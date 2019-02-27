@@ -2,6 +2,7 @@
 title: "Global Change Geography 2019 - Earth Observation"
 date: "`r Sys.Date()`"
 author: Philippe Rufin
+output_dir: "docs"
 output: 
   rmdformats::material:
     css: material_adjust.css
