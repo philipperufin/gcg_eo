@@ -44,7 +44,7 @@ Alternatively, you may want to follow one of the numerous tutorials for R fundam
 
 ------
 
-## Learning goals & course contents:
+## Learning goals & course contents
 
 The main goal of this course is to provide you with the necessary knowledge and tools for using optical remote sensing datasets and methods in the geo-scientific context. We want you to enhance your ability of problem-solving, empowering you to perform research independently. To that end, we cover aspects of data acquisition, spatial data handling in R and QGIS, basics of image pre-processing, higher-level processing such as pixel-based compositing and time-series binning. 
 
@@ -55,29 +55,23 @@ We use these methods for mapping of forest types, forest cover changes, agricult
 
 ------
 
-## Course materials.
+## Course materials
 
 ### Readings
 
-The first sessions of the course contain reading materials, such as are peer-reviewed papers and technical reports. You will find the reading materials for the next session at the end of each session. 
-
-### Exercises
-
-Exercise material is directly provided in the respective session. 
+The first sessions of the course contain reading materials, such as are peer-reviewed papers and technical reports. You will find the reading materials for the next session at the end of each session. We highlight aspects to focus upon to streamline the reading process and facilitate the discussion. We are looking forward to lively discussions of the reading materials and critical questions from your end. 
 
 ### Data
 
+All data used in the course is openly accessible. Mostly, we´ll be working with Landsat images, which you can access through the USGS Earth Explorer. We provide download links to the datasets for each session. It will be helpful if you organize your data in a course directory on your local machine (MSc students might want to use drive O:/Student_Data/).
 
-------
+### Exercises
 
-## What we expect.
+The weekly exercises are defined in the respective session. Each session comprises several tasks that involve scipting in R. Course participants must submit their R script in [moodle](http://moodle.hu-berlin.de/) to pass the course. Please organize your scripts according to the following structure:
 
-- A high motivation
-- Critical questions
-- Active particitpation
-- Well-prepared discussions of reading materials
-- Exercise submissions
+```
 
+``` 
 
 ------------------------------------------------------------------------------------------------
 
@@ -197,35 +191,21 @@ In this session, you will
 
 ## Data acquisition
 
-Let´s download a Landsat image. Do you know what following terms stand for? If not, exchange in groups.
-
-- Spatial resolution
-- Temporal resolution
-- Temporal coverage
-- Spectral resolution
-- Radiometric resolution
-- Image quality
-
-- Path/Row
-- Scene
-- Spectral band
-- Collection, Tier, Processing level
-
-
-Next, visit the [USGS Earth Explorer](http://earthexplorer.usgs.gov/) and navigate to Wisła, Poland	(lat,lon: 49.6473,18.8677), using the Adress/Place field. Switch to the 'Data Sets' tab and select Landsat -> Landsat Collection 1 Level-1. Tick the 'Landsat 8 OLI/TIRS C1 Level 1' box and click on 'Results >>'. 
+Let´s download a Landsat image. Visit the [USGS Earth Explorer](http://earthexplorer.usgs.gov/) and navigate to Wisła, Poland	(lat,lon: 49.6473,18.8677), using the Adress/Place field. Switch to the 'Data Sets' tab and select Landsat -> Landsat Collection 1 Level-1. Tick the 'Landsat 8 OLI/TIRS C1 Level 1' box and click on 'Results >>'. 
 
 You´ll get several hundreds of results, so let´s narrow down the search. Switch to the 'Additional Criteria' tab. Let´s choose a scene cloud cover of 'Less than 40%', the 'Tier 1' category and narrow the date range to the year 2015.
 
-Find the following images:
+Find the following images and display them in the Earth Explorer interface:
 
-LC08_L1TP_188026_20150423_20170409_01_T1
-LC08_L1TP_189025_20150820_20170406_01_T1
-LC08_L1TP_188026_20151101_20170402_01_T1
+- LC08_L1TP_188026_20150423_20170409_01_T1
+- LC08_L1TP_189025_20150820_20170406_01_T1
+- LC08_L1TP_188026_20151101_20170402_01_T1
 
+For downloading the images, you will need an EarthExplorer account. Register and download the .zip files. Unpack them to a designated folder for this session. If you prefer not to register, you can download the files from our repository. 
 
 ```
-## Define the path you want to store your data in
-path <- ''
+## Define a path you want to store this session´s data in
+path <- 'O:/Student_Data/your_name/EO/S01/'
 
 ## Create data directory in your working directory
 dir.create(paste0(path,'data'), showWarnings = TRUE)
@@ -245,7 +225,9 @@ X) Visit the folder containing the unpacked Landsat image. As you can see, the L
 
 ```raster()```, ```stack()``` ,```extent()```, ```crop()```,  ```extract()```, ```CRS()```, ```projectRaster()```, ```plotRGB()```, ```writeRaster()```
 
-X) Create stacks for each of the Landsat 8 images. Please include only the following bands: blue, green, red, near infrared, shortwave infrared 1, shortwave infrared 2 (in this order). Seek the list of [Landsat 8 bands](https://landsat.gsfc.nasa.gov/landsat-8/landsat-8-bands/) for a recap. 
+X) Create stacks for each of the Landsat 8 images. Please include only the following bands: blue, green, red, near infrared, shortwave infrared 1, shortwave infrared 2 (in this order). Check the list of [Landsat spectral bands](https://landsat.usgs.gov/what-are-band-designations-landsat-satellites/) for a recap. 
+
+![Band designations for Landsat satellites](fig/ls_bands.jpg)
 
 Try to create the stacks with a minimum amount of code as possible! Consider using helper functions such as ```paste0()```, ```dir()``` or ```list.files()```.
 
@@ -258,37 +240,53 @@ X) Check the extent of the images. You will notice that they vary from each othe
 ![Fig.1: Common extent of three images](fig/fig01.png)
 
 X) Crop each of the image stacks
-  a.	…to the common extent and create a multi-temporal stack of the three images. Please order them by acquisition day of year. 
-  b.	…to the following ```custom_extent <- c(xmin = 250000, xmax = 375000, ymin = 5589000, ymax = 5653000)```
+a) …to the common extent and create a multi-temporal stack of the three images. Please order them by acquisition day of year. 
+b) …to the following ```custom_extent <- c(250000, 375000, 5589000, 5653000)```
   
 ------
 
 ### Writing data
 
-X) Write the cropped stacks from Xa) and Xb) to your personal folder. Use the ‘ENVI’ format and the appropriate datatype. 
+X) Write the cropped stacks from Xa) and Xb) to your folder using ```writeRaster()```. Use the ```ENVI``` format and the appropriate ```datatype```. 
+
+### Visualizing data
 
 X)	Open the cropped images (Xb) in QGIS. Seek the symbology to create a true-color (red, green, blue) and a false-color representation (swIR1, nIR, red) of each image. Be aware that the order of the spectral regions in the electromagnetic spectrum (BGR) is different in your computer screen´s (RGB).
 
 ------
 
+### Voluntary section
+
 You managed to complete the assignment until this point? Great! In case you want to keep on going, try to complete the following voluntary tasks:
 
-6)	Use the ```plotRGB()``` function in R to create a false-color visualization (e.g. swIR1, nIR, red) of each the image stacks you generated in Xb).
+X)	Use the ```plotRGB()``` function in R to create a false-color visualization (e.g. swIR1, nIR, red) of each the image stacks you generated in Xb).
 
-7)	Extract a spectral profile of coordinate x = 343225; y = 5605500 from Xa). You can either use ```extract()``` or ```cellFromXY()``` to get the cell values using indexing.
+X)	Extract a spectral profile at coordinate x = 343225; y = 5605500. You can either use ```extract()``` or ```cellFromXY()``` to get the cell values using indexing.
 
-8)	Visualize the results from X) in R. Can you create one plot that represents a total of three spectral profiles (one for each image in the stack) accounting for the band wavelength and acquisition date? See an example below…
+X)	Visualize the results from X) in R. Can you create one plot that represents a total of three spectral profiles (one for each image in the stack) accounting for the band wavelength and acquisition date? See an example below…
+
 
 ------
 
-Coordinate systems!
+## Reading materials
 
+In the next session, we would like to discuss the following paper: 
 
-## Reading materials.
+[Zhu, Z., & Woodcock, C.E. (2012). Object-based cloud and cloud shadow detection in Landsat imagery. Remote Sensing of Environment, 118, 83–94.](https://doi.org/10.1016/j.rse.2011.10.028)
+
+This reading covers the basic aspects of the Fmask cloud and cloud shadow detection algorithm. It has been widely used for cloud detection on Landsat TM and ETM+ data. It was recently enhanced for the use with Landsat OLI and Sentinel 2 data (documented in [Zhu et al. 2015](https://doi.org/10.1016/j.rse.2014.12.014)).
+
+While reading try to find answers to the following questions:
+
+- What is the general architecture of the algorithm?
+- How were the thresholds for spectral tests derived?
+- How will different types of error impact further analyses of the masked image?
 
 ------
 
 # Session 02: Preprocessing, data quality & cloud masking
+
+## Learning goals
 
 ## Reading materials.
 
@@ -296,11 +294,15 @@ Coordinate systems!
 
 # Session 03: Vegetation indices and data transforms
 
+## Learning goals
+
 ## Reading materials.
 
 ------
 
 # Session 04: Pixel-based compositing
+
+## Learning goals
 
 ## Reading materials.
 
@@ -308,11 +310,15 @@ Coordinate systems!
 
 # Session 05: Machine learning for image classification
 
+## Learning goals
+
 ## Reading materials.
 
 ------
 
 # Session 06: Accuracy assessment and area estimation
+
+## Learning goals
 
 ## Reading materials.
 
@@ -320,16 +326,89 @@ Coordinate systems!
 
 # Session 07: Multi-temporal change detection
 
+## Learning goals
+
 ## Reading materials.
 
 ------
 
 # Session 08: Spectral-temporal metrics
 
+## Learning goals
+
 ## Reading materials.
 
 ------
 
-# Session 09: Project work I
+# Project work
 
-## Reading materials.
+## Phase I
+
+## Phase II
+
+## Phase III
+
+------
+
+# Terminology
+
+This is a non-exhaustive list of common terms and their definitions.
+
+## Observations
+
+- [Pixel](https://en.wikipedia.org/wiki/Pixel/)
+- Observation
+
+- Path/Row; WRS-2; Footprint; Scene: Partitions of Landsat images into approximately 185 × 185 km squares.
+- Grid: an arbitrary subdivision with square units in the target coordinate system.
+- Tile: an entity of the grid with a unique tile identifier. 
+- Chip: the individual gridded images that are affiliated with the tile.
+- Scene, Image
+
+- Data cube, Stack
+- Time series
+- Archive
+- Collection, Tier, Processing level
+
+## Sensor characteristics
+
+- Satellite
+- Sensor
+- Spatial resolution
+- Temporal resolution
+- Temporal coverage
+- Spectral resolution
+- Radiometric resolution
+
+## Data characteristics
+
+- Spectral band
+- Image quality
+
+- Very High Resolution
+- High Resolution
+- Medium Resolution
+- Moderate Resolution
+- Coarse Resolution
+
+- Time Series
+- Observation density
+- Multi-temporal
+- Hyper-temporal
+
+## Higher-level products
+
+- Composite / Mosaic
+- Pixel-based composites (Best observation composite)
+- Phenology-adaptive composites
+- Spectral-temporal metrics
+- Rank-band composite / metric
+- Phenometrics
+
+## Time intervals
+
+- Multi-annual
+- Inter-annual
+- Annual
+- Intra-annual 
+- Seasonal
