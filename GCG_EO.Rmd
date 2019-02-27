@@ -30,11 +30,11 @@ opts_chunk$set(echo=FALSE,
 opts_knit$set(width=75)
 ```
 
-# Welcome!
+# Hello!
 
 ![](fig/header.png)
 
-##  About Earth Observation!
+##  About Earth Observation
 
 Earth Observation is an advanced course for students of the Master of Science ["Global Change Geography"](https://www.geographie.hu-berlin.de/en/studies/study-programs/master-degree-programs/master-of-science) of Humboldt-Universität zu Berlin, other interested parties are cordially invited to join. In this course, we cover multiple aspects of optical remote sensing by working with multi-sprectral Landsat and Sentinel 2 imagery. The course is fully based on open source software, including R and QGIS.
 
@@ -63,13 +63,42 @@ The first sessions of the course contain reading materials, such as are peer-rev
 
 ### Data
 
-All data used in the course is openly accessible. Mostly, we´ll be working with Landsat images, which you can access through the USGS Earth Explorer. We provide download links to the datasets for each session. It will be helpful if you organize your data in a course directory on your local machine (MSc students might want to use drive O:/Student_Data/).
+All data used in the course is openly accessible. Mostly, we´ll be working with Landsat images, which you can access through the USGS Earth Explorer. We provide download links to the datasets for each session. It will be helpful if you organize your data in a course directory on your local machine (MSc students might want to use drive O:/Student_Data/your_name/EO/).
 
 ### Exercises
 
-The weekly exercises are defined in the respective session. Each session comprises several tasks that involve scipting in R. Course participants must submit their R script in [moodle](http://moodle.hu-berlin.de/) to pass the course. Please organize your scripts according to the following structure:
+The weekly exercises are defined in the respective session. Each session comprises several tasks that involve scipting in R. Course participants must submit their R script in [moodle](http://moodle.hu-berlin.de/) to pass the course. Please structure your scripts as follows:
 
 ```
+#############################################################################
+# MSc Earth Observation Exercise 01
+# [Your Name]
+#############################################################################
+
+# Load packages, use install.packages('packagename') to install if needed
+library(raster)
+
+# Change raster options to store large rasters in temp files on disk
+rasterOptions(maxmemory = 1e6)
+
+# Define the folder that contains your data...
+data.path <- 'O:/Student_Data/your_name/EarthObservation/S01/data/'
+
+#############################################################################
+# 1)	
+#############################################################################
+
+# Code for task 1
+
+...
+
+#############################################################################
+# 2)	
+#############################################################################
+
+# Code for task 2
+
+...
 
 ``` 
 
@@ -77,7 +106,7 @@ The weekly exercises are defined in the respective session. Each session compris
 
 # Introducing R 
 
-## Why use R?
+## Why do we use R?
 
 R is a programming language and open source software environment for statistical computing and graphics. The R language is widely used among statisticians and data miners for developing statistical software and data analysis. R was developed by Ross Ihaka and Robert Gentleman at the University of Auckland, New Zealand. The name R originates the first names of the two authors and refers to the programming language S. The project was conceived in 1992, with an initial version released in 1995 and a stable beta version in 2000.
 
@@ -149,10 +178,10 @@ create_response <- function(x){x + rnorm(50, 0, 0.2)}
 y <- create_response(x)
 
 # Make a dataframe
-data <- data.frame('x'=x, 'y'=y)
+data <- data.frame('x' = x, 'y' = y)
 
 # Plot the simulated dataset
-ggplot(data, aes(x=x, y=y)) +
+ggplot(data, aes(x = x, y = y)) +
   geom_point()
 
 # Investigate correlation in the data
@@ -201,19 +230,19 @@ Find the following images and display them in the Earth Explorer interface:
 - LC08_L1TP_189025_20150820_20170406_01_T1
 - LC08_L1TP_188026_20151101_20170402_01_T1
 
-For downloading the images, you will need an EarthExplorer account. Register and download the .zip files. Unpack them to a designated folder for this session. If you prefer not to register, you can download the files from our repository. 
+For downloading the images, you will need an EarthExplorer account. Register and download the .tar.gz files. Unpack them to a designated folder for this session. If you prefer not to register, you can [download the files from our repository](https://box.hu-berlin.de/f/5248da1584054eb6ba51/?dl=1). 
 
 ```
 ## Define a path you want to store this session´s data in
-path <- 'O:/Student_Data/your_name/EO/S01/'
+path <- 'O:/Student_Data/your_name/EO/S01/data/'
 
 ## Create data directory in your working directory
-dir.create(paste0(path,'data'), showWarnings = TRUE)
+dir.create(path, showWarnings = TRUE)
 
 ## Download the files for this session
-if (!file.exists('data/rs/samples.rds')) {
-  download.file('https://biogeo.ucdavis.edu/data/rspatial/rsdata.zip', dest = 'data/rsdata.zip')
-  unzip('data/rsdata.zip', exdir='data')
+if (!file.exists(paste0(path,gcg_eo_s01.zip))) {
+  download.file('https://box.hu-berlin.de/f/5248da1584054eb6ba51/?dl=1', dest = paste0(path,'gcg_eo_s01.zip'))
+  unzip(paste0(path,'gcg_eo_s01.zip'), exdir=path)
 }
 ```
 
@@ -237,7 +266,7 @@ Try to create the stacks with a minimum amount of code as possible! Consider usi
 
 X) Check the extent of the images. You will notice that they vary from each other. Find an efficient way to identify the common extent (xmin, xmax, ymin, ymax in projected coordinates) of all three images.
 
-![Fig.1: Common extent of three images](fig/fig01.png)
+![Fig.1: Identifying the common extent of several images](fig/fig01.png)
 
 X) Crop each of the image stacks
 a) …to the common extent and create a multi-temporal stack of the three images. Please order them by acquisition day of year. 

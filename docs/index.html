@@ -110,7 +110,7 @@ $(document).ready(function () {
       <nav class="col-xs-3 menu">
         <div id="toc">
         <ul>
-        <li><a href="#welcome">Welcome!</a></li>
+        <li><a href="#hello">Hello!</a></li>
         <li><a href="#introducing-r">Introducing R</a></li>
         <li><a href="#session-01-raster-handling-in-r">Session 01: Raster handling in R</a></li>
         <li><a href="#session-02-preprocessing-data-quality-cloud-masking">Session 02: Preprocessing, data quality &amp; cloud masking</a></li>
@@ -134,14 +134,14 @@ $(document).ready(function () {
 
 
 
-<div id="welcome" class="section level1">
-<h1>Welcome!</h1>
+<div id="hello" class="section level1">
+<h1>Hello!</h1>
 <div class="figure">
 <img src="fig/header.png" />
 
 </div>
 <div id="about-earth-observation" class="section level2">
-<h2>About Earth Observation!</h2>
+<h2>About Earth Observation</h2>
 <p>Earth Observation is an advanced course for students of the Master of Science <a href="https://www.geographie.hu-berlin.de/en/studies/study-programs/master-degree-programs/master-of-science">“Global Change Geography”</a> of Humboldt-Universität zu Berlin, other interested parties are cordially invited to join. In this course, we cover multiple aspects of optical remote sensing by working with multi-sprectral Landsat and Sentinel 2 imagery. The course is fully based on open source software, including R and QGIS.</p>
 <p>As you followed the curriculum of the MSc program, you most likely joined the module “Quantitative Methods for Geographers”, in which you learned using R for statistical problems. Here, we built on your existing knowledge. If you are not enrolled in the MSc program, feel free to look at the <a href="https://github.com/corneliussenf/quantitative_methods">course materials</a>.</p>
 <p>Alternatively, you may want to follow one of the numerous tutorials for R fundamentals (e.g., <a href="https://www.rstudio.com/online-learning/">RStudio</a>, <a href="https://www.datacamp.com/courses/free-introduction-to-r">DataCamp</a>, <a href="http://www.r-tutorial.nl/">UMC Utrecht</a>), or advanced tutorials for geodata processing (e.g., <a href="https://geoscripting-wur.github.io/">Wageningen University</a>, <a href="https://www.earthdatascience.org/">University of Colorado</a>).</p>
@@ -162,20 +162,49 @@ $(document).ready(function () {
 </div>
 <div id="data" class="section level3">
 <h3>Data</h3>
-<p>All data used in the course is openly accessible. Mostly, we´ll be working with Landsat images, which you can access through the USGS Earth Explorer. We provide download links to the datasets for each session. It will be helpful if you organize your data in a course directory on your local machine (MSc students might want to use drive O:/Student_Data/).</p>
+<p>All data used in the course is openly accessible. Mostly, we´ll be working with Landsat images, which you can access through the USGS Earth Explorer. We provide download links to the datasets for each session. It will be helpful if you organize your data in a course directory on your local machine (MSc students might want to use drive O:/Student_Data/your_name/EO/).</p>
 </div>
 <div id="exercises" class="section level3">
 <h3>Exercises</h3>
-<p>The weekly exercises are defined in the respective session. Each session comprises several tasks that involve scipting in R. Course participants must submit their R script in <a href="http://moodle.hu-berlin.de/">moodle</a> to pass the course. Please organize your scripts according to the following structure:</p>
-<pre><code></code></pre>
+<p>The weekly exercises are defined in the respective session. Each session comprises several tasks that involve scipting in R. Course participants must submit their R script in <a href="http://moodle.hu-berlin.de/">moodle</a> to pass the course. Please structure your scripts as follows:</p>
+<pre><code>#############################################################################
+# MSc Earth Observation Exercise 01
+# [Your Name]
+#############################################################################
+
+# Load packages, use install.packages(&#39;packagename&#39;) to install if needed
+library(raster)
+
+# Change raster options to store large rasters in temp files on disk
+rasterOptions(maxmemory = 1e6)
+
+# Define the folder that contains your data...
+data.path &lt;- &#39;O:/Student_Data/your_name/EarthObservation/S01/data/&#39;
+
+#############################################################################
+# 1)    
+#############################################################################
+
+# Code for task 1
+
+...
+
+#############################################################################
+# 2)    
+#############################################################################
+
+# Code for task 2
+
+...
+</code></pre>
 <hr />
 </div>
 </div>
 </div>
 <div id="introducing-r" class="section level1">
 <h1>Introducing R</h1>
-<div id="why-use-r" class="section level2">
-<h2>Why use R?</h2>
+<div id="why-do-we-use-r" class="section level2">
+<h2>Why do we use R?</h2>
 <p>R is a programming language and open source software environment for statistical computing and graphics. The R language is widely used among statisticians and data miners for developing statistical software and data analysis. R was developed by Ross Ihaka and Robert Gentleman at the University of Auckland, New Zealand. The name R originates the first names of the two authors and refers to the programming language S. The project was conceived in 1992, with an initial version released in 1995 and a stable beta version in 2000.</p>
 <p>programming entry point | easy to learn | great support | open source | data wrangling | visualization | works cross-platform | popular in science &amp; industry | job opportunities</p>
 <div class="figure">
@@ -234,15 +263,15 @@ create_response &lt;-<span class="st"> </span><span class="cf">function</span>(x
 y &lt;-<span class="st"> </span><span class="kw">create_response</span>(x)
 
 <span class="co"># Make a dataframe</span>
-data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">&#39;x&#39;</span>=x, <span class="st">&#39;y&#39;</span>=y)
+data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">&#39;x&#39;</span> =<span class="st"> </span>x, <span class="st">&#39;y&#39;</span> =<span class="st"> </span>y)
 
 <span class="co"># Plot the simulated dataset</span>
-<span class="kw">ggplot</span>(data, <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y)) <span class="op">+</span>
+<span class="kw">ggplot</span>(data, <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>()</code></pre></div>
 <p><img src="index_files/figure-html/style-1.png" width="288" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Investigate correlation in the data</span>
 <span class="kw">cor</span>(data<span class="op">$</span>x, data<span class="op">$</span>y)</code></pre></div>
-<pre><code>[1] 0.9493801</code></pre>
+<pre><code>[1] 0.9509257</code></pre>
 <hr />
 </div>
 <div id="help" class="section level2">
@@ -282,17 +311,17 @@ data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span clas
 <li>LC08_L1TP_189025_20150820_20170406_01_T1</li>
 <li>LC08_L1TP_188026_20151101_20170402_01_T1</li>
 </ul>
-<p>For downloading the images, you will need an EarthExplorer account. Register and download the .zip files. Unpack them to a designated folder for this session. If you prefer not to register, you can download the files from our repository.</p>
-<pre><code>## Define the path you want to store your data in
-path &lt;- &#39;O:/Student_Data/your_name/EO/&#39;
+<p>For downloading the images, you will need an EarthExplorer account. Register and download the .tar.gz files. Unpack them to a designated folder for this session. If you prefer not to register, you can <a href="https://box.hu-berlin.de/f/5248da1584054eb6ba51/?dl=1">download the files from our repository</a>.</p>
+<pre><code>## Define a path you want to store this session´s data in
+path &lt;- &#39;O:/Student_Data/your_name/EO/S01/data/&#39;
 
 ## Create data directory in your working directory
-dir.create(paste0(path,&#39;data&#39;), showWarnings = TRUE)
+dir.create(path, showWarnings = TRUE)
 
 ## Download the files for this session
-if (!file.exists(&#39;data/rs/samples.rds&#39;)) {
-  download.file(&#39;https://biogeo.ucdavis.edu/data/rspatial/rsdata.zip&#39;, dest = &#39;data/rsdata.zip&#39;)
-  unzip(&#39;data/rsdata.zip&#39;, exdir=&#39;data&#39;)
+if (!file.exists(&#39;paste0(path,gcg_eo_s01.zip)) {
+  download.file(&#39;https://box.hu-berlin.de/f/5248da1584054eb6ba51/?dl=1&#39;, dest = paste0(path,&#39;gcg_eo_s01.zip&#39;)
+  unzip(paste0(path,&#39;gcg_eo_s01.zip&#39;, exdir=path)
 }</code></pre>
 <hr />
 <div id="reading-data" class="section level3">
@@ -456,10 +485,12 @@ if (!file.exists(&#39;data/rs/samples.rds&#39;)) {
 <div id="observations" class="section level2">
 <h2>Observations</h2>
 <ul>
-<li>Pixel</li>
+<li><a href="https://en.wikipedia.org/wiki/Pixel/">Pixel</a></li>
 <li><p>Observation</p></li>
-<li>Path/Row</li>
-<li>Grid, tile, chip</li>
+<li>Path/Row; WRS-2; Footprint; Scene: Partitions of Landsat images into approximately 185 × 185 km squares.</li>
+<li>Grid: an arbitrary subdivision with square units in the target coordinate system.</li>
+<li>Tile: an entity of the grid with a unique tile identifier.</li>
+<li>Chip: the individual gridded images that are affiliated with the tile.</li>
 <li><p>Scene, Image</p></li>
 <li>Data cube, Stack</li>
 <li>Time series</li>
@@ -482,15 +513,17 @@ if (!file.exists(&#39;data/rs/samples.rds&#39;)) {
 <div id="data-characteristics" class="section level2">
 <h2>Data characteristics</h2>
 <ul>
-<li>Scene</li>
 <li>Spectral band</li>
-<li>Image quality</li>
-<li>Observation density</li>
+<li><p>Image quality</p></li>
 <li>Very High Resolution</li>
 <li>High Resolution</li>
 <li>Medium Resolution</li>
 <li>Moderate Resolution</li>
-<li>Coarse Resolution</li>
+<li><p>Coarse Resolution</p></li>
+<li>Time Series</li>
+<li>Observation density</li>
+<li>Multi-temporal</li>
+<li><p>Hyper-temporal</p></li>
 </ul>
 </div>
 <div id="higher-level-products" class="section level2">
@@ -512,8 +545,6 @@ if (!file.exists(&#39;data/rs/samples.rds&#39;)) {
 <li>Annual</li>
 <li>Intra-annual</li>
 <li>Seasonal</li>
-<li>Multi-temporal</li>
-<li>Hyper-temporal</li>
 </ul>
 </div>
 </div>
