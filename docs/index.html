@@ -120,7 +120,8 @@ $(document).ready(function () {
         <li><a href="#session-06-accuracy-assessment-and-area-estimation">Session 06: Accuracy assessment and area estimation</a></li>
         <li><a href="#session-07-multi-temporal-change-detection">Session 07: Multi-temporal change detection</a></li>
         <li><a href="#session-08-spectral-temporal-metrics">Session 08: Spectral-temporal metrics</a></li>
-        <li><a href="#session-09-project-work-i">Session 09: Project work I</a></li>
+        <li><a href="#project-work">Project work</a></li>
+        <li><a href="#terminology">Terminology</a></li>
         </ul>
         </div>
         
@@ -147,36 +148,28 @@ $(document).ready(function () {
 <hr />
 </div>
 <div id="learning-goals-course-contents" class="section level2">
-<h2>Learning goals &amp; course contents:</h2>
+<h2>Learning goals &amp; course contents</h2>
 <p>The main goal of this course is to provide you with the necessary knowledge and tools for using optical remote sensing datasets and methods in the geo-scientific context. We want you to enhance your ability of problem-solving, empowering you to perform research independently. To that end, we cover aspects of data acquisition, spatial data handling in R and QGIS, basics of image pre-processing, higher-level processing such as pixel-based compositing and time-series binning.</p>
 <p>We use state of the art methods in image processing and time series analyses of optical satellite imagery. The course covers methods related to data quality, cloud masking, vegetation indices, multi-temporal image analyses, machine learning classification algorithms, area adjusted accuracy assessment, time series analyses, and image compositing.</p>
 <p>We use these methods for mapping of forest types, forest cover changes, agricultural dynamics in the Carpathian ecoregion (Poland), the Southern Brazilian Amazon, and Crete in Greece.</p>
 <hr />
 </div>
-<div id="course-materials." class="section level2">
-<h2>Course materials.</h2>
+<div id="course-materials" class="section level2">
+<h2>Course materials</h2>
 <div id="readings" class="section level3">
 <h3>Readings</h3>
-<p>The first sessions of the course contain reading materials, such as are peer-reviewed papers and technical reports. You will find the reading materials for the next session at the end of each session.</p>
-</div>
-<div id="exercises" class="section level3">
-<h3>Exercises</h3>
+<p>The first sessions of the course contain reading materials, such as are peer-reviewed papers and technical reports. You will find the reading materials for the next session at the end of each session. We highlight aspects to focus upon to streamline the reading process and facilitate the discussion. We are looking forward to lively discussions of the reading materials and critical questions from your end.</p>
 </div>
 <div id="data" class="section level3">
 <h3>Data</h3>
+<p>All data used in the course is openly accessible. Mostly, we´ll be working with Landsat images, which you can access through the USGS Earth Explorer. We provide download links to the datasets for each session. It will be helpful if you organize your data in a course directory on your local machine (MSc students might want to use drive O:/Student_Data/).</p>
+</div>
+<div id="exercises" class="section level3">
+<h3>Exercises</h3>
+<p>The weekly exercises are defined in the respective session. Each session comprises several tasks that involve scipting in R. Course participants must submit their R script in <a href="http://moodle.hu-berlin.de/">moodle</a> to pass the course. Please organize your scripts according to the following structure:</p>
+<pre><code></code></pre>
 <hr />
 </div>
-</div>
-<div id="what-we-expect." class="section level2">
-<h2>What we expect.</h2>
-<ul>
-<li>A high motivation</li>
-<li>Critical questions</li>
-<li>Active particitpation</li>
-<li>Well-prepared discussions of reading materials</li>
-<li>Exercise submissions</li>
-</ul>
-<hr />
 </div>
 </div>
 <div id="introducing-r" class="section level1">
@@ -281,25 +274,17 @@ data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span clas
 </div>
 <div id="data-acquisition" class="section level2">
 <h2>Data acquisition</h2>
-<p>Let´s download a Landsat image. Do you know what following terms stand for? If not, exchange in groups.</p>
-<ul>
-<li>Spatial resolution</li>
-<li>Temporal resolution</li>
-<li>Temporal coverage</li>
-<li>Spectral resolution</li>
-<li>Radiometric resolution</li>
-<li><p>Image quality</p></li>
-<li>Path/Row</li>
-<li>Scene</li>
-<li>Spectral band</li>
-<li><p>Collection, Tier, Processing level</p></li>
-</ul>
-<p>Next, visit the <a href="http://earthexplorer.usgs.gov/">USGS Earth Explorer</a> and navigate to Wisła, Poland (lat,lon: 49.6473,18.8677), using the Adress/Place field. Switch to the ‘Data Sets’ tab and select Landsat -&gt; Landsat Collection 1 Level-1. Tick the ‘Landsat 8 OLI/TIRS C1 Level 1’ box and click on ‘Results &gt;&gt;’.</p>
+<p>Let´s download a Landsat image. Visit the <a href="http://earthexplorer.usgs.gov/">USGS Earth Explorer</a> and navigate to Wisła, Poland (lat,lon: 49.6473,18.8677), using the Adress/Place field. Switch to the ‘Data Sets’ tab and select Landsat -&gt; Landsat Collection 1 Level-1. Tick the ‘Landsat 8 OLI/TIRS C1 Level 1’ box and click on ‘Results &gt;&gt;’.</p>
 <p>You´ll get several hundreds of results, so let´s narrow down the search. Switch to the ‘Additional Criteria’ tab. Let´s choose a scene cloud cover of ‘Less than 40%’, the ‘Tier 1’ category and narrow the date range to the year 2015.</p>
-<p>Find the following images:</p>
-<p>LC08_L1TP_188026_20150423_20170409_01_T1 LC08_L1TP_189025_20150820_20170406_01_T1 LC08_L1TP_188026_20151101_20170402_01_T1</p>
+<p>Find the following images and display them in the Earth Explorer interface:</p>
+<ul>
+<li>LC08_L1TP_188026_20150423_20170409_01_T1</li>
+<li>LC08_L1TP_189025_20150820_20170406_01_T1</li>
+<li>LC08_L1TP_188026_20151101_20170402_01_T1</li>
+</ul>
+<p>For downloading the images, you will need an EarthExplorer account. Register and download the .zip files. Unpack them to a designated folder for this session. If you prefer not to register, you can download the files from our repository.</p>
 <pre><code>## Define the path you want to store your data in
-path &lt;- &#39;&#39;
+path &lt;- &#39;O:/Student_Data/your_name/EO/&#39;
 
 ## Create data directory in your working directory
 dir.create(paste0(path,&#39;data&#39;), showWarnings = TRUE)
@@ -317,8 +302,12 @@ if (!file.exists(&#39;data/rs/samples.rds&#39;)) {
 </ol>
 <p><code>raster()</code>, <code>stack()</code> ,<code>extent()</code>, <code>crop()</code>, <code>extract()</code>, <code>CRS()</code>, <code>projectRaster()</code>, <code>plotRGB()</code>, <code>writeRaster()</code></p>
 <ol start="24" style="list-style-type: upper-alpha">
-<li>Create stacks for each of the Landsat 8 images. Please include only the following bands: blue, green, red, near infrared, shortwave infrared 1, shortwave infrared 2 (in this order). Seek the list of <a href="https://landsat.gsfc.nasa.gov/landsat-8/landsat-8-bands/">Landsat 8 bands</a> for a recap.</li>
+<li>Create stacks for each of the Landsat 8 images. Please include only the following bands: blue, green, red, near infrared, shortwave infrared 1, shortwave infrared 2 (in this order). Check the list of <a href="https://landsat.usgs.gov/what-are-band-designations-landsat-satellites/">Landsat spectral bands</a> for a recap.</li>
 </ol>
+<div class="figure">
+<img src="fig/ls_bands.jpg" alt="Band designations for Landsat satellites" />
+<p class="caption">Band designations for Landsat satellites</p>
+</div>
 <p>Try to create the stacks with a minimum amount of code as possible! Consider using helper functions such as <code>paste0()</code>, <code>dir()</code> or <code>list.files()</code>.</p>
 <hr />
 </div>
@@ -335,86 +324,197 @@ if (!file.exists(&#39;data/rs/samples.rds&#39;)) {
 <li>Crop each of the image stacks</li>
 </ol>
 <ol style="list-style-type: lower-alpha">
-<li><pre><code>…to the common extent and create a multi-temporal stack of the three images. Please order them by acquisition day of year. </code></pre></li>
-<li><pre><code>…to the following ```custom_extent &lt;- c(xmin = 250000, xmax = 375000, ymin = 5589000, ymax = 5653000)```</code></pre></li>
+<li>…to the common extent and create a multi-temporal stack of the three images. Please order them by acquisition day of year.</li>
+<li>…to the following <code>custom_extent &lt;- c(250000, 375000, 5589000, 5653000)</code></li>
 </ol>
 <hr />
 </div>
 <div id="writing-data" class="section level3">
 <h3>Writing data</h3>
 <ol start="24" style="list-style-type: upper-alpha">
-<li><p>Write the cropped stacks from Xa) and Xb) to your personal folder. Use the ‘ENVI’ format and the appropriate datatype.</p></li>
-<li><p>Open the cropped images (Xb) in QGIS. Seek the symbology to create a true-color (red, green, blue) and a false-color representation (swIR1, nIR, red) of each image. Be aware that the order of the spectral regions in the electromagnetic spectrum (BGR) is different in your computer screen´s (RGB).</p></li>
+<li>Write the cropped stacks from Xa) and Xb) to your folder using <code>writeRaster()</code>. Use the <code>ENVI</code> format and the appropriate <code>datatype</code>.</li>
+</ol>
+</div>
+<div id="visualizing-data" class="section level3">
+<h3>Visualizing data</h3>
+<ol start="24" style="list-style-type: upper-alpha">
+<li>Open the cropped images (Xb) in QGIS. Seek the symbology to create a true-color (red, green, blue) and a false-color representation (swIR1, nIR, red) of each image. Be aware that the order of the spectral regions in the electromagnetic spectrum (BGR) is different in your computer screen´s (RGB).</li>
 </ol>
 <hr />
+</div>
+<div id="voluntary-section" class="section level3">
+<h3>Voluntary section</h3>
 <p>You managed to complete the assignment until this point? Great! In case you want to keep on going, try to complete the following voluntary tasks:</p>
-<ol start="6" style="list-style-type: decimal">
+<ol start="24" style="list-style-type: upper-alpha">
 <li><p>Use the <code>plotRGB()</code> function in R to create a false-color visualization (e.g. swIR1, nIR, red) of each the image stacks you generated in Xb).</p></li>
-<li><p>Extract a spectral profile of coordinate x = 343225; y = 5605500 from Xa). You can either use <code>extract()</code> or <code>cellFromXY()</code> to get the cell values using indexing.</p></li>
+<li><p>Extract a spectral profile at coordinate x = 343225; y = 5605500. You can either use <code>extract()</code> or <code>cellFromXY()</code> to get the cell values using indexing.</p></li>
 <li><p>Visualize the results from X) in R. Can you create one plot that represents a total of three spectral profiles (one for each image in the stack) accounting for the band wavelength and acquisition date? See an example below…</p></li>
 </ol>
 <hr />
-<p>Coordinate systems!</p>
 </div>
+</div>
+<div id="reading-materials" class="section level2">
+<h2>Reading materials</h2>
+<p>In the next session, we would like to discuss the following paper:</p>
+<p><a href="https://doi.org/10.1016/j.rse.2011.10.028">Zhu, Z., &amp; Woodcock, C.E. (2012). Object-based cloud and cloud shadow detection in Landsat imagery. Remote Sensing of Environment, 118, 83–94.</a></p>
+<p>This reading covers the basic aspects of the Fmask cloud and cloud shadow detection algorithm. It has been widely used for cloud detection on Landsat TM and ETM+ data. It was recently enhanced for the use with Landsat OLI and Sentinel 2 data (documented in <a href="https://doi.org/10.1016/j.rse.2014.12.014">Zhu et al. 2015</a>).</p>
+<p>While reading try to find answers to the following questions:</p>
+<ul>
+<li>What is the general architecture of the algorithm?</li>
+<li>How were the thresholds for spectral tests derived?</li>
+<li>How will different types of error impact further analyses of the masked image?</li>
+</ul>
+<hr />
+</div>
+</div>
+<div id="session-02-preprocessing-data-quality-cloud-masking" class="section level1">
+<h1>Session 02: Preprocessing, data quality &amp; cloud masking</h1>
+<div id="learning-goals-1" class="section level2">
+<h2>Learning goals</h2>
 </div>
 <div id="reading-materials." class="section level2">
 <h2>Reading materials.</h2>
 <hr />
 </div>
 </div>
-<div id="session-02-preprocessing-data-quality-cloud-masking" class="section level1">
-<h1>Session 02: Preprocessing, data quality &amp; cloud masking</h1>
-<div id="reading-materials.-1" class="section level2">
-<h2>Reading materials.</h2>
-<hr />
-</div>
-</div>
 <div id="session-03-vegetation-indices-and-data-transforms" class="section level1">
 <h1>Session 03: Vegetation indices and data transforms</h1>
-<div id="reading-materials.-2" class="section level2">
+<div id="learning-goals-2" class="section level2">
+<h2>Learning goals</h2>
+</div>
+<div id="reading-materials.-1" class="section level2">
 <h2>Reading materials.</h2>
 <hr />
 </div>
 </div>
 <div id="session-04-pixel-based-compositing" class="section level1">
 <h1>Session 04: Pixel-based compositing</h1>
-<div id="reading-materials.-3" class="section level2">
+<div id="learning-goals-3" class="section level2">
+<h2>Learning goals</h2>
+</div>
+<div id="reading-materials.-2" class="section level2">
 <h2>Reading materials.</h2>
 <hr />
 </div>
 </div>
 <div id="session-05-machine-learning-for-image-classification" class="section level1">
 <h1>Session 05: Machine learning for image classification</h1>
-<div id="reading-materials.-4" class="section level2">
+<div id="learning-goals-4" class="section level2">
+<h2>Learning goals</h2>
+</div>
+<div id="reading-materials.-3" class="section level2">
 <h2>Reading materials.</h2>
 <hr />
 </div>
 </div>
 <div id="session-06-accuracy-assessment-and-area-estimation" class="section level1">
 <h1>Session 06: Accuracy assessment and area estimation</h1>
-<div id="reading-materials.-5" class="section level2">
+<div id="learning-goals-5" class="section level2">
+<h2>Learning goals</h2>
+</div>
+<div id="reading-materials.-4" class="section level2">
 <h2>Reading materials.</h2>
 <hr />
 </div>
 </div>
 <div id="session-07-multi-temporal-change-detection" class="section level1">
 <h1>Session 07: Multi-temporal change detection</h1>
-<div id="reading-materials.-6" class="section level2">
+<div id="learning-goals-6" class="section level2">
+<h2>Learning goals</h2>
+</div>
+<div id="reading-materials.-5" class="section level2">
 <h2>Reading materials.</h2>
 <hr />
 </div>
 </div>
 <div id="session-08-spectral-temporal-metrics" class="section level1">
 <h1>Session 08: Spectral-temporal metrics</h1>
-<div id="reading-materials.-7" class="section level2">
+<div id="learning-goals-7" class="section level2">
+<h2>Learning goals</h2>
+</div>
+<div id="reading-materials.-6" class="section level2">
 <h2>Reading materials.</h2>
 <hr />
 </div>
 </div>
-<div id="session-09-project-work-i" class="section level1">
-<h1>Session 09: Project work I</h1>
-<div id="reading-materials.-8" class="section level2">
-<h2>Reading materials.</h2>
+<div id="project-work" class="section level1">
+<h1>Project work</h1>
+<div id="phase-i" class="section level2">
+<h2>Phase I</h2>
+</div>
+<div id="phase-ii" class="section level2">
+<h2>Phase II</h2>
+</div>
+<div id="phase-iii" class="section level2">
+<h2>Phase III</h2>
+<hr />
+</div>
+</div>
+<div id="terminology" class="section level1">
+<h1>Terminology</h1>
+<p>This is a non-exhaustive list of common terms and their definitions.</p>
+<div id="observations" class="section level2">
+<h2>Observations</h2>
+<ul>
+<li>Pixel</li>
+<li><p>Observation</p></li>
+<li>Path/Row</li>
+<li>Grid, tile, chip</li>
+<li><p>Scene, Image</p></li>
+<li>Data cube, Stack</li>
+<li>Time series</li>
+<li>Archive</li>
+<li><p>Collection, Tier, Processing level</p></li>
+</ul>
+</div>
+<div id="sensor-characteristics" class="section level2">
+<h2>Sensor characteristics</h2>
+<ul>
+<li>Satellite</li>
+<li>Sensor</li>
+<li>Spatial resolution</li>
+<li>Temporal resolution</li>
+<li>Temporal coverage</li>
+<li>Spectral resolution</li>
+<li>Radiometric resolution</li>
+</ul>
+</div>
+<div id="data-characteristics" class="section level2">
+<h2>Data characteristics</h2>
+<ul>
+<li>Scene</li>
+<li>Spectral band</li>
+<li>Image quality</li>
+<li>Observation density</li>
+<li>Very High Resolution</li>
+<li>High Resolution</li>
+<li>Medium Resolution</li>
+<li>Moderate Resolution</li>
+<li>Coarse Resolution</li>
+</ul>
+</div>
+<div id="higher-level-products" class="section level2">
+<h2>Higher-level products</h2>
+<ul>
+<li>Composite / Mosaic</li>
+<li>Pixel-based composites (Best observation composite)</li>
+<li>Phenology-adaptive composites</li>
+<li>Spectral-temporal metrics</li>
+<li>Rank-band composite / metric</li>
+<li>Phenometrics</li>
+</ul>
+</div>
+<div id="time-intervals" class="section level2">
+<h2>Time intervals</h2>
+<ul>
+<li>Multi-annual</li>
+<li>Inter-annual</li>
+<li>Annual</li>
+<li>Intra-annual</li>
+<li>Seasonal</li>
+<li>Multi-temporal</li>
+<li>Hyper-temporal</li>
+</ul>
 </div>
 </div>
 
