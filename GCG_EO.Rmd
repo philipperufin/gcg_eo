@@ -1,6 +1,6 @@
 ---
 title: "Earth Observation"
-date: "Summer Term 2019"
+date: "Summer 2019"
 author: MSc Global Change Geography
 output: 
   rmdformats::material:
@@ -180,7 +180,7 @@ In this session, you will
 
 - Download multi-spectral satellite data.
 - Read & write raster data.
-- Crop the spatial extent of images.
+- Manipulate the spatial extent of rasters.
 - Extract cell values & plot a spectral profile. 
 
 ------
