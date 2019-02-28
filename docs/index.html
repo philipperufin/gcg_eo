@@ -8,11 +8,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
-<meta name="author" content="Philippe Rufin" />
+<meta name="author" content="MSc Global Change Geography" />
 
-<meta name="date" content="2019-02-28" />
-
-<title>Global Change Geography 2019 - Earth Observation</title>
+<title>Earth Observation</title>
 <!-- Material Design fonts -->
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -95,9 +93,10 @@ $(document).ready(function () {
         <div class="row">
             <div class="col-xs-3">
         <div id="header">
-    <h1 class="title">Global Change Geography 2019 - Earth Observation</h1>
-                <h4 class="author">Philippe Rufin</h4>
-                <h4 class="date">2019-02-28</h4>
+    <h1 class="title">Earth Observation</h1>
+                <h4 class="author">MSc Global Change Geography</h4>
+                <h4 class="date">Summer Term 2019</h4>
+
         </div>
     </div>
 </div>
@@ -161,7 +160,7 @@ $(document).ready(function () {
 </div>
 <div id="data" class="section level3">
 <h3>Data</h3>
-<p>All data used in the course is openly accessible. Mostly, we´ll be working with Landsat images, which you can access through the USGS Earth Explorer. We provide download links to the datasets for each session. It will be helpful if you organize your data in a course directory on your local machine (MSc students might want to use drive <code>O:/Student_Data/your_name/EO/</code>). We will refer to this folder as <code>course.dir</code> throughout this course. Create subdirectories for each session, e.g. <code>course.dir/S01/</code> and separate data, code and course materials in additional sub-directories (e.g. <code>data</code>, <code>code</code>, <code>docs</code>).</p>
+<p>All data used in the course is openly accessible. Mostly, we´ll be working with Landsat images, which you can access through the USGS Earth Explorer. We provide download links to the datasets for each session. It will be helpful if you organize your data in a course directory on your local machine (MSc students might want to use drive <code>O:/Student_Data/your_name/EO/</code>). We will refer to this folder as <code>course.dir</code> throughout this course. Create subdirectories for each session, e.g. <code>course.dir/S01/</code> and separate data, code and course materials in additional sub-directories (e.g. <code>/data</code>, <code>/code</code>, <code>/docs</code>).</p>
 </div>
 <div id="exercises" class="section level3">
 <h3>Exercises</h3>
@@ -313,7 +312,7 @@ path &lt;-<span class="st"> &#39;course.dir/S01/data/&#39;</span>
 <hr />
 <div id="reading-data" class="section level3">
 <h3>Reading data</h3>
-<ol start="24" style="list-style-type: upper-alpha">
+<ol style="list-style-type: decimal">
 <li><p>Today, you will make use of R´s raster package classes and functions which are well described in the package documentation. Get acquainted with the following classes and functions and find out what they are useful for: <code>raster()</code>, <code>stack()</code> ,<code>extent()</code>, <code>crop()</code>, <code>extract()</code>, <code>CRS()</code>, <code>projectRaster()</code>, <code>plotRGB()</code>, <code>writeRaster()</code></p></li>
 <li><p>Visit the folder containing the unpacked Landsat image. Did you take a close look at the Landsat file naming convention? Practically, it provides some basic meta-information. For instance, <code>LC08_L1TP_189025_20140310_20170425_01_T1</code> is a sequence of information on the sensor, processing level, WRS path and row, acquisition date, processing date, collection, and collection tier, separated by ’_’.</p></li>
 <li><p>As you can see, the Landsat images are delivered as single-band files. The single bands should be stacked for further analyses. For stacking, all input files must have matching extents and the identical projection. Create a stack for each of the two Landsat 8 images.</p></li>
@@ -328,7 +327,7 @@ path &lt;-<span class="st"> &#39;course.dir/S01/data/&#39;</span>
 </div>
 <div id="manipulating-data" class="section level3">
 <h3>Manipulating data</h3>
-<ol start="24" style="list-style-type: upper-alpha">
+<ol start="4" style="list-style-type: decimal">
 <li><p>Investigate the stack. In which projection is the data delivered?</p></li>
 <li><p>Compare the extent of the two images. You will notice that they vary. Trying to stack images of different extent will cause an error message claiming:</p></li>
 <li><p>To stack both images, we need to crop (or clip, or cut) the images to their common extent. Find an efficient way to identify the common extent of the images, defined as <code>common.extent &lt;- c(xmin, xmax, ymin, ymax)</code> (in projected coordinates).</p></li>
@@ -337,21 +336,21 @@ path &lt;-<span class="st"> &#39;course.dir/S01/data/&#39;</span>
 <img src="fig/fig01.png" alt="Identifying the common extent of several images" />
 <p class="caption">Identifying the common extent of several images</p>
 </div>
-<ol start="24" style="list-style-type: upper-alpha">
+<ol start="7" style="list-style-type: decimal">
 <li>The common extent of the two images is pretty large. In order to reduce the amount of data for the next steps, we should crop the images to our region of interest, a part of the Western Beskids, defined by <code>roi.extent &lt;- c(327945, 380325, 5472105, 5521095)</code></li>
 </ol>
 <hr />
 </div>
 <div id="writing-data" class="section level3">
 <h3>Writing data</h3>
-<ol start="24" style="list-style-type: upper-alpha">
+<ol start="8" style="list-style-type: decimal">
 <li>Write the cropped stacks from X) to your folder using <code>writeRaster()</code>. Use the <code>GTiff</code> format and the <a href="https://www.rdocumentation.org/packages/raster/versions/2.5-8/topics/dataType">appropriate datatype</a>. Why is this important?</li>
 </ol>
 <hr />
 </div>
 <div id="visualizing-data" class="section level3">
 <h3>Visualizing data</h3>
-<ol start="24" style="list-style-type: upper-alpha">
+<ol start="9" style="list-style-type: decimal">
 <li><p>Open the cropped images (Xb) in QGIS. Seek the symbology to create a true-color (red, green, blue) and a false-color representation (e.g., RGB: swIR1, nIR, red) of each image. Be aware that the order of the spectral regions in the electromagnetic spectrum (BGR) is different in your computer screen´s (RGB).</p></li>
 <li><p>Use the <code>plotRGB()</code> function in R to create another false-color visualization of the images.</p></li>
 </ol>
@@ -363,11 +362,11 @@ path &lt;-<span class="st"> &#39;course.dir/S01/data/&#39;</span>
 </div>
 <div id="extracting-spectral-profiles" class="section level3">
 <h3>Extracting spectral profiles</h3>
-<ol start="24" style="list-style-type: upper-alpha">
+<ol start="11" style="list-style-type: decimal">
 <li>Use the <code>extract()</code> function to get spectral profiles from both images. Use the following coordinate:</li>
 </ol>
 <p><code>coordinate &lt;- data.frame('x' = 355623, 'y' = 5486216)</code>.</p>
-<ol start="24" style="list-style-type: upper-alpha">
+<ol start="12" style="list-style-type: decimal">
 <li>Visualize the results from X) in R. Can you create one plot that shows two spectral profiles (one for each image in the stack), while accounting for the band wavelength and acquisition date? Can you guess what type of surface we are looking at?</li>
 </ol>
 <div class="figure">
