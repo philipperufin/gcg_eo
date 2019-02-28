@@ -8,11 +8,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
-<meta name="author" content="Philippe Rufin" />
+<meta name="author" content="MSc Global Change Geography" />
 
-<meta name="date" content="2019-02-27" />
 
-<title>Global Change Geography 2019 - Earth Observation</title>
+<title>Earth Observation</title>
 <!-- Material Design fonts -->
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -95,9 +94,9 @@ $(document).ready(function () {
         <div class="row">
             <div class="col-xs-3">
         <div id="header">
-    <h1 class="title">Global Change Geography 2019 - Earth Observation</h1>
-                <h4 class="author">Philippe Rufin</h4>
-                <h4 class="date">2019-02-27</h4>
+    <h1 class="title">Earth Observation</h1>
+                <h4 class="author">MSc Global Change Geography</h4>
+                <h4 class="date">Summer Term 2019</h4>
         </div>
     </div>
 </div>
@@ -112,7 +111,7 @@ $(document).ready(function () {
         <ul>
         <li><a href="#hello">Hello!</a></li>
         <li><a href="#introducing-r">Introducing R</a></li>
-        <li><a href="#session-01-raster-handling-in-r">Session 01: Raster handling in R</a></li>
+        <li><a href="#session-01-handling-raster-data-in-r">Session 01: Handling raster data in R</a></li>
         <li><a href="#session-02-preprocessing-data-quality-cloud-masking">Session 02: Preprocessing, data quality &amp; cloud masking</a></li>
         <li><a href="#session-03-vegetation-indices-and-data-transforms">Session 03: Vegetation indices and data transforms</a></li>
         <li><a href="#session-04-pixel-based-compositing">Session 04: Pixel-based compositing</a></li>
@@ -144,14 +143,13 @@ $(document).ready(function () {
 <h2>About Earth Observation</h2>
 <p>Earth Observation is an advanced course for students of the Master of Science <a href="https://www.geographie.hu-berlin.de/en/studies/study-programs/master-degree-programs/master-of-science">“Global Change Geography”</a> of Humboldt-Universität zu Berlin, other interested parties are cordially invited to join. In this course, we cover multiple aspects of optical remote sensing by working with multi-sprectral Landsat and Sentinel 2 imagery. The course is fully based on open source software, including R and QGIS.</p>
 <p>As you followed the curriculum of the MSc program, you most likely joined the module “Quantitative Methods for Geographers”, in which you learned using R for statistical problems. Here, we built on your existing knowledge. If you are not enrolled in the MSc program, feel free to look at the <a href="https://github.com/corneliussenf/quantitative_methods">course materials</a>.</p>
-<p>Alternatively, you may want to follow one of the numerous tutorials for R fundamentals (e.g., <a href="https://www.rstudio.com/online-learning/">RStudio</a>, <a href="https://www.datacamp.com/courses/free-introduction-to-r">DataCamp</a>, <a href="http://www.r-tutorial.nl/">UMC Utrecht</a>), or advanced tutorials for geodata processing (e.g., <a href="https://geoscripting-wur.github.io/">Wageningen University</a>, <a href="https://www.earthdatascience.org/">University of Colorado</a>).</p>
+<p>Alternatively, you may want to follow one of the numerous tutorials for R fundamentals (e.g., <a href="https://www.rstudio.com/online-learning/">RStudio</a>, <a href="https://www.datacamp.com/courses/free-introduction-to-r">DataCamp</a>, <a href="http://www.r-tutorial.nl/">UMC Utrecht</a>, <a href="http://adv-r.had.co.nz/">Advanced R by Hadley Wickham</a>), or those specifically for geodata processing (e.g., <a href="https://geoscripting-wur.github.io/">Wageningen University</a>, <a href="https://www.earthdatascience.org/">University of Colorado</a>).</p>
 <hr />
 </div>
 <div id="learning-goals-course-contents" class="section level2">
 <h2>Learning goals &amp; course contents</h2>
-<p>The main goal of this course is to provide you with the necessary knowledge and tools for using optical remote sensing datasets and methods in the geo-scientific context. We want you to enhance your ability of problem-solving, empowering you to perform research independently. To that end, we cover aspects of data acquisition, spatial data handling in R and QGIS, basics of image pre-processing, higher-level processing such as pixel-based compositing and time-series binning.</p>
-<p>We use state of the art methods in image processing and time series analyses of optical satellite imagery. The course covers methods related to data quality, cloud masking, vegetation indices, multi-temporal image analyses, machine learning classification algorithms, area adjusted accuracy assessment, time series analyses, and image compositing.</p>
-<p>We use these methods for mapping of forest types, forest cover changes, agricultural dynamics in the Carpathian ecoregion (Poland), the Southern Brazilian Amazon, and Crete in Greece.</p>
+<p>The main goal of this course is to provide you with the necessary knowledge and tools for using optical remote sensing datasets and methods in the geo-scientific context. We want you to enhance your ability of problem-solving, empowering you to perform research independently. To that end, we cover aspects of data acquisition, spatial data handling in R and QGIS, basics of image pre-processing, higher-level processing such as pixel-based compositing and time-series binning. The course contents are related to our lab´s research foci, both in terms of methods and study regions. You may want to check out our <a href="https://www.geographie.hu-berlin.de/en/professorships/geomatics/publications-en">publications</a>, <a href="https://www.geographie.hu-berlin.de/en/professorships/geomatics/projects">current projects</a>, or have a look at <a href="https://www2.hu-berlin.de/geomultisens/europeanLandCover/euroLandCover.html">this example</a>.</p>
+<p>In the course you will learn about current state-of-the-art methods in image processing and time series analyses of optical satellite imagery. The course covers methods related to data quality, cloud masking, vegetation indices, multi-temporal image analyses, machine learning classification algorithms, area adjusted accuracy assessment, time series analyses, and image compositing. We use these methods for mapping of forest types, forest cover changes, agricultural dynamics in the Carpathian ecoregion (Poland), the Southern Brazilian Amazon, and Crete in Greece.</p>
 <hr />
 </div>
 <div id="course-materials" class="section level2">
@@ -162,41 +160,37 @@ $(document).ready(function () {
 </div>
 <div id="data" class="section level3">
 <h3>Data</h3>
-<p>All data used in the course is openly accessible. Mostly, we´ll be working with Landsat images, which you can access through the USGS Earth Explorer. We provide download links to the datasets for each session. It will be helpful if you organize your data in a course directory on your local machine (MSc students might want to use drive O:/Student_Data/your_name/EO/).</p>
+<p>All data used in the course is openly accessible. Mostly, we´ll be working with Landsat images, which you can access through the USGS Earth Explorer. We provide download links to the datasets for each session. It will be helpful if you organize your data in a course directory on your local machine (MSc students might want to use drive <code>O:/Student_Data/your_name/EO/</code>). We will refer to this folder as <code>course.dir</code> throughout this course. Create subdirectories for each session, e.g. <code>course.dir/S01/</code> and separate data, code and course materials in additional sub-directories (e.g. <code>/data</code>, <code>/code</code>, <code>/docs</code>).</p>
 </div>
 <div id="exercises" class="section level3">
 <h3>Exercises</h3>
-<p>The weekly exercises are defined in the respective session. Each session comprises several tasks that involve scipting in R. Course participants must submit their R script in <a href="http://moodle.hu-berlin.de/">moodle</a> to pass the course. Please structure your scripts as follows:</p>
-<pre><code>#############################################################################
-# MSc Earth Observation Exercise 01
-# [Your Name]
+<p>The weekly exercises are defined in the respective session. Each session comprises several tasks that involve scipting in R. Course participants must submit completed exercises, documented as R scripts, in <a href="http://moodle.hu-berlin.de/">moodle</a> to pass. Weekly submission deadlines are every sunday, 23:59. Please structure your script for every exercise as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">#############################################################################
+<span class="co"># MSc Earth Observation Exercise [Session number]</span>
+<span class="co"># [Your Name]</span>
 #############################################################################
 
-# Load packages, use install.packages(&#39;packagename&#39;) to install if needed
-library(raster)
+<span class="co"># Load packages, use install.packages(&#39;packagename&#39;) to install if needed</span>
+<span class="kw">library</span>(raster)
 
-# Change raster options to store large rasters in temp files on disk
-rasterOptions(maxmemory = 1e6)
+<span class="co"># Change raster options to store large rasters in temp files on disk</span>
+<span class="kw">rasterOptions</span>(<span class="dt">maxmemory =</span> <span class="fl">1e6</span>)
 
-# Define the folder that contains your data...
-data.path &lt;- &#39;O:/Student_Data/your_name/EarthObservation/S01/data/&#39;
-
-#############################################################################
-# 1)    
-#############################################################################
-
-# Code for task 1
-
-...
+<span class="co"># Define the folder that contains your data...</span>
+data.dir &lt;-<span class="st"> &#39;course.dir/S01/data/&#39;</span>
 
 #############################################################################
-# 2)    
+<span class="co"># 1)    </span>
 #############################################################################
 
-# Code for task 2
+<span class="co"># Comments for task 1</span>
 
-...
-</code></pre>
+
+#############################################################################
+<span class="co"># 2)    </span>
+#############################################################################
+
+<span class="co"># ...</span></code></pre></div>
 <hr />
 </div>
 </div>
@@ -205,38 +199,20 @@ data.path &lt;- &#39;O:/Student_Data/your_name/EarthObservation/S01/data/&#39;
 <h1>Introducing R</h1>
 <div id="why-do-we-use-r" class="section level2">
 <h2>Why do we use R?</h2>
-<p>R is a programming language and open source software environment for statistical computing and graphics. The R language is widely used among statisticians and data miners for developing statistical software and data analysis. R was developed by Ross Ihaka and Robert Gentleman at the University of Auckland, New Zealand. The name R originates the first names of the two authors and refers to the programming language S. The project was conceived in 1992, with an initial version released in 1995 and a stable beta version in 2000.</p>
-<p>programming entry point | easy to learn | great support | open source | data wrangling | visualization | works cross-platform | popular in science &amp; industry | job opportunities</p>
+<p>R is a programming language and open source software environment for statistical computing and graphics. The R language is widely used among statisticians and data miners for developing statistical software and data analysis. It was developed by Ross Ihaka and Robert Gentleman at the University of Auckland, New Zealand. The name R originates the first names of the two authors and refers to the programming language S. The project was conceived in 1992, with an initial version released in 1995 and a stable beta version in 2000.</p>
+<p>Learning R has tons of advantages. It is a great starting point for those eager to learn programming. R offers increasingly specialized tools for data wrangling, statistical analyses, and visualization. The CRAN package repository currently features &gt;13,000 packages serving a variety of purposes, e.g. data manipulation (<code>tidyr</code>, <code>dplyr</code>, <code>caret</code>), visualization (<code>ggplot2</code>, <code>ggmap</code>, <code>rasterVis</code>), and geodata handling (<code>raster</code>, <code>rgdal</code>, <code>sp</code>, <code>sf</code>). You will notice that a huge share of figures in scientific publications was produced using R. The R community is huge, and offers great support. R is extremely popular in science &amp; industry, so a proficiency in R opens a wide array of job opportunities. Everything is free and open source.</p>
 <div class="figure">
-<img src="fig/fig00.png" alt="Fig.1: A rising tide for R (Tipman 2015; doi: 10.1038/517109a)" />
-<p class="caption">Fig.1: A rising tide for R (Tipman 2015; doi: 10.1038/517109a)</p>
+<img src="fig/fig00.png" alt="A rising tide for R (Tipman 2015; doi: 10.1038/517109a)" />
+<p class="caption">A rising tide for R (Tipman 2015; doi: 10.1038/517109a)</p>
 </div>
-<p>The CRAN package repository currently features 13,203 packages serving a variety of purposes, e.g.</p>
-<ul>
-<li>data manipulation: <code>tidyr</code>, <code>dplyr</code>, <code>caret</code></li>
-<li>visualization: <code>ggplot2</code>, <code>ggmap</code></li>
-<li>spatial data: <code>raster</code>, <code>rgdal</code>, <code>sp</code>, <code>Rstoolbox</code></li>
-</ul>
-<hr />
-</div>
-<div id="the-raster-package" class="section level2">
-<h2>The <code>raster</code> package</h2>
-<p>It´s great, as it facilitates raster data handling. It allows us to access file characteristics before loading data into memory, facilitates handling of coordinate reference systems and spatial extents. We can use it to perform raster algebra, to combine raster and vector datasets (e.g. ESRI shapefiles), or to convert raster files into matrices, which are compatible with the base functions to access image statistics, develop models, slice data dimensions etc.</p>
-<p>There are a couple of things that the raster package does not provide. Advanced visualization of spatial datasets and manual operations, such collecting training or validation data, are preferably done in a GIS environment (e.g. QGIS). Furthermore, processing large data volumes in R can be quite time-consuming.</p>
-<pre><code>## Install the raster and rgdal packages
-install.package(&#39;raster&#39;)
-install.package(&#39;rgdal&#39;)
-
-## Load the package
-library(raster)</code></pre>
 <hr />
 </div>
 <div id="coding-style" class="section level2">
 <h2>Coding style</h2>
-<p>A short summary of <a href="http://adv-r.had.co.nz/Style.html">Hadley´s style guide</a>:</p>
+<p>A few basic rules apply to coding in R. Here is a short summary of <a href="https://google.github.io/styleguide/Rguide.xml">Google´s style guide</a>:</p>
 <ul>
 <li>Regularly save your progress.</li>
-<li><p>Script names should be meaningful and end in ‘.R’</p></li>
+<li><p>Script names should be meaningful and end in ‘.R’.</p></li>
 <li>Comment (#) your code &amp; separate it into readable chunks.</li>
 <li><p>Try to limit your code to 80 characters per line.</p></li>
 <li>Variable and function names should be lowercase.</li>
@@ -247,20 +223,20 @@ library(raster)</code></pre>
 </ul>
 <p>An example:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">######################################################
-## Creating random data and a correlated response 
-## Philippe Rufin, 2019
+<span class="co"># Creating random data and a correlated response </span>
+<span class="co"># Philippe Rufin, 2019</span>
 
-## Load all required packages
+<span class="co"># Load all required packages</span>
 <span class="kw">library</span>(ggplot2)
 
 <span class="co"># Create random data</span>
 x &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">50</span>, <span class="dv">0</span>, <span class="dv">2</span>)
 
 <span class="co"># Build function to simulate response</span>
-create_response &lt;-<span class="st"> </span><span class="cf">function</span>(x){x <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">50</span>, <span class="dv">0</span>, <span class="fl">0.2</span>)}
+create.response &lt;-<span class="st"> </span><span class="cf">function</span>(x){x <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">50</span>, <span class="dv">0</span>, <span class="fl">0.2</span>)}
 
 <span class="co"># Apply function to random data</span>
-y &lt;-<span class="st"> </span><span class="kw">create_response</span>(x)
+y &lt;-<span class="st"> </span><span class="kw">create.response</span>(x)
 
 <span class="co"># Make a dataframe</span>
 data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">&#39;x&#39;</span> =<span class="st"> </span>x, <span class="st">&#39;y&#39;</span> =<span class="st"> </span>y)
@@ -271,114 +247,132 @@ data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span clas
 <p><img src="index_files/figure-html/style-1.png" width="288" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Investigate correlation in the data</span>
 <span class="kw">cor</span>(data<span class="op">$</span>x, data<span class="op">$</span>y)</code></pre></div>
-<pre><code>[1] 0.9509257</code></pre>
+<pre><code>[1] 0.971865</code></pre>
 <hr />
 </div>
 <div id="help" class="section level2">
 <h2>Help!</h2>
 <p>If you get stuck, there are plenty of things you can do:</p>
 <ul>
-<li>seek the function´s help page (e.g. by highlighting the function and hitting F1)</li>
-<li>ask your colleagues using the moodle forum!</li>
-<li>search your problem or error message</li>
-<li>check forums (e.g. <a href="https://stackoverflow.com/">StackOverflow</a></li>
-<li>package vignette / documentation</li>
+<li>Seek the function´s help page (i.e. highlight the function and hit F1)</li>
+<li>Search your problem or error message</li>
+<li>Ask your colleagues</li>
+<li>Use the moodle forum</li>
+<li>Check forums (e.g., <a href="https://stackoverflow.com/">StackOverflow</a></li>
 </ul>
 <hr />
 </div>
 </div>
-<div id="session-01-raster-handling-in-r" class="section level1">
-<h1>Session 01: Raster handling in R</h1>
+<div id="session-01-handling-raster-data-in-r" class="section level1">
+<h1>Session 01: Handling raster data in R</h1>
 <div id="learning-goals" class="section level2">
 <h2>Learning goals</h2>
 <p>In this session, you will</p>
 <ul>
-<li>download multi-spectral satellite data.</li>
-<li>read &amp; write rastser data.</li>
-<li>crop the spatial extent of rasters.</li>
-<li>extract cell values.</li>
-<li>plot a spectral profile.</li>
+<li>Download multi-spectral satellite data.</li>
+<li>Read &amp; write raster data.</li>
+<li>Crop the spatial extent of images.</li>
+<li>Extract cell values &amp; plot a spectral profile.</li>
 </ul>
+<hr />
+</div>
+<div id="the-raster-package" class="section level2">
+<h2>The <code>raster</code> package</h2>
+<p>It´s great, as it facilitates raster data handling. It allows us to access file characteristics before loading data into memory, facilitates handling of coordinate reference systems and spatial extents. We can use it to perform raster algebra, to combine raster and vector datasets (e.g. ESRI shapefiles), or to convert raster files into matrices, which are compatible with the base functions to access image statistics, develop models, slice data dimensions etc.</p>
+<p>There are a couple of things that the raster package does not provide. Advanced visualization of spatial datasets and manual operations, such collecting training or validation data, are preferably done in a GIS environment (e.g. QGIS). Furthermore, processing large data volumes in R can be quite time-consuming (use Python instead, it´s syntax is similar to R).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Install the raster and rgdal packages</span>
+<span class="kw">install.packages</span>(<span class="st">&#39;raster&#39;</span>)
+<span class="kw">install.packages</span>(<span class="st">&#39;rgdal&#39;</span>)
+
+<span class="co"># Load the package</span>
+<span class="kw">library</span>(raster)</code></pre></div>
 <hr />
 </div>
 <div id="data-acquisition" class="section level2">
 <h2>Data acquisition</h2>
-<p>Let´s download a Landsat image. Visit the <a href="http://earthexplorer.usgs.gov/">USGS Earth Explorer</a> and navigate to Wisła, Poland (lat,lon: 49.6473,18.8677), using the Adress/Place field. Switch to the ‘Data Sets’ tab and select Landsat -&gt; Landsat Collection 1 Level-1. Tick the ‘Landsat 8 OLI/TIRS C1 Level 1’ box and click on ‘Results &gt;&gt;’.</p>
-<p>You´ll get several hundreds of results, so let´s narrow down the search. Switch to the ‘Additional Criteria’ tab. Let´s choose a scene cloud cover of ‘Less than 40%’, the ‘Tier 1’ category and narrow the date range to the year 2015.</p>
-<p>Find the following images and display them in the Earth Explorer interface:</p>
+<p>Let´s get some Landsat data. Visit the <a href="http://earthexplorer.usgs.gov/">USGS Earth Explorer</a> and use the Adress/Place field to navigate to Wisła, Poland (lat,lon: 49.6473,18.8677). Switch to the ‘Data Sets’ tab and select Landsat -&gt; Landsat Collection 1 Level-1. Tick the ‘Landsat 8 OLI/TIRS C1 Level 1’ box and click on ‘Results &gt;&gt;’.</p>
+<p>You´ll get several hundreds of results, so let´s narrow down the search. Switch to the ‘Additional Criteria’ tab. Let´s choose a scene cloud cover of ‘Less than 40%’, the ‘Tier 1’ category and narrow the date range to February 2014 until August 2014.</p>
+<p>Find the following images:</p>
 <ul>
-<li>LC08_L1TP_188026_20150423_20170409_01_T1</li>
-<li>LC08_L1TP_189025_20150820_20170406_01_T1</li>
-<li>LC08_L1TP_188026_20151101_20170402_01_T1</li>
+<li>LC08_L1TP_189025_20140716_20170421_01_T1</li>
+<li>LC08_L1TP_189025_20140310_20170425_01_T1</li>
 </ul>
-<p>For downloading the images, you will need an EarthExplorer account. Register and download the .tar.gz files. Unpack them to a designated folder for this session. If you prefer not to register, you can <a href="https://box.hu-berlin.de/f/5248da1584054eb6ba51/?dl=1">download the files from our repository</a>.</p>
-<pre><code>## Define a path you want to store this session´s data in
-path &lt;- &#39;O:/Student_Data/your_name/EO/S01/data/&#39;
+<p>Visualize the images in the Earth Explorer interface by clicking on the small image icon. For downloading the data, you will need an EarthExplorer account. If you prefer not to register, you can <a href="https://box.hu-berlin.de/f/5248da1584054eb6ba51/?dl=1">download the files from our repository</a>. Otherwise you may register and download the .tar.gz files. Unpack them to your session folder.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define a path you want to store this session´s data in</span>
+path &lt;-<span class="st"> &#39;course.dir/S01/data/&#39;</span>
 
-## Create data directory in your working directory
-dir.create(path, showWarnings = TRUE)
+<span class="co"># Create data directory in your working directory</span>
+<span class="kw">dir.create</span>(path, <span class="dt">showWarnings =</span> <span class="ot">TRUE</span>, <span class="dt">recursive =</span> <span class="ot">TRUE</span>)
 
-## Download the files for this session
-if (!file.exists(&#39;paste0(path,gcg_eo_s01.zip)) {
-  download.file(&#39;https://box.hu-berlin.de/f/5248da1584054eb6ba51/?dl=1&#39;, dest = paste0(path,&#39;gcg_eo_s01.zip&#39;)
-  unzip(paste0(path,&#39;gcg_eo_s01.zip&#39;, exdir=path)
-}</code></pre>
+<span class="co"># Download the files for this session</span>
+<span class="cf">if</span> (<span class="op">!</span><span class="kw">file.exists</span>(<span class="kw">paste0</span>(path,<span class="st">&#39;gcg_eo_s01.zip&#39;</span>))) {
+                 <span class="kw">download.file</span>(<span class="st">&#39;https://box.hu-berlin.de/f/5248da1584054eb6ba51/?dl=1&#39;</span>, <span class="dt">dest =</span> <span class="kw">paste0</span>(path,<span class="st">&#39;gcg_eo_s01.zip&#39;</span>))
+                 <span class="kw">unzip</span>(<span class="kw">paste0</span>(path,<span class="st">&#39;gcg_eo_s01.zip&#39;</span>), <span class="dt">exdir=</span>path)
+}</code></pre></div>
 <hr />
 <div id="reading-data" class="section level3">
 <h3>Reading data</h3>
-<ol start="24" style="list-style-type: upper-alpha">
-<li>Visit the folder containing the unpacked Landsat image. As you can see, the Landsat images we provided come as single-band files and should be stacked for further analyses. For stacking, all input files must have a matching extent and the identical projection. Today, you will make use of R´s raster package classes and functions which are well described in the package documentation. Get acquainted with the following classes / functions and what they are useful for:</li>
-</ol>
-<p><code>raster()</code>, <code>stack()</code> ,<code>extent()</code>, <code>crop()</code>, <code>extract()</code>, <code>CRS()</code>, <code>projectRaster()</code>, <code>plotRGB()</code>, <code>writeRaster()</code></p>
-<ol start="24" style="list-style-type: upper-alpha">
-<li>Create stacks for each of the Landsat 8 images. Please include only the following bands: blue, green, red, near infrared, shortwave infrared 1, shortwave infrared 2 (in this order). Check the list of <a href="https://landsat.usgs.gov/what-are-band-designations-landsat-satellites/">Landsat spectral bands</a> for a recap.</li>
+<ol style="list-style-type: decimal">
+<li><p>Today, you will make use of R´s raster package classes and functions which are well described in the package documentation. Get acquainted with the following classes and functions and find out what they are useful for: <code>raster()</code>, <code>stack()</code> ,<code>extent()</code>, <code>crop()</code>, <code>extract()</code>, <code>CRS()</code>, <code>projectRaster()</code>, <code>plotRGB()</code>, <code>writeRaster()</code></p></li>
+<li><p>Visit the folder containing the unpacked Landsat image. Did you take a close look at the Landsat file naming convention? Practically, it provides some basic meta-information. For instance, <code>LC08_L1TP_189025_20140310_20170425_01_T1</code> is a sequence of information on the sensor, processing level, WRS path and row, acquisition date, processing date, collection, and collection tier, separated by ’_’.</p></li>
+<li><p>As you can see, the Landsat images are delivered as single-band files. The single bands should be stacked for further analyses. For stacking, all input files must have matching extents and the identical projection. Create a stack for each of the two Landsat 8 images.</p></li>
 </ol>
 <div class="figure">
-<img src="fig/ls_bands.jpg" alt="Band designations for Landsat satellites" />
+<img src="fig/ls_bands.jpg" alt="Band designations for Landsat satellites" style="width:70.0%" />
 <p class="caption">Band designations for Landsat satellites</p>
 </div>
-<p>Try to create the stacks with a minimum amount of code as possible! Consider using helper functions such as <code>paste0()</code>, <code>dir()</code> or <code>list.files()</code>.</p>
+<p>Important: Please include only the following bands: blue, green, red, near infrared, shortwave infrared 1, shortwave infrared 2 (in this order). Check the list of <a href="https://landsat.usgs.gov/what-are-band-designations-landsat-satellites/">Landsat spectral bands</a> for a recap. Always keep the band designations in mind, as this can cause confusion, e.g. when combining Landsat 5 and Landsat 8 data.</p>
+<p>Try to create the two stacks with a minimum amount of code as possible! Consider using helper functions such as <code>paste0()</code>, <code>dir()</code> or <code>list.files()</code>.</p>
 <hr />
 </div>
 <div id="manipulating-data" class="section level3">
 <h3>Manipulating data</h3>
-<ol start="24" style="list-style-type: upper-alpha">
-<li>Check the extent of the images. You will notice that they vary from each other. Find an efficient way to identify the common extent (xmin, xmax, ymin, ymax in projected coordinates) of all three images.</li>
+<ol start="4" style="list-style-type: decimal">
+<li><p>Investigate the stack. In which projection is the data delivered?</p></li>
+<li><p>Compare the extent of the two images. You will notice that they vary. Trying to stack images of different extent will cause an error message claiming:</p></li>
+<li><p>To stack both images, we need to crop (or clip, or cut) the images to their common extent. Find an efficient way to identify the common extent of the images, defined as <code>common.extent &lt;- c(xmin, xmax, ymin, ymax)</code> (in projected coordinates).</p></li>
 </ol>
 <div class="figure">
-<img src="fig/fig01.png" alt="Fig.1: Common extent of three images" />
-<p class="caption">Fig.1: Common extent of three images</p>
+<img src="fig/fig01.png" alt="Identifying the common extent of several images" />
+<p class="caption">Identifying the common extent of several images</p>
 </div>
-<ol start="24" style="list-style-type: upper-alpha">
-<li>Crop each of the image stacks</li>
-</ol>
-<ol style="list-style-type: lower-alpha">
-<li>…to the common extent and create a multi-temporal stack of the three images. Please order them by acquisition day of year.</li>
-<li>…to the following <code>custom_extent &lt;- c(250000, 375000, 5589000, 5653000)</code></li>
+<ol start="7" style="list-style-type: decimal">
+<li>The common extent of the two images is pretty large. In order to reduce the amount of data for the next steps, we should crop the images to our region of interest, a part of the Western Beskids, defined by <code>roi.extent &lt;- c(327945, 380325, 5472105, 5521095)</code></li>
 </ol>
 <hr />
 </div>
 <div id="writing-data" class="section level3">
 <h3>Writing data</h3>
-<ol start="24" style="list-style-type: upper-alpha">
-<li>Write the cropped stacks from Xa) and Xb) to your folder using <code>writeRaster()</code>. Use the <code>ENVI</code> format and the appropriate <code>datatype</code>.</li>
-</ol>
-</div>
-<div id="visualizing-data" class="section level3">
-<h3>Visualizing data</h3>
-<ol start="24" style="list-style-type: upper-alpha">
-<li>Open the cropped images (Xb) in QGIS. Seek the symbology to create a true-color (red, green, blue) and a false-color representation (swIR1, nIR, red) of each image. Be aware that the order of the spectral regions in the electromagnetic spectrum (BGR) is different in your computer screen´s (RGB).</li>
+<ol start="8" style="list-style-type: decimal">
+<li>Write the cropped stacks from X) to your folder using <code>writeRaster()</code>. Use the <code>GTiff</code> format and the <a href="https://www.rdocumentation.org/packages/raster/versions/2.5-8/topics/dataType">appropriate datatype</a>. Why is this important?</li>
 </ol>
 <hr />
 </div>
-<div id="voluntary-section" class="section level3">
-<h3>Voluntary section</h3>
-<p>You managed to complete the assignment until this point? Great! In case you want to keep on going, try to complete the following voluntary tasks:</p>
-<ol start="24" style="list-style-type: upper-alpha">
-<li><p>Use the <code>plotRGB()</code> function in R to create a false-color visualization (e.g. swIR1, nIR, red) of each the image stacks you generated in Xb).</p></li>
-<li><p>Extract a spectral profile at coordinate x = 343225; y = 5605500. You can either use <code>extract()</code> or <code>cellFromXY()</code> to get the cell values using indexing.</p></li>
-<li><p>Visualize the results from X) in R. Can you create one plot that represents a total of three spectral profiles (one for each image in the stack) accounting for the band wavelength and acquisition date? See an example below…</p></li>
+<div id="visualizing-data" class="section level3">
+<h3>Visualizing data</h3>
+<ol start="9" style="list-style-type: decimal">
+<li><p>Open the cropped images (Xb) in QGIS. Seek the symbology to create a true-color (red, green, blue) and a false-color representation (e.g., RGB: swIR1, nIR, red) of each image. Be aware that the order of the spectral regions in the electromagnetic spectrum (BGR) is different in your computer screen´s (RGB).</p></li>
+<li><p>Use the <code>plotRGB()</code> function in R to create another false-color visualization of the images.</p></li>
 </ol>
+<div class="figure">
+<img src="fig/s01_falsecolor_432.png" alt="False color visualization (RGB: nIR, red, green)" />
+<p class="caption">False color visualization (RGB: nIR, red, green)</p>
+</div>
+<hr />
+</div>
+<div id="extracting-spectral-profiles" class="section level3">
+<h3>Extracting spectral profiles</h3>
+<ol start="11" style="list-style-type: decimal">
+<li>Use the <code>extract()</code> function to get spectral profiles from both images. Use the following coordinate:</li>
+</ol>
+<p><code>coordinate &lt;- data.frame('x' = 355623, 'y' = 5486216)</code>.</p>
+<ol start="12" style="list-style-type: decimal">
+<li>Visualize the results from X) in R. Can you create one plot that shows two spectral profiles (one for each image in the stack), while accounting for the band wavelength and acquisition date? Can you guess what type of surface we are looking at?</li>
+</ol>
+<div class="figure">
+<img src="fig/s01_spectra.png" alt="Spectral profiles for two observation dates" style="width:60.0%" />
+<p class="caption">Spectral profiles for two observation dates</p>
+</div>
 <hr />
 </div>
 </div>
@@ -386,7 +380,7 @@ if (!file.exists(&#39;paste0(path,gcg_eo_s01.zip)) {
 <h2>Reading materials</h2>
 <p>In the next session, we would like to discuss the following paper:</p>
 <p><a href="https://doi.org/10.1016/j.rse.2011.10.028">Zhu, Z., &amp; Woodcock, C.E. (2012). Object-based cloud and cloud shadow detection in Landsat imagery. Remote Sensing of Environment, 118, 83–94.</a></p>
-<p>This reading covers the basic aspects of the Fmask cloud and cloud shadow detection algorithm. It has been widely used for cloud detection on Landsat TM and ETM+ data. It was recently enhanced for the use with Landsat OLI and Sentinel 2 data (documented in <a href="https://doi.org/10.1016/j.rse.2014.12.014">Zhu et al. 2015</a>).</p>
+<p>This is a rather technical reading, which introduces the Fmask algorithm for automated cloud and cloud shadow detection. It has been widely used for cloud detection on Landsat TM and ETM+ data, and was enhanced for the use with Landsat OLI and Sentinel 2 data (documented in <a href="https://doi.org/10.1016/j.rse.2014.12.014">Zhu et al. 2015</a>).</p>
 <p>While reading try to find answers to the following questions:</p>
 <ul>
 <li>What is the general architecture of the algorithm?</li>
