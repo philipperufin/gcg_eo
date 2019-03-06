@@ -10,6 +10,7 @@
 
 <meta name="author" content="MSc Global Change Geography" />
 
+
 <title>Earth Observation</title>
 <!-- Material Design fonts -->
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
@@ -96,7 +97,6 @@ $(document).ready(function () {
     <h1 class="title">Earth Observation</h1>
                 <h4 class="author">MSc Global Change Geography</h4>
                 <h4 class="date">Summer 2019</h4>
-
         </div>
     </div>
 </div>
@@ -248,7 +248,7 @@ data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span clas
 <p><img src="index_files/figure-html/style-1.png" width="288" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Investigate correlation in the data</span>
 <span class="kw">cor</span>(data<span class="op">$</span>x, data<span class="op">$</span>y)</code></pre></div>
-<pre><code>[1] 0.971865</code></pre>
+<pre><code>[1] 0.9336196</code></pre>
 <hr />
 </div>
 <div id="help" class="section level2">
@@ -520,13 +520,13 @@ deg2rad &lt;-<span class="st"> </span><span class="cf">function</span>(deg){ (de
 <li>Produce cloud / cloud shadow masks of differing confidence levels</li>
 <li>Masking Landsat images</li>
 </ul>
+<hr />
+</div>
+<div id="landsat-data-quality" class="section level2">
+<h2>Landsat data quality</h2>
 <p>Which issues affect data quality of optical satellite images?</p>
 <p>next part of the exercise aims at a pixel-level description of image quality no need for dropping entire images, e.g. in case of high cloudiness, we can make use of parts of images, e.g. small unclouded regions BQA: Landsat quality band. what is it? definition: unsigned integers? bit-packed?</p>
 <p>we get all that from image metadata… where do we find the metadata?</p>
-<hr />
-</div>
-<div id="landsat-quality-bands" class="section level2">
-<h2>Landsat quality bands</h2>
 <p>How do we know if a pixel is affected by any of these?</p>
 <div class="figure">
 <img src="fig/s02_qa_band.png" alt="False-color representation of a cloudy Landsat Level 1 image (left) and a grey-scale visualization of the Landsat QA band (right)" style="width:60.0%" />
