@@ -32,6 +32,7 @@ opts_knit$set(width=75)
 ```
 
 # Hello!
+Bye
 
 ![](fig/header.png)
 
