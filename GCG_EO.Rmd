@@ -32,7 +32,6 @@ opts_knit$set(width=75)
 ```
 
 # Hello!
-Bye
 
 ![](fig/header.png)
 
@@ -617,6 +616,8 @@ b)	high and medium confidence clouds, high and medium confidence cloud shadows a
 # Session 03: Vegetation indices and data transforms
 
 ## Learning goals
+
+## Tasseled Cap
 
 ## Reading materials.
 
