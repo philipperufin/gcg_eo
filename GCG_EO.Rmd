@@ -491,7 +491,9 @@ How do we know if a pixel is affected by any of these?
 
 Remember the binary numeral system (0 / FALSE or 1 / TRUE)?
 
-![Binary system](fig/s02_binary_system.gif){width=100%}
+<!--![Binary system](fig/s02_binary_system.gif){width=100%}-->
+
+![The binary number system. Source: Wikipedia](https://upload.wikimedia.org/wikipedia/commons/7/75/Binary_counter.gif){width=100%}
 
 binary system represents numbers through 0/1 codes
 0 means „FALSE“ or „NO“ and 1 equals „TRUE“ or „YES“
@@ -613,9 +615,164 @@ b)	high and medium confidence clouds, high and medium confidence cloud shadows a
 
 ------
 
+<!-- ################################## SESSION 02 ############################################## -->
+
 # Session 03: Vegetation indices and data transforms
 
+------
+
 ## Learning goals
+
+- Gather training data for a broad forest type classification 
+- Learn how to calculate NDVI, EVI and Tasseled Cap components
+- Understand how forest types differ spectrally 
+
+------
+
+## Background
+
+### Training data
+
+Collecting training is an essential step on your way to a classified map. The training pixels will be considered representative for the classes you want to map, as classification algorithms determine class labels for unknown pixels based on their similarity to the training dataset. Collecting training data is relatively time consuming, regardless if you are collecting in the field or digitally. Small conceptual mistakes may require a revision of your training dataset. As a consequence, training data collection should be well prepared. This includes:
+
+- gathering as much reference information as possible. 
+- a precise and robust definition of your target classes based on the study region characteristics. 
+- good knowledge of the target classes, and their spectral (temporal) characteristics in the study region.
+- finding spectrally similar classes and identify potential ways to prevent confusion. 
+
+In practice, it´s important to know your training data well. Are the classes separable with the data at hand? Are essential class characteristics well represented? To learn more, it is always wise to explore the spectral characteristics of your training data points.
+
+-----
+
+### Vegetation indices and data transforms
+
+Vegetation produces a distinct spectral reflectance pattern due to its leaf and cell structure, its physiognomy, and complex stand structure. Photosynthetically inactive plant  parts differ considerably from active ones across different wavelength regions. The reflectance of photosynthetically active vegetation is characterized by different factors in the VIS, nIR and SWIR:
+
+- VIS – leaf pigments - In the visible bands the reflectance is relatively low as the majority of light is absorbed by the leaf pigments. Chlorophyll strongly absorbs energy in the blue and red wavelengths and reflects more green wavelengths. This is why healthy vegetation appears green.
+
+- nIR – cell structure - For healthy vegetation, the reflectance is much higher in the near infrared (NIR) region than in the visible region due to the cellular structure of the leaves, specifically the spongy mesophyll. Therefore healthy vegetation can be easily identified by the high NIR reflectance and generally low visible reflectance. 
+
+- SWIR – water content - The reflectance in the shortwave infrared wavelengths is related to the water content of the vegetation and its structure. Water has strong absorption bands around 1.45, 1.95 and 2.50 µm . Outside these absorption bands in the SWIR region, reflectance of leaves generally increases when water content in the leaf decreases. 
+
+![Spectral reflectance curce of vegetation. Source: gsp.humboldt.edu](fig/s03_vegetation_spectrum.png){width=80%}
+
+Vegetation indices make use of this particular reflectance signal. Most commonly known are the Normalized Difference Vegetation Index (NDVI) and the Enhanced Vegetation Index (EVI). 
+
+-----
+
+Normalized Difference Vegetation Index (NDVI)
+
+$NDVI = (nIR – red) / (nIR + red)$
+
+is not a physical measure, but a proxy integrating different factors:
+Land use / cover, incl. the amount of background signal visible in a pixel
+photosynthetic activity, vitality and overall vegetation condition
+Vegetation density and structure, e.g. represented by the LAI
+
+-----
+
+Enhanced Vegetation Index (EVI)
+
+$EVI = 2.5 * ((nIR – red) / (nIR + 6 * red – 7.5 * blue + 1))$
+
+often better correlation with biomass than NDVI, specifically in vegetation canopies with high LAI values (less saturation effects)
+Includes a correction for soil background effects (L) to also improve sensitivity for low density vegetation canopies
+Less sensitive to high aerosol loads, since the additional coefficients steer the aerosol resistance term, where the visible blue reflectance is used to correct for scattering that also affects the visible red.
+
+Indices enhance differences in the reflectance to highlight certain features. Vegetation indices have the advantage of being simple, but the disadvantage of disregarding parts of the spectral feature space. Linear transformations can help to overcome this limitation. 
+
+-----
+
+Tasseled Cap Transformation (TC)
+
+Linear combination of the Landsat spectral bands. Transformations of feature space provide a different view on existing data without reducing overall variance
+statistical approaches: based on image statistics alone (e.g. principal component analysis)
+thematic approaches: based on certain features of interest (e.g. Tasseled Cap)
+
+Kauth and Thomas (1978) therefore developed the so called „Tasseled Cap Transformation“ for analyzing agricultural lands with Landsat-MSS data. The tasseled cap transformation was presented in 1976 by R.J. Kauth and G.S. Thomas of Environmental Research Institute of Michigan in an article entitled "The tasseled Cap -- A Graphic Description of the Spectral-Temporal Development of Agricultural Crops as Seen by Landsat."  Crops phenological trajectories through red ~ near infrared feature space look like a „tasseled cap“. 
+
+![Crop phenological trajectories in near infrared ~ red featurespace. Band numbers relate to Landsat MSS bands, where band 3 (6) is the near infrared and band 2 (5) is the red band.](fig/s03_tc_concept.png){width=30%}
+
+We can nearly observe these trajectories in our study region by producing near infrared ~ red scatterplots for different points in time. 
+
+![Scatterplot of 10,000 pixels in Carpathian study region in near infrared ~ red featurespace at different points in time.](fig/s03_tc_seq.png){width=70%}
+
+
+Resulting from the TC, we commonly analyze three components called brightness, greenness, and wetness. Click on the links to view a eight-day time series for the year 2015 for each Tasseled Cap component in an agricultural region of Turkey. 
+
+- [Brightness](https://box.hu-berlin.de/seafhttp/files/f71d65d6-4629-41ea-8487-2815e6d74a9e/video.gif): an axis alongside the line of soils, indicating soil brightnes.
+- [Greenness](https://box.hu-berlin.de/seafhttp/files/13d7e33c-6395-4414-87ed-2f673a4ae972/video.gif): axis is perpendicular to the line of soils, emphasizes near infrared and thus vegetation state.
+- [Wetness](https://box.hu-berlin.de/seafhttp/files/de61835c-89ce-4564-9660-c85e48f2bdf1/video.gif): emphasizes shortwave infrared and is thus related to water content.
+
+------
+
+## Exercise
+
+This exercise has two larger aims. First, you will learn to collect training data for a broad forest type classification. We provide detailed forestry data to find representative sample pixels in QGIS. We will use the data you generate here for classification in the next session. Second, you will learn how the broad forest types appear spectrally in images acquired in different parts of the growing season.
+We provide the following datasets at O:/…/S03/data/… 
+
+…sr_data/: Four cloud-masked image chips from Landsat 8 (surface reflectance): 
+
+-	LC081890252014031001T1-SC20170927101754 (10 March 2014)
+-	LC081890252014071601T1-SC20171024094741 (16 July 2014)
+-	LC081890252015082001T1-SC20170927120710 (20 August 2015)
+-	LC081890252014110501T1-SC20170927102137 (05 November 2014)
+
+…vector/: A shapefile and a *.kmz file for GoogleEarth, which will help you to accurately delineate the Landsat pixel locations and extents for training data collection. 
+
+…BDL/: Forestry data collected in 2015 which is publicly available here. We prepared a shapefile for the use in this session. 
+
+It contains the following attributes: 
+
+| Attribute field | Definition                            | Class                   |
+| -------------   |-------------                          | -----                   |
+|species_en       |Dominant genus in each stand           |Ash, Beech, Fir, Spruce… |
+|part_cd          |Share of this genus within the stand   |0 – 100 (in %)           |
+|spec_age         |Average age of the trees in this stand |Age in years             |
+
+
+1)	Visualize and arrange all datasets in QGIS (LTR). Consider the following steps: 
+a.	Find a good false-color representation of the Landsat bands to highlight vegetation. 
+b.	Visualize the forestry data by choosing distinct colors for the different tree genera (species_en). Which genera are dominant in the study area?
+
+2)	Generate a new point shapefile for storing the training data you will collect in the next task. It should containt the attribute fields ‘classID’ and ‘confID’ (both of type integer). Make sure it has the same spatial reference system as the Landsat data.
+
+3)	Switch into the editing mode to locate training points and assign the corresponding class and confidence number. Please collect at least 15 pixels per class and assign them the class numbers and confidence numbers given below. 
+ 
+|Class name	      | classID	    | Confidence level | confID       |
+|-------------    |-------------|-------------     |------------- |
+|Deciduous forest	| 1	          |Very certain      |1             |
+|Mixed forest	    | 2	          |Some uncertainties|2             |
+|Coniferous forest|	3           |Very uncertain    |3             |
+|Non-forest       |	4           |                  |              |		
+
+Use the multi-temporal Landsat imagery, the forestry polygons and very high resolution imagery in GoogleEarth to guide your interpretation. You can link QGIS and GoogleEarth using the GEarthView plugin. The Landsat grid shapefile and kmz will help you to identify and label training locations for the four classes. 
+
+Regularly save the collected points and store the final shapefile with 60+ points in your personal folder on drive O:/. Ask us for help if you´re not familiar with the QGIS environment!
+
+4)	Load your shape in R using readOGR(). Extract the spectral values at your point locations from the March image in R using the extract() function. Specify sp = TRUE to append the spectral values to the point shapefile. 
+
+Make sure the result of this task is an object of type data.frame named sr.march. Your sample points should be represented as rows and the measured variables as columns (i.e. point id, classID, confID, and 6 spectral bands).
+
+5)	Create boxplots of your surface reflectance measurements for all spectral bands, grouped according to the class number. We provided the necessary code in the code template. Make sure you understand what the melt() function is doing. Feel free to adjust the plot layout.
+
+6)	For the extracted values of 4), calculate the NDVI and EVI. 
+
+Next, perform the tasseled cap transformation of the extracted values. You find the coefficients derived by Crist et al. (1985) in the code template. Consider matrix multiplication, using %*%.
+
+7)	Create boxplots of the vegetation indices and TC components calculated in 6) similar to 5). 
+
+Well done! If you want to keep on going, try to solve the following exercises as well…
+
+8)	Explore the spectral bands and vegetation indices for the other Landsat images by repeating task 4) to 7) using the other input images. 
+
+9)	Identify up to 20 spectral measurements (meaning a combination of acquisition date and spectral band or vegetation index or TC component) which shows differences between all or some of the four classes. Using these insights, create a rule set for forest type discrimination based on 3-5 user-defined spectral thresholds per class. A simple example: ‘non-forest if August NDVI < 0.3’.
+
+10)	Create a forest type map based on the thresholds of 9). You can do this by expressing your thresholds as logical statements and use indexing to assign a class value to each pixel. 
+
+Please submit a .zip file including your training data shapefile and R-script 
+in moodle before Monday. 
+
 
 ## Reading materials.
 
