@@ -773,7 +773,6 @@ Well done! If you want to keep on going, try to solve the following exercises as
 Please submit a .zip file including your training data shapefile and R-script 
 in moodle before Monday. 
 
-
 ## Reading materials.
 
 ------
