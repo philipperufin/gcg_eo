@@ -615,9 +615,9 @@ b)	high and medium confidence clouds, high and medium confidence cloud shadows a
 
 ------
 
-<!-- ################################## SESSION 02 ############################################## -->
+<!-- ################################## SESSION 03 ############################################## -->
 
-# Session 03: Vegetation indices and data transforms
+# Session 03: Training data collection
 
 ------
 
@@ -631,80 +631,27 @@ b)	high and medium confidence clouds, high and medium confidence cloud shadows a
 
 ## Background
 
-### Training data
+Collecting training is an essential step on your way to a classified map. The training pixels will be considered representative for the classes you want to map, as classification algorithms determine class labels for unknown pixels based on their similarity to the training dataset. 
 
-Collecting training is an essential step on your way to a classified map. The training pixels will be considered representative for the classes you want to map, as classification algorithms determine class labels for unknown pixels based on their similarity to the training dataset. Collecting training data is relatively time consuming, regardless if you are collecting in the field or digitally. Small conceptual mistakes may require a revision of your training dataset. As a consequence, training data collection should be well prepared. This includes:
+![Training points for forest type classification and resulting map output](fig/s03_training.PNG){width=100%}
 
-- gathering as much reference information as possible. 
-- a precise and robust definition of your target classes based on the study region characteristics. 
-- good knowledge of the target classes, and their spectral (temporal) characteristics in the study region.
-- finding spectrally similar classes and identify potential ways to prevent confusion. 
+Collecting training data is time consuming, regardless if you are collecting in the field or digitally. Small conceptual mistakes may require a revision of your training dataset. As a consequence, training data collection should be well prepared. Consider the following points.
 
-In practice, it´s important to know your training data well. Are the classes separable with the data at hand? Are essential class characteristics well represented? To learn more, it is always wise to explore the spectral characteristics of your training data points.
+- A precise and robust definition of your target classes based on the study region characteristics is key. Targeting a high thematic detail is beneficial, but spectral(-temporal) similarities between classes might pose limitations to a robust distinction of classes, such as tree species or crop types. In such cases, it is advised to think about a hierarchical structure to aggregate similar classes into higher level classes, such as forest types, or annual / perennial croplands. 
 
------
+- Gathering as much reference information as possible. Can we find additional datasets that guide our interpretation? Is any very high resolution (VHR) imagery available? GoogleEarth is a valuable source of  VHR imagery, but it is critical to account for the exact acquisition date.
 
-### Vegetation indices and data transforms
+- Good knowledge of the target classes, and their spectral (temporal) characteristics in the study region is beneficial. We should consider spectrally similar classes and identify potential ways to prevent confusion, e.g., by aggregating those classes or identifying spectral features  which help to separate them better. 
 
-Vegetation produces a distinct spectral reflectance pattern due to its leaf and cell structure, its physiognomy, and complex stand structure. Photosynthetically inactive plant  parts differ considerably from active ones across different wavelength regions. The reflectance of photosynthetically active vegetation is characterized by different factors in the VIS, nIR and SWIR:
+- A purely random point sampling is not neccessarily the best option (different from collecting independent validation data), as we might want to train small classes that are hardly captured by a random sample. Manual selection of training points is thus advised. However, the training data should be well distributed across the study region to capture regional biophysical variability, such as different soil types, weather patterns, or topography.
 
-- VIS – leaf pigments - In the visible bands the reflectance is relatively low as the majority of light is absorbed by the leaf pigments. Chlorophyll strongly absorbs energy in the blue and red wavelengths and reflects more green wavelengths. This is why healthy vegetation appears green.
+![Spatial distribution of six training datasets](fig/s03_train_dist.PNG)
 
-- nIR – cell structure - For healthy vegetation, the reflectance is much higher in the near infrared (NIR) region than in the visible region due to the cellular structure of the leaves, specifically the spongy mesophyll. Therefore healthy vegetation can be easily identified by the high NIR reflectance and generally low visible reflectance. 
+- The classification algorithm of your choice might have specific requirements towards the training data, e.g., concerning the number of samples, their distribution in the spectral featurespace, or their purity (pure vs. mixed pixel). We discuss these aspects later in the course.
 
-- SWIR – water content - The reflectance in the shortwave infrared wavelengths is related to the water content of the vegetation and its structure. Water has strong absorption bands around 1.45, 1.95 and 2.50 µm . Outside these absorption bands in the SWIR region, reflectance of leaves generally increases when water content in the leaf decreases. 
-
-![Spectral reflectance curce of vegetation. Source: gsp.humboldt.edu](fig/s03_vegetation_spectrum.png){width=80%}
-
-Vegetation indices make use of this particular reflectance signal. Most commonly known are the Normalized Difference Vegetation Index (NDVI) and the Enhanced Vegetation Index (EVI). 
+- In practice, it´s important to know your training data well. Are the classes separable with the data at hand? Are essential class characteristics well represented? Are there any outliers? To learn more, it is always wise to explore the spectral characteristics of your training data points. We can do this through investigating the spectral reflectances at our training data locations (e.g., through histograms / boxplots) and comparing them between classes.
 
 -----
-
-Normalized Difference Vegetation Index (NDVI)
-
-$NDVI = (nIR – red) / (nIR + red)$
-
-is not a physical measure, but a proxy integrating different factors:
-Land use / cover, incl. the amount of background signal visible in a pixel
-photosynthetic activity, vitality and overall vegetation condition
-Vegetation density and structure, e.g. represented by the LAI
-
------
-
-Enhanced Vegetation Index (EVI)
-
-$EVI = 2.5 * ((nIR – red) / (nIR + 6 * red – 7.5 * blue + 1))$
-
-often better correlation with biomass than NDVI, specifically in vegetation canopies with high LAI values (less saturation effects)
-Includes a correction for soil background effects (L) to also improve sensitivity for low density vegetation canopies
-Less sensitive to high aerosol loads, since the additional coefficients steer the aerosol resistance term, where the visible blue reflectance is used to correct for scattering that also affects the visible red.
-
-Indices enhance differences in the reflectance to highlight certain features. Vegetation indices have the advantage of being simple, but the disadvantage of disregarding parts of the spectral feature space. Linear transformations can help to overcome this limitation. 
-
------
-
-Tasseled Cap Transformation (TC)
-
-Linear combination of the Landsat spectral bands. Transformations of feature space provide a different view on existing data without reducing overall variance
-statistical approaches: based on image statistics alone (e.g. principal component analysis)
-thematic approaches: based on certain features of interest (e.g. Tasseled Cap)
-
-Kauth and Thomas (1978) therefore developed the so called „Tasseled Cap Transformation“ for analyzing agricultural lands with Landsat-MSS data. The tasseled cap transformation was presented in 1976 by R.J. Kauth and G.S. Thomas of Environmental Research Institute of Michigan in an article entitled "The tasseled Cap -- A Graphic Description of the Spectral-Temporal Development of Agricultural Crops as Seen by Landsat."  Crops phenological trajectories through red ~ near infrared feature space look like a „tasseled cap“. 
-
-![Crop phenological trajectories in near infrared ~ red featurespace. Band numbers relate to Landsat MSS bands, where band 3 (6) is the near infrared and band 2 (5) is the red band.](fig/s03_tc_concept.png){width=30%}
-
-We can nearly observe these trajectories in our study region by producing near infrared ~ red scatterplots for different points in time. 
-
-![Scatterplot of 10,000 pixels in Carpathian study region in near infrared ~ red featurespace at different points in time.](fig/s03_tc_seq.png){width=70%}
-
-
-Resulting from the TC, we commonly analyze three components called brightness, greenness, and wetness. Click on the links to view a eight-day time series for the year 2015 for each Tasseled Cap component in an agricultural region of Turkey. 
-
-- [Brightness](https://box.hu-berlin.de/seafhttp/files/f71d65d6-4629-41ea-8487-2815e6d74a9e/video.gif): an axis alongside the line of soils, indicating soil brightnes.
-- [Greenness](https://box.hu-berlin.de/seafhttp/files/13d7e33c-6395-4414-87ed-2f673a4ae972/video.gif): axis is perpendicular to the line of soils, emphasizes near infrared and thus vegetation state.
-- [Wetness](https://box.hu-berlin.de/seafhttp/files/de61835c-89ce-4564-9660-c85e48f2bdf1/video.gif): emphasizes shortwave infrared and is thus related to water content.
-
-------
 
 ## Exercise
 
@@ -750,25 +697,118 @@ Use the multi-temporal Landsat imagery, the forestry polygons and very high reso
 
 Regularly save the collected points and store the final shapefile with 60+ points in your personal folder on drive O:/. Ask us for help if you´re not familiar with the QGIS environment!
 
-4)	Load your shape in R using readOGR(). Extract the spectral values at your point locations from the March image in R using the extract() function. Specify sp = TRUE to append the spectral values to the point shapefile. 
+4)	Load your shape in R using readOGR(). Extract the spectral values at your point locations from the March image in R using the extract() function. Specify sp = TRUE to append the spectral values to the point shapefile. Write this shapefile to disk, we make use of it in the later sessions. 
 
 Make sure the result of this task is an object of type data.frame named sr.march. Your sample points should be represented as rows and the measured variables as columns (i.e. point id, classID, confID, and 6 spectral bands).
 
 5)	Create boxplots of your surface reflectance measurements for all spectral bands, grouped according to the class number. We provided the necessary code in the code template. Make sure you understand what the melt() function is doing. Feel free to adjust the plot layout.
 
-6)	For the extracted values of 4), calculate the NDVI and EVI. 
+------
 
-Next, perform the tasseled cap transformation of the extracted values. You find the coefficients derived by Crist et al. (1985) in the code template. Consider matrix multiplication, using %*%.
+# Session 03: Vegetation indices and data transforms
 
-7)	Create boxplots of the vegetation indices and TC components calculated in 6) similar to 5). 
+Vegetation produces a distinct spectral reflectance pattern due to its leaf and cell structure, its physiognomy, and complex stand structure. Photosynthetically inactive plant  parts differ considerably from active ones across different wavelength regions. The reflectance of photosynthetically active vegetation is characterized by different factors in the VIS, nIR and SWIR:
 
-Well done! If you want to keep on going, try to solve the following exercises as well…
+- VIS – leaf pigments - In the visible bands the reflectance is relatively low as the majority of light is absorbed by the leaf pigments. Chlorophyll strongly absorbs energy in the blue and red wavelengths and reflects more green wavelengths. This is why healthy vegetation appears green.
 
-8)	Explore the spectral bands and vegetation indices for the other Landsat images by repeating task 4) to 7) using the other input images. 
+- nIR – cell structure - For healthy vegetation, the reflectance is much higher in the near infrared (NIR) region than in the visible region due to the cellular structure of the leaves, specifically the spongy mesophyll. Therefore healthy vegetation can be easily identified by the high NIR reflectance and generally low visible reflectance. 
 
-9)	Identify up to 20 spectral measurements (meaning a combination of acquisition date and spectral band or vegetation index or TC component) which shows differences between all or some of the four classes. Using these insights, create a rule set for forest type discrimination based on 3-5 user-defined spectral thresholds per class. A simple example: ‘non-forest if August NDVI < 0.3’.
+- SWIR – water content - The reflectance in the shortwave infrared wavelengths is related to the water content of the vegetation and its structure. Water has strong absorption bands around 1.45, 1.95 and 2.50 µm . Outside these absorption bands in the SWIR region, reflectance of leaves generally increases when water content in the leaf decreases. 
 
-10)	Create a forest type map based on the thresholds of 9). You can do this by expressing your thresholds as logical statements and use indexing to assign a class value to each pixel. 
+![Spectral reflectance curce of vegetation. Source: gsp.humboldt.edu](fig/s03_vegetation_spectrum.png){width=80%}
+
+
+
+Vegetation indices make use of this particular reflectance signal. Most commonly known are the Normalized Difference Vegetation Index (NDVI) and the Enhanced Vegetation Index (EVI). 
+
+-----
+
+Normalized Difference Vegetation Index (NDVI)
+
+The NDVI relates the difference between the nIR and red reflectance to their sum. 
+
+$NDVI = (nIR – red) / (nIR + red)$
+
+For instance, a red reflectance of 5% and a nIR reflectance of 50% result in 
+
+```{r ndvi, eval=T, echo=T}
+
+red <- 5
+nIR <- 50
+
+ndvi <- (nIR - red) / (nIR + red)
+print(ndvi)
+
+```
+
+
+The NDVI is not a physical measure, but a proxy integrating different factors, such as land use / cover, incl. the amount of background signal visible in a pixel, photosynthetic activity, vitality and overall vegetation condition. It relates well to vegetation density and structure, e.g., represented by the lead area index (LAI)
+
+-----
+
+Enhanced Vegetation Index (EVI)
+
+The EVI often has a better correlation with biomass than NDVI, specifically in vegetation canopies with low and high LAI values. 
+
+![NDVI and EVI from MODIS image composites (5-20 March 2000). Source:  http://earthobservatory.nasa.gov/](fig/s03_ndvi_evi.PNG){width=100%}
+
+$EVI = G * ((nIR – red) / (nIR + (C1 * red – C2 * blue) + L))$
+
+The EVI aims at reducing saturation effects which are common for NDVI. It includes a correction for soil background effects (L) to improve sensitivity for low density vegetation canopies. It is less sensitive to high aerosol loads, since the additional coefficients (C1 and C2) steer the aerosol resistance term, and the visible blue reflectance is used to correct for scattering that also affects the visible red.
+
+Indices enhance differences in the reflectance to highlight certain features. Vegetation indices have the advantage of being simple, but the disadvantage of disregarding parts of the spectral feature space. Linear transformations can help to overcome this limitation. 
+
+-----
+
+Tasseled Cap Transformation (TC)
+
+Linear combination of the Landsat spectral bands. Transformations of feature space provide a different view on existing data without reducing overall variance
+statistical approaches: based on image statistics alone (e.g. principal component analysis)
+thematic approaches: based on certain features of interest (e.g. Tasseled Cap)
+
+Kauth and Thomas (1978) therefore developed the so called „Tasseled Cap Transformation“ for analyzing agricultural lands with Landsat-MSS data. The tasseled cap transformation was presented in 1976 by R.J. Kauth and G.S. Thomas of Environmental Research Institute of Michigan in an article entitled "The tasseled Cap -- A Graphic Description of the Spectral-Temporal Development of Agricultural Crops as Seen by Landsat."  Crops phenological trajectories through red ~ near infrared feature space look like a „tasseled cap“. 
+
+![Crop phenological trajectories in near infrared ~ red featurespace. Band numbers relate to Landsat MSS bands, where band 3 (6) is the near infrared and band 2 (5) is the red band.](fig/s03_tc_concept.png){width=30%}
+
+We can observe these trajectories by producing near infrared ~ red scatterplots for different points in time.
+
+![Scatterplot of 10,000 locations of an agricultural system in southeastern Turkey in near infrared ~ red featurespace, observed within the course of one year (2015).](fig/s03_sct_cln.gif){width=50%}
+
+<!--![Corresponding image chips of agricultural system in southeastern Turkey in RGB = nIR, swIR, red.](fig/s03_img.gif){width=70%}-->
+
+Resulting from the TC, we commonly analyze three components called brightness, greenness, and wetness:
+
+- Brightness: an axis alongside the line of soils, indicating soil brightnes.
+- Greenness: axis is perpendicular to the line of soils, emphasizes near infrared and thus vegetation state.
+- Wetness: emphasizes shortwave infrared and is thus related to water content.
+
+------
+
+## Exercise
+
+1)	Load the training data shapefile with the extracted spectral values into R. Calculate the NDVI and EVI from the extracted values. The EVI formula for Landsat data is as follows: 
+
+$EVI = 2.5 * ((nIR – red) / (nIR + 6 * red – 7.5 * blue + 1))$
+
+2) Perform the tasseled cap transformation of the extracted values. We use the coefficients derived by Crist et al. (1985). 
+
+```{r tc_coeff, eval=T, echo=T}
+tcc <- matrix(c( 0.2043,  0.4158,  0.5524, 0.5741,  0.3124,  0.2303, 
+                -0.1603, -0.2819, -0.4934, 0.7940, -0.0002, -0.1446,
+                 0.0315,  0.2021,  0.3102, 0.1594, -0.6806, -0.6109), 
+                dimnames = list(c('blue', 'green', 'red', 'nIR', 'swIR1', 'swIR2'), c('bright', 'green', 'wet')),
+                ncol = 3)
+
+print(tcc)
+```
+
+The TC is a linear band transformation. We can simply multiply each band with its factor and sum them up. A more straightforward way can be matrix multiplication, using ```%*%``` in R. 
+
+![Multiplication of a 2x3 matrix with a 3x3 matrix. Source: http://calculus.seas.upenn.edu/](http://calculus.seas.upenn.edu/uploads/Main/MatrixMult.gif){height=80%}
+
+2)	Create boxplots of the vegetation indices and TC components. 
+
+3)	Explore the spectral bands and vegetation indices for the other Landsat images by repeating task 4) to 7) using the other input images. 
 
 Please submit a .zip file including your training data shapefile and R-script 
 in moodle before Monday. 
@@ -865,7 +905,7 @@ This is a non-exhaustive list of common terms and their definitions.
 - Spectral band
 - Image quality
 
-- Very High Resolution
+- Very High Resolution (VHR)
 - High Resolution
 - Medium Resolution
 - Moderate Resolution
