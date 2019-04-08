@@ -214,22 +214,10 @@ Find the following images:
 - LC08_L1TP_189025_20140716_20170421_01_T1
 - LC08_L1TP_189025_20140310_20170425_01_T1
 
+Check [this website](https://www.usgs.gov/land-resources/nli/landsat/landsat-collection-1) to get an overview of the Landsat Collection 1 file naming convention (product identifiers) and more further information such as processing levels.
+
 Visualize the images in the Earth Explorer interface by clicking on the small image icon. For downloading the data, you will need an EarthExplorer account. If you prefer not to register, you can [download the files from our repository](https://box.hu-berlin.de/f/5248da1584054eb6ba51/?dl=1). Otherwise you may register and download the .tar.gz files. Unpack them to your session folder. 
 
-```{r download, echo=TRUE, eval=FALSE}
-# Define a path you want to store this session´s data in
-path <- 'course.dir/S01/data/'
-
-# Create data directory in your working directory
-dir.create(path, showWarnings = TRUE, recursive = TRUE)
-
-# Download the files for this session
-if (!file.exists(paste0(path,'gcg_eo_s01.zip'))) {
-                 download.file('https://box.hu-berlin.de/f/5248da1584054eb6ba51/?dl=1', dest = paste0(path,'gcg_eo_s01.zip'))
-                 unzip(paste0(path,'gcg_eo_s01.zip'), exdir=path)
-}
- 
-```
 
 ------
 
@@ -270,13 +258,13 @@ Error in compareRaster(x) : different extent
 
 ### Writing data
 
-8) Write the cropped stacks from X) to your folder using ```writeRaster()```. Use the ```GTiff``` format and the [appropriate datatype](https://www.rdocumentation.org/packages/raster/versions/2.5-8/topics/dataType). Why is this important?
+8) Write the cropped stacks from 7) to your folder using ```writeRaster()```. Use the ```GTiff``` format and the [appropriate datatype](https://www.rdocumentation.org/packages/raster/versions/2.5-8/topics/dataType). Why is this important?
 
 ------
 
 ### Visualizing data
 
-9)	Open the cropped images (Xb) in QGIS. Seek the symbology to create a true-color (red, green, blue) and a false-color representation (e.g., RGB: swIR1, nIR, red) of each image. Be aware that the order of the spectral regions in the electromagnetic spectrum (BGR) is different in your computer screen´s (RGB).
+9)	Open the cropped images in QGIS. Seek the symbology to create a true-color (red, green, blue) and a false-color representation (e.g., RGB: swIR1, nIR, red) of each image. Be aware that the order of the spectral regions in the electromagnetic spectrum (BGR) is different in your computer screen´s (RGB).
 
 10)	Use the ```plotRGB()``` function in R to create another false-color visualization of the images.
 
@@ -715,7 +703,7 @@ Vegetation produces a distinct spectral reflectance pattern due to its leaf and 
 
 - SWIR – water content - The reflectance in the shortwave infrared wavelengths is related to the water content of the vegetation and its structure. Water has strong absorption bands around 1.45, 1.95 and 2.50 µm . Outside these absorption bands in the SWIR region, reflectance of leaves generally increases when water content in the leaf decreases. 
 
-![Spectral reflectance curce of vegetation. Source: gsp.humboldt.edu](fig/s03_vegetation_spectrum.png){width=80%}
+![Spectral reflectance curve of vegetation. Source: gsp.humboldt.edu](fig/s03_vegetation_spectrum.png){width=80%}
 
 
 
@@ -819,9 +807,84 @@ in moodle before Monday.
 
 # Session 04: Pixel-based compositing
 
+------
+
 ## Learning goals
 
+
+
+------
+
+## Compositing
+
+- Create a cloud free coverage by combining several partially clouded images
+- [Do not confuse terminology: false color composite, multi-temporal composite bands, etc.]
+- Originally developed for coarse resolution sensors with daily global coverage that lack cloud masks…
+
+For Landsat and similar data, compositing is still a relatively new topic
+
+Reasons:
+
+- Free data policy started 2008
+- observation frequency improved with the launch of Landsat 8, while Landsat 7 SLC off (and previous Landsat 5 after 25 years in orbit) where limited
+- automation of cloud masking and atmospheric correction
+computational power & storage capacity
+
+------
+
+## Pixel-based compositing
+
+- Image compositing now allows to create cloud free, radiometrically consistent image datasets over large areas from the Landsat archive
+
+![Global WELD. Source: Roy et al. 2014](fig/s04_WELD.gif)
+
+- Automated cloud masking has improved greatly (e.g. Fmask, Zhu and Woodcock 2012) or Sentinel cloud screening (e.g. Frantz et al. 2018)
+- Automated pre-processing to surface reflectance products allows integration of L4, L5, L7, L8 (and Sentinel2); e.g. via LEDAPS by Masek et al. 2006, Ju et al. 2012) 
+
+
+------
+
+## The global Landsat archive
+
+#### Archive consolidation
+
+![Global Landsat archive as of 2013. source: ?????](fig/s04_global_ls_archive.gif)
+
+#### Landsat observation density
+
+![Global Landsat observation density. Source: Wulder et al. 2016; doi:10.1016/j.rse.2015.11.032](fig/s04_landsat_density.gif)
+
+------
+
+## Compositing vs. metrics
+
+Two main types of compositing outputs:
+
+1. Best observation/pixel composites:
+- Parametric scoring approach (DOY, distance cloud/shadow, haze score, etc.)
+- Seasonal tuning
+- Traceability using metaFlag images
+
+2. Spectral-temporal Metrics:
+- Values usually not observed, but derived (e.g. mean or standard deviation)
+
+Rank band Metrics:
+
+- Several features that characterize the statistical distribution of cloud free observations per band and pixel
+- Rank bands used to identify spectral vector of the acquisition that for example relates to the median NDVI
+
+![Rank band metrics plot](fig/s04_metrics_plot.gif)
+
+
+------
+
 ## Reading materials.
+
+Griffiths, P., van der Linden, S., Kuemmerle, T., & Hostert, P. (2013). A Pixel-Based Landsat Compositing Algorithm for Large Area Land Cover Mapping. IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing, 6, 2088-2101
+Roy, D.F., Ju, J., Kline, K., Scaramuzza, P. L., Kovalskyy, V., Hansen, M., ... Zhang, C. (2010). Web-enabled Landsat data (WELD): Landsat ETM+ composited mosaics of the conterminous United States. Remote Sensing of Environment, 114,35–49.
+White, J.C., Wulder, M.A., Hobart, G.W., Luther, J.E., Hermosilla, T., Griffiths, P., Coops, N.C., Hall, R.J., Hostert, P., Dyk, A., & Guindon, L. (2014). Pixel-Based Image Compositing for Large-Area Dense Time Series Applications and Science. Canadian Journal of Remote Sensing, 192-212
+
+-- Masek 2006, Ju 2012 
 
 ------
 
