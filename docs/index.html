@@ -96,7 +96,7 @@ $(document).ready(function () {
         <div id="header">
     <h1 class="title">Earth Observation</h1>
                 <h4 class="author">MSc Global Change Geography</h4>
-                <h4 class="date">Summer 2019</h4>
+                <h4 class="date">Summer term 2019</h4>
         </div>
     </div>
 </div>
@@ -112,17 +112,6 @@ $(document).ready(function () {
         <li><a href="#hello">Hello!</a></li>
         <li><a href="#introducing-r">Introducing R</a></li>
         <li><a href="#session-01-handling-raster-data-in-r">Session 01: Handling raster data in R</a></li>
-        <li><a href="#session-02-from-digital-numbers-to-surface-reflectance">Session 02: From digital numbers to surface reflectance</a></li>
-        <li><a href="#session-02-data-quality-cloud-masking">Session 02: Data quality &amp; cloud masking</a></li>
-        <li><a href="#session-03-training-data-collection">Session 03: Training data collection</a></li>
-        <li><a href="#session-03-vegetation-indices-and-data-transforms">Session 03: Vegetation indices and data transforms</a></li>
-        <li><a href="#session-04-pixel-based-compositing">Session 04: Pixel-based compositing</a></li>
-        <li><a href="#session-05-machine-learning-for-image-classification">Session 05: Machine learning for image classification</a></li>
-        <li><a href="#session-06-accuracy-assessment-and-area-estimation">Session 06: Accuracy assessment and area estimation</a></li>
-        <li><a href="#session-07-multi-temporal-change-detection">Session 07: Multi-temporal change detection</a></li>
-        <li><a href="#session-08-spectral-temporal-metrics">Session 08: Spectral-temporal metrics</a></li>
-        <li><a href="#project-work">Project work</a></li>
-        <li><a href="#terminology">Terminology</a></li>
         </ul>
         </div>
         
@@ -143,7 +132,7 @@ $(document).ready(function () {
 </div>
 <div id="about-earth-observation" class="section level2">
 <h2>About Earth Observation</h2>
-<p>Earth Observation is an advanced course for students of the Master of Science <a href="https://www.geographie.hu-berlin.de/en/studies/study-programs/master-degree-programs/master-of-science">“Global Change Geography”</a> of Humboldt-Universität zu Berlin, other interested parties are cordially invited to join. In this course, we cover multiple aspects of optical remote sensing by working with multi-sprectral Landsat and Sentinel 2 imagery. The course is fully based on open source software, including R and QGIS.</p>
+<p>Earth Observation is an advanced course for students of the Master of Science <a href="https://www.geographie.hu-berlin.de/en/studies/study-programs/master-degree-programs/master-of-science">“Global Change Geography”</a> of Humboldt-Universität zu Berlin. In this course, we cover multiple aspects of optical remote sensing by working with multi-sprectral Landsat and Sentinel 2 imagery. The course is fully based on open source software, including R and QGIS.</p>
 <p>As you followed the curriculum of the MSc program, you most likely joined the module “Quantitative Methods for Geographers”, in which you learned using R for statistical problems. Here, we built on your existing knowledge. If you are not enrolled in the MSc program, feel free to look at the <a href="https://github.com/corneliussenf/quantitative_methods">course materials</a>.</p>
 <p>Alternatively, you may want to follow one of the numerous tutorials for R fundamentals (e.g., <a href="https://www.rstudio.com/online-learning/">RStudio</a>, <a href="https://www.datacamp.com/courses/free-introduction-to-r">DataCamp</a>, <a href="http://www.r-tutorial.nl/">UMC Utrecht</a>, <a href="http://adv-r.had.co.nz/">Advanced R by Hadley Wickham</a>), or those specifically for geodata processing (e.g., <a href="https://geoscripting-wur.github.io/">Wageningen University</a>, <a href="https://www.earthdatascience.org/">University of Colorado</a>).</p>
 <hr />
@@ -211,15 +200,14 @@ data.dir &lt;-<span class="st"> &#39;course.dir/S01/data/&#39;</span>
 </div>
 <div id="coding-style" class="section level2">
 <h2>Coding style</h2>
-<p>A few basic rules apply to coding in R. Here is a short summary of <a href="https://google.github.io/styleguide/Rguide.xml">Google´s style guide</a>:</p>
+<p>A few basic rules apply to coding in R. Here is a short summary of <a href="http://adv-r.had.co.nz/Style.html">Hadley Wickham´s style guide</a>:</p>
 <ul>
 <li>Regularly save your progress.</li>
 <li><p>Script names should be meaningful and end in ‘.R’.</p></li>
 <li>Comment (#) your code &amp; separate it into readable chunks.</li>
 <li><p>Try to limit your code to 80 characters per line.</p></li>
 <li>Variable and function names should be lowercase.</li>
-<li>Variable names should be nouns and function names verbs.</li>
-<li><p>Use underscores to separate words within a name.</p></li>
+<li><p>Variable names should be nouns and function names verbs.</p></li>
 <li>Place spaces around operators (=, +, -, &lt;-, etc.) and after commas.</li>
 <li><p>Use &lt;-, not =, for assignment.</p></li>
 </ul>
@@ -249,7 +237,7 @@ data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span clas
 <p><img src="index_files/figure-html/style-1.png" width="288" style="display: block; margin: auto;" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Investigate correlation in the data</span>
 <span class="kw">cor</span>(data<span class="op">$</span>x, data<span class="op">$</span>y)</code></pre></div>
-<pre><code>[1] 0.9336196</code></pre>
+<pre><code>[1] 0.971865</code></pre>
 <hr />
 </div>
 <div id="help" class="section level2">
@@ -259,8 +247,8 @@ data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span clas
 <li>Seek the function´s help page (i.e. highlight the function and hit F1)</li>
 <li>Search your problem or error message</li>
 <li>Ask your colleagues</li>
-<li>Use the moodle forum</li>
-<li>Check forums (e.g., <a href="https://stackoverflow.com/">StackOverflow</a></li>
+<li>Use the moodle course forum</li>
+<li>Check forums (e.g., <a href="https://stackoverflow.com/">StackOverflow</a>)</li>
 </ul>
 <!-- ################################## SESSION 01 ############################################## -->
 </div>
@@ -271,7 +259,7 @@ data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span clas
 <h2>Learning goals</h2>
 <p>In this session, you will</p>
 <ul>
-<li>Download multi-spectral satellite data.</li>
+<li>Acquire multi-spectral satellite data.</li>
 <li>Read &amp; write raster data.</li>
 <li>Manipulate the spatial extent of rasters.</li>
 <li>Extract cell values &amp; plot a spectral profile.</li>
@@ -281,7 +269,8 @@ data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span clas
 <div id="the-raster-package" class="section level2">
 <h2>The <code>raster</code> package</h2>
 <p>It´s great, as it facilitates raster data handling. It allows us to access file characteristics before loading data into memory, facilitates handling of coordinate reference systems and spatial extents. We can use it to perform raster algebra, to combine raster and vector datasets (e.g. ESRI shapefiles), or to convert raster files into matrices, which are compatible with the base functions to access image statistics, develop models, slice data dimensions etc.</p>
-<p>There are a couple of things that the raster package does not provide. Advanced visualization of spatial datasets and manual operations, such collecting training or validation data, are preferably done in a GIS environment (e.g. QGIS). Furthermore, processing large data volumes in R can be quite time-consuming (use Python instead, it´s syntax is similar to R).</p>
+<p>There are a couple of things that the raster package does not provide. For example, advanced visualization of spatial datasets and manual operations, such collecting training or validation data, are preferably done in a GIS environment (e.g. QGIS). Furthermore, processing large data volumes in R can be quite time-consuming (we often use Python instead, it´s syntax is quite similar to R).</p>
+<p>You install the raster package just like any other package in R. Dependencies will automatically be installed. On some machines, you might need to install <code>rgdal</code> manually.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Install the raster and rgdal packages</span>
 <span class="kw">install.packages</span>(<span class="st">&#39;raster&#39;</span>)
 <span class="kw">install.packages</span>(<span class="st">&#39;rgdal&#39;</span>)
@@ -290,71 +279,72 @@ data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span clas
 <span class="kw">library</span>(raster)</code></pre></div>
 <hr />
 </div>
-<div id="data-acquisition" class="section level2">
-<h2>Data acquisition</h2>
-<p>Let´s get some Landsat data. Visit the <a href="http://earthexplorer.usgs.gov/">USGS Earth Explorer</a> and use the Adress/Place field to navigate to Wisła, Poland (lat,lon: 49.6473,18.8677). Switch to the ‘Data Sets’ tab and select Landsat -&gt; Landsat Collection 1 Level-1. Tick the ‘Landsat 8 OLI/TIRS C1 Level 1’ box and click on ‘Results &gt;&gt;’.</p>
-<p>You´ll get several hundreds of results, so let´s narrow down the search. Switch to the ‘Additional Criteria’ tab. Let´s choose a scene cloud cover of ‘Less than 40%’, the ‘Tier 1’ category and narrow the date range to February 2014 until August 2014.</p>
+<div id="exercise" class="section level2">
+<h2>Exercise</h2>
+<div id="data-acquisition" class="section level3">
+<h3>Data acquisition</h3>
+<ol style="list-style-type: decimal">
+<li><p>Let´s get some Landsat data. Visit the <a href="http://earthexplorer.usgs.gov/">USGS Earth Explorer</a> and use the Adress/Place field to navigate to Wisła, Poland (lat,lon: 49.6473,18.8677). Switch to the ‘Data Sets’ tab and select Landsat -&gt; Landsat Collection 1 Level-1. Tick the ‘Landsat 8 OLI/TIRS C1 Level 1’ box and click on ‘Results &gt;&gt;’.</p></li>
+<li><p>You´ll get several hundreds of results, so let´s narrow down the search. Switch to the ‘Additional Criteria’ tab. Let´s choose a scene cloud cover of ‘Less than 40%’, the ‘Tier 1’ category and narrow the date range to February 2014 until August 2014.</p></li>
+</ol>
 <p>Find the following images:</p>
 <ul>
 <li>LC08_L1TP_189025_20140716_20170421_01_T1</li>
 <li>LC08_L1TP_189025_20140310_20170425_01_T1</li>
 </ul>
-<p>Visualize the images in the Earth Explorer interface by clicking on the small image icon. For downloading the data, you will need an EarthExplorer account. If you prefer not to register, you can <a href="https://box.hu-berlin.de/f/5248da1584054eb6ba51/?dl=1">download the files from our repository</a>. Otherwise you may register and download the .tar.gz files. Unpack them to your session folder.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define a path you want to store this session´s data in</span>
-path &lt;-<span class="st"> &#39;course.dir/S01/data/&#39;</span>
-
-<span class="co"># Create data directory in your working directory</span>
-<span class="kw">dir.create</span>(path, <span class="dt">showWarnings =</span> <span class="ot">TRUE</span>, <span class="dt">recursive =</span> <span class="ot">TRUE</span>)
-
-<span class="co"># Download the files for this session</span>
-<span class="cf">if</span> (<span class="op">!</span><span class="kw">file.exists</span>(<span class="kw">paste0</span>(path,<span class="st">&#39;gcg_eo_s01.zip&#39;</span>))) {
-                 <span class="kw">download.file</span>(<span class="st">&#39;https://box.hu-berlin.de/f/5248da1584054eb6ba51/?dl=1&#39;</span>, <span class="dt">dest =</span> <span class="kw">paste0</span>(path,<span class="st">&#39;gcg_eo_s01.zip&#39;</span>))
-                 <span class="kw">unzip</span>(<span class="kw">paste0</span>(path,<span class="st">&#39;gcg_eo_s01.zip&#39;</span>), <span class="dt">exdir=</span>path)
-}</code></pre></div>
+<p>Check <a href="https://www.usgs.gov/land-resources/nli/landsat/landsat-collection-1">this website</a> to get an overview of the Landsat Collection 1 file naming convention (product identifiers) and further information such as processing levels.</p>
+<ol start="3" style="list-style-type: decimal">
+<li>Visualize the images in the Earth Explorer interface by clicking on the small image icon. For downloading the data, you will need an EarthExplorer account. You may register and download the .tar.gz files. If you prefer not to register, you can <a href="https://box.hu-berlin.de/f/5248da1584054eb6ba51/?dl=1">download the files from our repository</a>. Unpack the files in your session directory.</li>
+</ol>
 <hr />
+</div>
 <div id="reading-data" class="section level3">
 <h3>Reading data</h3>
-<ol style="list-style-type: decimal">
+<ol start="4" style="list-style-type: decimal">
 <li><p>Today, you will make use of R´s raster package classes and functions which are well described in the package documentation. Get acquainted with the following classes and functions and find out what they are useful for: <code>raster()</code>, <code>stack()</code> ,<code>extent()</code>, <code>crop()</code>, <code>extract()</code>, <code>CRS()</code>, <code>projectRaster()</code>, <code>plotRGB()</code>, <code>writeRaster()</code></p></li>
-<li><p>Visit the folder containing the unpacked Landsat image. Did you take a close look at the Landsat file naming convention? Practically, it provides some basic meta-information. For instance, <code>LC08_L1TP_189025_20140310_20170425_01_T1</code> is a sequence of information on the sensor, processing level, WRS path and row, acquisition date, processing date, collection, and collection tier, separated by ’_’.</p></li>
+<li><p>Visit the folder containing the unpacked Landsat image. Did you take a close look at the <a href="https://www.usgs.gov/media/images/landsat-collection-1-product-identifier">Landsat file naming convention</a>? Practically, it provides some basic meta-information. For instance, <code>LC08_L1TP_189025_20140310_20170425_01_T1</code> is a sequence of information on the sensor, processing level, WRS path and row, acquisition date, processing date, collection, and collection tier, separated by ’_’.</p></li>
 <li><p>As you can see, the Landsat images are delivered as single-band files. The single bands should be stacked for further analyses. For stacking, all input files must have matching extents and the identical projection. Create a stack for each of the two Landsat 8 images.</p></li>
 </ol>
+<p>Important: Please include only the following bands: blue, green, red, near infrared, shortwave infrared 1, shortwave infrared 2 (in this order). Check the list of <a href="https://landsat.usgs.gov/what-are-band-designations-landsat-satellites/">Landsat spectral bands</a> for a recap. Always keep the band designations in mind, as this can cause confusion, e.g. when combining Landsat 5 and Landsat 8 data.</p>
 <div class="figure">
 <img src="fig/ls_bands.jpg" alt="Band designations for Landsat satellites" style="width:70.0%" />
 <p class="caption">Band designations for Landsat satellites</p>
 </div>
-<p>Important: Please include only the following bands: blue, green, red, near infrared, shortwave infrared 1, shortwave infrared 2 (in this order). Check the list of <a href="https://landsat.usgs.gov/what-are-band-designations-landsat-satellites/">Landsat spectral bands</a> for a recap. Always keep the band designations in mind, as this can cause confusion, e.g. when combining Landsat 5 and Landsat 8 data.</p>
 <p>Try to create the two stacks with a minimum amount of code as possible! Consider using helper functions such as <code>paste0()</code>, <code>dir()</code> or <code>list.files()</code>.</p>
 <hr />
 </div>
 <div id="manipulating-data" class="section level3">
 <h3>Manipulating data</h3>
-<ol start="4" style="list-style-type: decimal">
+<ol start="7" style="list-style-type: decimal">
 <li><p>Investigate the stack. In which projection is the data delivered?</p></li>
 <li><p>Compare the extent of the two images. You will notice that they vary. Trying to stack images of different extent will cause an error message claiming:</p></li>
-<li><p>To stack both images, we need to crop (or clip, or cut) the images to their common extent. Find an efficient way to identify the common extent of the images, defined as <code>common.extent &lt;- c(xmin, xmax, ymin, ymax)</code> (in projected coordinates).</p></li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">image.stack &lt;-<span class="st"> </span><span class="kw">stack</span>(image.one, image.two)
+Error <span class="cf">in</span> <span class="kw">compareRaster</span>(x) <span class="op">:</span><span class="st"> </span>different extent</code></pre></div>
+<ol start="9" style="list-style-type: decimal">
+<li>To stack both images, we need to crop (i.e. clip, or cut) the images to their common extent. Find an efficient way to identify the common extent of the images, defined as <code>common.extent &lt;- c(xmin, xmax, ymin, ymax)</code> (in projected coordinates).</li>
 </ol>
 <div class="figure">
 <img src="fig/fig01.png" alt="Identifying the common extent of several images" />
 <p class="caption">Identifying the common extent of several images</p>
 </div>
-<ol start="7" style="list-style-type: decimal">
+<ol start="10" style="list-style-type: decimal">
 <li>The common extent of the two images is pretty large. In order to reduce the amount of data for the next steps, we should crop the images to our region of interest, a part of the Western Beskids, defined by <code>roi.extent &lt;- c(327945, 380325, 5472105, 5521095)</code></li>
 </ol>
 <hr />
 </div>
 <div id="writing-data" class="section level3">
 <h3>Writing data</h3>
-<ol start="8" style="list-style-type: decimal">
-<li>Write the cropped stacks from X) to your folder using <code>writeRaster()</code>. Use the <code>GTiff</code> format and the <a href="https://www.rdocumentation.org/packages/raster/versions/2.5-8/topics/dataType">appropriate datatype</a>. Why is this important?</li>
+<ol start="11" style="list-style-type: decimal">
+<li>Write the cropped stacks from 10) to your folder using <code>writeRaster()</code>. Use the <code>GTiff</code> format and the <a href="https://www.rdocumentation.org/packages/raster/versions/2.5-8/topics/dataType">appropriate datatype</a>. Why is this important?</li>
 </ol>
 <hr />
 </div>
 <div id="visualizing-data" class="section level3">
 <h3>Visualizing data</h3>
-<ol start="9" style="list-style-type: decimal">
-<li><p>Open the cropped images (Xb) in QGIS. Seek the symbology to create a true-color (red, green, blue) and a false-color representation (e.g., RGB: swIR1, nIR, red) of each image. Be aware that the order of the spectral regions in the electromagnetic spectrum (BGR) is different in your computer screen´s (RGB).</p></li>
-<li><p>Use the <code>plotRGB()</code> function in R to create another false-color visualization of the images.</p></li>
+<ol start="12" style="list-style-type: decimal">
+<li><p>Open the cropped images in QGIS. Seek the symbology to create a true-color (red, green, blue) and a false-color representation (e.g., RGB: swIR1, nIR, red) of each image. Make sure to properly consider the order of bands in your stack (blue, green, red, nIR, swIR 1, swIR 2) in relation to your computer screen´s color channels (RGB).</p></li>
+<li><p>Use the <code>plotRGB()</code> function in R to create another false-color visualization of the images in R.</p></li>
 </ol>
 <div class="figure">
 <img src="fig/s01_falsecolor_432.png" alt="False color visualization (RGB: nIR, red, green)" />
@@ -364,12 +354,12 @@ path &lt;-<span class="st"> &#39;course.dir/S01/data/&#39;</span>
 </div>
 <div id="extracting-spectral-profiles" class="section level3">
 <h3>Extracting spectral profiles</h3>
-<ol start="11" style="list-style-type: decimal">
+<ol start="14" style="list-style-type: decimal">
 <li>Use the <code>extract()</code> function to get spectral profiles from both images. Use the following coordinate:</li>
 </ol>
 <p><code>coordinate &lt;- data.frame('x' = 355623, 'y' = 5486216)</code>.</p>
-<ol start="12" style="list-style-type: decimal">
-<li>Visualize the results from X) in R. Can you create one plot that shows two spectral profiles (one for each image in the stack), while accounting for the band wavelength and acquisition date? Can you guess what type of surface we are looking at?</li>
+<ol start="15" style="list-style-type: decimal">
+<li>Visualize the results from 14) in R. Can you create one plot that shows two spectral profiles (one for each image in the stack), while accounting for the band wavelength and acquisition date? Can you guess what type of surface we are looking at?</li>
 </ol>
 <div class="figure">
 <img src="fig/s01_spectra.png" alt="Spectral profiles for two observation dates" style="width:60.0%" />
@@ -383,601 +373,761 @@ path &lt;-<span class="st"> &#39;course.dir/S01/data/&#39;</span>
 <p>In the next session, we would like to discuss the following paper:</p>
 <p><a href="https://doi.org/10.1016/j.rse.2011.10.028">Zhu, Z., &amp; Woodcock, C.E. (2012). Object-based cloud and cloud shadow detection in Landsat imagery. Remote Sensing of Environment, 118, 83–94.</a></p>
 <p>This is a rather technical reading, which introduces the Fmask algorithm for automated cloud and cloud shadow detection. It has been widely used for cloud detection on Landsat TM and ETM+ data, and was enhanced for the use with Landsat OLI and Sentinel 2 data (documented in <a href="https://doi.org/10.1016/j.rse.2014.12.014">Zhu et al. 2015</a>).</p>
-<p>While reading try to find answers to the following questions:</p>
+<p>While reading focus on the following broad questions:</p>
 <ul>
-<li>What is the general architecture of the algorithm?</li>
+<li>Why do we need automated cloud masking?</li>
+<li>How does it work in principle?</li>
+<li>Where are the limitations?</li>
+</ul>
+<p>More specifically, think about the following:</p>
+<ul>
 <li>How were the thresholds for spectral tests derived?</li>
-<li>How will different types of error impact further analyses of the masked image?</li>
+<li>How will different error types impact further analyses?</li>
 </ul>
-<!-- ################################## SESSION 02 ############################################## -->
-</div>
-</div>
-<div id="session-02-from-digital-numbers-to-surface-reflectance" class="section level1">
-<h1>Session 02: From digital numbers to surface reflectance</h1>
-<hr />
-<div id="learning-goals-1" class="section level2">
-<h2>Learning goals</h2>
-<ul>
-<li>Convert digital number values to top-of-atmosphere reflectance</li>
-<li>Compare top-of-atmosphere reflectance to surface reflectance</li>
-</ul>
-<hr />
-</div>
-<div id="what-is-radiance-what-are-dns" class="section level2">
-<h2>What is radiance / what are DNs?</h2>
-<p>This session is the most technical of the entire course. Today we will be dealing with physical units, conversion, and data quality. Let´s kick it off with a short recap. Towards the end of the last exercise, you produced a plot of measurements in the different bands of a Landsat image, similar to this one:</p>
-<div class="figure">
-<img src="fig/s01_spectra.png" alt="Spectral profiles extracted from a Landsat Level 1 image" style="width:60.0%" />
-<p class="caption">Spectral profiles extracted from a Landsat Level 1 image</p>
-</div>
-<p>Our y-axis label was “DN”, or digital number. Now, what is that again? Earth observing sensors, such as the ones on board the Landsat satellites register radiance at the top of the atmosphere. Radiance is expressed in watt per <a href="https://en.wikipedia.org/wiki/Steradian">steradian</a> per square meter.</p>
-<p>Storing data in radiance units is difficult and therefore sensors translate measured radiance into DNs. Therefore, the range of energy measured by the sensor is broken into distinct units (DNs). Sensor-specific calibration determines the minimum and maximum amount of radiance that can be measured. DNs express the amount of radiance in relation to these sensor-specific calibration coefficients. The total number of possible DNs is what we refer to as the radiometric resolution of the sensor.</p>
-<p>As an example, Landsat 4, 5, and 7 worked with a radiometric resolution of 8 bit. This allows for <code>2^8</code>, or 255 distinct DNs values. Landsat 8 works with 12 bit radiometric resolution, which is artificially quantized to 16 bit. The 16 bit resolution can represent much more different grey shades, exactly <code>2^16</code>, or 65,536 values. Let´s put this into code.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(raster)
+<!-- ################################## SESSION 02 ############################################## 
 
-<span class="co"># Define the number of bits</span>
-bit &lt;-<span class="st"> </span><span class="dv">4</span>
+# Session 02: From digital numbers to surface reflectance
 
-<span class="co"># How many grey tones can we represent given bit?</span>
-<span class="kw">print</span>(<span class="kw">paste0</span>(bit, <span class="st">&#39; bits produce &#39;</span>, <span class="dv">2</span><span class="op">^</span>bit, <span class="st">&#39; grey tones.&#39;</span>))</code></pre></div>
-<pre><code>[1] &quot;4 bits produce 16 grey tones.&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create a raster with one line and 2^bit columns,</span>
-<span class="co"># whereas cell values are filled with a vector of numbers from 1 2^bit</span>
-r &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="dt">nrows =</span> <span class="dv">1</span>, <span class="dt">ncols =</span> <span class="dv">2</span><span class="op">^</span>bit, <span class="dt">vals =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span><span class="op">^</span>bit))
+------
 
-<span class="co"># Plot the image and assign grey-scale values to the cells</span>
-<span class="kw">image</span>(r, <span class="dt">col =</span> <span class="kw">grey.colors</span>(<span class="dv">2</span><span class="op">^</span>bit, <span class="dt">start =</span> <span class="dv">0</span>, <span class="dt">end =</span> <span class="dv">1</span>), <span class="dt">main =</span> <span class="kw">paste0</span>(bit, <span class="st">&quot; bit raster&quot;</span>))</code></pre></div>
-<p><img src="index_files/figure-html/greyscale-1.png" width="576" /></p>
-<hr />
-</div>
-<div id="dns-to-toa" class="section level2">
-<h2>DNs to TOA</h2>
-<p>As DNs are dependent on the sensor calibration, identical measurements yield differing DNs across sensors. DNs are physically not meaningful. Instead of DNs, often we are interested in reflectance. Reflectance expresses the fraction of reflected radiance relative to the total incoming energy (sun), and is scaled between 0 and 1. Many applications require data converted to reflectance and/or corrected for the influence of the atmosphere.</p>
-<ul>
-<li>Sensor calibration (DN to radiance)</li>
-<li>Conversion to top-of-atmosphere reflectance (radiance to TOA)</li>
-<li>Atmospheric correction yielding bottom-of-atmosphere reflectance (TOA to BOA, or surface reflectance)</li>
-</ul>
-<p>A conversion of DNs into radiance can be easily undertaken. By accounting for sun-sensor geometries and solar irradiance, we can easily infer top-of-atmosphere reflectance (TOA) from radiance. This facilitates, e.g., a comparison of measurements from different sensors.</p>
-<p>Practically, this involves a linear scaling of the DN values which uses two band-specific rescaling factors. One is multiplicative, one is additive. Formulas are explained in the <a href="https://landsat.usgs.gov/using-usgs-landsat-8-product">USGS guide for conversion to TOA Reflectance</a>. With Landsat 8 Collection 1 data, we can use a single set of coefficients to convert DNs to TOA reflectance. Note that this is not the case for all sensors.</p>
-<p><span class="math inline">\(ρλ&#39; = M_ρ * Q_{cal} + A_ρ\)</span></p>
-<p>where</p>
-<p><span class="math inline">\(ρλ&#39;\)</span> = TOA planetary reflectance, without correction for solar angle.</p>
-<p><span class="math inline">\(M_ρ\)</span> = Band-specific multiplicative rescaling factor from the metadata.</p>
-<p><span class="math inline">\(Q_{cal}\)</span> = Quantized and calibrated standard product pixel values (DN).</p>
-<p><span class="math inline">\(A_ρ\)</span> = Band-specific additive rescaling factor from the metadata.</p>
-<p>In a next step, we can correct for solar angle during image acquisition.</p>
-<p><span class="math inline">\(ρλ = ρλ&#39; / cos(θ_{SZ}) = ρλ&#39; / sin(θ_{SE})\)</span></p>
-<p>where</p>
-<p><span class="math inline">\(ρλ\)</span> = TOA planetary reflectance corrected for solar angle.</p>
-<p><span class="math inline">\(θ_{SZ}\)</span> = Local solar zenith angle, whereas <span class="math inline">\(θ_{SZ} = 90° - θ_{SE}\)</span>.</p>
-<p><span class="math inline">\(θ_{SE}\)</span> = Local sun elevation angle.</p>
-<hr />
-</div>
-<div id="toa-to-boa" class="section level2">
-<h2>TOA to BOA</h2>
-<p>A final step towards comparable measurements of the Earth surface is the atmospheric correction. By doing atmospheric correction, we (theoretically) eliminate the influence of the atmosphere. We therefore call the product “surface reflectance” or “bottom of atmosphere reflectance” (BOA). Theoretically, the space-borne sensor´s measurements should be identical to ground-based measurements.</p>
-<hr />
-</div>
-<div id="exercise" class="section level2">
-<h2>Exercise</h2>
-<p>During this exercise you will learn how to convert Landsat-8 Collection 1 DNs to TOA reflectance, and compare and characterize spectral appearance of different land cover types in TOA and BOA imagery. The data are provided in <a href="">our repository</a>. After unpacking, you find the following folders:</p>
-<ul>
-<li>DN/LC08_L1TP_189025_20141105_20170417_01_T1/ - the directory containing the “L1TP” Landsat product (i.e. terrain-corrected (“orthorectified”) data in DNs), including the metadata file (MTL.txt) and the Quality Band (BQA.tif) which contains information on radiometric saturation, clouds, cloud shadows and more.</li>
-<li>SR/LC081890252014110501T1-SC20170927102137/ – the directory containing Level-2 data, i.e. atmospherically corrected, or bottom-of-atmosphere data.</li>
-</ul>
-<ol style="list-style-type: decimal">
-<li><p>Familiarize yourself with the L1TP data. Visualize individual bands, have a look at the Level-1 metadata file (LC08_L1TP_ XXX_MTL.txt) and the information provided within. Again, we only use the six reflective bands of the OLI sensor in this exercise (3xVIS, nIR, 2xswIR)</p></li>
-<li><p>Read the Landsat metadata file in R using <code>read.delim()</code> and extract the necessary information for the top-of-atmosphere conversion:</p></li>
-</ol>
-<p>REFLECTANCE_MULT_BAND</p>
-<p>REFLECTANCE_ADD_BAND</p>
-<p>SUN_ELEVATION</p>
-<p>Use the pattern matching function <code>grep()</code> to find the corresponding entries in the metadata file and store them as numeric vectors. Do this as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define the folder that contains your data...</span>
-path &lt;-<span class="st"> &#39;course.dir/S02/data/DN&#39;</span>
+## Learning goals
 
-<span class="co"># Read MTL file</span>
-mtl &lt;-<span class="st"> </span><span class="kw">list.files</span>(data.path, <span class="dt">pattern=</span><span class="st">&quot;MTL.txt$&quot;</span>, <span class="dt">recursive=</span>T, <span class="dt">full.names=</span>T)
-mtl.txt &lt;-<span class="st"> </span><span class="kw">read.delim</span>(mtl, <span class="dt">sep =</span> <span class="st">&#39;=&#39;</span>, <span class="dt">stringsAsFactors =</span> F)
+- Convert digital number values to top-of-atmosphere reflectance
+- Compare top-of-atmosphere reflectance to surface reflectance
 
-<span class="co"># Extract numeric values</span>
-REFLECTANCE_MULT_BAND &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(mtl.txt[<span class="kw">grep</span>(<span class="st">&quot;REFLECTANCE_MULT_BAND&quot;</span>,mtl.txt<span class="op">$</span>GROUP),][<span class="dv">2</span><span class="op">:</span><span class="dv">7</span>,<span class="dv">2</span>])</code></pre></div>
-<ol start="3" style="list-style-type: decimal">
-<li>Convert the DN values to TOA following the “Conversion to TOA Reflectance” section in the <a href="https://landsat.usgs.gov/using-usgs-landsat-8-product">USGS guide for conversion to TOA Reflectance</a>. Important things to keep in mind:</li>
-</ol>
-<ul>
-<li>The Landsat data is provided as integer values. When applying the equation, the data will be cast to float. You will have to re-convert to integer at some point. Use a reflectance scaling factor of 10,000 during the conversion.</li>
-<li>You can apply the conversion to all bands in a stack simultaneously.</li>
-<li>The sun elevation angle provided in the metadata file is reported in degrees. The <code>sin()</code> function expects that angles are provided in radians. For the conversion to work correctly, you need to convert <code>SUN_ELEVATION</code> into radians. Make use of this helper function:</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Helper-function to convert degrees to radians</span>
-deg2rad &lt;-<span class="st"> </span><span class="cf">function</span>(deg){ (deg <span class="op">*</span><span class="st"> </span>pi) <span class="op">/</span><span class="st"> </span>(<span class="dv">180</span>) }</code></pre></div>
-<ol start="4" style="list-style-type: decimal">
-<li><p>Write the result of your TOA conversion to disk in the <code>ENVI</code> format. Make sure to use an integer data type to save disk space.</p></li>
-<li><p>Open the BOA and the TOA file in QGIS and visually assess the differences in the spectral signature between the SR and TOA files. Use the info tool´s graph view to investigate the spectral signatures of each of the following land cover types:</p></li>
-</ol>
-<ul>
-<li>Deciduous forest</li>
-<li>Coniferous forest</li>
-<li>Grassland</li>
-<li>Cropland</li>
-<li>Impervious surfaces</li>
-<li>Water</li>
-</ul>
-<ol style="list-style-type: lower-alpha">
-<li>What are the most evident differences between TOA and SR reflectance spectra?</li>
-<li>Briefly summarize the spectral appearance of the six land cover types, and the main difference between the TOA and SR.</li>
-</ol>
-<hr />
-</div>
-</div>
-<div id="session-02-data-quality-cloud-masking" class="section level1">
-<h1>Session 02: Data quality &amp; cloud masking</h1>
-<div id="learning-goals-2" class="section level2">
-<h2>Learning goals</h2>
-<ul>
-<li>Understand how to use the Landsat Collection 1 quality bands</li>
-<li>Produce cloud / cloud shadow masks of differing confidence levels</li>
-<li>Masking Landsat images</li>
-</ul>
-<hr />
-</div>
-<div id="landsat-data-quality" class="section level2">
-<h2>Landsat data quality</h2>
-<p>Which issues affect data quality of optical satellite images?</p>
-<p>next part of the exercise aims at a pixel-level description of image quality no need for dropping entire images, e.g. in case of high cloudiness, we can make use of parts of images, e.g. small unclouded regions BQA: Landsat quality band. what is it? definition: unsigned integers? bit-packed?</p>
-<p>we get all that from image metadata… where do we find the metadata?</p>
-<p>How do we know if a pixel is affected by any of these?</p>
-<div class="figure">
-<img src="fig/s02_qa_band.png" alt="False-color representation of a cloudy Landsat Level 1 image (left) and a grey-scale visualization of the Landsat QA band (right)" style="width:60.0%" />
-<p class="caption">False-color representation of a cloudy Landsat Level 1 image (left) and a grey-scale visualization of the Landsat QA band (right)</p>
-</div>
-<p>“Each pixel in the QA band contains unsigned integers that represent bit-packed combinations of surface, atmospheric, and sensor conditions that can affect the overall usefulness of a given pixel.”</p>
-<div id="the-binary-system" class="section level3">
-<h3>The binary system</h3>
-<p>Remember the binary numeral system (0 / FALSE or 1 / TRUE)?</p>
-<!--![Binary system](fig/s02_binary_system.gif){width=100%}-->
-<div class="figure">
-<img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Binary_counter.gif" alt="The binary number system. Source: Wikipedia" style="width:100.0%" />
-<p class="caption">The binary number system. Source: Wikipedia</p>
-</div>
-<p>binary system represents numbers through 0/1 codes 0 means „FALSE“ or „NO“ and 1 equals „TRUE“ or „YES“ here, we have five bit positions, where each position is sequentially numbered, starting with 0, read from right to left we always calculate 2 to the power of the bit position… the combinations of 0 and 1 bits to the power of their position enables us to represent decimal numbers. the more positions the more / higher numbers we can generate</p>
-<p>5 bits:</p>
-<p>00001 = 0 * 24 + 0 * 23 + 0 * 22 + 0 * 21 + 1 * 20 = 1</p>
-<p>00111 = 0 * 24 + 0 * 23 + 1 * 22 + 1 * 21 + 1 * 20 = 7</p>
-<p>11111 = 1 * 24 + 1 * 23 + 1 * 22 + 1 * 21 + 1 * 20 = 31</p>
-<p>5 bit: 0 – 31 = 32 values</p>
-<p>16 bit: 0 - 65,535 = 65,536 values</p>
-<p>the Landsat QA band is coded in 16 bits arranged from right to left: 0-15 each bit has a meaning in terms of data quality e.g. bit 4 (or position 5 from the right) means „cloud“ so if it´s 1, there´s a cloud. which integer value do we have when cloud is 1? 2^4 = 16 combinations of several true / false conditions result in different integer values</p>
-<div class="figure">
-<img src="fig/s02_landsat_qa.png" alt="Landsat QA band bit designation" style="width:80.0%" />
-<p class="caption">Landsat QA band bit designation</p>
-</div>
-<p><a href="https://landsat.usgs.gov/collectionqualityband" class="uri">https://landsat.usgs.gov/collectionqualityband</a></p>
-<p>For the single bits (0, 1, and 4):</p>
-<p>0 = “No” = This condition does not exist 1 = “Yes” = This condition exists</p>
-<p>For radiometric saturation bits (2-3), read from left to right, represent how many bands contain saturation:</p>
-<p>00 - No bands contain saturation 01 - 1-2 bands contain saturation 10 - 3-4 bands contain saturation 11 - 5 or more bands contain saturation</p>
-<p>The remaining double bits (5-6, 7-8, 9-10, 11-12, read from left to right) represent levels of confidence that a condition exists:</p>
-<p>00 = “Not Determined” / This condition does not exist 01 = “Low” = Algorithm has low to no confidence that this condition exists (0-33 percent confidence) 10 = “Medium” = Algorithm has medium confidence that this condition exists (34-66 percent confidence) 11 = “High” = Algorithm has high confidence that this condition exists (67-100 percent confidence)</p>
-<hr />
-</div>
-</div>
-<div id="de-coding-quality-band-values" class="section level2">
-<h2>De-coding quality band values</h2>
-<p>Let´s look at the integer value 2804 to illustrate how this works. R offers a good way of dealing with bit-packed information. The <code>intToBits()</code> function converts integer numbers into sequences of bits, whereas 32 double-digit bits are returned by default.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Convert integer to bit sequence</span>
-<span class="kw">intToBits</span>(<span class="dv">2804</span>)</code></pre></div>
-<pre><code> [1] 00 00 01 00 01 01 01 01 00 01 00 01 00 00 00 00 00 00 00 00 00 00 00
-[24] 00 00 00 00 00 00 00 00 00</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Convert the double-digit into single-digit bits</span>
-<span class="kw">as.numeric</span>(<span class="kw">intToBits</span>(<span class="dv">2804</span>))</code></pre></div>
-<pre><code> [1] 0 0 1 0 1 1 1 1 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># We´re looking at 16 bit data, so let´s deprecate the unused bits</span>
-<span class="kw">as.numeric</span>(<span class="kw">intToBits</span>(<span class="dv">2804</span>)[<span class="dv">1</span><span class="op">:</span><span class="dv">16</span>])</code></pre></div>
-<pre><code> [1] 0 0 1 0 1 1 1 1 0 1 0 1 0 0 0 0</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Bit sequences are read from right to left, so we need to reverse the order</span>
-<span class="kw">rev</span>(<span class="kw">as.numeric</span>(<span class="kw">intToBits</span>(<span class="dv">2804</span>)[<span class="dv">1</span><span class="op">:</span><span class="dv">16</span>]))</code></pre></div>
-<pre><code> [1] 0 0 0 0 1 0 1 0 1 1 1 1 0 1 0 0</code></pre>
-<p>Now we can compare with the Landsat 8 Collection 1 Level 1 QA band bit designation. What´s the pixel quality information of the integer value 2804?</p>
-<div class="figure">
-<img src="fig/s02_landsat_qa_decode.PNG" alt="Landsat QA band bit designation" style="width:70.0%" />
-<p class="caption">Landsat QA band bit designation</p>
-</div>
-<p>We are looking at a cloudy pixel with radiometric saturation affecting 1-2 bands.</p>
-<hr />
-</div>
-<div id="exercise-1" class="section level2">
-<h2>Exercise</h2>
-<ol style="list-style-type: decimal">
-<li><p>Let´s have a look at the Landsat Collection 1 Quality Band (BQA). First, load the BQA band and find the three most frequent values using <code>freq()</code>.</p></li>
-<li><p>As you can see, the band contains integer values. By decoding the integer values into 16 bit binary strings, we can read the quality information for each pixel. Use the <code>intToBits()</code> function to decode the three most frequent BQA values and decipher their meaning using the Landsat quality band documentation. <code>intToBits()</code> returns 32 bits by default. Make sure you only look at bits 1 to 16. Also, keep in mind the right-to-left order when comparing the decoded bits with the table. You might want to use <code>rev()</code> to invert the order of the outputs by <code>intToBits()</code>. Note your findings as a comment in the script:</p></li>
-</ol>
-<pre><code># What do the most frequent values mean? Decode each integer value into bits and 
+------
+
+## What is radiance / what are DNs?
+
+This session is the most technical of the entire course. Today we will be dealing with physical units, conversion, and data quality. Let´s kick it off with a short recap. Towards the end of the last exercise, you produced a plot of measurements in the different bands of a Landsat image, similar to this one: 
+
+![Spectral profiles extracted from a Landsat Level 1 image](fig/s01_spectra.png){width=60%}
+
+Our y-axis label was "DN", or digital number. Now, what is that again? Earth observing sensors, such as the ones on board the Landsat satellites register radiance at the top of the atmosphere. Radiance is expressed in watt per [steradian](https://en.wikipedia.org/wiki/Steradian) per square meter. 
+
+Storing data in radiance units is difficult and therefore sensors translate measured radiance into DNs. Therefore, the range of energy measured by the sensor is broken into distinct units (DNs). Sensor-specific calibration determines the minimum and maximum amount of radiance that can be measured. DNs express the amount of radiance in relation to these sensor-specific calibration coefficients. The total number of possible DNs is what we refer to as the radiometric resolution of the sensor. 
+
+As an example, Landsat 4, 5, and 7 worked with a radiometric resolution of 8 bit. This allows for ```2^8```, or 255 distinct DNs values. Landsat 8 works with 12 bit radiometric resolution, which is artificially quantized to 16 bit. The 16 bit resolution can represent much more different grey shades, exactly ```2^16```, or 65,536 values. Let´s put this into code. 
+
+
+```r
+library(raster)
+
+# Define the number of bits
+bit <- 4
+
+# How many grey tones can we represent given bit?
+print(paste0(bit, ' bits produce ', 2^bit, ' grey tones.'))
+```
+
+```
+[1] "4 bits produce 16 grey tones."
+```
+
+```r
+# Create a raster with one line and 2^bit columns,
+# whereas cell values are filled with a vector of numbers from 1 2^bit
+r <- raster(nrows = 1, ncols = 2^bit, vals = c(1:2^bit))
+
+# Plot the image and assign grey-scale values to the cells
+image(r, col = grey.colors(2^bit, start = 0, end = 1), main = paste0(bit, " bit raster"))
+```
+
+<img src="index_files/figure-html/greyscale-1.png" width="576" />
+
+------
+
+## DNs to TOA
+
+As DNs are dependent on the sensor calibration, identical measurements yield differing DNs across sensors. DNs are physically not meaningful. Instead of DNs, often we are interested in reflectance. Reflectance expresses the fraction of reflected radiance relative to the total incoming energy (sun), and is scaled between 0 and 1.  Many applications require data converted to reflectance and/or corrected for the influence of the atmosphere. 
+
+- Sensor calibration (DN to radiance)
+- Conversion to top-of-atmosphere reflectance (radiance to TOA)
+- Atmospheric correction yielding bottom-of-atmosphere reflectance (TOA to BOA, or surface reflectance)
+
+A conversion of DNs into radiance can be easily undertaken. By accounting for sun-sensor geometries and solar irradiance, we can easily infer top-of-atmosphere reflectance (TOA) from radiance. This facilitates, e.g., a comparison of measurements from different sensors. 
+
+Practically, this involves a linear scaling of the DN values which uses two band-specific rescaling factors. One is multiplicative, one is additive. Formulas are explained in the [USGS guide for conversion to TOA Reflectance](https://landsat.usgs.gov/using-usgs-landsat-8-product). With Landsat 8 Collection 1 data, we can use a single set of coefficients to convert DNs to TOA reflectance. Note that this is not the case for all sensors.  
+
+$ρλ' = M_ρ * Q_{cal} + A_ρ$
+
+where
+
+$ρλ'$   = TOA planetary reflectance, without correction for solar angle.
+
+$M_ρ$   = Band-specific multiplicative rescaling factor from the metadata. 
+
+$Q_{cal}$   = Quantized and calibrated standard product pixel values (DN).
+
+$A_ρ$   = Band-specific additive rescaling factor from the metadata. 
+
+In a next step, we can correct for solar angle during image acquisition.
+
+$ρλ = ρλ' / cos(θ_{SZ}) = ρλ' / sin(θ_{SE})$
+
+where
+
+$ρλ$    = TOA planetary reflectance corrected for solar angle.
+
+$θ_{SZ}$    = Local solar zenith angle, whereas $θ_{SZ} = 90° - θ_{SE}$.
+
+$θ_{SE}$    = Local sun elevation angle. 
+
+------
+
+## TOA to BOA
+
+A final step towards comparable measurements of the Earth surface is the atmospheric correction. By doing atmospheric correction, we (theoretically) eliminate the influence of the atmosphere. We therefore call the product "surface reflectance" or "bottom of atmosphere reflectance" (BOA). Theoretically, the space-borne sensor´s measurements should be identical to ground-based measurements. 
+
+------
+
+## Exercise
+
+During this exercise you will learn how to convert Landsat-8 Collection 1 DNs to TOA reflectance, and compare and characterize spectral appearance of different land cover types in TOA and BOA imagery. The data are provided in [our repository](). After unpacking, you find the following folders:
+
+- DN/LC08_L1TP_189025_20141105_20170417_01_T1/ - the directory containing the “L1TP” Landsat product (i.e. terrain-corrected (“orthorectified”) data in DNs), including the metadata file (MTL.txt) and the Quality Band (BQA.tif) which contains information on radiometric saturation, clouds, cloud shadows and more.
+- SR/LC081890252014110501T1-SC20170927102137/ – the directory containing Level-2 data, i.e. atmospherically corrected, or bottom-of-atmosphere data. 
+
+1)  Familiarize yourself with the L1TP data. Visualize individual bands, have a look at the Level-1 metadata file (LC08_L1TP_ XXX_MTL.txt) and the information provided within. Again, we only use the six reflective bands of the OLI sensor in this exercise (3xVIS, nIR, 2xswIR)
+
+2)  Read the Landsat metadata file in R using ```read.delim()``` and extract the necessary information for the top-of-atmosphere conversion: 
+
+REFLECTANCE_MULT_BAND
+
+REFLECTANCE_ADD_BAND
+
+SUN_ELEVATION
+
+Use the pattern matching function ```grep()``` to find the corresponding entries in the metadata file and store them as numeric vectors. Do this as follows: 
+
+
+```r
+# Define the folder that contains your data...
+path <- 'course.dir/S02/data/DN'
+
+# Read MTL file
+mtl <- list.files(data.path, pattern="MTL.txt$", recursive=T, full.names=T)
+mtl.txt <- read.delim(mtl, sep = '=', stringsAsFactors = F)
+
+# Extract numeric values
+REFLECTANCE_MULT_BAND <- as.numeric(mtl.txt[grep("REFLECTANCE_MULT_BAND",mtl.txt$GROUP),][2:7,2])
+```
+
+3)  Convert the DN values to TOA following the “Conversion to TOA Reflectance” section in the [USGS guide for conversion to TOA Reflectance](https://landsat.usgs.gov/using-usgs-landsat-8-product). Important things to keep in mind: 
+
+- The Landsat data is provided as integer values. When applying the equation, the data will be cast to float. You will have to re-convert to integer at some point. Use a reflectance scaling factor of 10,000 during the conversion.
+- You can apply the conversion to all bands in a stack simultaneously.
+- The sun elevation angle provided in the metadata file is reported in degrees. The ```sin()``` function expects that angles are provided in radians. For the conversion to work correctly, you need to convert ```SUN_ELEVATION``` into radians. Make use of this helper function:
+
+
+```r
+# Helper-function to convert degrees to radians
+deg2rad <- function(deg){ (deg * pi) / (180) }
+```
+
+4)  Write the result of your TOA conversion to disk in the ```ENVI``` format. Make sure to use an integer data type to save disk space. 
+
+5)  Open the BOA and the TOA file in QGIS and visually assess the differences in the spectral signature between the SR and TOA files. Use the info tool´s graph view to investigate the spectral signatures of each of the following land cover types: 
+
+- Deciduous forest
+- Coniferous forest
+- Grassland
+- Cropland
+- Impervious surfaces
+- Water
+
+a) What are the most evident differences between TOA and SR reflectance spectra? 
+b) Briefly summarize the spectral appearance of the six land cover types, and the main difference between the TOA and SR.
+
+------
+
+# Session 02: Data quality & cloud masking
+
+## Learning goals
+
+- Understand how to use the Landsat Collection 1 quality bands
+- Produce cloud / cloud shadow masks of differing confidence levels
+- Masking Landsat images
+
+------
+
+## Landsat data quality 
+
+Which issues affect data quality of optical satellite images?
+
+next part of the exercise aims at a pixel-level description of image quality
+no need for dropping entire images, e.g. in case of high cloudiness, 
+we can make use of parts of images, e.g. small unclouded regions
+BQA: Landsat quality band. what is it? definition:
+unsigned integers?
+bit-packed?
+
+we get all that from image metadata...
+where do we find the metadata?
+
+How do we know if a pixel is affected by any of these?
+
+![False-color representation of a cloudy Landsat Level 1 image (left) and a grey-scale visualization of the Landsat QA band (right)](fig/s02_qa_band.png){width=60%}
+
+“Each pixel in the QA band contains unsigned integers that represent bit-packed combinations of surface, atmospheric, and sensor conditions that can affect the overall usefulness of a given pixel.”
+
+### The binary system
+
+Remember the binary numeral system (0 / FALSE or 1 / TRUE)?
+
+![The binary number system. Source: Wikipedia](https://upload.wikimedia.org/wikipedia/commons/7/75/Binary_counter.gif){width=100%}
+
+binary system represents numbers through 0/1 codes
+0 means „FALSE“ or „NO“ and 1 equals „TRUE“ or „YES“
+here, we have five bit positions, where each position is sequentially numbered, starting with 0, read from right to left
+we always calculate 2 to the power of the bit position...
+the combinations of 0 and 1 bits to the power of their position enables us to represent decimal numbers.
+the more positions the more / higher numbers we can generate
+
+5 bits:
+
+00001 = 0 * 24 + 0 * 23 + 0 * 22 + 0 * 21 + 1 * 20 = 1
+
+00111 = 0 * 24 + 0 * 23 + 1 * 22 + 1 * 21 + 1 * 20 = 7
+
+11111 = 1 * 24 + 1 * 23 + 1 * 22 + 1 * 21 + 1 * 20 = 31
+
+5 bit:  0 – 31      = 32 values
+
+16 bit:     0 - 65,535  = 65,536 values
+
+the Landsat QA band is coded in 16 bits
+arranged from right to left: 0-15
+each bit has a meaning in terms of data quality
+e.g. bit 4 (or position 5 from the right) means „cloud“
+so if it´s 1, there´s a cloud.
+which integer value do we have when cloud is 1? 2^4 = 16
+combinations of several true / false conditions result in different integer values
+
+
+![Landsat QA band bit designation](fig/s02_landsat_qa.png){width=80%}
+
+https://landsat.usgs.gov/collectionqualityband
+
+
+
+For the single bits (0, 1, and 4):
+
+0 = "No" = This condition does not exist
+1 = "Yes" = This condition exists
+
+
+For radiometric saturation bits (2-3), read from left to right, represent how many bands contain saturation:
+
+00 - No bands contain saturation
+01 - 1-2 bands contain saturation
+10 - 3-4 bands contain saturation
+11 - 5 or more bands contain saturation
+
+The remaining double bits (5-6, 7-8, 9-10, 11-12, read from left to right) represent levels of confidence that a condition exists:
+
+00 = “Not Determined” / This condition does not exist
+01 = “Low” = Algorithm has low to no confidence that this condition exists (0-33 percent confidence)
+10 = “Medium” = Algorithm has medium confidence that this condition exists (34-66 percent confidence)
+11 = “High” = Algorithm has high confidence that this condition exists (67-100 percent confidence)
+
+------
+
+## De-coding quality band values
+
+Let´s look at the integer value 2804 to illustrate how this works. R offers a good way of dealing with bit-packed information. The ```intToBits()``` function converts integer numbers into sequences of bits, whereas 32 double-digit bits are returned by default. 
+
+
+```r
+# Convert integer to bit sequence
+intToBits(2804)
+```
+
+```
+ [1] 00 00 01 00 01 01 01 01 00 01 00 01 00 00 00 00 00 00 00 00 00 00 00
+[24] 00 00 00 00 00 00 00 00 00
+```
+
+```r
+# Convert the double-digit into single-digit bits
+as.numeric(intToBits(2804))
+```
+
+```
+ [1] 0 0 1 0 1 1 1 1 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+```
+
+```r
+# We´re looking at 16 bit data, so let´s deprecate the unused bits
+as.numeric(intToBits(2804)[1:16])
+```
+
+```
+ [1] 0 0 1 0 1 1 1 1 0 1 0 1 0 0 0 0
+```
+
+```r
+# Bit sequences are read from right to left, so we need to reverse the order
+rev(as.numeric(intToBits(2804)[1:16]))
+```
+
+```
+ [1] 0 0 0 0 1 0 1 0 1 1 1 1 0 1 0 0
+```
+
+Now we can compare with the Landsat 8 Collection 1 Level 1 QA band bit designation. What´s the pixel quality information of the integer value 2804?
+
+![Landsat QA band bit designation](fig/s02_landsat_qa_decode.PNG){width=70%}
+
+We are looking at a cloudy pixel with radiometric saturation affecting 1-2 bands.
+
+------
+
+## Exercise
+
+1) Let´s have a look at the Landsat Collection 1 Quality Band (BQA). First, load the BQA band and find the three most frequent values using ```freq()```.
+
+3)  As you can see, the band contains integer values. By decoding the integer values into 16 bit binary strings, we can read the quality information for each pixel. Use the ```intToBits()``` function to decode the three most frequent BQA values and decipher their meaning using the Landsat quality band documentation. ```intToBits()``` returns 32 bits by default. Make sure you only look at bits 1 to 16. Also, keep in mind the right-to-left order when comparing the decoded bits with the table. You might want to use ```rev()``` to invert the order of the outputs by ```intToBits()```. Note your findings as a comment in the script: 
+
+```
+# What do the most frequent values mean? Decode each integer value into bits and 
 # describe their meaning here: 
 
 # Most frequent value: 
 # Second most frequent value: 
-# Third most frequent value: </code></pre>
-<ol start="4" style="list-style-type: decimal">
-<li>By converting integer values into binary bits, we can extract specific attributes from the BQA. Let´s to this in a systematic manner by defining a function, which yields TRUE for binary codes with bit 0 = 1:</li>
-</ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define function to find fill values from Landsat BQA</span>
-fill_pixels &lt;-<span class="st"> </span><span class="cf">function</span>(x) {<span class="kw">intToBits</span>(x)[<span class="dv">1</span>] <span class="op">==</span><span class="st"> </span>T}</code></pre></div>
-<p>Next, use indexing and Boolean expressions to define functions which return TRUE for a) high confidence clouds, high confidence cloud shadows and fill values b) high and medium confidence clouds, high and medium confidence cloud shadows and fill values</p>
-<ol start="5" style="list-style-type: decimal">
-<li><p>Create a mask using the above functions. You can use <code>calc()</code>. Plot the mask and check if clouds, cloud shadows, and fill values are labeled as 1 and clear observations as 0. Write both masks to disk.</p></li>
-<li><p>Open both masks in QGIS, together with an RGB representation of the image. Which mask is more accurate?</p></li>
-<li><p>Next, load the BOA data as a stack (VIS, nIR, swIR) and use the mask() function to mask clouds, cloud shadows and fill values from the image. Use the mask which you found to be more accurate. Make sure to specify the maskvalue argument accordingly. Write the masked BOA stack to disk in the ENVI format.</p></li>
-</ol>
-</div>
-<div id="reading-materials." class="section level2">
-<h2>Reading materials.</h2>
-<hr />
-<!-- ################################## SESSION 03 ############################################## -->
-</div>
-</div>
-<div id="session-03-training-data-collection" class="section level1">
-<h1>Session 03: Training data collection</h1>
-<hr />
-<div id="learning-goals-3" class="section level2">
-<h2>Learning goals</h2>
-<ul>
-<li>Gather training data for a broad forest type classification</li>
-<li>Learn how to calculate NDVI, EVI and Tasseled Cap components</li>
-<li>Understand how forest types differ spectrally</li>
-</ul>
-<hr />
-</div>
-<div id="background" class="section level2">
-<h2>Background</h2>
-<p>Collecting training is an essential step on your way to a classified map. The training pixels will be considered representative for the classes you want to map, as classification algorithms determine class labels for unknown pixels based on their similarity to the training dataset.</p>
-<div class="figure">
-<img src="fig/s03_training.PNG" alt="Training points for forest type classification and resulting map output" style="width:100.0%" />
-<p class="caption">Training points for forest type classification and resulting map output</p>
-</div>
-<p>Collecting training data is time consuming, regardless if you are collecting in the field or digitally. Small conceptual mistakes may require a revision of your training dataset. As a consequence, training data collection should be well prepared. Consider the following points.</p>
-<ul>
-<li><p>A precise and robust definition of your target classes based on the study region characteristics is key. Targeting a high thematic detail is beneficial, but spectral(-temporal) similarities between classes might pose limitations to a robust distinction of classes, such as tree species or crop types. In such cases, it is advised to think about a hierarchical structure to aggregate similar classes into higher level classes, such as forest types, or annual / perennial croplands.</p></li>
-<li><p>Gathering as much reference information as possible. Can we find additional datasets that guide our interpretation? Is any very high resolution (VHR) imagery available? GoogleEarth is a valuable source of VHR imagery, but it is critical to account for the exact acquisition date.</p></li>
-<li><p>Good knowledge of the target classes, and their spectral (temporal) characteristics in the study region is beneficial. We should consider spectrally similar classes and identify potential ways to prevent confusion, e.g., by aggregating those classes or identifying spectral features which help to separate them better.</p></li>
-<li><p>A purely random point sampling is not neccessarily the best option (different from collecting independent validation data), as we might want to train small classes that are hardly captured by a random sample. Manual selection of training points is thus advised. However, the training data should be well distributed across the study region to capture regional biophysical variability, such as different soil types, weather patterns, or topography.</p></li>
-</ul>
-<div class="figure">
-<img src="fig/s03_train_dist.PNG" alt="Spatial distribution of six training datasets" />
-<p class="caption">Spatial distribution of six training datasets</p>
-</div>
-<ul>
-<li><p>The classification algorithm of your choice might have specific requirements towards the training data, e.g., concerning the number of samples, their distribution in the spectral featurespace, or their purity (pure vs. mixed pixel). We discuss these aspects later in the course.</p></li>
-<li><p>In practice, it´s important to know your training data well. Are the classes separable with the data at hand? Are essential class characteristics well represented? Are there any outliers? To learn more, it is always wise to explore the spectral characteristics of your training data points. We can do this through investigating the spectral reflectances at our training data locations (e.g., through histograms / boxplots) and comparing them between classes.</p></li>
-</ul>
-<hr />
-</div>
-<div id="exercise-2" class="section level2">
-<h2>Exercise</h2>
-<p>This exercise has two larger aims. First, you will learn to collect training data for a broad forest type classification. We provide detailed forestry data to find representative sample pixels in QGIS. We will use the data you generate here for classification in the next session. Second, you will learn how the broad forest types appear spectrally in images acquired in different parts of the growing season. We provide the following datasets at O:/…/S03/data/…</p>
-<p>…sr_data/: Four cloud-masked image chips from Landsat 8 (surface reflectance):</p>
-<ul>
-<li>LC081890252014031001T1-SC20170927101754 (10 March 2014)</li>
-<li>LC081890252014071601T1-SC20171024094741 (16 July 2014)</li>
-<li>LC081890252015082001T1-SC20170927120710 (20 August 2015)</li>
-<li>LC081890252014110501T1-SC20170927102137 (05 November 2014)</li>
-</ul>
-<p>…vector/: A shapefile and a *.kmz file for GoogleEarth, which will help you to accurately delineate the Landsat pixel locations and extents for training data collection.</p>
-<p>…BDL/: Forestry data collected in 2015 which is publicly available here. We prepared a shapefile for the use in this session.</p>
-<p>It contains the following attributes:</p>
-<table>
-<thead>
-<tr class="header">
-<th>Attribute field</th>
-<th>Definition</th>
-<th>Class</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>species_en</td>
-<td>Dominant genus in each stand</td>
-<td>Ash, Beech, Fir, Spruce…</td>
-</tr>
-<tr class="even">
-<td>part_cd</td>
-<td>Share of this genus within the stand</td>
-<td>0 – 100 (in %)</td>
-</tr>
-<tr class="odd">
-<td>spec_age</td>
-<td>Average age of the trees in this stand</td>
-<td>Age in years</td>
-</tr>
-</tbody>
-</table>
-<ol style="list-style-type: decimal">
-<li>Visualize and arrange all datasets in QGIS (LTR). Consider the following steps:</li>
-</ol>
-<ol style="list-style-type: lower-alpha">
-<li>Find a good false-color representation of the Landsat bands to highlight vegetation.</li>
-<li>Visualize the forestry data by choosing distinct colors for the different tree genera (species_en). Which genera are dominant in the study area?</li>
-</ol>
-<ol start="2" style="list-style-type: decimal">
-<li><p>Generate a new point shapefile for storing the training data you will collect in the next task. It should containt the attribute fields ‘classID’ and ‘confID’ (both of type integer). Make sure it has the same spatial reference system as the Landsat data.</p></li>
-<li><p>Switch into the editing mode to locate training points and assign the corresponding class and confidence number. Please collect at least 15 pixels per class and assign them the class numbers and confidence numbers given below.</p></li>
-</ol>
-<table>
-<thead>
-<tr class="header">
-<th>Class name</th>
-<th>classID</th>
-<th>Confidence level</th>
-<th>confID</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Deciduous forest</td>
-<td>1</td>
-<td>Very certain</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td>Mixed forest</td>
-<td>2</td>
-<td>Some uncertainties</td>
-<td>2</td>
-</tr>
-<tr class="odd">
-<td>Coniferous forest</td>
-<td>3</td>
-<td>Very uncertain</td>
-<td>3</td>
-</tr>
-<tr class="even">
-<td>Non-forest</td>
-<td>4</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p>Use the multi-temporal Landsat imagery, the forestry polygons and very high resolution imagery in GoogleEarth to guide your interpretation. You can link QGIS and GoogleEarth using the GEarthView plugin. The Landsat grid shapefile and kmz will help you to identify and label training locations for the four classes.</p>
-<p>Regularly save the collected points and store the final shapefile with 60+ points in your personal folder on drive O:/. Ask us for help if you´re not familiar with the QGIS environment!</p>
-<ol start="4" style="list-style-type: decimal">
-<li>Load your shape in R using readOGR(). Extract the spectral values at your point locations from the March image in R using the extract() function. Specify sp = TRUE to append the spectral values to the point shapefile. Write this shapefile to disk, we make use of it in the later sessions.</li>
-</ol>
-<p>Make sure the result of this task is an object of type data.frame named sr.march. Your sample points should be represented as rows and the measured variables as columns (i.e. point id, classID, confID, and 6 spectral bands).</p>
-<ol start="5" style="list-style-type: decimal">
-<li>Create boxplots of your surface reflectance measurements for all spectral bands, grouped according to the class number. We provided the necessary code in the code template. Make sure you understand what the melt() function is doing. Feel free to adjust the plot layout.</li>
-</ol>
-<hr />
-</div>
-</div>
-<div id="session-03-vegetation-indices-and-data-transforms" class="section level1">
-<h1>Session 03: Vegetation indices and data transforms</h1>
-<p>Vegetation produces a distinct spectral reflectance pattern due to its leaf and cell structure, its physiognomy, and complex stand structure. Photosynthetically inactive plant parts differ considerably from active ones across different wavelength regions. The reflectance of photosynthetically active vegetation is characterized by different factors in the VIS, nIR and SWIR:</p>
-<ul>
-<li><p>VIS – leaf pigments - In the visible bands the reflectance is relatively low as the majority of light is absorbed by the leaf pigments. Chlorophyll strongly absorbs energy in the blue and red wavelengths and reflects more green wavelengths. This is why healthy vegetation appears green.</p></li>
-<li><p>nIR – cell structure - For healthy vegetation, the reflectance is much higher in the near infrared (NIR) region than in the visible region due to the cellular structure of the leaves, specifically the spongy mesophyll. Therefore healthy vegetation can be easily identified by the high NIR reflectance and generally low visible reflectance.</p></li>
-<li><p>SWIR – water content - The reflectance in the shortwave infrared wavelengths is related to the water content of the vegetation and its structure. Water has strong absorption bands around 1.45, 1.95 and 2.50 µm . Outside these absorption bands in the SWIR region, reflectance of leaves generally increases when water content in the leaf decreases.</p></li>
-</ul>
-<div class="figure">
-<img src="fig/s03_vegetation_spectrum.png" alt="Spectral reflectance curce of vegetation. Source: gsp.humboldt.edu" style="width:80.0%" />
-<p class="caption">Spectral reflectance curce of vegetation. Source: gsp.humboldt.edu</p>
-</div>
-<p>Vegetation indices make use of this particular reflectance signal. Most commonly known are the Normalized Difference Vegetation Index (NDVI) and the Enhanced Vegetation Index (EVI).</p>
-<hr />
-<p>Normalized Difference Vegetation Index (NDVI)</p>
-<p>The NDVI relates the difference between the nIR and red reflectance to their sum.</p>
-<p><span class="math inline">\(NDVI = (nIR – red) / (nIR + red)\)</span></p>
-<p>For instance, a red reflectance of 5% and a nIR reflectance of 50% result in</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">red &lt;-<span class="st"> </span><span class="dv">5</span>
-nIR &lt;-<span class="st"> </span><span class="dv">50</span>
+# Third most frequent value: 
+```
 
-ndvi &lt;-<span class="st"> </span>(nIR <span class="op">-</span><span class="st"> </span>red) <span class="op">/</span><span class="st"> </span>(nIR <span class="op">+</span><span class="st"> </span>red)
-<span class="kw">print</span>(ndvi)</code></pre></div>
-<pre><code>[1] 0.8181818</code></pre>
-<p>The NDVI is not a physical measure, but a proxy integrating different factors, such as land use / cover, incl. the amount of background signal visible in a pixel, photosynthetic activity, vitality and overall vegetation condition. It relates well to vegetation density and structure, e.g., represented by the lead area index (LAI)</p>
-<hr />
-<p>Enhanced Vegetation Index (EVI)</p>
-<p>The EVI often has a better correlation with biomass than NDVI, specifically in vegetation canopies with low and high LAI values.</p>
-<div class="figure">
-<img src="fig/s03_ndvi_evi.PNG" alt="NDVI and EVI from MODIS image composites (5-20 March 2000). Source: http://earthobservatory.nasa.gov/" style="width:100.0%" />
-<p class="caption">NDVI and EVI from MODIS image composites (5-20 March 2000). Source: <a href="http://earthobservatory.nasa.gov/" class="uri">http://earthobservatory.nasa.gov/</a></p>
-</div>
-<p><span class="math inline">\(EVI = G * ((nIR – red) / (nIR + (C1 * red – C2 * blue) + L))\)</span></p>
-<p>The EVI aims at reducing saturation effects which are common for NDVI. It includes a correction for soil background effects (L) to improve sensitivity for low density vegetation canopies. It is less sensitive to high aerosol loads, since the additional coefficients (C1 and C2) steer the aerosol resistance term, and the visible blue reflectance is used to correct for scattering that also affects the visible red.</p>
-<p>Indices enhance differences in the reflectance to highlight certain features. Vegetation indices have the advantage of being simple, but the disadvantage of disregarding parts of the spectral feature space. Linear transformations can help to overcome this limitation.</p>
-<hr />
-<p>Tasseled Cap Transformation (TC)</p>
-<p>Linear combination of the Landsat spectral bands. Transformations of feature space provide a different view on existing data without reducing overall variance statistical approaches: based on image statistics alone (e.g. principal component analysis) thematic approaches: based on certain features of interest (e.g. Tasseled Cap)</p>
-<p>Kauth and Thomas (1978) therefore developed the so called „Tasseled Cap Transformation“ for analyzing agricultural lands with Landsat-MSS data. The tasseled cap transformation was presented in 1976 by R.J. Kauth and G.S. Thomas of Environmental Research Institute of Michigan in an article entitled “The tasseled Cap – A Graphic Description of the Spectral-Temporal Development of Agricultural Crops as Seen by Landsat.” Crops phenological trajectories through red ~ near infrared feature space look like a „tasseled cap“.</p>
-<div class="figure">
-<img src="fig/s03_tc_concept.png" alt="Crop phenological trajectories in near infrared ~ red featurespace. Band numbers relate to Landsat MSS bands, where band 3 (6) is the near infrared and band 2 (5) is the red band." style="width:30.0%" />
-<p class="caption">Crop phenological trajectories in near infrared ~ red featurespace. Band numbers relate to Landsat MSS bands, where band 3 (6) is the near infrared and band 2 (5) is the red band.</p>
-</div>
-<p>We can observe these trajectories by producing near infrared ~ red scatterplots for different points in time.</p>
-<div class="figure">
-<img src="fig/s03_sct_cln.gif" alt="Scatterplot of 10,000 locations of an agricultural system in southeastern Turkey in near infrared ~ red featurespace, observed within the course of one year (2015)." style="width:50.0%" />
-<p class="caption">Scatterplot of 10,000 locations of an agricultural system in southeastern Turkey in near infrared ~ red featurespace, observed within the course of one year (2015).</p>
-</div>
-<!--![Corresponding image chips of agricultural system in southeastern Turkey in RGB = nIR, swIR, red.](fig/s03_img.gif){width=70%}-->
-<p>Resulting from the TC, we commonly analyze three components called brightness, greenness, and wetness:</p>
-<ul>
-<li>Brightness: an axis alongside the line of soils, indicating soil brightnes.</li>
-<li>Greenness: axis is perpendicular to the line of soils, emphasizes near infrared and thus vegetation state.</li>
-<li>Wetness: emphasizes shortwave infrared and is thus related to water content.</li>
-</ul>
-<hr />
-<div id="exercise-3" class="section level2">
-<h2>Exercise</h2>
-<ol style="list-style-type: decimal">
-<li>Load the training data shapefile with the extracted spectral values into R. Calculate the NDVI and EVI from the extracted values. The EVI formula for Landsat data is as follows:</li>
-</ol>
-<p><span class="math inline">\(EVI = 2.5 * ((nIR – red) / (nIR + 6 * red – 7.5 * blue + 1))\)</span></p>
-<ol start="2" style="list-style-type: decimal">
-<li>Perform the tasseled cap transformation of the extracted values. We use the coefficients derived by Crist et al. (1985).</li>
-</ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tcc &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>( <span class="fl">0.2043</span>,  <span class="fl">0.4158</span>,  <span class="fl">0.5524</span>, <span class="fl">0.5741</span>,  <span class="fl">0.3124</span>,  <span class="fl">0.2303</span>, 
-                <span class="op">-</span><span class="fl">0.1603</span>, <span class="op">-</span><span class="fl">0.2819</span>, <span class="op">-</span><span class="fl">0.4934</span>, <span class="fl">0.7940</span>, <span class="op">-</span><span class="fl">0.0002</span>, <span class="op">-</span><span class="fl">0.1446</span>,
-                 <span class="fl">0.0315</span>,  <span class="fl">0.2021</span>,  <span class="fl">0.3102</span>, <span class="fl">0.1594</span>, <span class="op">-</span><span class="fl">0.6806</span>, <span class="op">-</span><span class="fl">0.6109</span>), 
-                <span class="dt">dimnames =</span> <span class="kw">list</span>(<span class="kw">c</span>(<span class="st">&#39;blue&#39;</span>, <span class="st">&#39;green&#39;</span>, <span class="st">&#39;red&#39;</span>, <span class="st">&#39;nIR&#39;</span>, <span class="st">&#39;swIR1&#39;</span>, <span class="st">&#39;swIR2&#39;</span>), <span class="kw">c</span>(<span class="st">&#39;bright&#39;</span>, <span class="st">&#39;green&#39;</span>, <span class="st">&#39;wet&#39;</span>)),
-                <span class="dt">ncol =</span> <span class="dv">3</span>)
 
-<span class="kw">print</span>(tcc)</code></pre></div>
-<pre><code>      bright   green     wet
+4)  By converting integer values into binary bits, we can extract specific attributes from the BQA. Let´s to this in a systematic manner by defining a function, which yields TRUE for binary codes with bit 0 = 1:
+
+
+```r
+# Define function to find fill values from Landsat BQA
+fill_pixels <- function(x) {intToBits(x)[1] == T}
+```
+
+Next, use indexing and Boolean expressions to define functions which return TRUE for 
+a)  high confidence clouds, high confidence cloud shadows and fill values
+b)  high and medium confidence clouds, high and medium confidence cloud shadows and fill values
+
+5)  Create a mask using the above functions. You can use ```calc()```. Plot the mask and check if clouds, cloud shadows, and fill values are labeled as 1 and clear observations as 0. Write both masks to disk.
+
+6) Open both masks in QGIS, together with an RGB representation of the image. Which mask is more accurate? 
+
+7) Next, load the BOA data as a stack (VIS, nIR, swIR) and use the mask() function to mask clouds, cloud shadows and fill values from the image. Use the mask which you found to be more accurate. Make sure to specify the maskvalue argument accordingly. Write the masked BOA stack to disk in the ENVI format.
+
+
+## Reading materials.
+
+------
+
+################################## SESSION 03 ############################################## 
+
+# Session 03: Training data collection
+
+------
+
+## Learning goals
+
+- Gather training data for a broad forest type classification 
+- Learn how to calculate NDVI, EVI and Tasseled Cap components
+- Understand how forest types differ spectrally 
+
+------
+
+## Background
+
+Collecting training is an essential step on your way to a classified map. The training pixels will be considered representative for the classes you want to map, as classification algorithms determine class labels for unknown pixels based on their similarity to the training dataset. 
+
+![Training points for forest type classification and resulting map output](fig/s03_training.PNG){width=100%}
+
+Collecting training data is time consuming, regardless if you are collecting in the field or digitally. Small conceptual mistakes may require a revision of your training dataset. As a consequence, training data collection should be well prepared. Consider the following points.
+
+- A precise and robust definition of your target classes based on the study region characteristics is key. Targeting a high thematic detail is beneficial, but spectral(-temporal) similarities between classes might pose limitations to a robust distinction of classes, such as tree species or crop types. In such cases, it is advised to think about a hierarchical structure to aggregate similar classes into higher level classes, such as forest types, or annual / perennial croplands. 
+
+- Gathering as much reference information as possible. Can we find additional datasets that guide our interpretation? Is any very high resolution (VHR) imagery available? GoogleEarth is a valuable source of  VHR imagery, but it is critical to account for the exact acquisition date.
+
+- Good knowledge of the target classes, and their spectral (temporal) characteristics in the study region is beneficial. We should consider spectrally similar classes and identify potential ways to prevent confusion, e.g., by aggregating those classes or identifying spectral features  which help to separate them better. 
+
+- A purely random point sampling is not neccessarily the best option (different from collecting independent validation data), as we might want to train small classes that are hardly captured by a random sample. Manual selection of training points is thus advised. However, the training data should be well distributed across the study region to capture regional biophysical variability, such as different soil types, weather patterns, or topography.
+
+![Spatial distribution of six training datasets](fig/s03_train_dist.PNG)
+
+- The classification algorithm of your choice might have specific requirements towards the training data, e.g., concerning the number of samples, their distribution in the spectral featurespace, or their purity (pure vs. mixed pixel). We discuss these aspects later in the course.
+
+- In practice, it´s important to know your training data well. Are the classes separable with the data at hand? Are essential class characteristics well represented? Are there any outliers? To learn more, it is always wise to explore the spectral characteristics of your training data points. We can do this through investigating the spectral reflectances at our training data locations (e.g., through histograms / boxplots) and comparing them between classes.
+
+-----
+
+## Exercise
+
+This exercise has two larger aims. First, you will learn to collect training data for a broad forest type classification. We provide detailed forestry data to find representative sample pixels in QGIS. We will use the data you generate here for classification in the next session. Second, you will learn how the broad forest types appear spectrally in images acquired in different parts of the growing season.
+We provide the following datasets at O:/…/S03/data/… 
+
+…sr_data/: Four cloud-masked image chips from Landsat 8 (surface reflectance): 
+
+-   LC081890252014031001T1-SC20170927101754 (10 March 2014)
+-   LC081890252014071601T1-SC20171024094741 (16 July 2014)
+-   LC081890252015082001T1-SC20170927120710 (20 August 2015)
+-   LC081890252014110501T1-SC20170927102137 (05 November 2014)
+
+…vector/: A shapefile and a *.kmz file for GoogleEarth, which will help you to accurately delineate the Landsat pixel locations and extents for training data collection. 
+
+…BDL/: Forestry data collected in 2015 which is publicly available here. We prepared a shapefile for the use in this session. 
+
+It contains the following attributes: 
+
+| Attribute field | Definition                            | Class                   |
+| -------------   |-------------                          | -----                   |
+|species_en       |Dominant genus in each stand           |Ash, Beech, Fir, Spruce… |
+|part_cd          |Share of this genus within the stand   |0 – 100 (in %)           |
+|spec_age         |Average age of the trees in this stand |Age in years             |
+
+
+1)  Visualize and arrange all datasets in QGIS (LTR). Consider the following steps: 
+a.  Find a good false-color representation of the Landsat bands to highlight vegetation. 
+b.  Visualize the forestry data by choosing distinct colors for the different tree genera (species_en). Which genera are dominant in the study area?
+
+2)  Generate a new point shapefile for storing the training data you will collect in the next task. It should containt the attribute fields ‘classID’ and ‘confID’ (both of type integer). Make sure it has the same spatial reference system as the Landsat data.
+
+3)  Switch into the editing mode to locate training points and assign the corresponding class and confidence number. Please collect at least 15 pixels per class and assign them the class numbers and confidence numbers given below. 
+ 
+|Class name       | classID     | Confidence level | confID       |
+|-------------    |-------------|-------------     |------------- |
+|Deciduous forest   | 1           |Very certain      |1             |
+|Mixed forest       | 2           |Some uncertainties|2             |
+|Coniferous forest| 3           |Very uncertain    |3             |
+|Non-forest       | 4           |                  |              |     
+
+Use the multi-temporal Landsat imagery, the forestry polygons and very high resolution imagery in GoogleEarth to guide your interpretation. You can link QGIS and GoogleEarth using the GEarthView plugin. The Landsat grid shapefile and kmz will help you to identify and label training locations for the four classes. 
+
+Regularly save the collected points and store the final shapefile with 60+ points in your personal folder on drive O:/. Ask us for help if you´re not familiar with the QGIS environment!
+
+4)  Load your shape in R using readOGR(). Extract the spectral values at your point locations from the March image in R using the extract() function. Specify sp = TRUE to append the spectral values to the point shapefile. Write this shapefile to disk, we make use of it in the later sessions. 
+
+Make sure the result of this task is an object of type data.frame named sr.march. Your sample points should be represented as rows and the measured variables as columns (i.e. point id, classID, confID, and 6 spectral bands).
+
+5)  Create boxplots of your surface reflectance measurements for all spectral bands, grouped according to the class number. We provided the necessary code in the code template. Make sure you understand what the melt() function is doing. Feel free to adjust the plot layout.
+
+------
+
+# Session 03: Vegetation indices and data transforms
+
+Vegetation produces a distinct spectral reflectance pattern due to its leaf and cell structure, its physiognomy, and complex stand structure. Photosynthetically inactive plant  parts differ considerably from active ones across different wavelength regions. The reflectance of photosynthetically active vegetation is characterized by different factors in the VIS, nIR and SWIR:
+
+- VIS – leaf pigments - In the visible bands the reflectance is relatively low as the majority of light is absorbed by the leaf pigments. Chlorophyll strongly absorbs energy in the blue and red wavelengths and reflects more green wavelengths. This is why healthy vegetation appears green.
+
+- nIR – cell structure - For healthy vegetation, the reflectance is much higher in the near infrared (NIR) region than in the visible region due to the cellular structure of the leaves, specifically the spongy mesophyll. Therefore healthy vegetation can be easily identified by the high NIR reflectance and generally low visible reflectance. 
+
+- SWIR – water content - The reflectance in the shortwave infrared wavelengths is related to the water content of the vegetation and its structure. Water has strong absorption bands around 1.45, 1.95 and 2.50 µm . Outside these absorption bands in the SWIR region, reflectance of leaves generally increases when water content in the leaf decreases. 
+
+![Spectral reflectance curve of vegetation. Source: gsp.humboldt.edu](fig/s03_vegetation_spectrum.png){width=80%}
+
+
+
+Vegetation indices make use of this particular reflectance signal. Most commonly known are the Normalized Difference Vegetation Index (NDVI) and the Enhanced Vegetation Index (EVI). 
+
+-----
+
+Normalized Difference Vegetation Index (NDVI)
+
+The NDVI relates the difference between the nIR and red reflectance to their sum. 
+
+$NDVI = (nIR – red) / (nIR + red)$
+
+For instance, a red reflectance of 5% and a nIR reflectance of 50% result in 
+
+
+```r
+red <- 5
+nIR <- 50
+
+ndvi <- (nIR - red) / (nIR + red)
+print(ndvi)
+```
+
+```
+[1] 0.8181818
+```
+
+
+The NDVI is not a physical measure, but a proxy integrating different factors, such as land use / cover, incl. the amount of background signal visible in a pixel, photosynthetic activity, vitality and overall vegetation condition. It relates well to vegetation density and structure, e.g., represented by the lead area index (LAI)
+
+-----
+
+Enhanced Vegetation Index (EVI)
+
+The EVI often has a better correlation with biomass than NDVI, specifically in vegetation canopies with low and high LAI values. 
+
+![NDVI and EVI from MODIS image composites (5-20 March 2000). Source:  http://earthobservatory.nasa.gov/](fig/s03_ndvi_evi.PNG){width=100%}
+
+$EVI = G * ((nIR – red) / (nIR + (C1 * red – C2 * blue) + L))$
+
+The EVI aims at reducing saturation effects which are common for NDVI. It includes a correction for soil background effects (L) to improve sensitivity for low density vegetation canopies. It is less sensitive to high aerosol loads, since the additional coefficients (C1 and C2) steer the aerosol resistance term, and the visible blue reflectance is used to correct for scattering that also affects the visible red.
+
+Indices enhance differences in the reflectance to highlight certain features. Vegetation indices have the advantage of being simple, but the disadvantage of disregarding parts of the spectral feature space. Linear transformations can help to overcome this limitation. 
+
+-----
+
+Tasseled Cap Transformation (TC)
+
+Linear combination of the Landsat spectral bands. Transformations of feature space provide a different view on existing data without reducing overall variance
+statistical approaches: based on image statistics alone (e.g. principal component analysis)
+thematic approaches: based on certain features of interest (e.g. Tasseled Cap)
+
+Kauth and Thomas (1978) therefore developed the so called „Tasseled Cap Transformation“ for analyzing agricultural lands with Landsat-MSS data. The tasseled cap transformation was presented in 1976 by R.J. Kauth and G.S. Thomas of Environmental Research Institute of Michigan in an article entitled "The tasseled Cap -- A Graphic Description of the Spectral-Temporal Development of Agricultural Crops as Seen by Landsat."  Crops phenological trajectories through red ~ near infrared feature space look like a „tasseled cap“. 
+
+![Crop phenological trajectories in near infrared ~ red featurespace. Band numbers relate to Landsat MSS bands, where band 3 (6) is the near infrared and band 2 (5) is the red band.](fig/s03_tc_concept.png){width=30%}
+
+We can observe these trajectories by producing near infrared ~ red scatterplots for different points in time.
+
+![Scatterplot of 10,000 locations of an agricultural system in southeastern Turkey in near infrared ~ red featurespace, observed within the course of one year (2015).](fig/s03_sct_cln.gif){width=50%}
+
+
+Resulting from the TC, we commonly analyze three components called brightness, greenness, and wetness:
+
+- Brightness: an axis alongside the line of soils, indicating soil brightnes.
+- Greenness: axis is perpendicular to the line of soils, emphasizes near infrared and thus vegetation state.
+- Wetness: emphasizes shortwave infrared and is thus related to water content.
+
+------
+
+## Exercise
+
+1)  Load the training data shapefile with the extracted spectral values into R. Calculate the NDVI and EVI from the extracted values. The EVI formula for Landsat data is as follows: 
+
+$EVI = 2.5 * ((nIR – red) / (nIR + 6 * red – 7.5 * blue + 1))$
+
+2) Perform the tasseled cap transformation of the extracted values. We use the coefficients derived by Crist et al. (1985). 
+
+
+```r
+tcc <- matrix(c( 0.2043,  0.4158,  0.5524, 0.5741,  0.3124,  0.2303, 
+                -0.1603, -0.2819, -0.4934, 0.7940, -0.0002, -0.1446,
+                 0.0315,  0.2021,  0.3102, 0.1594, -0.6806, -0.6109), 
+                dimnames = list(c('blue', 'green', 'red', 'nIR', 'swIR1', 'swIR2'), c('bright', 'green', 'wet')),
+                ncol = 3)
+
+print(tcc)
+```
+
+```
+      bright   green     wet
 blue  0.2043 -0.1603  0.0315
 green 0.4158 -0.2819  0.2021
 red   0.5524 -0.4934  0.3102
 nIR   0.5741  0.7940  0.1594
 swIR1 0.3124 -0.0002 -0.6806
-swIR2 0.2303 -0.1446 -0.6109</code></pre>
-<p>The TC is a linear band transformation. We can simply multiply each band with its factor and sum them up. A more straightforward way can be matrix multiplication, using <code>%*%</code> in R.</p>
-<div class="figure">
-<img src="http://calculus.seas.upenn.edu/uploads/Main/MatrixMult.gif" alt="Multiplication of a 2x3 matrix with a 3x3 matrix. Source: http://calculus.seas.upenn.edu/" style="height:80.0%" />
-<p class="caption">Multiplication of a 2x3 matrix with a 3x3 matrix. Source: <a href="http://calculus.seas.upenn.edu/" class="uri">http://calculus.seas.upenn.edu/</a></p>
-</div>
-<ol start="2" style="list-style-type: decimal">
-<li><p>Create boxplots of the vegetation indices and TC components.</p></li>
-<li><p>Explore the spectral bands and vegetation indices for the other Landsat images by repeating task 4) to 7) using the other input images.</p></li>
-</ol>
-<p>Please submit a .zip file including your training data shapefile and R-script in moodle before Monday.</p>
-</div>
-<div id="reading-materials.-1" class="section level2">
-<h2>Reading materials.</h2>
-<hr />
-</div>
-</div>
-<div id="session-04-pixel-based-compositing" class="section level1">
-<h1>Session 04: Pixel-based compositing</h1>
-<div id="learning-goals-4" class="section level2">
-<h2>Learning goals</h2>
-</div>
-<div id="reading-materials.-2" class="section level2">
-<h2>Reading materials.</h2>
-<hr />
-</div>
-</div>
-<div id="session-05-machine-learning-for-image-classification" class="section level1">
-<h1>Session 05: Machine learning for image classification</h1>
-<div id="learning-goals-5" class="section level2">
-<h2>Learning goals</h2>
-</div>
-<div id="reading-materials.-3" class="section level2">
-<h2>Reading materials.</h2>
-<hr />
-</div>
-</div>
-<div id="session-06-accuracy-assessment-and-area-estimation" class="section level1">
-<h1>Session 06: Accuracy assessment and area estimation</h1>
-<div id="learning-goals-6" class="section level2">
-<h2>Learning goals</h2>
-</div>
-<div id="reading-materials.-4" class="section level2">
-<h2>Reading materials.</h2>
-<hr />
-</div>
-</div>
-<div id="session-07-multi-temporal-change-detection" class="section level1">
-<h1>Session 07: Multi-temporal change detection</h1>
-<div id="learning-goals-7" class="section level2">
-<h2>Learning goals</h2>
-</div>
-<div id="reading-materials.-5" class="section level2">
-<h2>Reading materials.</h2>
-<hr />
-</div>
-</div>
-<div id="session-08-spectral-temporal-metrics" class="section level1">
-<h1>Session 08: Spectral-temporal metrics</h1>
-<div id="learning-goals-8" class="section level2">
-<h2>Learning goals</h2>
-</div>
-<div id="reading-materials.-6" class="section level2">
-<h2>Reading materials.</h2>
-<hr />
-</div>
-</div>
-<div id="project-work" class="section level1">
-<h1>Project work</h1>
-<div id="phase-i" class="section level2">
-<h2>Phase I</h2>
-</div>
-<div id="phase-ii" class="section level2">
-<h2>Phase II</h2>
-</div>
-<div id="phase-iii" class="section level2">
-<h2>Phase III</h2>
-<hr />
-</div>
-</div>
-<div id="terminology" class="section level1">
-<h1>Terminology</h1>
-<p>This is a non-exhaustive list of common terms and their definitions.</p>
-<div id="observations" class="section level2">
-<h2>Observations</h2>
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/Pixel/">Pixel</a></li>
-<li><p>Observation</p></li>
-<li>Path/Row; WRS-2; Footprint; Scene: Partitions of Landsat images into approximately 185 × 185 km squares.</li>
-<li>Grid: an arbitrary subdivision with square units in the target coordinate system.</li>
-<li>Tile: an entity of the grid with a unique tile identifier.</li>
-<li>Chip: the individual gridded images that are affiliated with the tile.</li>
-<li><p>Scene, Image</p></li>
-<li>Data cube, Stack</li>
-<li>Time series</li>
-<li>Archive</li>
-<li><p>Collection, Tier, Processing level</p></li>
-<li><p>DN, TOA, BOA</p></li>
-</ul>
-</div>
-<div id="sensor-characteristics" class="section level2">
-<h2>Sensor characteristics</h2>
-<ul>
-<li>Satellite</li>
-<li>Sensor</li>
-<li>Spatial resolution</li>
-<li>Temporal resolution</li>
-<li>Temporal coverage</li>
-<li>Spectral resolution</li>
-<li>Radiometric resolution</li>
-</ul>
-</div>
-<div id="data-characteristics" class="section level2">
-<h2>Data characteristics</h2>
-<ul>
-<li>Spectral band</li>
-<li><p>Image quality</p></li>
-<li>Very High Resolution (VHR)</li>
-<li>High Resolution</li>
-<li>Medium Resolution</li>
-<li>Moderate Resolution</li>
-<li><p>Coarse Resolution</p></li>
-<li>Time Series</li>
-<li>Observation density</li>
-<li>Multi-temporal</li>
-<li><p>Hyper-temporal</p></li>
-</ul>
-</div>
-<div id="higher-level-products" class="section level2">
-<h2>Higher-level products</h2>
-<ul>
-<li>Composite / Mosaic</li>
-<li>Pixel-based composites (Best observation composite)</li>
-<li>Phenology-adaptive composites</li>
-<li>Spectral-temporal metrics</li>
-<li>Rank-band composite / metric</li>
-<li>Phenometrics</li>
-</ul>
-</div>
-<div id="time-intervals" class="section level2">
-<h2>Time intervals</h2>
-<ul>
-<li>Multi-annual</li>
-<li>Inter-annual</li>
-<li>Annual</li>
-<li>Intra-annual</li>
-<li>Seasonal</li>
-</ul>
+swIR2 0.2303 -0.1446 -0.6109
+```
+
+The TC is a linear band transformation. We can simply multiply each band with its factor and sum them up. A more straightforward way can be matrix multiplication, using ```%*%``` in R. 
+
+![Multiplication of a 2x3 matrix with a 3x3 matrix. Source: http://calculus.seas.upenn.edu/](http://calculus.seas.upenn.edu/uploads/Main/MatrixMult.gif){height=80%}
+
+2)  Create boxplots of the vegetation indices and TC components. 
+
+3)  Explore the spectral bands and vegetation indices for the other Landsat images by repeating task 4) to 7) using the other input images. 
+
+Please submit a .zip file including your training data shapefile and R-script 
+in moodle before Monday. 
+
+## Reading materials.
+
+------
+
+# Session 04: Pixel-based compositing
+
+------
+
+## Learning goals
+
+
+
+------
+
+## Compositing
+
+- Create a cloud free coverage by combining several partially clouded images
+- [Do not confuse terminology: false color composite, multi-temporal composite bands, etc.]
+- Originally developed for coarse resolution sensors with daily global coverage that lack cloud masks…
+
+For Landsat and similar data, compositing is still a relatively new topic
+
+Reasons:
+
+- Free data policy started 2008
+- observation frequency improved with the launch of Landsat 8, while Landsat 7 SLC off (and previous Landsat 5 after 25 years in orbit) where limited
+- automation of cloud masking and atmospheric correction
+computational power & storage capacity
+
+------
+
+## Pixel-based compositing
+
+- Image compositing now allows to create cloud free, radiometrically consistent image datasets over large areas from the Landsat archive
+
+![Global WELD. Source: Roy et al. 2014](fig/s04_WELD.gif)
+
+- Automated cloud masking has improved greatly (e.g. Fmask, Zhu and Woodcock 2012) or Sentinel cloud screening (e.g. Frantz et al. 2018)
+- Automated pre-processing to surface reflectance products allows integration of L4, L5, L7, L8 (and Sentinel2); e.g. via LEDAPS by Masek et al. 2006, Ju et al. 2012) 
+
+
+------
+
+## The global Landsat archive
+
+#### Archive consolidation
+
+![Global Landsat archive as of 2013. source: ?????](fig/s04_global_ls_archive.gif)
+
+#### Landsat observation density
+
+![Global Landsat observation density. Source: Wulder et al. 2016; doi:10.1016/j.rse.2015.11.032](fig/s04_landsat_density.gif)
+
+------
+
+## Compositing vs. metrics
+
+Two main types of compositing outputs:
+
+1. Best observation/pixel composites:
+- Parametric scoring approach (DOY, distance cloud/shadow, haze score, etc.)
+- Seasonal tuning
+- Traceability using metaFlag images
+
+2. Spectral-temporal Metrics:
+- Values usually not observed, but derived (e.g. mean or standard deviation)
+
+Rank band Metrics:
+
+- Several features that characterize the statistical distribution of cloud free observations per band and pixel
+- Rank bands used to identify spectral vector of the acquisition that for example relates to the median NDVI
+
+![Rank band metrics plot](fig/s04_metrics_plot.gif)
+
+
+------
+
+## Reading materials.
+
+Griffiths, P., van der Linden, S., Kuemmerle, T., & Hostert, P. (2013). A Pixel-Based Landsat Compositing Algorithm for Large Area Land Cover Mapping. IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing, 6, 2088-2101
+Roy, D.F., Ju, J., Kline, K., Scaramuzza, P. L., Kovalskyy, V., Hansen, M., ... Zhang, C. (2010). Web-enabled Landsat data (WELD): Landsat ETM+ composited mosaics of the conterminous United States. Remote Sensing of Environment, 114,35–49.
+White, J.C., Wulder, M.A., Hobart, G.W., Luther, J.E., Hermosilla, T., Griffiths, P., Coops, N.C., Hall, R.J., Hostert, P., Dyk, A., & Guindon, L. (2014). Pixel-Based Image Compositing for Large-Area Dense Time Series Applications and Science. Canadian Journal of Remote Sensing, 192-212
+
+-- Masek 2006, Ju 2012 
+
+------
+
+# Session 05: Machine learning for image classification
+
+## Learning goals
+
+## Reading materials.
+
+------
+
+# Session 06: Accuracy assessment and area estimation
+
+## Learning goals
+
+## Reading materials.
+
+------
+
+# Session 07: Multi-temporal change detection
+
+## Learning goals
+
+## Reading materials.
+
+------
+
+# Session 08: Spectral-temporal metrics
+
+## Learning goals
+
+## Reading materials.
+
+------
+
+# Project work
+
+## Phase I
+
+## Phase II
+
+## Phase III
+
+------
+
+# Terminology
+
+This is a non-exhaustive list of common terms and their definitions.
+
+## Observations
+
+- [Pixel](https://en.wikipedia.org/wiki/Pixel/)
+- Observation
+
+- Path/Row; WRS-2; Footprint; Scene: Partitions of Landsat images into approximately 185 × 185 km squares.
+- Grid: an arbitrary subdivision with square units in the target coordinate system.
+- Tile: an entity of the grid with a unique tile identifier. 
+- Chip: the individual gridded images that are affiliated with the tile.
+- Scene, Image
+
+- Data cube, Stack
+- Time series
+- Archive
+- Collection, Tier, Processing level
+
+- DN, TOA, BOA
+
+## Sensor characteristics
+
+- Satellite
+- Sensor
+- Spatial resolution
+- Temporal resolution
+- Temporal coverage
+- Spectral resolution
+- Radiometric resolution
+
+## Data characteristics
+
+- Spectral band
+- Image quality
+
+- Very High Resolution (VHR)
+- High Resolution
+- Medium Resolution
+- Moderate Resolution
+- Coarse Resolution
+
+- Time Series
+- Observation density
+- Multi-temporal
+- Hyper-temporal
+
+## Higher-level products
+
+- Composite / Mosaic
+- Pixel-based composites (Best observation composite)
+- Phenology-adaptive composites
+- Spectral-temporal metrics
+- Rank-band composite / metric
+- Phenometrics
+
+## Time intervals
+
+- Multi-annual
+- Inter-annual
+- Annual
+- Intra-annual 
+- Seasonal
+
+-->
 </div>
 </div>
 
