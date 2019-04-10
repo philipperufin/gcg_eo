@@ -21,13 +21,13 @@
 
 .header-panel h1 {
     color: #000;
-	font-family: sans-serif;
+	font-family: "Calibri", Times, sans-serif;
     font-size: 28px;
     padding-left: 35px;
 }
 
 .header-panel h4 {
-    font-family: sans-serif;
+    font-family: "Calibri", Times, sans-serif;
 	font-size: 16px;
     color: #000;
     padding-left: 35px;
@@ -35,13 +35,13 @@
 }
 
 .header-panel h4.author {
-	font-family: sans-serif;	
+	font-family: "Calibri", Times, sans-serif;	
     font-size: 14px;
 	font-style: italic;
 }
 
 .header-panel h4.date {
-  font-family: sans-serif;
+  font-family: "Calibri", Times, sans-serif;
   font-size: 14px;
   font-style: italic;
 }
@@ -63,7 +63,7 @@
 }
 
 .menu ul li {
-	font-family: sans-serif;
+	font-family: "Calibri", Times, sans-serif;
     list-style: none;
     padding: 10px 0 10px 10px;
     font-size: 15px;
@@ -163,7 +163,7 @@ pre > code {
 }
 
 .chisq-results {
-	font-family: sans-serif;
+	font-family: "Calibri", Times, sans-serif;
     font-size: 85%;
     font-style: italic;
     margin-top: -1em;
@@ -220,7 +220,7 @@ img.image-thumb {
 }
 
 .figure p.caption {
-	font-family: sans-serif;
+	font-family: "Calibri", Times, sans-serif;
     margin: 0px;
     padding: 0px;
     font-size: 80%;
@@ -281,7 +281,7 @@ table .panel-body {
 }
 
 .datatables label {
-  font-family: sans-serif;
+  font-family: "Calibri", Times, sans-serif;
   color: #333;
   font-size: 90%;
   font-weight: 300;
@@ -291,7 +291,7 @@ table .panel-body {
 .dataTables_filter,
 .dataTables_info,
 .dataTables_paginate {
-  font-family: sans-serif;
+  font-family: "Calibri", Times, sans-serif;
   font-size: 80%;
 }
 

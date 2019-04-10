@@ -53,17 +53,17 @@ In the course you will learn about current state-of-the-art methods in image pro
 
 ------
 
-## Course materials
+# Course materials
 
-### Readings
+## Readings
 
 The first sessions of the course contain reading materials, such as are peer-reviewed papers and technical reports. You will find the reading materials for the next session at the end of each session. We highlight aspects to focus upon to streamline the reading process and facilitate the discussion. We are looking forward to lively discussions of the reading materials and critical questions from your end. 
 
-### Data
+## Data
 
 All data used in the course is openly accessible. Mostly, we´ll be working with Landsat images, which you can access through the USGS Earth Explorer. We provide download links to the datasets for each session. It will be helpful if you organize your data in a course directory on your local machine (MSc students might want to use drive ```O:/Student_Data/your_name/EO/```). We will refer to this folder as ```course.dir``` throughout this course. Create subdirectories for each session, e.g. ```course.dir/S01/``` and separate data, code and course materials in additional sub-directories (e.g. ```/data```, ```/code```, ```/docs```).
 
-### Exercises
+## Exercises
 
 The weekly exercises are defined in the respective session. Each session comprises several tasks that involve scipting in R. Course participants must submit completed exercises, documented as R scripts, in [moodle](http://moodle.hu-berlin.de/) to pass. Weekly submission deadlines are every sunday, 23:59. Please structure your script for every exercise as follows:
 
@@ -210,7 +210,7 @@ library(raster)
 
 1) Let´s get some Landsat data. Visit the [USGS Earth Explorer](http://earthexplorer.usgs.gov/) and use the Adress/Place field to navigate to Wisła, Poland	(lat,lon: 49.6473,18.8677). Switch to the 'Data Sets' tab and select Landsat -> Landsat Collection 1 Level-1. Tick the 'Landsat 8 OLI/TIRS C1 Level 1' box and click on 'Results >>'. 
 
-2) You´ll get several hundreds of results, so let´s narrow down the search. Switch to the 'Additional Criteria' tab. Let´s choose a scene cloud cover of 'Less than 40%', the 'Tier 1' category and narrow the date range to February 2014 until August 2014.
+2) You´ll get several hundreds of results, so let´s narrow down the search. Under 'Search Criteria', define an acquisition date range between February 2014 and August 2014. Switch to the 'Additional Criteria' tab. Let´s choose a scene cloud cover of 'Less than 40%', and select the 'Tier 1' category. 
 
 Find the following images:
 
