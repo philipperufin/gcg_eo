@@ -264,7 +264,7 @@ The common extent of the two images is pretty large. In order to reduce the amou
 
 ### 4) Writing data
 
-Write the cropped stacks from 10) to your folder using ```writeRaster()```. Use the ```GTiff``` format and the [appropriate datatype](https://www.rdocumentation.org/packages/raster/versions/2.5-8/topics/dataType). Why is this important?
+Write the cropped stacks to your folder using ```writeRaster()```. Use the ```GTiff``` format and the [appropriate datatype](https://www.rdocumentation.org/packages/raster/versions/2.5-8/topics/dataType). Why is this important?
 
 ------
 
@@ -284,7 +284,7 @@ Use the ```extract()``` function to get spectral profiles from both images. Use 
 
 ```coordinate <- data.frame('x' = 355623, 'y' = 5486216)```. 
 
-Visualize the results from 14) in R. Can you create one plot that shows two spectral profiles (one for each image in the stack), while accounting for the band wavelength and acquisition date? Can you guess what type of surface we are looking at?
+Visualize the results in R. Can you create one plot that shows two spectral profiles (one for each image in the stack), while accounting for the band wavelength and acquisition date? Can you guess what type of surface we are looking at?
 
 ![Spectral profiles for two observation dates](fig/s01_spectra.png){width=60%}
 
@@ -364,7 +364,7 @@ As DNs are dependent on the sensor calibration, identical measurements yield dif
 
 A conversion of DNs into radiance can be easily undertaken. By accounting for sun-sensor geometries and solar irradiance, we can easily infer top-of-atmosphere reflectance (TOA) from radiance. This facilitates, e.g., a comparison of measurements from different sensors. 
 
-Practically, this involves a linear scaling of the DN values which uses two band-specific rescaling factors. One is multiplicative, one is additive. Formulas are explained in the [USGS guide for conversion to TOA Reflectance](https://landsat.usgs.gov/using-usgs-landsat-8-product). With Landsat 8 Collection 1 data, we can use a single set of coefficients to convert DNs to TOA reflectance. Note that this is not the case for all sensors.  
+Practically, this involves a linear scaling of the DN values which uses two band-specific rescaling factors. One is multiplicative, one is additive. Formulas are explained in the [USGS guide for conversion to TOA Reflectance](https://www.usgs.gov/land-resources/nli/landsat/using-usgs-landsat-level-1-data-product). With Landsat 8 Collection 1 data, we can use a single set of coefficients to convert DNs to TOA reflectance. Note that this is not the case for all sensors.  
 
 $ρλ' = M_ρ * Q_{cal} + A_ρ$
 
@@ -429,10 +429,10 @@ mtl.txt <- read.delim(mtl, sep = '=', stringsAsFactors = F)
 REFLECTANCE_MULT_BAND <- as.numeric(mtl.txt[grep("REFLECTANCE_MULT_BAND",mtl.txt$GROUP),][2:7,2])
 ```
 
-Convert the DN values to TOA following the “Conversion to TOA Reflectance” section in the [USGS guide for conversion to TOA Reflectance](https://landsat.usgs.gov/using-usgs-landsat-8-product). Important things to keep in mind: 
+Convert the DN values to TOA following the “Conversion to TOA Reflectance” section in the [USGS guide for conversion to TOA Reflectance](https://www.usgs.gov/land-resources/nli/landsat/using-usgs-landsat-level-1-data-product). Important things to keep in mind:
 
-- The Landsat data is provided as integer values. When applying the equation, the data will be cast to float. You will have to re-convert to integer at some point. Use a reflectance scaling factor of 10,000 during the conversion.
 - You can apply the conversion to all bands in a stack simultaneously.
+- The Landsat data is provided as integer values. When applying the equation, the data will be cast to float. You will have to re-convert to integer at some point. Use a reflectance scaling factor of 10,000 during the conversion.
 - The sun elevation angle provided in the metadata file is reported in degrees. The ```sin()``` function expects that angles are provided in radians. For the conversion to work correctly, you need to convert ```SUN_ELEVATION``` into radians. Make use of this helper function:
 
 ```{r deg2rad, echo=TRUE, eval=FALSE}
@@ -453,7 +453,10 @@ Open the BOA and the TOA file in QGIS and visually assess the differences in the
 - Impervious surfaces
 - Water
 
+In your R script, take notes on the following questions:
+
 a) What are the most evident differences between TOA and SR reflectance spectra? 
+
 b) Briefly summarize the spectral appearance of the six land cover types, and the main difference between the TOA and SR.
 
 ------
@@ -473,9 +476,9 @@ b) Briefly summarize the spectral appearance of the six land cover types, and th
 Think about the following question and exchange with your neighbor: 
 Which issues affect the data quality of optical satellite images?
 
-How to find out if a pixel is affected by any of these issues? Luckily, the USGS provides quality bands for the Landsat Collection 1 products. If we look up what this band contains, we find out that: 
+How to find out if a pixel is affected by any of these issues? Luckily, the USGS provides quality bands for the Landsat Collection 1 products. If we look up the [Landsat QA band website](https://www.usgs.gov/land-resources/nli/landsat/landsat-collection-1-level-1-quality-assessment-band) to find out what this band contains, we find the following information: 
 
-“Each pixel in the QA band contains unsigned integers that represent bit-packed combinations of surface, atmospheric, and sensor conditions that can affect the overall usefulness of a given pixel.” 
+*“Each pixel in the QA band contains unsigned integers that represent bit-packed combinations of surface, atmospheric, and sensor conditions that can affect the overall usefulness of a given pixel.”*
 
 ![False-color representation of a cloudy Landsat Level 1 image (left) and a grey-scale visualization of the Landsat QA band (right)](fig/s02_qa_band.png){width=60%}
 
@@ -511,7 +514,7 @@ The more positions or bits we have the higher numbers we can generate. With 5 bi
 The Landsat QA band is coded in 16 bit, which are arranged from right to left. Each bit has a specific meaning in terms of data quality
 e.g. bit 4 (or position 5 from the right) means „cloud“. If bit 4 has the state 1 (or "YES", or "TRUE"), there was a cloud detected in that pixel. If bit 4 has the state 1, the resulting integer value will be 2^4 = 16. Following this logic, different combinations of true / false conditions result in different integer values.
 
-![Landsat QA band bit designation (https://landsat.usgs.gov/collectionqualityband)](fig/s02_landsat_qa.png){width=80%}
+![Landsat QA band bit designation](fig/s02_landsat_qa.png){width=80%}
 
 In the Landsat QA band, there are furthermore single and double bits. Single bits inform about one condition in a binary manner:
 
