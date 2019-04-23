@@ -525,7 +525,7 @@ deg2rad &lt;-<span class="st"> </span><span class="cf">function</span>(deg){ (de
 <p class="caption">The binary number system. Source: Wikipedia</p>
 </div>
 <p>The binary system represents numbers through sequences of bits. Each bit has a position and a state. The positions are numbered from 0 to the total number of bits, read from right to left. The state of a bit can be either, 0, or 1. Consider the meaning of 0 as „FALSE“ or „NO“, 1 equals „TRUE“ or „YES“.</p>
-<p>In the example above, five bit positions are given. Each position is sequentially numbered, starting with 0, read from right to left. By calculating 2 to the power of the bit position, we receive the value of each bit. For all bits with the value 1, we sum the respective values. Different combinations of states and positions thus enable us to represent integer numbers.</p>
+<p>In the example above, five bit positions are given. Each position is sequentially numbered, starting with 0, read from right to left. By calculating 2 to the power of the bit position, we receive the value of each bit. For all bits with the value 1, we sum the respective values. Different combinations of states and positions therefore enable us to represent integer numbers.</p>
 <p>The more positions or bits we have the higher numbers we can generate. With 5 bits, we can represent the numbers 0 – 31 (32 unique values), with 16 bits, we can represent the numbers 0 - 65,535 (65,536 unique values). Following the example with 5 bits, we can for instance represent these numbers:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 00001</span>
 <span class="dv">0</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">4</span> <span class="op">+</span><span class="st"> </span><span class="dv">0</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">0</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">0</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">0</span></code></pre></div>
@@ -687,7 +687,7 @@ ndvi &lt;-<span class="st"> </span>(nIR <span class="op">-</span><span class="st
 </div>
 <div id="tasseled-cap-transformation" class="section level2">
 <h2>Tasseled Cap Transformation</h2>
-<p>The Tasseled Cap Transformation (TC) is a linear transformation of the Landsat spectral bands. It was first presented in 1976 by R.J. Kauth and G.S. Thomas of Environmental Research Institute of Michigan in an article titled “The Tasseled Cap – A Graphic Description of the Spectral-Temporal Development of Agricultural Crops as Seen by Landsat.” The Tasseled Cap Transformation was thus developed for analyzing agricultural lands with Landsat MSS data. The name „Tasseled Cap“ was chosen because the of the shape of phenological trajectories of crops in the nIR ~ red feature space.</p>
+<p>The Tasseled Cap Transformation (TC) is a linear transformation of the Landsat spectral bands. It was first presented in 1976 by R.J. Kauth and G.S. Thomas of Environmental Research Institute of Michigan in an article titled “The Tasseled Cap – A Graphic Description of the Spectral-Temporal Development of Agricultural Crops as Seen by Landsat.” The TC was thus developed for analyzing agricultural lands with Landsat MSS data. The name „Tasseled Cap“ was chosen because the of the shape of phenological trajectories of crops in the nIR ~ red feature space.</p>
 <div class="figure">
 <img src="fig/s03_tc_concept.png" alt="Crop phenological trajectories in near infrared ~ red featurespace. Band numbers relate to Landsat MSS bands, where band 3 (6) is the near infrared and band 2 (5) is the red band." style="width:40.0%" />
 <p class="caption">Crop phenological trajectories in near infrared ~ red featurespace. Band numbers relate to Landsat MSS bands, where band 3 (6) is the near infrared and band 2 (5) is the red band.</p>
@@ -700,8 +700,8 @@ ndvi &lt;-<span class="st"> </span>(nIR <span class="op">-</span><span class="st
 <p>The concept was further developed for the use with other sensors, including Landsat TM, ETM+ and OLI. It is still widely used for different applications in the context of urban, agricultural, or forest-related remote-sensing studies. Resulting from the TC, we mostly analyze three components called Brightness, Greenness, and Wetness:</p>
 <ul>
 <li><em>Brightness</em>: an axis along the line of soils, indicating soil brightness.</li>
-<li><em>Greenness</em>: axis is perpendicular to the soil line, emphasizes near infrared and thus vegetation.</li>
-<li><em>Wetness</em>: emphasizes shortwave infrared and is thus related to water content.</li>
+<li><em>Greenness</em>: axis is perpendicular to the soil line, emphasizes near infrared and hence vegetation.</li>
+<li><em>Wetness</em>: emphasizes shortwave infrared and is thereby related to water content.</li>
 </ul>
 <hr />
 </div>
@@ -773,7 +773,8 @@ swIR2     0.2303   -0.1446 -0.6109</code></pre>
 <li><p>A precise and robust definition of your target classes based on the study region characteristics is key. Targeting a high thematic detail is beneficial, but spectral(-temporal) similarities between classes might pose limitations to a robust distinction of classes, such as tree species or crop types. In such cases, it is advised to think about a hierarchical structure to aggregate similar classes into higher level classes, such as forest types, or annual / perennial croplands.</p></li>
 <li><p>Gathering as much reference information as possible. Can we find additional datasets that guide our interpretation? Is any very high resolution (VHR) imagery available? GoogleEarth is a valuable source of VHR imagery, but it is critical to account for the exact acquisition date.</p></li>
 <li><p>Good knowledge of the target classes, and their spectral (temporal) characteristics in the study region is beneficial. We should consider spectrally similar classes and identify potential ways to prevent confusion, e.g., by aggregating those classes or identifying spectral features which help to separate them better.</p></li>
-<li><p>A purely random point sampling is not neccessarily the best option (different from collecting independent validation data), as we might want to train small classes that are hardly captured by a random sample. Manual selection of training points is thus advised. However, the training data should be well distributed across the study region to capture regional biophysical variability, such as different soil types, weather patterns, or topography.</p></li>
+<li><p>A purely random point sampling is not neccessarily the best option (different from collecting independent validation data), as we might want to train small classes that are hardly captured by a random sample. Manual selection of training points is advised to circumvent this problem.</p></li>
+<li><p>The image below shows the spatial distribution of six training datasets collected during an earlier iteration of the course. Some training points cluster in a subset of the study region. Ideally, however, training data should be well distributed across the study region to cover regional biophysical variability, such as different soil types, weather patterns, or topography.</p></li>
 </ul>
 <div class="figure">
 <img src="fig/s03_train_dist.PNG" alt="Spatial distribution of six training datasets" />
@@ -797,7 +798,7 @@ swIR2     0.2303   -0.1446 -0.6109</code></pre>
 <li>LC081890252014110501T1-SC20170927102137 (05 November 2014)</li>
 </ul>
 <p>…vector/: A shapefile and a *.kmz file for GoogleEarth, which will help you to accurately delineate the Landsat pixel locations and extents for training data collection.</p>
-<p>…BDL/: Forestry data collected in 2015 which is publicly available here. We prepared a shapefile for the use in this session.</p>
+<p>…BDL/: Forestry data collected in 2015 which is publicly available <a href="https://www.bdl.lasy.gov.pl/portal/wniosek-en">here</a>. We prepared a shapefile for the use in this session.</p>
 <p>It contains the following attributes:</p>
 <table>
 <thead>
@@ -833,7 +834,8 @@ swIR2     0.2303   -0.1446 -0.6109</code></pre>
 <li><p>Visualize the forestry data by choosing distinct colors for the different tree genera (species_en).</p></li>
 </ol>
 <p>Which genera are dominant in the study area?</p>
-<p>Generate a new point shapefile for storing the training data you will collect in the next task. It should contain the attribute fields ‘classID’ and ‘confID’ (both of type integer). Make sure it has the same spatial reference system as the Landsat data.</p>
+<p>Generate a new point shapefile for storing the training data you will collect in the next task. It should contain the attribute fields ‘classID’ and ‘confID’ (both of type integer).</p>
+<p>Watch out - make sure the shapefile has the same spatial reference system as the Landsat data.</p>
 </div>
 <div id="collect-training-data" class="section level3">
 <h3>2) Collect training data</h3>
@@ -874,7 +876,7 @@ swIR2     0.2303   -0.1446 -0.6109</code></pre>
 </tr>
 </tbody>
 </table>
-<p>Use the multi-temporal Landsat imagery, the forestry polygons and very high resolution imagery in GoogleEarth to identify training points. The historic imagery tool can be extremely useful to guide your interpretation between deciduous and evergreen trees, as it contains imagery from the leaf-off phenological phase. The Landsat grid shapefile and .kmz will help you to identify and label the precise training locations for the four classes.</p>
+<p>Use the multi-temporal Landsat imagery, the forestry polygons and very high resolution imagery in GoogleEarth to identify training points. The historic imagery tool in Google Earth can be extremely useful to guide your interpretation between deciduous and evergreen trees, as it contains imagery from the leaf-off phenological phase. The Landsat grid shapefile and .kmz will help you to identify and label the precise training locations for the four classes.</p>
 <p>Regularly save the collected points and store the final shapefile with 60+ points in your course folder.</p>
 </div>
 <div id="explore-your-training-data" class="section level3">
