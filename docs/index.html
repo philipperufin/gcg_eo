@@ -112,7 +112,7 @@ $(document).ready(function () {
         <li><a href="#hello">Hello!</a></li>
         <li><a href="#introducing-r">Introducing R</a></li>
         <li><a href="#course-materials">Course materials</a></li>
-        <li><a href="#session-01-handling-raster-data-in-r">Session 01: Handling raster data in R</a></li>
+        <li><a href="#session-01-handling-rasters-in-r">Session 01: Handling rasters in R</a></li>
         <li><a href="#session-02-from-dns-to-toa">Session 02: From DNs to TOA</a></li>
         <li><a href="#session-02-data-quality-cloud-masking">Session 02: Data quality &amp; cloud masking</a></li>
         <li><a href="#session-03-vegetation-indices-and-data-transforms">Session 03: Vegetation indices and data transforms</a></li>
@@ -264,16 +264,16 @@ data.dir &lt;-<span class="st"> &#39;course.dir/S01/data/&#39;</span>
 <!-- ################################## SESSION 01 ############################################## -->
 </div>
 </div>
-<div id="session-01-handling-raster-data-in-r" class="section level1">
-<h1>Session 01: Handling raster data in R</h1>
+<div id="session-01-handling-rasters-in-r" class="section level1">
+<h1>Session 01: Handling rasters in R</h1>
 <div id="learning-goals" class="section level2">
 <h2>Learning goals</h2>
 <p>In this session, you will</p>
 <ul>
-<li>Acquire multi-spectral satellite data.</li>
-<li>Read &amp; write raster data.</li>
-<li>Manipulate the spatial extent of rasters.</li>
-<li>Extract cell values &amp; plot a spectral profile.</li>
+<li>Acquire multi-spectral satellite data</li>
+<li>Read &amp; write raster data</li>
+<li>Manipulate the spatial extent of rasters</li>
+<li>Extract cell values &amp; plot a spectral profile</li>
 </ul>
 <hr />
 </div>
@@ -501,9 +501,9 @@ deg2rad &lt;-<span class="st"> </span><span class="cf">function</span>(deg){ (de
 <div id="learning-goals-2" class="section level2">
 <h2>Learning goals</h2>
 <ul>
-<li>Understand how to use the Landsat Collection 1 quality bands.</li>
-<li>Produce cloud / cloud shadow masks of differing confidence levels.</li>
-<li>Mask Landsat images.</li>
+<li>Understand how to use the Landsat Collection 1 quality bands</li>
+<li>Produce cloud / cloud shadow masks of differing confidence levels</li>
+<li>Mask Landsat images</li>
 </ul>
 <hr />
 </div>
@@ -618,8 +618,8 @@ fill_pixels &lt;-<span class="st"> </span><span class="cf">function</span>(x) {<
 <p>Next, load the BOA data as a stack (VIS, nIR, swIR) and use the <code>mask()</code> function to mask clouds, cloud shadows and fill values from the image. Use the mask which you found to be more accurate. Make sure to specify the maskvalue argument accordingly. Write the masked BOA stack to disk in the <code>GTiff</code> format.</p>
 </div>
 </div>
-<div id="reading-materials." class="section level2">
-<h2>Reading materials.</h2>
+<div id="reading-materials-1" class="section level2">
+<h2>Reading materials</h2>
 <p>In the next session, we would like to discuss the following paper:</p>
 <p><a href="https://doi.org/10.1016/j.rse.2013.04.022">Griffiths, P. et al. (2014). Forest disturbances, forest recovery, and changes in forest types across the Carpathian ecoregion from 1985 to 2010 based on Landsat image composites. Remote Sensing of Environment, 151, 72–88.</a></p>
 <p>In this paper, a long time series of Landsat image composites at five year intervals is used to study the dynamics of forest disturbance, recovery and changes in forest types across the Carpathian ecoregion. Please make sure to read the paper thoroughly and focus on the following broad questions:</p>
@@ -630,6 +630,7 @@ fill_pixels &lt;-<span class="st"> </span><span class="cf">function</span>(x) {<
 <li>Are there uncertainties related to the findings?</li>
 </ul>
 <hr />
+<!-- ################################## SESSION 03 ############################################## -->
 </div>
 </div>
 <div id="session-03-vegetation-indices-and-data-transforms" class="section level1">
@@ -638,7 +639,6 @@ fill_pixels &lt;-<span class="st"> </span><span class="cf">function</span>(x) {<
 <h2>Learning goals</h2>
 <ul>
 <li>Learn how to calculate NDVI, EVI and Tasseled Cap components</li>
-<li>Understand how these indices differ</li>
 </ul>
 </div>
 <div id="spectral-behavior-of-vegetation" class="section level2">
@@ -717,7 +717,7 @@ ndvi &lt;-<span class="st"> </span>(nIR <span class="op">-</span><span class="st
 </ul>
 <div id="compute-vegetation-indices" class="section level3">
 <h3>1) Compute vegetation indices</h3>
-<p>Read the March surface reflectance stack in R and calculate NDVI as well as EVI. In line with the MODIS EVI product, the correction factors for the EVI are:</p>
+<p>Read the March surface reflectance stack in R and calculate NDVI as well as EVI. The correction factors for calculating EVI from Landsat data are:</p>
 <ul>
 <li><p><span class="math inline">\(G = 2.5\)</span></p></li>
 <li><p><span class="math inline">\(C1 = 6\)</span></p></li>
@@ -748,7 +748,6 @@ swIR2     0.2303   -0.1446 -0.6109</code></pre>
 <p>Make sure to create an individual layer for Brightness, Greenness, and Wetness. Create a stack from the three layers and scale the results by 10,000. While the computation is ongoing, proceed with task 1) of the block on training data collection.</p>
 <p>When the computation is completed, write the results to disk, using the <code>INT2S</code> data type. Add the NDVI, EVI, and the TC stack to the QGIS project you started in the next block. Visually explore the vegetation indices and TC components.</p>
 <hr />
-<!-- ################################## SESSION 03 ############################################## -->
 </div>
 </div>
 </div>
@@ -903,7 +902,7 @@ spectra.df &lt;-<span class="st"> </span><span class="kw">melt</span>(sr.march, 
 <hr />
 </div>
 </div>
-<div id="reading-materials-1" class="section level2">
+<div id="reading-materials-2" class="section level2">
 <h2>Reading materials</h2>
 <p>In the next session, we would like to discuss the following paper:</p>
 <p><a href="https://www.researchgate.net/publication/259486369_A_Pixel-Based_Landsat_Compositing_Algorithm_for_Large_Area_Land_Cover_Mapping">Griffiths et al. (2013): Pixel-Based Landsat Compositing for Large Area Land Cover Mapping. IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing, 6(5), 2088-2101.</a></p>
@@ -1047,18 +1046,18 @@ White, J.C., Wulder, M.A., Hobart, G.W., Luther, J.E., Hermosilla, T., Griffiths
 <div id="observations" class="section level2">
 <h2>Observations</h2>
 <ul>
-<li><a href="https://en.wikipedia.org/wiki/Pixel/">Pixel</a></li>
-<li><p>Observation</p></li>
+<li><a href="https://en.wikipedia.org/wiki/Pixel">Pixel</a></li>
+<li>Observation</li>
 <li>Path/Row; WRS-2; Footprint; Scene: Partitions of Landsat images into approximately 185 × 185 km squares.</li>
 <li>Grid: an arbitrary subdivision with square units in the target coordinate system.</li>
 <li>Tile: an entity of the grid with a unique tile identifier.</li>
 <li>Chip: the individual gridded images that are affiliated with the tile.</li>
-<li><p>Scene, Image</p></li>
+<li>Scene, Image</li>
 <li>Data cube, Stack</li>
 <li>Time series</li>
 <li>Archive</li>
-<li><p>Collection, Tier, Processing level</p></li>
-<li><p>DN, TOA, BOA</p></li>
+<li>Collection, Tier, Processing level</li>
+<li>DN, TOA, BOA</li>
 </ul>
 </div>
 <div id="sensor-characteristics" class="section level2">
@@ -1078,16 +1077,16 @@ White, J.C., Wulder, M.A., Hobart, G.W., Luther, J.E., Hermosilla, T., Griffiths
 <h2>Data characteristics</h2>
 <ul>
 <li>Spectral band</li>
-<li><p>Image quality</p></li>
+<li>Image quality</li>
 <li>Very High Resolution (VHR)</li>
 <li>High Resolution</li>
 <li>Medium Resolution</li>
 <li>Moderate Resolution</li>
-<li><p>Coarse Resolution</p></li>
+<li>Coarse Resolution</li>
 <li>Time Series</li>
 <li>Observation density</li>
 <li>Multi-temporal</li>
-<li><p>Hyper-temporal</p></li>
+<li>Hyper-temporal</li>
 </ul>
 </div>
 <div id="higher-level-products" class="section level2">
