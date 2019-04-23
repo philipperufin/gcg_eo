@@ -791,7 +791,7 @@ Collecting training data is time consuming, regardless if you are collecting in 
 
 - A purely random point sampling is not neccessarily the best option (different from collecting independent validation data), as we might want to train small classes that are hardly captured by a random sample. Manual selection of training points is advised to circumvent this problem. 
 
-- The image below shows the spatial distribution of six training datasets, collected during an earlier iteration of the course. Some training points cluster in a subset of the study region. Ideally, however, training data should be well distributed across the study region to cover regional biophysical variability, such as different soil types, weather patterns, or topography. 
+- The image below shows the spatial distribution of six training datasets collected during an earlier iteration of the course. Some training points cluster in a subset of the study region. Ideally, however, training data should be well distributed across the study region to cover regional biophysical variability, such as different soil types, weather patterns, or topography. 
 
 ![Spatial distribution of six training datasets](fig/s03_train_dist.PNG)
 
@@ -816,7 +816,7 @@ We provide the following datasets in [our repository](https://box.hu-berlin.de/f
 
 …vector/: A shapefile and a *.kmz file for GoogleEarth, which will help you to accurately delineate the Landsat pixel locations and extents for training data collection. 
 
-…BDL/: Forestry data collected in 2015 which is publicly available [here](https://www.bdl.lasy.gov.pl/portal/wniosek-en). We prepared a shapefile for the use in this session. 
+…BDL/: Forestry data collected in 2015 which is publicly available [here](https://www.bdl.lasy.gov.pl/portal/wniosek-en). We prepared a shapefile for the use in this session.
 
 It contains the following attributes: 
 
