@@ -39,10 +39,6 @@ opts_knit$set(width=75)
 
 Earth Observation is an advanced course for students of the Master of Science ["Global Change Geography"](https://www.geographie.hu-berlin.de/en/studies/study-programs/master-degree-programs/master-of-science) of Humboldt-Universität zu Berlin. In this course, we cover multiple aspects of optical remote sensing by working with multi-sprectral Landsat and Sentinel 2 imagery. The course is fully based on open source software, including R and QGIS.
 
-As you followed the curriculum of the MSc program, you most likely joined the module "Quantitative Methods for Geographers", in which you learned using R for statistical problems. Here, we built on your existing knowledge. If you are not enrolled in the MSc program, feel free to look at the [course materials](https://github.com/corneliussenf/quantitative_methods). 
-
-Alternatively, you may want to follow one of the numerous tutorials for R fundamentals (e.g., [RStudio](https://www.rstudio.com/online-learning/), [DataCamp](https://www.datacamp.com/courses/free-introduction-to-r), [UMC Utrecht](http://www.r-tutorial.nl/), [Advanced R by Hadley Wickham](http://adv-r.had.co.nz/)), or those specifically for geodata processing (e.g., [Wageningen University](https://geoscripting-wur.github.io/), [University of Colorado](https://www.earthdatascience.org/)).
-
 ------
 
 ## Learning goals & course contents
@@ -50,6 +46,14 @@ Alternatively, you may want to follow one of the numerous tutorials for R fundam
 The main goal of this course is to provide you with the necessary knowledge and tools for using optical remote sensing datasets and methods in the geo-scientific context. We want you to enhance your ability of problem-solving, empowering you to perform research independently. To that end, we cover aspects of data acquisition, spatial data handling in R and QGIS, basics of image pre-processing, higher-level processing such as pixel-based compositing and time-series binning. The course contents are related to our lab´s research foci, both in terms of methods and study regions. You may want to check out our [publications](https://www.geographie.hu-berlin.de/en/professorships/geomatics/publications-en), [current projects](https://www.geographie.hu-berlin.de/en/professorships/geomatics/projects), or have a look at [this example](https://www2.hu-berlin.de/geomultisens/europeanLandCover/euroLandCover.html). 
 
 In the course you will learn about current state-of-the-art methods in image processing and time series analyses of optical satellite imagery. The course covers methods related to data quality, cloud masking, vegetation indices, multi-temporal image analyses, machine learning classification algorithms, area adjusted accuracy assessment, time series analyses, and image compositing. We use these methods for mapping of forest types, forest cover changes, agricultural dynamics in the Carpathian ecoregion (Poland), the  Southern Brazilian Amazon, and Crete in Greece.
+
+------
+
+## Requirements 
+
+A good understanding of basic principles of remote sensing is needed to follow this course. Participants should furthermore have a basic understanding of R, including syntax, data types and knowledge on how to read, manipulate and write data. As you followed the curriculum of the MSc program, you most likely joined the module "Quantitative Methods for Geographers", in which you learned using R for statistical problems. Here, we built on your existing knowledge. If you are not enrolled in the MSc program, feel free to look at the [course materials](https://github.com/corneliussenf/quantitative_methods). 
+
+Alternatively, you may want to follow one of the numerous tutorials for R fundamentals (e.g., [RStudio](https://www.rstudio.com/online-learning/), [DataCamp](https://www.datacamp.com/courses/free-introduction-to-r), [UMC Utrecht](http://www.r-tutorial.nl/), [Advanced R by Hadley Wickham](http://adv-r.had.co.nz/), [R Graphics Cookbook](https://r-graphics.org/)), or one of those specifically for geodata processing (e.g., [Wageningen University](https://geoscripting-wur.github.io/), [University of Colorado](https://www.earthdatascience.org/)).
 
 -----------
 
@@ -141,7 +145,7 @@ All data used in the course is openly accessible. Mostly, we´ll be working with
 
 ## Exercises
 
-The weekly exercises are defined in the respective session. Each session comprises several tasks that involve scipting in R. Course participants must submit completed exercises, documented as R scripts, in [moodle](http://moodle.hu-berlin.de/) to pass. Weekly submission deadlines are every sunday, 23:59. Please structure your script for every exercise as follows:
+The weekly exercises are defined in the respective session. Each session comprises several tasks that involve scipting in R. Course participants must submit completed exercises, documented as R scripts, in [moodle](http://moodle.hu-berlin.de/) to pass. Weekly submission deadlines are every sunday, 23:59. Please name the script of your work group as SXX_name1_name2.R, e.g. S01_ernst_rufin.R. Please structure your script for every exercise as follows:
 
 ```{r template, echo=TRUE, eval=FALSE}
 #############################################################################
@@ -440,7 +444,7 @@ Convert the DN values to TOA following the “Conversion to TOA Reflectance” s
 deg2rad <- function(deg){ (deg * pi) / (180) }
 ```
 
-Write the result of your TOA conversion to disk in the ```ENVI``` format. Make sure to use an integer data type to save disk space. 
+Write the result of your TOA conversion to disk in the ```GTiff``` format. Make sure to use an integer data type to save disk space. 
 
 ### 2) Compare TOA with BOA
 
@@ -602,7 +606,7 @@ Open both masks in QGIS, together with an RGB representation of the image. Which
 
 ### 3) Masking images 
 
-Next, load the BOA data as a stack (VIS, nIR, swIR) and use the ```mask()``` function to mask clouds, cloud shadows and fill values from the image. Use the mask which you found to be more accurate. Make sure to specify the maskvalue argument accordingly. Write the masked BOA stack to disk in the ENVI format.
+Next, load the BOA data as a stack (VIS, nIR, swIR) and use the ```mask()``` function to mask clouds, cloud shadows and fill values from the image. Use the mask which you found to be more accurate. Make sure to specify the maskvalue argument accordingly. Write the masked BOA stack to disk in the ```GTiff``` format.
 
 
 ## Reading materials.
@@ -620,17 +624,155 @@ In this paper, a long time series of Landsat image composites at five year inter
 
 ------
 
-<!-- ################################## SESSION 03 ############################################## 
+# Session 03: Vegetation indices and data transforms
+
+## Learning goals 
+
+- Learn how to calculate NDVI, EVI and Tasseled Cap components
+- Understand how these indices differ 
+
+## Spectral behavior of vegetation
+
+Vegetation produces a distinct spectral reflectance pattern due to its leaf and cell structure, its physiognomy, and complex stand structure. Photosynthetically inactive plant  parts differ considerably from active ones across different wavelength regions. The reflectance of photosynthetically active vegetation is characterized by different factors in the VIS, nIR and SWIR:
+
+- VIS – leaf pigments - In the visible bands the reflectance is relatively low as the majority of light is absorbed by the leaf pigments. Chlorophyll strongly absorbs energy in the blue and red wavelengths and reflects more in the green parts of the spectrum. This is why healthy vegetation appears green to the human eye.
+
+- nIR – cell structure - For healthy vegetation, the reflectance is much higher in the near infrared (NIR) region than in the visible region due to the cellular structure of the leaves, specifically the spongy mesophyll. Therefore healthy vegetation can be easily identified by the high NIR reflectance and generally low visible reflectance. 
+
+- SWIR – water content - The reflectance in the shortwave infrared wavelengths is related to the water content of the vegetation and its structure. Water has strong absorption around 1.45, 1.95 and 2.50 µm . Outside these absorption bands in the SWIR region, reflectance of leaves generally increases when water content in the leaf decreases. 
+
+![Spectral reflectance curve of vegetation. Source: gsp.humboldt.edu](fig/s03_vegetation_spectrum.png){width=80%}
+
+## Vegetation indices
+
+Vegetation indices make use of this particular reflectance signal. Most commonly known are the Normalized Difference Vegetation Index (NDVI) and the Enhanced Vegetation Index (EVI). 
+
+-----
+
+### Normalized Difference Vegetation Index (NDVI)
+
+The NDVI relates the difference between the nIR and red reflectance to their sum. 
+
+$NDVI = (nIR – red) / (nIR + red)$
+
+For instance, a red reflectance of 10% and a nIR reflectance of 50% result in 
+
+```{r ndvi, eval=T, echo=T}
+
+red <- 0.1
+nIR <- 0.5
+
+ndvi <- (nIR - red) / (nIR + red)
+print(ndvi)
+
+```
+
+The NDVI is not a physical measure, but a proxy integrating different factors, such as land use / cover, incl. the amount of background signal visible in a pixel, photosynthetic activity, vitality and overall vegetation condition. It relates well to vegetation density and structure, e.g., represented by the leaf area index (LAI)
+
+-----
+
+### Enhanced Vegetation Index (EVI)
+
+The EVI often has a better correlation with biomass than NDVI, specifically in vegetation canopies with low and high LAI values. 
+
+![NDVI and EVI from MODIS image composites (5-20 March 2000). Source:  http://earthobservatory.nasa.gov/](fig/s03_ndvi_evi.PNG){width=100%}
+
+$EVI = G * ((nIR – red) / (nIR + (C1 * red – C2 * blue) + L))$
+
+The EVI aims at reducing saturation effects which are common for NDVI. It includes a correction for soil background effects (L) to improve sensitivity for low density vegetation canopies. It is less sensitive to high aerosol loads, since the additional coefficients (C1 and C2) steer the aerosol resistance term, and the visible blue reflectance is used to correct for scattering that also affects the visible red.
+
+Indices enhance differences in the reflectance to highlight certain features. Vegetation indices have the advantage of being simple, but the disadvantage of disregarding parts of the spectral feature space. Linear transformations, such as the Tasseled Cap Transformation, can help to overcome this limitation. 
+
+-----
+
+## Tasseled Cap Transformation 
+
+The Tasseled Cap Transformation (TC) is a linear transformation of the Landsat spectral bands. It was first presented in 1976 by R.J. Kauth and G.S. Thomas of Environmental Research Institute of Michigan in an article titled "The Tasseled Cap -- A Graphic Description of the Spectral-Temporal Development of Agricultural Crops as Seen by Landsat." The Tasseled Cap Transformation was thus developed for analyzing agricultural lands with Landsat MSS data. The name „Tasseled Cap“ was chosen because the of the shape of phenological trajectories of crops in the nIR ~ red feature space. 
+
+![Crop phenological trajectories in near infrared ~ red featurespace. Band numbers relate to Landsat MSS bands, where band 3 (6) is the near infrared and band 2 (5) is the red band.](fig/s03_tc_concept.png){width=40%}
+
+We can observe these trajectories by producing near infrared ~ red scatterplots for different points in time.
+
+![Animated scatterplot of 10,000 locations of an agricultural system in southeastern Turkey in near infrared ~ red featurespace, observed within the course of one year (2015).](fig/s03_sct_cln.gif){width=50%}
+
+The concept was further developed for the use with other sensors, including Landsat TM, ETM+ and OLI. It is still widely used for different applications in the context of urban, agricultural, or forest-related remote-sensing studies. Resulting from the TC, we mostly analyze three components called Brightness, Greenness, and Wetness:
+
+- *Brightness*: an axis along the line of soils, indicating soil brightness.
+- *Greenness*: axis is perpendicular to the soil line, emphasizes near infrared and thus vegetation.
+- *Wetness*: emphasizes shortwave infrared and is thus related to water content.
+
+------
+
+## Exercise
+
+We provide the following datasets in [our repository](https://box.hu-berlin.de/f/7bb994e5cb414bf49940/?dl=1): 
+
+…sr_data/: Four cloud-masked image chips from Landsat 8 (surface reflectance): 
+
+-	LC081890252014031001T1-SC20170927101754 (10 March 2014)
+-	LC081890252014071601T1-SC20171024094741 (16 July 2014)
+-	LC081890252015082001T1-SC20170927120710 (20 August 2015)
+-	LC081890252014110501T1-SC20170927102137 (05 November 2014)
+
+
+### 1)	Compute vegetation indices 
+
+Read the March surface reflectance stack in R and calculate NDVI as well as EVI. In line with the MODIS EVI product, the correction factors for the EVI are: 
+
+- $G = 2.5$
+
+- $C1 = 6$
+
+- $C2 = 7.5$, and 
+
+- $L = 1$.
+
+Always be aware that the reflectance values in our datasets is scaled by 10,000. This will not make a difference when computing the NDVI, as we are only looking at relative differences. However, for the EVI, $L$ must be scaled by 10,000. Also, keep in mind that we commonly want to store datasets in ```INT2S``` data type, and therefore we need to scale our results by 10,000. Consequently, we compute the EVI from Landsat data as follows: 
+
+```evi <- 2.5 * ((nIR – red) / (nIR + 6 * red – 7.5 * blue + 10000))```
+
+While the computation is ongoing, proceed with preparing the code for the next task. When the computation is done, write the results to disk, using the ```INT2S``` data type.
+
+### 2) Perform a Tasseled Cap transformation
+
+Perform the TC using the March surface reflectance stack. We use the coefficients derived by [Crist (1985)](https://www.sciencedirect.com/science/article/pii/0034425785901026). 
+
+```{r tc_coeff, eval=T, echo=F}
+tcc <- matrix(c( 0.2043,  0.4158,  0.5524, 0.5741,  0.3124,  0.2303, 
+                -0.1603, -0.2819, -0.4934, 0.7940, -0.0002, -0.1446,
+                 0.0315,  0.2021,  0.3102, 0.1594, -0.6806, -0.6109), 
+                dimnames = list(c('blue', 'green', 'red', 'nIR', 'swIR1', 'swIR2'), c('brightness', 'greenness', 'wetness')),
+                ncol = 3)
+
+print(tcc)
+```
+
+The TC is a linear band transformation. We can simply multiply the individual bands in the march stack with the corresponding factor and sum up the result, e.g., for TC Brightness:
+
+```{r tc_transform, eval=F, echo=T}
+brightness <- march.stack[[1]] * tcc[1,1] + 
+              march.stack[[2]] * tcc[2,1] + 
+              march.stack[[3]] * tcc[3,1] + 
+              march.stack[[4]] * tcc[4,1] + 
+              march.stack[[5]] * tcc[5,1] + 
+              march.stack[[6]] * tcc[6,1]
+```
+
+Make sure to create an individual layer for Brightness, Greenness, and Wetness. Create a stack from the three layers and scale the results by 10,000. While the computation is ongoing, proceed with task 1) of the block on training data collection. 
+
+When the computation is completed, write the results to disk, using the ```INT2S``` data type. Add the NDVI, EVI, and the TC stack to the QGIS project you started in the next block. Visually explore the vegetation indices and TC components. 
+
+------
+
+<!-- ################################## SESSION 03 ############################################## -->
 
 # Session 03: Training data collection
 
-------
 
 ## Learning goals
 
 - Gather training data for a broad forest type classification 
-- Learn how to calculate NDVI, EVI and Tasseled Cap components
-- Understand how forest types differ spectrally 
+- Understand how forest types differ spectrally
 
 ------
 
@@ -638,7 +780,7 @@ In this paper, a long time series of Landsat image composites at five year inter
 
 Collecting training is an essential step on your way to a classified map. The training pixels will be considered representative for the classes you want to map, as classification algorithms determine class labels for unknown pixels based on their similarity to the training dataset. 
 
-![Training points for forest type classification and resulting map output](fig/s03_training.PNG){width=100%}
+![Training points for forest type classification and resulting map output](fig/s03_training.PNG){width=80%}
 
 Collecting training data is time consuming, regardless if you are collecting in the field or digitally. Small conceptual mistakes may require a revision of your training dataset. As a consequence, training data collection should be well prepared. Consider the following points.
 
@@ -652,16 +794,17 @@ Collecting training data is time consuming, regardless if you are collecting in 
 
 ![Spatial distribution of six training datasets](fig/s03_train_dist.PNG)
 
-- The classification algorithm of your choice might have specific requirements towards the training data, e.g., concerning the number of samples, their distribution in the spectral featurespace, or their purity (pure vs. mixed pixel). We discuss these aspects later in the course.
+- The classification algorithm of your choice might have specific requirements towards the training data, e.g., concerning the number of samples, their distribution in the spectral feature space, or their purity (pure vs. mixed pixel). We discuss these aspects later in the course.
 
-- In practice, it´s important to know your training data well. Are the classes separable with the data at hand? Are essential class characteristics well represented? Are there any outliers? To learn more, it is always wise to explore the spectral characteristics of your training data points. We can do this through investigating the spectral reflectances at our training data locations (e.g., through histograms / boxplots) and comparing them between classes.
+- In practice, it´s important to know your training data well. Are the classes separable with the data at hand? Are essential class characteristics well represented? Are there any outliers? To learn more, it is always wise to explore the spectral characteristics of your training data points. We can do this through investigating the spectral reflectances at our training data locations (e.g., through histograms / boxplots) and comparing them between classes. That´s what we want to do today.
 
 -----
 
 ## Exercise
 
-This exercise has two larger aims. First, you will learn to collect training data for a broad forest type classification. We provide detailed forestry data to find representative sample pixels in QGIS. We will use the data you generate here for classification in the next session. Second, you will learn how the broad forest types appear spectrally in images acquired in different parts of the growing season.
-We provide the following datasets at O:/…/S03/data/… 
+This exercise has two larger aims. First, you will learn to collect training data for a broad forest type classification. We provide forestry data to find representative sample pixels in QGIS. We will use the data you generate in this exercise for classification in the next session. Second, you will learn how the broad forest types appear spectrally in images acquired in different parts of the growing season.
+
+We provide the following datasets in [our repository](https://box.hu-berlin.de/f/7bb994e5cb414bf49940/?dl=1): 
 
 …sr_data/: Four cloud-masked image chips from Landsat 8 (surface reflectance): 
 
@@ -683,151 +826,88 @@ It contains the following attributes:
 |spec_age         |Average age of the trees in this stand |Age in years             |
 
 
-1)	Visualize and arrange all datasets in QGIS (LTR). Consider the following steps: 
-a.	Find a good false-color representation of the Landsat bands to highlight vegetation. 
-b.	Visualize the forestry data by choosing distinct colors for the different tree genera (species_en). Which genera are dominant in the study area?
+### 1) Prepare the training data collection
 
-2)	Generate a new point shapefile for storing the training data you will collect in the next task. It should containt the attribute fields ‘classID’ and ‘confID’ (both of type integer). Make sure it has the same spatial reference system as the Landsat data.
+Visualize and arrange all abovementioned datasets in QGIS. Ask us for help if you´re not familiar with QGIS. Consider the following steps:
 
-3)	Switch into the editing mode to locate training points and assign the corresponding class and confidence number. Please collect at least 15 pixels per class and assign them the class numbers and confidence numbers given below. 
+a)	Find a good [false-color representation](https://www.harrisgeospatial.com/Learn/Blogs/Blog-Details/ArtMID/10198/ArticleID/15691/The-Many-Band-Combinations-of-Landsat-8) of the Landsat 8 bands to highlight vegetation. 
+
+b)	Visualize the forestry data by choosing distinct colors for the different tree genera (species_en). 
+
+Which genera are dominant in the study area?
+
+Generate a new point shapefile for storing the training data you will collect in the next task. It should contain the attribute fields ‘classID’ and ‘confID’ (both of type integer). Make sure it has the same spatial reference system as the Landsat data.
+
+### 2) Collect training data 
+
+Switch into the editing mode to locate training points and assign the corresponding class and confidence number. Please collect at least 15 pixels per class and assign them the class numbers and confidence numbers given below. 
  
 |Class name	      | classID	    | Confidence level | confID       |
 |-------------    |-------------|-------------     |------------- |
-|Deciduous forest	| 1	          |Very certain      |1             |
-|Mixed forest	    | 2	          |Some uncertainties|2             |
-|Coniferous forest|	3           |Very uncertain    |3             |
+|Deciduous forest	| 1	          |Very certain      | 1            |
+|Mixed forest	    | 2	          |Some uncertainties| 2            |
+|Coniferous forest|	3           |Very uncertain    | 3            |
 |Non-forest       |	4           |                  |              |		
 
-Use the multi-temporal Landsat imagery, the forestry polygons and very high resolution imagery in GoogleEarth to guide your interpretation. You can link QGIS and GoogleEarth using the GEarthView plugin. The Landsat grid shapefile and kmz will help you to identify and label training locations for the four classes. 
+Use the multi-temporal Landsat imagery, the forestry polygons and very high resolution imagery in GoogleEarth to identify training points. The historic imagery tool can be extremely useful to guide your interpretation between deciduous and evergreen trees, as it contains imagery from the leaf-off phenological phase. The Landsat grid shapefile and .kmz will help you to identify and label the precise training locations for the four classes. 
 
-Regularly save the collected points and store the final shapefile with 60+ points in your personal folder on drive O:/. Ask us for help if you´re not familiar with the QGIS environment!
+Regularly save the collected points and store the final shapefile with 60+ points in your course folder.
 
-4)	Load your shape in R using readOGR(). Extract the spectral values at your point locations from the March image in R using the extract() function. Specify sp = TRUE to append the spectral values to the point shapefile. Write this shapefile to disk, we make use of it in the later sessions. 
+### 3)	Explore your training data 
 
-Make sure the result of this task is an object of type data.frame named sr.march. Your sample points should be represented as rows and the measured variables as columns (i.e. point id, classID, confID, and 6 spectral bands).
+Load your shape in R using ```readOGR()```. Extract the spectral values at your point locations from the March image in R using the ```extract()``` function. Specify ```sp = TRUE``` to append the spectral values to the point shapefile. 
 
-5)	Create boxplots of your surface reflectance measurements for all spectral bands, grouped according to the class number. We provided the necessary code in the code template. Make sure you understand what the melt() function is doing. Feel free to adjust the plot layout.
+Make sure the result of this task is an object of type ```data.frame``` named ```sr.march```. Your sample points should be represented as rows and the measured variables as columns (i.e. point id, classID, confID, and 6 spectral bands).
 
-------
+Create boxplots of your surface reflectance measurements for all spectral bands, grouped according to the class number. 
 
-# Session 03: Vegetation indices and data transforms
+```{r eval=F, echo=T}
+# Load required packages
+library(ggplot2)
+library(reshape2)
 
-Vegetation produces a distinct spectral reflectance pattern due to its leaf and cell structure, its physiognomy, and complex stand structure. Photosynthetically inactive plant  parts differ considerably from active ones across different wavelength regions. The reflectance of photosynthetically active vegetation is characterized by different factors in the VIS, nIR and SWIR:
+# Melt dataframe containing point id, classID, confID, and 6 spectral bands
+spectra.df <- melt(sr.march, id.vars=c(1:3), measure.vars=c(4:9))
 
-- VIS – leaf pigments - In the visible bands the reflectance is relatively low as the majority of light is absorbed by the leaf pigments. Chlorophyll strongly absorbs energy in the blue and red wavelengths and reflects more green wavelengths. This is why healthy vegetation appears green.
-
-- nIR – cell structure - For healthy vegetation, the reflectance is much higher in the near infrared (NIR) region than in the visible region due to the cellular structure of the leaves, specifically the spongy mesophyll. Therefore healthy vegetation can be easily identified by the high NIR reflectance and generally low visible reflectance. 
-
-- SWIR – water content - The reflectance in the shortwave infrared wavelengths is related to the water content of the vegetation and its structure. Water has strong absorption bands around 1.45, 1.95 and 2.50 µm . Outside these absorption bands in the SWIR region, reflectance of leaves generally increases when water content in the leaf decreases. 
-
-![Spectral reflectance curve of vegetation. Source: gsp.humboldt.edu](fig/s03_vegetation_spectrum.png){width=80%}
-
-
-
-Vegetation indices make use of this particular reflectance signal. Most commonly known are the Normalized Difference Vegetation Index (NDVI) and the Enhanced Vegetation Index (EVI). 
-
------
-
-Normalized Difference Vegetation Index (NDVI)
-
-The NDVI relates the difference between the nIR and red reflectance to their sum. 
-
-$NDVI = (nIR – red) / (nIR + red)$
-
-For instance, a red reflectance of 5% and a nIR reflectance of 50% result in 
-
-```{r ndvi, eval=T, echo=T}
-
-red <- 5
-nIR <- 50
-
-ndvi <- (nIR - red) / (nIR + red)
-print(ndvi)
-
+# Create boxplots of spectral bands per class
+ggplot(spectra.df, aes(x=variable, y=value, color=classID)) +
+  geom_boxplot() 
 ```
 
+Make sure you understand what the ```melt()``` function is doing. Feel free to adjust the plot layout.
 
-The NDVI is not a physical measure, but a proxy integrating different factors, such as land use / cover, incl. the amount of background signal visible in a pixel, photosynthetic activity, vitality and overall vegetation condition. It relates well to vegetation density and structure, e.g., represented by the lead area index (LAI)
+Similarly to the previous task, extract the values at your point locations from the Tasseled Cap stack. Create boxplots of the three Tasseled Cap components, grouped by the target class. Investigate the boxplots in order to investigate the differences between your target classes. Try to answer the following questions: 
 
------
+- Do the Tasseled Cap components allow for discriminating your target classes? 
+- Which classes are likely difficult to separate?
 
-Enhanced Vegetation Index (EVI)
-
-The EVI often has a better correlation with biomass than NDVI, specifically in vegetation canopies with low and high LAI values. 
-
-![NDVI and EVI from MODIS image composites (5-20 March 2000). Source:  http://earthobservatory.nasa.gov/](fig/s03_ndvi_evi.PNG){width=100%}
-
-$EVI = G * ((nIR – red) / (nIR + (C1 * red – C2 * blue) + L))$
-
-The EVI aims at reducing saturation effects which are common for NDVI. It includes a correction for soil background effects (L) to improve sensitivity for low density vegetation canopies. It is less sensitive to high aerosol loads, since the additional coefficients (C1 and C2) steer the aerosol resistance term, and the visible blue reflectance is used to correct for scattering that also affects the visible red.
-
-Indices enhance differences in the reflectance to highlight certain features. Vegetation indices have the advantage of being simple, but the disadvantage of disregarding parts of the spectral feature space. Linear transformations can help to overcome this limitation. 
-
------
-
-Tasseled Cap Transformation (TC)
-
-Linear combination of the Landsat spectral bands. Transformations of feature space provide a different view on existing data without reducing overall variance
-statistical approaches: based on image statistics alone (e.g. principal component analysis)
-thematic approaches: based on certain features of interest (e.g. Tasseled Cap)
-
-Kauth and Thomas (1978) therefore developed the so called „Tasseled Cap Transformation“ for analyzing agricultural lands with Landsat-MSS data. The tasseled cap transformation was presented in 1976 by R.J. Kauth and G.S. Thomas of Environmental Research Institute of Michigan in an article entitled "The tasseled Cap -- A Graphic Description of the Spectral-Temporal Development of Agricultural Crops as Seen by Landsat."  Crops phenological trajectories through red ~ near infrared feature space look like a „tasseled cap“. 
-
-![Crop phenological trajectories in near infrared ~ red featurespace. Band numbers relate to Landsat MSS bands, where band 3 (6) is the near infrared and band 2 (5) is the red band.](fig/s03_tc_concept.png){width=30%}
-
-We can observe these trajectories by producing near infrared ~ red scatterplots for different points in time.
-
-![Scatterplot of 10,000 locations of an agricultural system in southeastern Turkey in near infrared ~ red featurespace, observed within the course of one year (2015).](fig/s03_sct_cln.gif){width=50%}
-
-
-Resulting from the TC, we commonly analyze three components called brightness, greenness, and wetness:
-
-- Brightness: an axis alongside the line of soils, indicating soil brightnes.
-- Greenness: axis is perpendicular to the line of soils, emphasizes near infrared and thus vegetation state.
-- Wetness: emphasizes shortwave infrared and is thus related to water content.
+*Voluntary exercise*: If you´re keen on exploring spectral changes over time, repeat the above procedures for the remaining images (July, August, November). 
 
 ------
 
-## Exercise
+## Reading materials
 
-1)	Load the training data shapefile with the extracted spectral values into R. Calculate the NDVI and EVI from the extracted values. The EVI formula for Landsat data is as follows: 
+In the next session, we would like to discuss the following paper: 
 
-$EVI = 2.5 * ((nIR – red) / (nIR + 6 * red – 7.5 * blue + 1))$
+[Griffiths et al. (2013): Pixel-Based Landsat Compositing for Large Area Land Cover Mapping. IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing, 6(5), 2088-2101.](https://www.researchgate.net/publication/259486369_A_Pixel-Based_Landsat_Compositing_Algorithm_for_Large_Area_Land_Cover_Mapping)
+ 
+This paper describes the methods used in the article you read last week. Here, a novel algorithm for large-area pixel-based compositing from Landsat data was developed. Please read the paper thoroughly, make sure you understand the underlying concept and write down any question for the discussion in our next session. Also, answer the following broad questions: 
 
-2) Perform the tasseled cap transformation of the extracted values. We use the coefficients derived by Crist et al. (1985). 
+- What is the motivation for this article?
+- How does the algorithm work in principle?
+- Which key parameters were used for the parametric scoring?
+- What is the difference between annual and seasonal consistency?
 
-```{r tc_coeff, eval=T, echo=T}
-tcc <- matrix(c( 0.2043,  0.4158,  0.5524, 0.5741,  0.3124,  0.2303, 
-                -0.1603, -0.2819, -0.4934, 0.7940, -0.0002, -0.1446,
-                 0.0315,  0.2021,  0.3102, 0.1594, -0.6806, -0.6109), 
-                dimnames = list(c('blue', 'green', 'red', 'nIR', 'swIR1', 'swIR2'), c('bright', 'green', 'wet')),
-                ncol = 3)
-
-print(tcc)
-```
-
-The TC is a linear band transformation. We can simply multiply each band with its factor and sum them up. A more straightforward way can be matrix multiplication, using ```%*%``` in R. 
-
-![Multiplication of a 2x3 matrix with a 3x3 matrix. Source: http://calculus.seas.upenn.edu/](http://calculus.seas.upenn.edu/uploads/Main/MatrixMult.gif){height=80%}
-
-2)	Create boxplots of the vegetation indices and TC components. 
-
-3)	Explore the spectral bands and vegetation indices for the other Landsat images by repeating task 4) to 7) using the other input images. 
-
-Please submit a .zip file including your training data shapefile and R-script 
-in moodle before Monday. 
-
-## Reading materials.
 
 ------
+
+<!-- 
 
 # Session 04: Pixel-based compositing
 
 ------
 
 ## Learning goals
-
-
 
 ------
 
@@ -944,7 +1024,7 @@ White, J.C., Wulder, M.A., Hobart, G.W., Luther, J.E., Hermosilla, T., Griffiths
 
 ## Phase III
 
-------
+------ -->
 
 # Terminology
 
@@ -977,6 +1057,7 @@ This is a non-exhaustive list of common terms and their definitions.
 - Temporal coverage
 - Spectral resolution
 - Radiometric resolution
+- Bits, Bytes
 
 ## Data characteristics
 
@@ -1010,5 +1091,3 @@ This is a non-exhaustive list of common terms and their definitions.
 - Annual
 - Intra-annual 
 - Seasonal
-
--->
