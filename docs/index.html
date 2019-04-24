@@ -731,6 +731,13 @@ ndvi &lt;-<span class="st"> </span>(nIR <span class="op">-</span><span class="st
 <div id="perform-a-tasseled-cap-transformation" class="section level3">
 <h3>2) Perform a Tasseled Cap transformation</h3>
 <p>Perform the TC using the March surface reflectance stack. We use the coefficients derived by <a href="https://www.sciencedirect.com/science/article/pii/0034425785901026">Crist (1985)</a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tcc &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>( <span class="fl">0.2043</span>,  <span class="fl">0.4158</span>,  <span class="fl">0.5524</span>, <span class="fl">0.5741</span>,  <span class="fl">0.3124</span>,  <span class="fl">0.2303</span>, 
+                <span class="op">-</span><span class="fl">0.1603</span>, <span class="op">-</span><span class="fl">0.2819</span>, <span class="op">-</span><span class="fl">0.4934</span>, <span class="fl">0.7940</span>, <span class="op">-</span><span class="fl">0.0002</span>, <span class="op">-</span><span class="fl">0.1446</span>,
+                 <span class="fl">0.0315</span>,  <span class="fl">0.2021</span>,  <span class="fl">0.3102</span>, <span class="fl">0.1594</span>, <span class="op">-</span><span class="fl">0.6806</span>, <span class="op">-</span><span class="fl">0.6109</span>), 
+                <span class="dt">dimnames =</span> <span class="kw">list</span>(<span class="kw">c</span>(<span class="st">&#39;blue&#39;</span>, <span class="st">&#39;green&#39;</span>, <span class="st">&#39;red&#39;</span>, <span class="st">&#39;nIR&#39;</span>, <span class="st">&#39;swIR1&#39;</span>, <span class="st">&#39;swIR2&#39;</span>), <span class="kw">c</span>(<span class="st">&#39;brightness&#39;</span>, <span class="st">&#39;greenness&#39;</span>, <span class="st">&#39;wetness&#39;</span>)),
+                <span class="dt">ncol =</span> <span class="dv">3</span>)
+
+<span class="kw">print</span>(tcc)</code></pre></div>
 <pre><code>      brightness greenness wetness
 blue      0.2043   -0.1603  0.0315
 green     0.4158   -0.2819  0.2021

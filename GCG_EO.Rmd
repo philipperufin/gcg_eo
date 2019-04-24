@@ -738,7 +738,7 @@ While the computation is ongoing, proceed with preparing the code for the next t
 
 Perform the TC using the March surface reflectance stack. We use the coefficients derived by [Crist (1985)](https://www.sciencedirect.com/science/article/pii/0034425785901026). 
 
-```{r tc_coeff, eval=T, echo=F}
+```{r tc_coeff, eval=T, echo=T}
 tcc <- matrix(c( 0.2043,  0.4158,  0.5524, 0.5741,  0.3124,  0.2303, 
                 -0.1603, -0.2819, -0.4934, 0.7940, -0.0002, -0.1446,
                  0.0315,  0.2021,  0.3102, 0.1594, -0.6806, -0.6109), 
