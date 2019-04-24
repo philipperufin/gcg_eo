@@ -607,8 +607,8 @@ deg2rad &lt;-<span class="st"> </span><span class="cf">function</span>(deg){ (de
 fill_pixels &lt;-<span class="st"> </span><span class="cf">function</span>(x) {<span class="kw">intToBits</span>(x)[<span class="dv">1</span>] <span class="op">==</span><span class="st"> </span>T}</code></pre></div>
 <p>Next, use indexing and Boolean expressions to define functions which return TRUE for</p>
 <ol style="list-style-type: lower-alpha">
-<li>high confidence clouds, high confidence cloud shadows and fill values</li>
-<li>high and medium confidence clouds, high and medium confidence cloud shadows and fill values</li>
+<li>high confidence clouds or high confidence cloud shadows or fill values</li>
+<li>high and medium confidence clouds or high and medium confidence cloud shadows or fill values</li>
 </ol>
 <p>Create a mask using the above functions. You can use <code>calc()</code>. Plot the mask and check if clouds, cloud shadows, and fill values are labeled as 1 and clear observations as 0. Write both masks to disk.</p>
 <p>Open both masks in QGIS, together with an RGB representation of the image. Which mask is more accurate?</p>
@@ -752,7 +752,7 @@ swIR2     0.2303   -0.1446 -0.6109</code></pre>
 <span class="st">              </span>march.stack[[<span class="dv">4</span>]] <span class="op">*</span><span class="st"> </span>tcc[<span class="dv">4</span>,<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>
 <span class="st">              </span>march.stack[[<span class="dv">5</span>]] <span class="op">*</span><span class="st"> </span>tcc[<span class="dv">5</span>,<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>
 <span class="st">              </span>march.stack[[<span class="dv">6</span>]] <span class="op">*</span><span class="st"> </span>tcc[<span class="dv">6</span>,<span class="dv">1</span>]</code></pre></div>
-<p>Make sure to create an individual layer for Brightness, Greenness, and Wetness. Create a stack from the three layers and scale the results by 10,000. While the computation is ongoing, proceed with task 1) of the block on training data collection.</p>
+<p>Make sure to create an individual layer for Brightness, Greenness, and Wetness. Create a stack from the three layers. While the computation is ongoing, proceed with task 1) of the block on training data collection.</p>
 <p>When the computation is completed, write the results to disk, using the <code>INT2S</code> data type. Add the NDVI, EVI, and the TC stack to the QGIS project you started in the next block. Visually explore the vegetation indices and TC components.</p>
 <hr />
 </div>
