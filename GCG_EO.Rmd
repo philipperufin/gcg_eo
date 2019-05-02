@@ -912,22 +912,24 @@ This paper describes the methods used in the article you read last week. Here, a
 
 ## Learning goals
 
-------
-
-## Compositing
-
+- Understand the fundamentals of pixel based image compositing
 - Create a cloud free coverage by combining several partially clouded images
 - [Do not confuse terminology: false color composite, multi-temporal composite bands, etc.]
-- Originally developed for coarse resolution sensors with daily global coverage that lack cloud masks…
 
-For Landsat and similar data, compositing is still a relatively new topic
+------
 
-Reasons:
+## Background:
 
-- Free data policy started 2008
-- observation frequency improved with the launch of Landsat 8, while Landsat 7 SLC off (and previous Landsat 5 after 25 years in orbit) where limited
-- automation of cloud masking and atmospheric correction
-computational power & storage capacity
+Parametric best-pixel-compositing allows to use a set of rules (parameters) to determine the observations best suited for analysis. These parameters can include information about distance to clouds, temporal proximity to a target date or seasonal consistency. We use best-pixel-compositing to produce gap-free images of a (large) area, 
+
+
+#### Landsat observation density
+
+![Global Landsat observation density. Source: Wulder et al. 2016; doi:10.1016/j.rse.2015.11.032](fig/s04_landsat_density.gif)
+
+Compositing can be extremely helpful for creating gap-free images in regions that are scarce in data density.
+This method allows to create cloud free, radiometrically consistent image datasets over large areas from the Landsat archive.
+
 
 ------
 
@@ -943,37 +945,55 @@ computational power & storage capacity
 
 ------
 
-## The global Landsat archive
+## Exercise
 
-#### Archive consolidation
+The goal of this week's exercise is to combine several images into best-pixel composites using a parametric compositing function. We will be working with our main script which sources the compositing function from a second script. Outsourcing functions - especially extensive ones - improves the readability of scripts and allows for using functions from different scripts. Check the help for source() if you are not familiar with sourcing R code in your script. 
 
-![Global Landsat archive as of 2013. source: ?????](fig/s04_global_ls_archive.gif)
+### 1)	Parameterization
+We provide a function which allows you to produce cloud-free best-pixel composites for a pre-defined target DOY. This function requires one input data.frame (see code template on how to create it) and eight input parameters: 
 
-#### Landsat observation density
+a. *img_list*: a data frame containing five variables for each of the Landsat images:  
+  
+  	$image_files: the full paths to the files in …sr_data.  
+  	$cloud_dist_files: the full paths to the files in …cloud_dist.  
+  	$date: the acquisition day in Date format (YYYY-MM-DD).  
+  	$DOY: the acquisition day of the year.  
+  	$year: the acquisition year.  
 
-![Global Landsat observation density. Source: Wulder et al. 2016; doi:10.1016/j.rse.2015.11.032](fig/s04_landsat_density.gif)
+b.	*target_date*: the target date for your composite in Date format (YYYY-MM-DD)
 
-------
+c.	*W_DOY*, *W_year*, *W_cloud_dist*: weights for the three available parameters DOY, year and distance to clouds. Must be scaled between 0 and 1 and sum up to 1, the higher the weight, the higher the importance of the criterion. 
 
-## Compositing vs. metrics
+d.	*max_DOY_offset*, *max_year_offset*: Thresholds for the maximum allowed differences between target DOY and acquisition DOY, as well target year and acquisition year. Images exceeding these thresholds (further away in time) will be fully ignored. For instance, max_year_offset = 0 will not allow observations from a year other than the target year. By choosing these parameters, you will determine whether you prefer seasonal consistency (close to target DOY but from different years) over annual consistency (observations from same year but potentially distant DOYs). Discuss the parametrization in your group. 
 
-Two main types of compositing outputs:
+e.	*min_cloud_dist*, *max_cloud_dist*:  The minimum and maximum distance to clouds. min_cloud_dist = 10 will exclude all observations which are less than 10 pixels away from a cloud. The cloud scores are linearly scaled between the minimum (score = 0) and maximum cloud distance (score = 1). Pixels with distances above max_cloud_dist will receive a score of 1. 
 
-1. Best observation/pixel composites:
-- Parametric scoring approach (DOY, distance cloud/shadow, haze score, etc.)
-- Seasonal tuning
-- Traceability using metaFlag images
+### 2) Exploring the script
+Open the parametric_compositing.R script and take time to read through it in groups. Make sure you understand how the function operates. Seek the help pages of functions you don´t know, test single parts of the function and discuss questions with each other.
 
-2. Spectral-temporal Metrics:
-- Values usually not observed, but derived (e.g. mean or standard deviation)
+### 3) Adding documentation
+The developer did not spend sufficient time on the documentation. Make the script a bit more user-friendly by adding missing comments (#...). Make sure your comments explain what happens in each step of the function, and why. Are there bugs or sections which you would code differently?
 
-Rank band Metrics:
+### 4) Defining target dates
+Relying on your insights from collecting training data on forest types, define two target days of the year (DOY) to capture different phenological stages. These will be used as target_date parameters later on.
 
-- Several features that characterize the statistical distribution of cloud free observations per band and pixel
-- Rank bands used to identify spectral vector of the acquisition that for example relates to the median NDVI
+### 5) Setting parameters and running the script
+Make a decision concerning the compositing parameters explained in 1c, 1d and 1e. 
 
-![Rank band metrics plot](fig/s04_metrics_plot.gif)
+Next, run the parametric_compositing() function with your parameters and write the result to disk. Include the target DOY in the filename. While the function executes, proceed with the next exercise.
 
+### 6) Improving the user-friendliness of the script
+Make the compositing function more user friendly. Insert a couple of plot and print commands to enable the users to follow the progress of the compositing while the function is running.  
+
+For instance, print() how many images were used for the final composite, their acquisition dates, etc. Also, you might want to plot() the composited image after each iteration. You could add further status messages telling the user how much time single steps took.  
+
+Don´t forget to save the script and run the source() command in your R script to update the function after you made these changes. 
+
+### 7) Second run for target date 2
+Repeat the compositing for the second target DOY you specified in 4) and write the results to disk.
+
+### 8) Visual inspection and evaluation of results
+Visually inspect the quality of your compositing results in QGIS. Look at the bands containing the DOY and year flags (band 7 and 8). What worked out well, what did not? How could the quality of the composites be improved? Re-iterate with different parameters if you wish.
 
 ------
 
