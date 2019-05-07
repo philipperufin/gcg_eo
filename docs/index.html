@@ -1288,19 +1288,13 @@ Make a decision concerning the compositing parameters explained in 1c, 1d and 1e
 <h3>2) Training additional models based on different input data</h3>
 <p>Repeat 1) to train an additional randomForest models based on</p>
 <ol style="list-style-type: lower-alpha">
-<li>…the other composite.<br />
-</li>
-<li>…a stack of both composites.</li>
+<li><p>…the other composite.</p></li>
+<li><p>…a stack of both composites.</p></li>
 </ol>
 </div>
 <div id="investigating-the-models-and-classification" class="section level3">
 <h3>3) Investigating the models and classification</h3>
-<p>The model object resulting from 2) contains a wealth of information on the model parameters and performance. Assess the out of bag (OOB) error estimates of the trained models (1b, 2a, 2b) by inspecting the err.rate attribute of your model objects.</p>
-<ol style="list-style-type: lower-alpha">
-<li>Which model has the lowest OOB error?</li>
-<li>How does the OOB behave when increasing the number of trees in your model (ntrees)? You can access the OOB per number of trees included via err.rate. Use this information to determine a suitable value for ntrees.</li>
-<li>Which of the four classes has the highest OOB errors?</li>
-</ol>
+<p>The model object resulting from 2) contains a wealth of information on the model parameters and performance. Assess the out of bag (OOB) error estimates of the trained models (1b, 2a, 2b) by inspecting the err.rate attribute of your model objects. a. Which model has the lowest OOB error? b. How does the OOB behave when increasing the number of trees in your model (ntrees)? You can access the OOB per number of trees included via err.rate. Use this information to determine a suitable value for ntrees. c. Which of the four classes has the highest OOB errors?</p>
 </div>
 <div id="training-a-final-model-and-investigating-variable-importances" class="section level3">
 <h3>4) Training a final model and investigating variable importances</h3>
@@ -1412,7 +1406,7 @@ Next, answer the following questions:</p>
 <h2>Exercise</h2>
 <p>After completing the last exercises, you gained a lot of experience in using R &amp; QGIS for data handling and pre-processing, training data collection, classification, and accuracy assessment. In other terms: you´re well prepared for performing a change detection using Landsat data. The goal of this exercise is to map forest cover change in the Southern Brazilian Amazon.</p>
 <p>We provided the following datasets at O:/…/S07/data/…</p>
-<p><em>…sr_data/: Three Landsat 5 surface reflectance stacks (</em>_crp.tif) at five-year intervals from 2000 to 2010.</p>
+<p>…sr_data/: Three Landsat 5 surface reflectance stacks (*_crp.tif) at five-year intervals from 2000 to 2010.</p>
 <ul>
 <li>LT052260682000061001T1-SC20170927060330 (10 June 2000)<br />
 </li>
@@ -1420,7 +1414,7 @@ Next, answer the following questions:</p>
 </li>
 <li>LT052260682010062201T1-SC20170927060241 (22 June 2010)</li>
 </ul>
-<p><em>…vector/: A shapefile and a </em>.kmz file for GoogleEarth, which will help you to accurately delineate the Landsat pixel locations and extents for training data collection.</p>
+<p>…vector/: A shapefile and a *.kmz file for GoogleEarth, which will help you to accurately delineate the Landsat pixel locations and extents for training data collection.</p>
 <p>…validation/: A shapefile containing reference data for the accuracy assessment.</p>
 <p>…gfc/: A subset of the Global Forest Change dataset by Hansen et al. (2013). We reclassified the data to match the target classes of today´s exercises.</p>
 <p>Your task is to create a change map, which contains the following classes:</p>
