@@ -143,12 +143,6 @@ $(document).ready(function () {
         <li><a href="#session-02-data-quality-cloud-masking">Session 02: Data quality &amp; cloud masking</a></li>
         <li><a href="#session-03-vegetation-indices-and-data-transforms">Session 03: Vegetation indices and data transforms</a></li>
         <li><a href="#session-03-training-data-collection">Session 03: Training data collection</a></li>
-        <li><a href="#session-04-pixel-based-compositing">Session 04: Pixel-based compositing</a></li>
-        <li><a href="#session-05-machine-learning-for-image-classification">Session 05: Machine learning for image classification</a></li>
-        <li><a href="#session-06-accuracy-assessment-and-area-estimation">Session 06: Accuracy assessment and area estimation</a></li>
-        <li><a href="#session-07-multi-temporal-change-detection">Session 07: Multi-temporal change detection</a></li>
-        <li><a href="#session-08-spectral-temporal-metrics">Session 08: Spectral-temporal metrics</a></li>
-        <li><a href="#project-work">Project work</a></li>
         <li><a href="#terminology">Terminology</a></li>
         </ul>
         </div>
@@ -235,7 +229,7 @@ $(document).ready(function () {
 <p><img src="index_files/figure-html/style-1.png" width="288" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># Investigate correlation in the data</span></a>
 <a class="sourceLine" id="cb2-2" title="2"><span class="kw">cor</span>(data<span class="op">$</span>x, data<span class="op">$</span>y)</a></code></pre></div>
-<pre><code>[1] 0.9408059</code></pre>
+<pre><code>[1] 0.9336196</code></pre>
 <hr />
 </div>
 <div id="help" class="section level2">
@@ -952,558 +946,503 @@ swIR2     0.2303   -0.1446 -0.6109</code></pre>
 <li>What is the difference between annual and seasonal consistency?</li>
 </ul>
 <hr />
-</div>
-</div>
-<div id="session-04-pixel-based-compositing" class="section level1">
-<h1>Session 04: Pixel-based compositing</h1>
-<hr />
-<div id="learning-goals-5" class="section level2">
-<h2>Learning goals</h2>
-<ul>
-<li>Understand the fundamentals of pixel-based image compositing</li>
-<li>Parameterize a compositing function and create your own composite from multiple Landsat scenes</li>
-</ul>
-<hr />
-</div>
-<div id="background-1" class="section level2">
-<h2>Background:</h2>
-<p>The availability of Landsat images varies by region. Even in areas where obersvation density is high, such as North America, coverage can be reduced by clouds and quality of observations can be impacted by haze or sensor saturation. <img src="fig/s04_landsat_availability.jpg" alt="Global availability of Landsat images. Source: Wulder et al. 2016; https://doi.org/10.1016/j.rse.2015.11.032" /> Using best-pixel-compositing, we can use multiple obervations (i.e., from multiple Landsat scenes) and combine them to one consistent image composite. This allows to create cloud-free, radiometrically and phenologically consistent image composites that are contiguous over large areas. A set of rules (parameters) is used to determine the observations best suited for analysis. These parameters can include information about distance to clouds, temporal proximity to a target date and seasonal consistency.</p>
-<p>One of the first global composites using Landsat data was produced using the WELD compositing approach (Roy et al. 2011, <a href="https://doi.org/10.1016/j.rse.2009.08.011" class="uri">https://doi.org/10.1016/j.rse.2009.08.011</a>). <img src="fig/s04_global_weld.jpg" alt="Monthly global WELD surface reflectance composite for June 2009. Source: https://worldview.earthdata.nasa.gov/" /></p>
-<hr />
-</div>
-<div id="parametric-pixel-based-compositing" class="section level2">
-<h2>Parametric pixel-based compositing</h2>
-<ul>
-<li>a method to produce a gap-free image of a (large) area</li>
-<li>representing a specific point in time (target date)</li>
-<li>best pixel selected according to multiple parameters (e.g. how close to target date, distance to clouds) weighted scoring allows for flexible parametrization according to user´s needs and study area characteristics</li>
-</ul>
-<div class="figure">
-<img src="fig/s04_compositing.png" alt="Creating one pixel-based composite from three images." />
-<p class="caption">Creating one pixel-based composite from three images.</p>
-</div>
-<hr />
-</div>
-<div id="best-pixel-based-compositing-in-seven-steps" class="section level2">
-<h2>Best-pixel-based compositing in seven steps</h2>
-<ol style="list-style-type: decimal">
-<li>Determine compositing parameters, e.g. Target DOY: June 15 +/- 30 days and target year: 2015 +/- 1 year</li>
-<li>Calculate DOY and year suitability (0-1) according to parameters</li>
-</ol>
-<div class="figure">
-<img src="fig/s04_suitability_offsets.png" alt="Five images to be used for best-pixel compositing and their DOY and year offsets" />
-<p class="caption">Five images to be used for best-pixel compositing and their DOY and year offsets</p>
-</div>
-<p>We use linear functions to determine the suitability of an observation.<br />
-In the plot for the DOY function below, we’re chosing a parameterization that favors observations closest to the target DOY and assign a suitability score of 0 for observations that are 50 or more days from the target date. Being 30 days from the target DOY, the May 16 2015 observation receives a suitability score of 0.4.<br />
-A second function determines the suitability score for the year of observation. Again, observations close to the target year are assigned high values, while observations acquired five or more years from the target year are considered unsuitable. The resulting suitability score for the May 15 2015 observation is 1.<br />
-<img src="fig/s04_suitabilityplot_doy_year.png" alt="Linear functions for the DOY and year suitability score" style="width:90.0%" /></p>
-<ol start="3" style="list-style-type: decimal">
-<li>Calculate pixel-level suitability (0-1), e.g. through min. distance to clouds.</li>
-</ol>
-<div class="figure">
-<img src="fig/s04_suitability_clouds.png" alt="Distance to next cloud in pixels" />
-<p class="caption">Distance to next cloud in pixels</p>
-</div>
-<p>To minimize the likelihood of pixels being affected by clouds, we favor observations that aren’t in close proximity to clouds. The cloud distance scoring function below assigns a suitability score of 1 as soon as the distance to the next cloud is 100 or more pixels. An observation that has a distance of 60 pixels (=1800m) to the next cloud receives a cloud distance suitability score of 0.6.</p>
-<div class="figure">
-<img src="fig/s04_suitabilityplot_clouds.png" alt="Linear function for the cloud suitability score" style="width:40.0%" />
-<p class="caption">Linear function for the cloud suitability score</p>
-</div>
-<ol start="4" style="list-style-type: decimal">
-<li>Define which criteria are most important for you (W = weights): <span class="math display">\[W_{DOY} = 0.5\]</span> <span class="math display">\[W_{year} = 0.2\]</span> <span class="math display">\[W_{CloudDist} = 0.3\]</span></li>
-<li>Calculate a score for each pixel in each image. We can use the weighted sum of suitabilities (S = score):</li>
-</ol>
-<p><span class="math display">\[score = S_{DOY} * W_{DOY} + S_{Year} * W_{Year} + S_{CloudDist} * W_{CloudDist}\]</span><br />
-Using the values from the exemplary plots above yields:<br />
-<span class="math display">\[score = 0.4 * 0.5 + 1 * 0.2 + 0.6 * 0.3\]</span> <span class="math display">\[score = 0.58\]</span></p>
-<div class="figure">
-<img src="fig/s04_suitability_score_weighted.png" alt="Resulting suitability scores for each image" />
-<p class="caption">Resulting suitability scores for each image</p>
-</div>
-<ol start="6" style="list-style-type: decimal">
-<li><p>Use the best observation (= highest score) for the final composite.</p></li>
-<li><p>Evaluate the results by checking for seasonal/annual consistency and cloud distance (and re-iterate) <img src="fig/s04_final_composite.jpg" /></p></li>
-</ol>
-<hr />
-</div>
-<div id="exercise-5" class="section level2">
-<h2>Exercise</h2>
-<p>The goal of this week’s exercise is to combine several images into best-pixel composites using a parametric compositing function. We will be working with our main script which sources the compositing function from a second script. Outsourcing functions - especially extensive ones - improves the readability of scripts and allows for using functions from different scripts. Check the help for source() if you are not familiar with sourcing R code in your script.</p>
+<!-- 
+
+# Session 04: Pixel-based compositing
+
+------
+
+## Learning goals
+
+- Understand the fundamentals of pixel-based image compositing
+- Parameterize a compositing function and create your own composite from multiple Landsat scenes
+
+------
+
+## Background:
+
+The availability of Landsat images varies by region. Even in areas where obersvation density is high, such as North America, coverage can be reduced by clouds and quality of observations can be impacted by haze or sensor saturation. 
+![Global availability of Landsat images. Source: Wulder et al. 2016;  https://doi.org/10.1016/j.rse.2015.11.032](fig/s04_landsat_availability.jpg) 
+Using best-pixel-compositing, we can use multiple obervations (i.e., from multiple Landsat scenes) and combine them to one consistent image composite. This allows to create cloud-free, radiometrically and phenologically consistent image composites that are contiguous over large areas. A set of rules (parameters) is used to determine the observations best suited for analysis. These parameters can include information about distance to clouds, temporal proximity to a target date and seasonal consistency. 
+
+One of the first global composites using Landsat data was produced using the WELD compositing approach (Roy et al. 2011, https://doi.org/10.1016/j.rse.2009.08.011). 
+![Monthly global WELD surface reflectance composite for June 2009. Source: https://worldview.earthdata.nasa.gov/](fig/s04_global_weld.jpg)
+
+
+------
+
+## Parametric pixel-based compositing
+
+- a method to produce a gap-free image of a (large) area
+- representing a specific point in time (target date)
+- best pixel selected according to multiple parameters (e.g. how close to target date, distance to clouds)
+weighted scoring allows for flexible parametrization according to user´s needs and study area characteristics
+
+![Creating one pixel-based composite from three images.](fig/s04_compositing.png)
+
+
+------
+
+## Best-pixel-based compositing in seven steps
+
+1) Determine compositing parameters, e.g. Target DOY: June 15 +/- 30 days and target year: 2015 +/- 1 year
+2) Calculate DOY and year suitability (0-1) according to parameters  
+
+![Five images to be used for best-pixel compositing and their DOY and year offsets](fig/s04_suitability_offsets.png) 
+
+We use linear functions to determine the suitability of an observation.  
+In the plot for the DOY function below, we're chosing a parameterization that favors observations closest to the target DOY and assign a suitability score of 0 for observations that are 50 or more days from the target date. Being 30 days from the target DOY, the May 16 2015 observation receives a suitability score of 0.4.  
+A second function determines the suitability score for the year of observation. Again, observations close to the target year are assigned high values, while observations acquired five or more years from the target year are considered unsuitable. The resulting suitability score for the May 15 2015 observation is 1.  
+![Linear functions for the DOY and year suitability score ](fig/s04_suitabilityplot_doy_year.png){width=90%}
+
+3) Calculate pixel-level suitability (0-1), e.g. through min. distance to clouds.
+
+![Distance to next cloud in pixels](fig/s04_suitability_clouds.png)
+
+To minimize the likelihood of pixels being affected by clouds, we favor observations that aren't in close proximity to clouds. The cloud distance scoring function below assigns a suitability score of 1 as soon as the distance to the next cloud is 100 or more pixels. An observation that has a distance of 60 pixels (=1800m) to the next cloud receives a cloud distance suitability score of 0.6. 
+
+![Linear function for the cloud suitability score](fig/s04_suitabilityplot_clouds.png){width=40%}
+
+
+
+4) Define which criteria are most important for you (W = weights):
+$$W_{DOY} = 0.5$$
+$$W_{year} = 0.2$$
+$$W_{CloudDist} = 0.3$$
+5) Calculate a score for each pixel in each image. We can use the weighted sum of suitabilities (S = score):
+
+$$score = S_{DOY} * W_{DOY} + S_{Year} * W_{Year} + S_{CloudDist} * W_{CloudDist}$$  
+Using the values from the exemplary plots above yields:  
+$$score = 0.4 * 0.5 + 1 * 0.2 + 0.6 * 0.3$$
+$$score = 0.58$$
+
+![Resulting suitability scores for each image](fig/s04_suitability_score_weighted.png)
+
+6) Use the best observation (= highest score) for the final composite.
+
+
+7) Evaluate the results by checking for seasonal/annual consistency and cloud distance (and re-iterate)
+![](fig/s04_final_composite.jpg)
+
+------
+
+
+## Exercise
+
+The goal of this week's exercise is to combine several images into best-pixel composites using a parametric compositing function. We will be working with our main script which sources the compositing function from a second script. Outsourcing functions - especially extensive ones - improves the readability of scripts and allows for using functions from different scripts. Check the help for source() if you are not familiar with sourcing R code in your script. 
+
 <details>
-<p><summary>Click here to see code for the parametric compositing function</summary></p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1">  <span class="co">#############################################################################</span></a>
-<a class="sourceLine" id="cb34-2" title="2">  <span class="co"># MSc Earth Observation Exercise 4</span></a>
-<a class="sourceLine" id="cb34-3" title="3">  <span class="co"># Function for creating cloud-free composites of multiple Landsat images</span></a>
-<a class="sourceLine" id="cb34-4" title="4">  <span class="co"># Requires an input data.frame (here img_list) and eight compositing </span></a>
-<a class="sourceLine" id="cb34-5" title="5">  <span class="co"># parameters. Please see exercise sheet for further details.</span></a>
-<a class="sourceLine" id="cb34-6" title="6">  <span class="co">#############################################################################</span></a>
-<a class="sourceLine" id="cb34-7" title="7">  </a>
-<a class="sourceLine" id="cb34-8" title="8">  <span class="co">#############################################################################</span></a>
-<a class="sourceLine" id="cb34-9" title="9">  <span class="co"># Loading required packages here...</span></a>
-<a class="sourceLine" id="cb34-10" title="10">  <span class="kw">library</span>(raster)</a>
-<a class="sourceLine" id="cb34-11" title="11">  <span class="kw">library</span>(lubridate)</a>
-<a class="sourceLine" id="cb34-12" title="12">  </a>
-<a class="sourceLine" id="cb34-13" title="13">  <span class="co"># Change raster options to store large rasters in temp files on disk</span></a>
-<a class="sourceLine" id="cb34-14" title="14">  <span class="kw">rasterOptions</span>(<span class="dt">maxmemory =</span> <span class="fl">1e6</span>)</a>
-<a class="sourceLine" id="cb34-15" title="15">  </a>
-<a class="sourceLine" id="cb34-16" title="16">  <span class="co">#############################################################################</span></a>
-<a class="sourceLine" id="cb34-17" title="17">  <span class="co"># Function definition starts here</span></a>
-<a class="sourceLine" id="cb34-18" title="18">  parametric_compositing &lt;-<span class="st"> </span><span class="cf">function</span>(img_list, target_date, </a>
-<a class="sourceLine" id="cb34-19" title="19">                                   W_DOY, W_year, W_cloud_dist, </a>
-<a class="sourceLine" id="cb34-20" title="20">                                   max_DOY_offset, max_year_offset, </a>
-<a class="sourceLine" id="cb34-21" title="21">                                   min_cloud_dist, max_cloud_dist) {</a>
-<a class="sourceLine" id="cb34-22" title="22">  <span class="co">#...</span></a>
-<a class="sourceLine" id="cb34-23" title="23">  tic &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()</a>
-<a class="sourceLine" id="cb34-24" title="24">  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;Start of compositing process: &#39;</span>, tic))</a>
-<a class="sourceLine" id="cb34-25" title="25">  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;Target date: &#39;</span>, target_date))</a>
-<a class="sourceLine" id="cb34-26" title="26">  </a>
-<a class="sourceLine" id="cb34-27" title="27">  <span class="co"># Extract target DOY and year from target_date</span></a>
-<a class="sourceLine" id="cb34-28" title="28">  target_DOY &lt;-<span class="st"> </span><span class="kw">yday</span>(target_date)</a>
-<a class="sourceLine" id="cb34-29" title="29">  target_year &lt;-<span class="st"> </span><span class="kw">year</span>(target_date)</a>
-<a class="sourceLine" id="cb34-30" title="30">  </a>
-<a class="sourceLine" id="cb34-31" title="31">  <span class="co">#...</span></a>
-<a class="sourceLine" id="cb34-32" title="32">  <span class="cf">if</span>(<span class="kw">sum</span>(W_DOY, W_year, W_cloud_dist)<span class="op">!=</span><span class="dv">1</span>) { <span class="kw">stop</span>(<span class="st">&#39;Error: something wrong.&#39;</span>) }</a>
-<a class="sourceLine" id="cb34-33" title="33">  </a>
-<a class="sourceLine" id="cb34-34" title="34">  <span class="co">#############################################################################</span></a>
-<a class="sourceLine" id="cb34-35" title="35">  <span class="co"># Calculate the scores for the DOY, year, and cloud distance criteria</span></a>
-<a class="sourceLine" id="cb34-36" title="36">  <span class="kw">print</span>(<span class="st">&#39;Calculating compositing scores&#39;</span>)</a>
-<a class="sourceLine" id="cb34-37" title="37">  </a>
-<a class="sourceLine" id="cb34-38" title="38">  <span class="co">#...</span></a>
-<a class="sourceLine" id="cb34-39" title="39">  obs_DOY &lt;-<span class="st"> </span>img_list<span class="op">$</span>DOY</a>
-<a class="sourceLine" id="cb34-40" title="40">  DOY_score &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>(<span class="kw">abs</span>(target_DOY <span class="op">-</span><span class="st"> </span>img_list<span class="op">$</span>DOY) <span class="op">/</span><span class="st"> </span>max_DOY_offset)</a>
-<a class="sourceLine" id="cb34-41" title="41">  DOY_score[DOY_score<span class="op">&lt;</span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
-<a class="sourceLine" id="cb34-42" title="42">  </a>
-<a class="sourceLine" id="cb34-43" title="43">  <span class="co">#...</span></a>
-<a class="sourceLine" id="cb34-44" title="44">  obs_year &lt;-<span class="st"> </span>img_list<span class="op">$</span>year</a>
-<a class="sourceLine" id="cb34-45" title="45">  year_score &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">-</span>(<span class="kw">abs</span>(target_year <span class="op">-</span><span class="st"> </span>obs_year) <span class="op">/</span><span class="st"> </span>max_year_offset)</a>
-<a class="sourceLine" id="cb34-46" title="46">  </a>
-<a class="sourceLine" id="cb34-47" title="47">  <span class="cf">if</span> (max_year_offset <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) {year_score[obs_year<span class="op">==</span>target_year] &lt;-<span class="st"> </span><span class="dv">1</span>}</a>
-<a class="sourceLine" id="cb34-48" title="48">  year_score[year_score<span class="op">&lt;</span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
-<a class="sourceLine" id="cb34-49" title="49">  </a>
-<a class="sourceLine" id="cb34-50" title="50">  <span class="co"># Get candidate images within max_DOY_offset and max_year_offset</span></a>
-<a class="sourceLine" id="cb34-51" title="51">  ix &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="op">!</span><span class="kw">is.na</span>(DOY_score) <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(year_score))</a>
-<a class="sourceLine" id="cb34-52" title="52">  <span class="cf">if</span> (<span class="kw">length</span>(ix)<span class="op">&gt;</span><span class="dv">1</span>) { <span class="kw">print</span>(<span class="kw">paste</span>(<span class="kw">length</span>(ix),  <span class="st">&#39;candidate images selected, calculating scores.&#39;</span>)) }</a>
-<a class="sourceLine" id="cb34-53" title="53">  <span class="cf">if</span> (<span class="kw">length</span>(ix)<span class="op">&lt;</span><span class="dv">2</span>) { <span class="kw">stop</span>(<span class="st">&#39;Another error because something is wrong.&#39;</span>) }</a>
-<a class="sourceLine" id="cb34-54" title="54">  </a>
-<a class="sourceLine" id="cb34-55" title="55">  <span class="co"># Stack cloud distance layers of candidate images and reclassify </span></a>
-<a class="sourceLine" id="cb34-56" title="56">  <span class="co"># values &lt; min_cloud_dist to NA, and values &gt; max_cloud_dist to max_cloud_dist</span></a>
-<a class="sourceLine" id="cb34-57" title="57">  cloud_dist &lt;-<span class="st"> </span><span class="kw">stack</span>(<span class="kw">as.character</span>(img_list<span class="op">$</span>cloud_dist_files[ix]))</a>
-<a class="sourceLine" id="cb34-58" title="58">  cloud_dist &lt;-<span class="st"> </span><span class="kw">reclassify</span>(cloud_dist, <span class="dt">rcl=</span><span class="kw">c</span>(<span class="dv">0</span>, min_cloud_dist, <span class="ot">NA</span>), <span class="dt">right=</span><span class="ot">NA</span>, <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)</a>
-<a class="sourceLine" id="cb34-59" title="59">  cloud_dist &lt;-<span class="st"> </span><span class="kw">reclassify</span>(cloud_dist, <span class="dt">rcl=</span><span class="kw">c</span>(max_cloud_dist, <span class="kw">sqrt</span>(<span class="kw">nrow</span>(cloud_dist)<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="kw">ncol</span>(cloud_dist)<span class="op">^</span><span class="dv">2</span>), max_cloud_dist), <span class="dt">right=</span><span class="ot">NA</span>, <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)</a>
-<a class="sourceLine" id="cb34-60" title="60">  </a>
-<a class="sourceLine" id="cb34-61" title="61">  <span class="co">#...</span></a>
-<a class="sourceLine" id="cb34-62" title="62">  cloud_score &lt;-<span class="st"> </span>(cloud_dist <span class="op">-</span><span class="st"> </span>min_cloud_dist) <span class="op">/</span><span class="st"> </span>(max_cloud_dist <span class="op">-</span><span class="st"> </span>min_cloud_dist)</a>
-<a class="sourceLine" id="cb34-63" title="63">  </a>
-<a class="sourceLine" id="cb34-64" title="64">  <span class="co">#...</span></a>
-<a class="sourceLine" id="cb34-65" title="65">  obs_score &lt;-<span class="st"> </span>DOY_score[ix] <span class="op">*</span><span class="st"> </span>W_DOY <span class="op">+</span><span class="st"> </span>year_score[ix] <span class="op">*</span><span class="st"> </span>W_year <span class="op">+</span><span class="st"> </span>cloud_score <span class="op">*</span><span class="st"> </span>W_cloud_dist</a>
-<a class="sourceLine" id="cb34-66" title="66">  </a>
-<a class="sourceLine" id="cb34-67" title="67">  <span class="co">#...</span></a>
-<a class="sourceLine" id="cb34-68" title="68">  select &lt;-<span class="st"> </span><span class="kw">which.max</span>(obs_score)</a>
-<a class="sourceLine" id="cb34-69" title="69">  </a>
-<a class="sourceLine" id="cb34-70" title="70">  <span class="co">#...</span></a>
-<a class="sourceLine" id="cb34-71" title="71">  candidates &lt;-<span class="st"> </span><span class="kw">unique</span>(select)</a>
-<a class="sourceLine" id="cb34-72" title="72">  </a>
-<a class="sourceLine" id="cb34-73" title="73">  <span class="co">#############################################################################</span></a>
-<a class="sourceLine" id="cb34-74" title="74">  <span class="co"># Fill composite image with pixels from the candidate images</span></a>
-<a class="sourceLine" id="cb34-75" title="75">  <span class="cf">for</span> (i <span class="cf">in</span> candidates){</a>
-<a class="sourceLine" id="cb34-76" title="76">    </a>
-<a class="sourceLine" id="cb34-77" title="77">    <span class="co">#...</span></a>
-<a class="sourceLine" id="cb34-78" title="78">    fill_image &lt;-<span class="st"> </span><span class="kw">brick</span>(<span class="kw">as.character</span>(img_list<span class="op">$</span>image_files[ix[i]]), <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)</a>
-<a class="sourceLine" id="cb34-79" title="79">    </a>
-<a class="sourceLine" id="cb34-80" title="80">    <span class="co">#...</span></a>
-<a class="sourceLine" id="cb34-81" title="81">    <span class="cf">if</span> (i <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(candidates)) { </a>
-<a class="sourceLine" id="cb34-82" title="82">      composite &lt;-<span class="st"> </span><span class="kw">brick</span>(fill_image, <span class="dt">values=</span><span class="ot">FALSE</span>) </a>
-<a class="sourceLine" id="cb34-83" title="83">      <span class="kw">dataType</span>(composite) &lt;-<span class="st"> &#39;INT2S&#39;</span></a>
-<a class="sourceLine" id="cb34-84" title="84">      <span class="kw">values</span>(composite) &lt;-<span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb34-85" title="85">    }</a>
-<a class="sourceLine" id="cb34-86" title="86">    </a>
-<a class="sourceLine" id="cb34-87" title="87">    <span class="kw">print</span>(<span class="kw">paste0</span>(<span class="st">&#39;Filling raster with acquisition from date &#39;</span>, img_list<span class="op">$</span>date[ix[i]]))</a>
-<a class="sourceLine" id="cb34-88" title="88">    fill_image.masked &lt;-<span class="st"> </span><span class="kw">mask</span>(fill_image, select, <span class="dt">maskvalue=</span>i, <span class="dt">inverse=</span>T, <span class="dt">updatevalue=</span><span class="dv">0</span>, <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)</a>
-<a class="sourceLine" id="cb34-89" title="89">    fill_image.masked[<span class="kw">is.na</span>(fill_image.masked)] &lt;-<span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb34-90" title="90">    composite &lt;-<span class="st"> </span>composite <span class="op">+</span><span class="st"> </span>fill_image.masked</a>
-<a class="sourceLine" id="cb34-91" title="91">    </a>
-<a class="sourceLine" id="cb34-92" title="92">  }</a>
-<a class="sourceLine" id="cb34-93" title="93">  </a>
-<a class="sourceLine" id="cb34-94" title="94">  <span class="co">#...</span></a>
-<a class="sourceLine" id="cb34-95" title="95">  composite_na &lt;-<span class="st"> </span><span class="kw">mask</span>(composite, select, <span class="dt">maskvalue=</span><span class="ot">NA</span>, <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)</a>
-<a class="sourceLine" id="cb34-96" title="96">  </a>
-<a class="sourceLine" id="cb34-97" title="97">  <span class="co">#############################################################################</span></a>
-<a class="sourceLine" id="cb34-98" title="98">  <span class="co">#...</span></a>
-<a class="sourceLine" id="cb34-99" title="99">  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;NAs: &#39;</span>, <span class="kw">round</span>(<span class="kw">freq</span>(composite[[<span class="dv">1</span>]], <span class="dt">value=</span><span class="ot">NA</span>)<span class="op">/</span><span class="kw">ncell</span>(composite[[<span class="dv">1</span>]])<span class="op">*</span><span class="dv">100</span>, <span class="dt">digits=</span><span class="dv">3</span>), <span class="st">&#39; %&#39;</span>))</a>
-<a class="sourceLine" id="cb34-100" title="100">  </a>
-<a class="sourceLine" id="cb34-101" title="101">  <span class="co">#...</span></a>
-<a class="sourceLine" id="cb34-102" title="102">  rcl_DOY &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">ncol=</span><span class="dv">2</span>, <span class="dt">data=</span><span class="kw">c</span>(candidates, obs_DOY[ix[candidates]]))</a>
-<a class="sourceLine" id="cb34-103" title="103">  select_DOY &lt;-<span class="st"> </span><span class="kw">reclassify</span>(select, rcl_DOY, <span class="dt">datatype =</span> <span class="st">&#39;INT2S&#39;</span>)</a>
-<a class="sourceLine" id="cb34-104" title="104">  </a>
-<a class="sourceLine" id="cb34-105" title="105">  <span class="co">#...</span></a>
-<a class="sourceLine" id="cb34-106" title="106">  rcl_year &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">ncol=</span><span class="dv">2</span>, <span class="dt">data=</span><span class="kw">c</span>(candidates, obs_year[ix[candidates]]))</a>
-<a class="sourceLine" id="cb34-107" title="107">  select_year &lt;-<span class="st"> </span><span class="kw">reclassify</span>(select, rcl_year)</a>
-<a class="sourceLine" id="cb34-108" title="108">  </a>
-<a class="sourceLine" id="cb34-109" title="109">  <span class="co">#...</span></a>
-<a class="sourceLine" id="cb34-110" title="110">  output &lt;-<span class="st"> </span><span class="kw">stack</span>(composite_na, select_DOY, select_year)</a>
-<a class="sourceLine" id="cb34-111" title="111">  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;End of compositing process: &#39;</span>, <span class="kw">Sys.time</span>()))</a>
-<a class="sourceLine" id="cb34-112" title="112">  </a>
-<a class="sourceLine" id="cb34-113" title="113">  <span class="co">#...</span></a>
-<a class="sourceLine" id="cb34-114" title="114">  <span class="kw">return</span>(output)</a>
-<a class="sourceLine" id="cb34-115" title="115">  </a>
-<a class="sourceLine" id="cb34-116" title="116">  }</a></code></pre></div>
+  <summary>Click here to see code for the parametric compositing function</summary>
+  
+  ```r
+  #############################################################################
+  # MSc Earth Observation Exercise 4
+  # Function for creating cloud-free composites of multiple Landsat images
+  # Requires an input data.frame (here img_list) and eight compositing 
+  # parameters. Please see exercise sheet for further details.
+  #############################################################################
+  
+  #############################################################################
+  # Loading required packages here...
+  library(raster)
+  library(lubridate)
+  
+  # Change raster options to store large rasters in temp files on disk
+  rasterOptions(maxmemory = 1e6)
+  
+  #############################################################################
+  # Function definition starts here
+  parametric_compositing <- function(img_list, target_date, 
+                                   W_DOY, W_year, W_cloud_dist, 
+                                   max_DOY_offset, max_year_offset, 
+                                   min_cloud_dist, max_cloud_dist) {
+  #...
+  tic <- Sys.time()
+  print(paste('Start of compositing process: ', tic))
+  print(paste('Target date: ', target_date))
+  
+  # Extract target DOY and year from target_date
+  target_DOY <- yday(target_date)
+  target_year <- year(target_date)
+  
+  #...
+  if(sum(W_DOY, W_year, W_cloud_dist)!=1) { stop('Error: something wrong.') }
+  
+  #############################################################################
+  # Calculate the scores for the DOY, year, and cloud distance criteria
+  print('Calculating compositing scores')
+  
+  #...
+  obs_DOY <- img_list$DOY
+  DOY_score <- 1 - (abs(target_DOY - img_list$DOY) / max_DOY_offset)
+  DOY_score[DOY_score<0] <- NA
+  
+  #...
+  obs_year <- img_list$year
+  year_score <- 1-(abs(target_year - obs_year) / max_year_offset)
+  
+  if (max_year_offset == 0) {year_score[obs_year==target_year] <- 1}
+  year_score[year_score<0] <- NA
+  
+  # Get candidate images within max_DOY_offset and max_year_offset
+  ix <- which(!is.na(DOY_score) & !is.na(year_score))
+  if (length(ix)>1) { print(paste(length(ix),  'candidate images selected, calculating scores.')) }
+  if (length(ix)<2) { stop('Another error because something is wrong.') }
+  
+  # Stack cloud distance layers of candidate images and reclassify 
+  # values < min_cloud_dist to NA, and values > max_cloud_dist to max_cloud_dist
+  cloud_dist <- stack(as.character(img_list$cloud_dist_files[ix]))
+  cloud_dist <- reclassify(cloud_dist, rcl=c(0, min_cloud_dist, NA), right=NA, datatype='INT2S')
+  cloud_dist <- reclassify(cloud_dist, rcl=c(max_cloud_dist, sqrt(nrow(cloud_dist)^2 + ncol(cloud_dist)^2), max_cloud_dist), right=NA, datatype='INT2S')
+  
+  #...
+  cloud_score <- (cloud_dist - min_cloud_dist) / (max_cloud_dist - min_cloud_dist)
+  
+  #...
+  obs_score <- DOY_score[ix] * W_DOY + year_score[ix] * W_year + cloud_score * W_cloud_dist
+  
+  #...
+  select <- which.max(obs_score)
+  
+  #...
+  candidates <- unique(select)
+  
+  #############################################################################
+  # Fill composite image with pixels from the candidate images
+  for (i in candidates){
+    
+    #...
+    fill_image <- brick(as.character(img_list$image_files[ix[i]]), datatype='INT2S')
+    
+    #...
+    if (i == min(candidates)) { 
+      composite <- brick(fill_image, values=FALSE) 
+      dataType(composite) <- 'INT2S'
+      values(composite) <- 0
+    }
+    
+    print(paste0('Filling raster with acquisition from date ', img_list$date[ix[i]]))
+    fill_image.masked <- mask(fill_image, select, maskvalue=i, inverse=T, updatevalue=0, datatype='INT2S')
+    fill_image.masked[is.na(fill_image.masked)] <- 0
+    composite <- composite + fill_image.masked
+    
+  }
+  
+  #...
+  composite_na <- mask(composite, select, maskvalue=NA, datatype='INT2S')
+  
+  #############################################################################
+  #...
+  print(paste('NAs: ', round(freq(composite[[1]], value=NA)/ncell(composite[[1]])*100, digits=3), ' %'))
+  
+  #...
+  rcl_DOY <- matrix(ncol=2, data=c(candidates, obs_DOY[ix[candidates]]))
+  select_DOY <- reclassify(select, rcl_DOY, datatype = 'INT2S')
+  
+  #...
+  rcl_year <- matrix(ncol=2, data=c(candidates, obs_year[ix[candidates]]))
+  select_year <- reclassify(select, rcl_year)
+  
+  #...
+  output <- stack(composite_na, select_DOY, select_year)
+  print(paste('End of compositing process: ', Sys.time()))
+  
+  #...
+  return(output)
+  
+  }
+  ```
 </details>
+
 <details>
-<p><summary>Click here to see the code for the main script calling the parametric compositing function</summary></p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1">  <span class="co">#############################################################################</span></a>
-<a class="sourceLine" id="cb35-2" title="2">  <span class="co"># MSc Earth Observation Exercise 4</span></a>
-<a class="sourceLine" id="cb35-3" title="3">  <span class="co"># [Your Name]</span></a>
-<a class="sourceLine" id="cb35-4" title="4">  <span class="co">#############################################################################</span></a>
-<a class="sourceLine" id="cb35-5" title="5">  </a>
-<a class="sourceLine" id="cb35-6" title="6">  <span class="co">#############################################################################</span></a>
-<a class="sourceLine" id="cb35-7" title="7">  <span class="kw">library</span>(rgdal)</a>
-<a class="sourceLine" id="cb35-8" title="8">  <span class="kw">library</span>(raster)</a>
-<a class="sourceLine" id="cb35-9" title="9">  <span class="kw">library</span>(lubridate)</a>
-<a class="sourceLine" id="cb35-10" title="10">  <span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb35-11" title="11">  <span class="kw">source</span>(<span class="st">&#39;&#39;</span>) <span class="co">#path to the parametric_compositing function</span></a>
-<a class="sourceLine" id="cb35-12" title="12">  </a>
-<a class="sourceLine" id="cb35-13" title="13">  <span class="co"># Change raster options to store large rasters in temp files on disk</span></a>
-<a class="sourceLine" id="cb35-14" title="14">  <span class="kw">rasterOptions</span>(<span class="dt">maxmemory =</span> <span class="fl">1e6</span>)</a>
-<a class="sourceLine" id="cb35-15" title="15">  </a>
-<a class="sourceLine" id="cb35-16" title="16">  <span class="co">######## Define the folder that contains your data...</span></a>
-<a class="sourceLine" id="cb35-17" title="17">  data.path &lt;-<span class="st"> &#39;O:/ST19_MSc-EO/S04/data/&#39;</span></a>
-<a class="sourceLine" id="cb35-18" title="18">  </a>
-<a class="sourceLine" id="cb35-19" title="19">  <span class="co">#############################################################################</span></a>
-<a class="sourceLine" id="cb35-20" title="20">  <span class="co"># 1)</span></a>
-<a class="sourceLine" id="cb35-21" title="21">  <span class="co">#############################################################################</span></a>
-<a class="sourceLine" id="cb35-22" title="22">  </a>
-<a class="sourceLine" id="cb35-23" title="23">  sr &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="kw">paste0</span>(data.path, <span class="st">&#39;/sr_data&#39;</span>), <span class="dt">pattern=</span><span class="st">&quot;.tif$&quot;</span>, <span class="dt">full.names=</span>T, <span class="dt">recursive=</span>F)</a>
-<a class="sourceLine" id="cb35-24" title="24">  fmask &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="kw">paste0</span>(data.path, <span class="st">&#39;/fmask&#39;</span>), <span class="dt">pattern=</span><span class="st">&quot;.tif$&quot;</span>, <span class="dt">full.names=</span>T, <span class="dt">recursive=</span>F)</a>
-<a class="sourceLine" id="cb35-25" title="25">  cd &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="kw">paste0</span>(data.path, <span class="st">&#39;/cloud_dist&#39;</span>), <span class="dt">pattern=</span><span class="st">&quot;.tif$&quot;</span>, <span class="dt">full.names=</span>T, <span class="dt">recursive=</span>F)</a>
-<a class="sourceLine" id="cb35-26" title="26">  </a>
-<a class="sourceLine" id="cb35-27" title="27">  sta &lt;-<span class="st"> </span><span class="kw">nchar</span>(<span class="kw">paste0</span>(data.path,<span class="st">&#39;/sr_data/LT05228082&#39;</span>)) <span class="op">+</span><span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb35-28" title="28">  end &lt;-<span class="st"> </span>sta <span class="op">+</span><span class="st"> </span><span class="dv">6</span></a>
-<a class="sourceLine" id="cb35-29" title="29">  </a>
-<a class="sourceLine" id="cb35-30" title="30">  dates &lt;-<span class="st"> </span><span class="kw">as.Date</span>(<span class="kw">substr</span>(sr, sta, end), <span class="dt">format=</span><span class="st">&#39;%Y%j&#39;</span>)</a>
-<a class="sourceLine" id="cb35-31" title="31">  </a>
-<a class="sourceLine" id="cb35-32" title="32">  sr.sorted &lt;-<span class="st"> </span>sr[<span class="kw">order</span>(dates)]</a>
-<a class="sourceLine" id="cb35-33" title="33">  cd.sorted &lt;-<span class="st"> </span>cd[<span class="kw">order</span>(dates)]</a>
-<a class="sourceLine" id="cb35-34" title="34">  </a>
-<a class="sourceLine" id="cb35-35" title="35">  img_list &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">&quot;image_files&quot;</span>=<span class="kw">as.character</span>(sr.sorted), <span class="st">&quot;cloud_dist_files&quot;</span>=<span class="kw">as.character</span>(cd.sorted) ,<span class="st">&quot;date&quot;</span>=<span class="kw">sort</span>(dates), <span class="st">&quot;DOY&quot;</span>=<span class="kw">yday</span>(<span class="kw">sort</span>(dates)), <span class="st">&quot;year&quot;</span>=<span class="kw">year</span>(<span class="kw">sort</span>(dates)))</a>
-<a class="sourceLine" id="cb35-36" title="36">  </a>
-<a class="sourceLine" id="cb35-37" title="37">  </a>
-<a class="sourceLine" id="cb35-38" title="38">  <span class="co">#############################################################################</span></a>
-<a class="sourceLine" id="cb35-39" title="39">  <span class="co"># 2)</span></a>
-<a class="sourceLine" id="cb35-40" title="40">  <span class="co">#############################################################################</span></a>
-<a class="sourceLine" id="cb35-41" title="41">  target_date_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">ymd</span>(<span class="st">&#39;YYYYMMDD&#39;</span>)</a>
-<a class="sourceLine" id="cb35-42" title="42">  target_date_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">ymd</span>(<span class="st">&#39;YYYYMMDD&#39;</span>)</a>
-<a class="sourceLine" id="cb35-43" title="43">  </a>
-<a class="sourceLine" id="cb35-44" title="44">  W_DOY &lt;-<span class="st"> </span><span class="fl">0.0</span></a>
-<a class="sourceLine" id="cb35-45" title="45">  W_year &lt;-<span class="st"> </span><span class="fl">0.0</span></a>
-<a class="sourceLine" id="cb35-46" title="46">  W_cloud_dist &lt;-<span class="st"> </span><span class="fl">0.0</span></a>
-<a class="sourceLine" id="cb35-47" title="47">  </a>
-<a class="sourceLine" id="cb35-48" title="48">  max_DOY_offset &lt;-<span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb35-49" title="49">  max_year_offset &lt;-<span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb35-50" title="50">  </a>
-<a class="sourceLine" id="cb35-51" title="51">  min_cloud_dist &lt;-<span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb35-52" title="52">  max_cloud_dist &lt;-<span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb35-53" title="53">  </a>
-<a class="sourceLine" id="cb35-54" title="54">  composite_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">parametric_compositing</span>(img_list, target_date_<span class="dv">1</span>, </a>
-<a class="sourceLine" id="cb35-55" title="55">                                       W_DOY, W_year, W_cloud_dist, </a>
-<a class="sourceLine" id="cb35-56" title="56">                                       max_DOY_offset, max_year_offset, </a>
-<a class="sourceLine" id="cb35-57" title="57">                                       min_cloud_dist, max_cloud_dist)</a>
-<a class="sourceLine" id="cb35-58" title="58">  </a>
-<a class="sourceLine" id="cb35-59" title="59">  <span class="co">#############################################################################</span></a>
-<a class="sourceLine" id="cb35-60" title="60">  <span class="co"># 4)</span></a>
-<a class="sourceLine" id="cb35-61" title="61">  <span class="co">#############################################################################</span></a>
-<a class="sourceLine" id="cb35-62" title="62">  </a>
-<a class="sourceLine" id="cb35-63" title="63">  composite_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">parametric_compositing</span>(img_list, target_date_<span class="dv">2</span>, </a>
-<a class="sourceLine" id="cb35-64" title="64">                                      W_DOY, W_year, W_cloud_dist, </a>
-<a class="sourceLine" id="cb35-65" title="65">                                      max_DOY_offset, max_year_offset, </a>
-<a class="sourceLine" id="cb35-66" title="66">                                      min_cloud_dist, max_cloud_dist)</a></code></pre></div>
+  <summary>Click here to see the code for the main script calling the parametric compositing function</summary>
+  
+  ```r
+  #############################################################################
+  # MSc Earth Observation Exercise 4
+  # [Your Name]
+  #############################################################################
+  
+  #############################################################################
+  library(rgdal)
+  library(raster)
+  library(lubridate)
+  library(ggplot2)
+  source('') #path to the parametric_compositing function
+  
+  # Change raster options to store large rasters in temp files on disk
+  rasterOptions(maxmemory = 1e6)
+  
+  ######## Define the folder that contains your data...
+  data.path <- 'O:/ST19_MSc-EO/S04/data/'
+  
+  #############################################################################
+  # 1)
+  #############################################################################
+  
+  sr <- list.files(paste0(data.path, '/sr_data'), pattern=".tif$", full.names=T, recursive=F)
+  fmask <- list.files(paste0(data.path, '/fmask'), pattern=".tif$", full.names=T, recursive=F)
+  cd <- list.files(paste0(data.path, '/cloud_dist'), pattern=".tif$", full.names=T, recursive=F)
+  
+  sta <- nchar(paste0(data.path,'/sr_data/LT05228082')) + 1
+  end <- sta + 6
+  
+  dates <- as.Date(substr(sr, sta, end), format='%Y%j')
+  
+  sr.sorted <- sr[order(dates)]
+  cd.sorted <- cd[order(dates)]
+  
+  img_list <- data.frame("image_files"=as.character(sr.sorted), "cloud_dist_files"=as.character(cd.sorted) ,"date"=sort(dates), "DOY"=yday(sort(dates)), "year"=year(sort(dates)))
+  
+  
+  #############################################################################
+  # 2)
+  #############################################################################
+  target_date_1 <- ymd('YYYYMMDD')
+  target_date_2 <- ymd('YYYYMMDD')
+  
+  W_DOY <- 0.0
+  W_year <- 0.0
+  W_cloud_dist <- 0.0
+  
+  max_DOY_offset <- 0
+  max_year_offset <- 0
+  
+  min_cloud_dist <- 0
+  max_cloud_dist <- 0
+  
+  composite_1 <- parametric_compositing(img_list, target_date_1, 
+                                       W_DOY, W_year, W_cloud_dist, 
+                                       max_DOY_offset, max_year_offset, 
+                                       min_cloud_dist, max_cloud_dist)
+  
+  #############################################################################
+  # 4)
+  #############################################################################
+  
+  composite_2 <- parametric_compositing(img_list, target_date_2, 
+                                      W_DOY, W_year, W_cloud_dist, 
+                                      max_DOY_offset, max_year_offset, 
+                                      min_cloud_dist, max_cloud_dist)
+  ```
 </details>
-<div id="parameterization" class="section level3">
-<h3>1) Parameterization</h3>
-<p>The function above allows you to produce cloud-free best-pixel composites for a pre-defined target DOY. This function requires one input data.frame (see code template on how to create it) and eight input parameters:</p>
-<ol style="list-style-type: lower-alpha">
-<li><p><em>img_list</em>: a data frame containing five variables for each of the Landsat images:</p>
-<p>$image_files: the full paths to the files in …sr_data.<br />
-$cloud_dist_files: the full paths to the files in …cloud_dist.<br />
-$date: the acquisition day in Date format (YYYY-MM-DD).<br />
-$DOY: the acquisition day of the year.<br />
-$year: the acquisition year.</p></li>
-<li><p><em>target_date</em>: the target date for your composite in Date format (YYYY-MM-DD)</p></li>
-<li><p><em>W_DOY</em>, <em>W_year</em>, <em>W_cloud_dist</em>: weights for the three available parameters DOY, year and distance to clouds. Must be scaled between 0 and 1 and sum up to 1, the higher the weight, the higher the importance of the criterion.</p></li>
-<li><p><em>max_DOY_offset</em>, <em>max_year_offset</em>: Thresholds for the maximum allowed differences between target DOY and acquisition DOY, as well target year and acquisition year. Images exceeding these thresholds (further away in time) will be fully ignored. For instance, max_year_offset = 0 will not allow observations from a year other than the target year. By choosing these parameters, you will determine whether you prefer seasonal consistency (close to target DOY but from different years) over annual consistency (observations from same year but potentially distant DOYs). Discuss the parametrization in your group.</p></li>
-<li><p><em>min_cloud_dist</em>, <em>max_cloud_dist</em>: The minimum and maximum distance to clouds. min_cloud_dist = 10 will exclude all observations which are less than 10 pixels away from a cloud. The cloud scores are linearly scaled between the minimum (score = 0) and maximum cloud distance (score = 1). Pixels with distances above max_cloud_dist will receive a score of 1.</p></li>
-</ol>
-</div>
-<div id="defining-target-dates-and-parameters" class="section level3">
-<h3>2) Defining target dates and parameters</h3>
-<p>Relying on your insights from collecting training data on forest types, define two target days of the year (DOY) to capture different phenological stages. These will be used as target_date parameters later on.<br />
-Make a decision concerning the compositing parameters explained in 1c, 1d and 1e.</p>
-</div>
-<div id="exploring-the-script-and-adding-documentation" class="section level3">
-<h3>3) Exploring the script and adding documentation</h3>
-<ol style="list-style-type: lower-alpha">
-<li><p>Open the parametric_compositing.R script and take time to read through it in groups. Run the code line by line. Make sure you understand how the function operates. Discuss questions in your group and seek the help pages of functions you don´t know.</p></li>
-<li><p>The developer did not spend sufficient time on the documentation. Make the script a bit more user-friendly by adding missing comments (#…). Make sure your comments explain what happens in each step of the function, and why. Are there bugs or sections which you would code differently?</p></li>
-<li><p>Next, run the parametric_compositing() function with your parameters and write the result to disk. Include the target DOY in the filename. While the function executes, proceed with the next exercise.</p></li>
-</ol>
-</div>
-<div id="second-run-for-target-date-2" class="section level3">
-<h3>4) Second run for target date 2</h3>
-<p>Repeat the compositing for the second target DOY you specified in 2) and write the results to disk.</p>
-</div>
-<div id="visual-inspection-and-evaluation-of-results" class="section level3">
-<h3>5) Visual inspection and evaluation of results</h3>
-<p>Visually inspect the quality of your compositing results in QGIS. Look at the bands containing the DOY and year flags (band 7 and 8). What worked out well, what did not? How could the quality of the composites be improved? Re-iterate with different parameters if you wish.</p>
-</div>
-<div id="improving-the-user-friendliness-of-the-script-optionalvoluntary-task" class="section level3">
-<h3>6) Improving the user-friendliness of the script (optional/voluntary task)</h3>
-<p>Make the compositing function more user friendly. Insert a couple of plot and print commands to enable the users to follow the progress of the compositing while the function is running.</p>
-<p>For instance, print() how many images were used for the final composite, their acquisition dates, etc. Also, you might want to plot() the composited image after each iteration. You could add further status messages telling the user how much time single steps took.</p>
-<p>Don´t forget to save the script and run the source() command in your R script to update the function after you made these changes.</p>
-<hr />
-</div>
-</div>
-<div id="reading-materials." class="section level2">
-<h2>Reading materials.</h2>
-<hr />
-</div>
-</div>
-<div id="session-05-machine-learning-for-image-classification" class="section level1">
-<h1>Session 05: Machine learning for image classification</h1>
-<div id="learning-goals-6" class="section level2">
-<h2>Learning goals</h2>
-</div>
-<div id="exercise-6" class="section level2">
-<h2>Exercise</h2>
-<p>In this exercise, we will deal with image classification using the Random Forests algorithm. Specifically, we will use your training data and your pixel-based composites from the last exercises to map forest types in the Western Beskids. We will assess the performance of multiple classification models through the out of bag error and will investigate variable importances.</p>
-<div id="loading-and-preparing-training-data-training-the-classification-model" class="section level4">
-<h4>1) Loading and preparing training data; training the classification model</h4>
-<ol style="list-style-type: lower-alpha">
-<li><p>Load the vector file containing your training data points using readOGR(). Next, create a stack()/brick() of your favourite pixel-based composite (last week´s result).</p></li>
-<li><p>Use extract()to create a data.frame with training points as rows, and class labels (classID) as well as the spectral bands of your composites as columns. Remove the day of year and year flags (band 7 and 8) for the next steps. As we want to train a classification (and not a regression), the randomForest() function expects the dependent variable to be of type factor - use as.factor() for conversion of the classID column. The Random Forest algorithm cannot deal with NoData (NA) values. Remove NAs from the data.frame.</p></li>
-<li><p>Train a randomForest() classification model with the data.frame created in the prior step.</p></li>
-</ol>
-</div>
-<div id="training-additional-models-based-on-different-input-data" class="section level3">
-<h3>2) Training additional models based on different input data</h3>
-<p>Repeat 1) to train an additional randomForest models based on</p>
-<ol style="list-style-type: lower-alpha">
-<li><p>…the other composite.</p></li>
-<li><p>…a stack of both composites.</p></li>
-</ol>
-</div>
-<div id="investigating-the-models-and-classification" class="section level3">
-<h3>3) Investigating the models and classification</h3>
-<p>The model object resulting from 2) contains a wealth of information on the model parameters and performance. Assess the out of bag (OOB) error estimates of the trained models (1b, 2a, 2b) by inspecting the err.rate attribute of your model objects. a. Which model has the lowest OOB error? b. How does the OOB behave when increasing the number of trees in your model (ntrees)? You can access the OOB per number of trees included via err.rate. Use this information to determine a suitable value for ntrees. c. Which of the four classes has the highest OOB errors?</p>
-</div>
-<div id="training-a-final-model-and-investigating-variable-importances" class="section level3">
-<h3>4) Training a final model and investigating variable importances</h3>
-<ol style="list-style-type: lower-alpha">
-<li>Train a final model with the best combination of images (3a) and ntrees (3b).</li>
-<li>Investigate the variable importances using varImpPlot(). Use partialPlot() to produce partial dependence plots for your most important predictor and all four classes. Can you explain the differences between classes?</li>
-</ol>
-</div>
-<div id="classification" class="section level3">
-<h3>5) Classification</h3>
-<p>Perform a classification of the image stack using the predict() function. Write the resulting map to disk in ENVI format. When doing so, consider choosing the appropriate datatype argument.</p>
-</div>
-</div>
-<div id="reading-materials.-1" class="section level2">
-<h2>Reading materials.</h2>
-<hr />
-</div>
-</div>
-<div id="session-06-accuracy-assessment-and-area-estimation" class="section level1">
-<h1>Session 06: Accuracy assessment and area estimation</h1>
-<div id="learning-goals-7" class="section level2">
-<h2>Learning goals</h2>
-</div>
-<div id="exercise-7" class="section level2">
-<h2>Exercise</h2>
-<p>In this exercise, you will perform an accuracy assessment of your forest type map. We will perform an area-adjusted accuracy assessment and estimate error-adjusted area for each forest type class.</p>
-<div id="participate-in-the-quiz-in-moodle.-in-case-you-had-wrong-answers-please-discuss-with-your-classmates." class="section level3">
-<h3>1) Participate in the quiz in moodle. In case you had wrong answers, please discuss with your classmates.</h3>
-</div>
-<div id="creating-a-stratified-set-of-reference-samples" class="section level3">
-<h3>2) Creating a stratified set of reference samples</h3>
-<ol style="list-style-type: lower-alpha">
-<li>Load your forest type map in R. Create a set of reference samples in R using sampleStratified(). We want to have a stratified equalized sample of 20 pixels per class. Specify the size parameter accordingly.<br />
-Specify sp = TRUE to receive a spatial points object and na.rm = TRUE to ignore unclassified regions. Write the points to disk using writeOGR().</li>
-</ol>
-</div>
-<div id="determine-class-labels-for-the-reference-samples" class="section level3">
-<h3>3) Determine class labels for the reference samples</h3>
-<ol style="list-style-type: lower-alpha">
-<li>Load the point shapefile in QGIS and add two fields of type Integer: classID and confID.</li>
-<li>Link QGIS and GoogleEarth using GearthView. Visit each point and determine the class label according to the high resolution imagery. Enter the class and confidence labels in the attribute table. Work efficiently through the points and save your changes regularly.</li>
-</ol>
-<table>
-<thead>
-<tr class="header">
-<th>Class name</th>
-<th>classID</th>
-<th>Confidence level</th>
-<th>confID</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Deciduous forest</td>
-<td>1</td>
-<td>Very certain</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td>Mixed forest</td>
-<td>2</td>
-<td>Some uncertainties</td>
-<td>2</td>
-</tr>
-<tr class="odd">
-<td>Coniferous forest</td>
-<td>3</td>
-<td>Very uncertain</td>
-<td>3</td>
-</tr>
-<tr class="even">
-<td>Non-forest</td>
-<td>4</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="assessing-class-proportions-and-creating-a-confusion-matrix" class="section level3">
-<h3>4) Assessing class proportions and creating a confusion matrix</h3>
-<ol style="list-style-type: lower-alpha">
-<li>In R, assess the class proportions of your map. To do so, use the freq()function to get pixel counts. Use these for calculating class propotions (0-1). Remember to exclude NAs, so the proportions of your 4 classes sum up to 1.</li>
-<li>Load the points in R. Create a confusion matrix from the resulting data.frame using table().</li>
-</ol>
-</div>
-<div id="deriving-accuracies-and-evaluating-results" class="section level3">
-<h3>5) Deriving accuracies and evaluating results</h3>
-<p>Copy &amp; paste the values from your confusion matrix as well as the class proportions into the Excel spreadsheet.<br />
-Next, answer the following questions:</p>
-<ol style="list-style-type: lower-alpha">
-<li>Which class has the highest / lowest user´s accuracy?</li>
-<li>Which class has the highest / lowest producer´s accuracy?</li>
-<li>How does the overall accuracy differ after area-adjustment? Why?</li>
-</ol>
-</div>
-</div>
-<div id="reading-materials.-2" class="section level2">
-<h2>Reading materials.</h2>
-<hr />
-</div>
-</div>
-<div id="session-07-multi-temporal-change-detection" class="section level1">
-<h1>Session 07: Multi-temporal change detection</h1>
-<div id="learning-goals-8" class="section level2">
-<h2>Learning goals</h2>
-</div>
-<div id="exercise-8" class="section level2">
-<h2>Exercise</h2>
-<p>After completing the last exercises, you gained a lot of experience in using R &amp; QGIS for data handling and pre-processing, training data collection, classification, and accuracy assessment. In other terms: you´re well prepared for performing a change detection using Landsat data. The goal of this exercise is to map forest cover change in the Southern Brazilian Amazon.</p>
-<p>We provided the following datasets at O:/…/S07/data/…</p>
-<p>…sr_data/: Three Landsat 5 surface reflectance stacks (*_crp.tif) at five-year intervals from 2000 to 2010.</p>
-<ul>
-<li>LT052260682000061001T1-SC20170927060330 (10 June 2000)<br />
-</li>
-<li>LT052260682005060801T1-SC20170927060440 (08 June 2005)<br />
-</li>
-<li>LT052260682010062201T1-SC20170927060241 (22 June 2010)</li>
-</ul>
-<p>…vector/: A shapefile and a *.kmz file for GoogleEarth, which will help you to accurately delineate the Landsat pixel locations and extents for training data collection.</p>
-<p>…validation/: A shapefile containing reference data for the accuracy assessment.</p>
-<p>…gfc/: A subset of the Global Forest Change dataset by Hansen et al. (2013). We reclassified the data to match the target classes of today´s exercises.</p>
-<p>Your task is to create a change map, which contains the following classes:</p>
-<table>
-<thead>
-<tr class="header">
-<th>classID</th>
-<th>Class</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1</td>
-<td>Stable Forest</td>
-</tr>
-<tr class="even">
-<td>2</td>
-<td>Deforestation 2001-2005</td>
-</tr>
-<tr class="odd">
-<td>3</td>
-<td>Deforestation 2005-2010</td>
-</tr>
-<tr class="even">
-<td>4</td>
-<td>Forest Gain</td>
-</tr>
-<tr class="odd">
-<td>5</td>
-<td>Stable Non-Forest</td>
-</tr>
-</tbody>
-</table>
-<p>Different from the previous exercises, you can decide on how the workflow of your map production looks like in detail. Use the code and tools from the last sessions and earlier experiences with remote sensing and associated software packages, if applicable. Consider the following steps:</p>
-<p><strong>1) Choosing an approach for change detection</strong><br />
-Several change detection approaches can be used to map forest cover changes. You can choose a methodological approach for your change detection. We suggest two approaches for supervised classification:</p>
-<ul>
-<li>Post-classification comparison: You perform a classification of land cover for each composite dataset. You then use raster algebra in R (or any other tool of your choice) to convert the individual results into a change map.</li>
-<li>Integrated multi-temporal change classification: You stack all features into a single file and collect training data for the change classes of interest. You obtain the change map directly from your classification.</li>
-</ul>
-<p><strong>2) Inspect and prepare your data</strong></p>
-<ol style="list-style-type: lower-alpha">
-<li>Visualize the Landsat images in QGIS. Try out a true color (RGB: 3-2-1), as well as a 4-5-3 false color combination.</li>
-<li>Optional: Derive additional features from your data. Do you want to classify based on the spectral bands? What about vegetation indices, principal components, tasseled cap components?</li>
-</ol>
-<p><strong>3) Training data collection</strong></p>
-<ol style="list-style-type: lower-alpha">
-<li>Consider that the way you collect your training data varies with the approach you choose in 1).</li>
-<li>Collecting training data is time consuming - try to be efficient. Make use of the QGIS Info-Tool to compare spectral profiles of the three images. You can also link QGIS and Google Earth through the GearthView plugin. For exact pixel locations, use the Landsat pixel grid we provided.</li>
-</ol>
-<p><strong>4) Model training &amp; classification</strong></p>
-<ol style="list-style-type: lower-alpha">
-<li>Choose a classification algorithm: Feel free to use any classifier. In case you´re interested in differences between classifiers, test more than one!</li>
-<li>Parametrize the model. Depending on your choice of classification model, think about how to make an informed decision about the model parameters. Optimize parameters wherever possible, e.g. by using the out-of-bag error.</li>
-</ol>
-<p><strong>5) Change map validation &amp; area estimates</strong></p>
-<ol style="list-style-type: lower-alpha">
-<li>We provided reference data for the study area as a shapefile. Use it to perform an accuracy assessment. Why is it challenging to perform an area-adjusted accuracy assessment in this case?</li>
-<li>Calculate map-based area estimates for your map and the Global Forest Change data using simple pixel counting. Compare the estimates. What are the major differences?</li>
-</ol>
-<p><strong>6) Reporting results</strong><br />
-We collect your main results in this table: <a href="https://ethercalc.org/572rg3qh93t2" class="uri">https://ethercalc.org/572rg3qh93t2</a> Please fill in all required fields, i.e. your name and selected approach (e.g. post-classification comparison), overall accuracy and class accuracies in decimal values (e.g. 0.75), as well as class areas in hectares.</p>
-</div>
-<div id="reading-materials.-3" class="section level2">
-<h2>Reading materials.</h2>
-<hr />
-</div>
-</div>
-<div id="session-08-spectral-temporal-metrics" class="section level1">
-<h1>Session 08: Spectral-temporal metrics</h1>
-<div id="learning-goals-9" class="section level2">
-<h2>Learning goals</h2>
-</div>
-<div id="reading-materials.-4" class="section level2">
-<h2>Reading materials.</h2>
-<hr />
-</div>
-</div>
-<div id="project-work" class="section level1">
-<h1>Project work</h1>
-<div id="phase-i" class="section level2">
-<h2>Phase I</h2>
-</div>
-<div id="phase-ii" class="section level2">
-<h2>Phase II</h2>
-</div>
-<div id="phase-iii" class="section level2">
-<h2>Phase III</h2>
-<hr />
+
+### 1)  Parameterization
+The function above allows you to produce cloud-free best-pixel composites for a pre-defined target DOY. This function requires one input data.frame (see code template on how to create it) and eight input parameters: 
+
+a. *img_list*: a data frame containing five variables for each of the Landsat images:  
+  
+    $image_files: the full paths to the files in …sr_data.  
+    $cloud_dist_files: the full paths to the files in …cloud_dist.  
+    $date: the acquisition day in Date format (YYYY-MM-DD).  
+    $DOY: the acquisition day of the year.  
+    $year: the acquisition year.  
+
+b.  *target_date*: the target date for your composite in Date format (YYYY-MM-DD)
+
+c.  *W_DOY*, *W_year*, *W_cloud_dist*: weights for the three available parameters DOY, year and distance to clouds. Must be scaled between 0 and 1 and sum up to 1, the higher the weight, the higher the importance of the criterion. 
+
+d.  *max_DOY_offset*, *max_year_offset*: Thresholds for the maximum allowed differences between target DOY and acquisition DOY, as well target year and acquisition year. Images exceeding these thresholds (further away in time) will be fully ignored. For instance, max_year_offset = 0 will not allow observations from a year other than the target year. By choosing these parameters, you will determine whether you prefer seasonal consistency (close to target DOY but from different years) over annual consistency (observations from same year but potentially distant DOYs). Discuss the parametrization in your group. 
+
+e.  *min_cloud_dist*, *max_cloud_dist*:  The minimum and maximum distance to clouds. min_cloud_dist = 10 will exclude all observations which are less than 10 pixels away from a cloud. The cloud scores are linearly scaled between the minimum (score = 0) and maximum cloud distance (score = 1). Pixels with distances above max_cloud_dist will receive a score of 1. 
+
+### 2) Defining target dates and parameters
+Relying on your insights from collecting training data on forest types, define two target days of the year (DOY) to capture different phenological stages. These will be used as target_date parameters later on.  
+Make a decision concerning the compositing parameters explained in 1c, 1d and 1e.  
+
+### 3) Exploring the script and adding documentation
+a. Open the parametric_compositing.R script and take time to read through it in groups. Run the code line by line. Make sure you understand how the function operates. Discuss questions in your group and seek the help pages of functions you don´t know.  
+
+b. The developer did not spend sufficient time on the documentation. Make the script a bit more user-friendly by adding missing comments (#...). Make sure your comments explain what happens in each step of the function, and why. Are there bugs or sections which you would code differently?
+
+c. Next, run the parametric_compositing() function with your parameters and write the result to disk. Include the target DOY in the filename. While the function executes, proceed with the next exercise.
+
+### 4) Second run for target date 2
+Repeat the compositing for the second target DOY you specified in 2) and write the results to disk.
+
+### 5) Visual inspection and evaluation of results
+Visually inspect the quality of your compositing results in QGIS. Look at the bands containing the DOY and year flags (band 7 and 8). What worked out well, what did not? How could the quality of the composites be improved? Re-iterate with different parameters if you wish.
+
+### 6) Improving the user-friendliness of the script (optional/voluntary task)
+Make the compositing function more user friendly. Insert a couple of plot and print commands to enable the users to follow the progress of the compositing while the function is running.  
+
+For instance, print() how many images were used for the final composite, their acquisition dates, etc. Also, you might want to plot() the composited image after each iteration. You could add further status messages telling the user how much time single steps took.  
+
+Don´t forget to save the script and run the source() command in your R script to update the function after you made these changes. 
+
+------
+
+## Reading materials.
+
+------
+
+# Session 05: Machine learning for image classification
+
+## Learning goals
+
+
+## Exercise
+
+In this exercise, we will deal with image classification using the Random Forests algorithm. Specifically, we will use your training data and your pixel-based composites from the last exercises to map forest types in the Western Beskids. We will assess the performance of multiple classification models through the out of bag error and will investigate variable importances.  
+
+#### 1) Loading and preparing training data; training the classification model
+a. Load the vector file containing your training data points using readOGR(). Next, create a stack()/brick() of your favourite pixel-based composite (last week´s result).  
+
+b. Use extract()to create a data.frame with training points as rows, and class labels (classID) as well as the spectral bands of your composites as columns. Remove the day of year and year flags (band 7 and 8) for the next steps. As we want to train a classification (and not a regression), the randomForest() function expects the dependent variable to be of type factor - use as.factor() for conversion of the classID column. The Random Forest algorithm cannot deal with NoData (NA) values. Remove NAs from the data.frame.  
+
+c. Train a randomForest() classification model with the data.frame created in the prior step.  
+
+### 2) Training additional models based on different input data 
+Repeat 1) to train an additional randomForest models based on
+
+a. …the other composite.  
+
+b. …a stack of both composites.  
+
+### 3) Investigating the models and classification
+The model object resulting from 2) contains a wealth of information on the model parameters and performance. Assess the out of bag (OOB) error estimates of the trained models (1b, 2a, 2b) by inspecting the err.rate attribute of your model objects.
+a. Which model has the lowest OOB error?
+b. How does the OOB behave when increasing the number of trees in your model (ntrees)? You can access the OOB per number of trees included via err.rate. Use this information to determine a suitable value for ntrees.
+c. Which of the four classes has the highest OOB errors?
+
+### 4) Training a final model and investigating variable importances
+a. Train a final model with the best combination of images (3a) and ntrees (3b).
+b. Investigate the variable importances using varImpPlot(). Use partialPlot() to produce partial dependence plots for your most important predictor and all four classes. Can you explain the differences between classes?
+
+### 5) Classification
+Perform a classification of the image stack using the predict() function. Write the resulting map to disk in ENVI format. When doing so, consider choosing the appropriate datatype argument.
+
+
+## Reading materials.
+
+------
+
+# Session 06: Accuracy assessment and area estimation
+
+## Learning goals
+
+## Exercise
+
+In this exercise, you will perform an accuracy assessment of your forest type map. We will perform an area-adjusted accuracy assessment and estimate error-adjusted area for each forest type class.
+
+### 1) Participate in the quiz in moodle. In case you had wrong answers, please discuss with your classmates.
+
+### 2) Creating a stratified set of reference samples
+a. Load your forest type map in R. Create a set of reference samples in R using sampleStratified(). We want to have a stratified equalized sample of 20 pixels per class. Specify the size parameter accordingly.  
+Specify sp = TRUE to receive a spatial points object and na.rm = TRUE to ignore unclassified regions. Write the points to disk using writeOGR().
+
+### 3) Determine class labels for the reference samples
+a. Load the point shapefile in QGIS and add two fields of type Integer: classID and confID.
+b. Link QGIS and GoogleEarth using GearthView. Visit each point and determine the class label according to the high resolution imagery. Enter the class and confidence labels in the attribute table. Work efficiently through the points and save your changes regularly.
+
+| Class name        | classID | Confidence level   | confID |
+| ----------        | ------- | ----------------   | ------ |
+| Deciduous forest  | 1       | Very certain       | 1      |
+| Mixed forest      | 2       | Some uncertainties | 2      |
+| Coniferous forest | 3       | Very uncertain     | 3      |
+| Non-forest        | 4       |                    |        |
+
+
+### 4) Assessing class proportions and creating a confusion matrix
+a. In R, assess the class proportions of your map. To do so, use the freq()function to get pixel counts. Use these for calculating class propotions (0-1). Remember to exclude NAs, so the proportions of your 4 classes sum up to 1.
+b. Load the points in R. Create a confusion matrix from the resulting data.frame using table().
+
+### 5) Deriving accuracies and evaluating results
+Copy & paste the values from your confusion matrix as well as the class proportions into the Excel spreadsheet.   
+Next, answer the following questions:
+
+a. Which class has the highest / lowest user´s accuracy?
+b. Which class has the highest / lowest producer´s accuracy?
+c. How does the overall accuracy differ after area-adjustment? Why?
+
+## Reading materials.
+
+------
+
+# Session 07: Multi-temporal change detection
+
+## Learning goals
+
+## Exercise
+
+After completing the last exercises, you gained a lot of experience in using R & QGIS for data handling and pre-processing, training data collection, classification, and accuracy assessment. In other terms: you´re well prepared for performing a change detection using Landsat data. The goal of this exercise is to map forest cover change in the Southern Brazilian Amazon.  
+
+We provided the following datasets at O:/…/S07/data/…  
+
+…sr_data/: Three Landsat 5 surface reflectance stacks (*_crp.tif) at five-year intervals from 2000 to 2010.
+
+- LT052260682000061001T1-SC20170927060330 (10 June 2000)  
+- LT052260682005060801T1-SC20170927060440 (08 June 2005)  
+- LT052260682010062201T1-SC20170927060241 (22 June 2010)  
+
+…vector/: A shapefile and a *.kmz file for GoogleEarth, which will help you to accurately delineate the Landsat pixel locations and extents for training data collection.  
+
+…validation/: A shapefile containing reference data for the accuracy assessment.  
+
+…gfc/: A subset of the Global Forest Change dataset by Hansen et al. (2013). We reclassified the data to match the target classes of today´s exercises.
+
+Your task is to create a change map, which contains the following classes:
+
+| classID | Class                   |
+| ------- | -----                   |
+| 1       | Stable Forest           |
+| 2       | Deforestation 2001-2005 |
+| 3       | Deforestation 2005-2010 |
+| 4       | Forest Gain             |
+| 5       | Stable Non-Forest       |
+
+Different from the previous exercises, you can decide on how the workflow of your map production looks like in detail. Use the code and tools from the last sessions and earlier experiences with remote sensing and associated software packages, if applicable. Consider the following steps:
+
+### 1) Choosing an approach for change detection
+Several change detection approaches can be used to map forest cover changes. You can choose a methodological approach for your change detection. We suggest two approaches for supervised classification:
+
+- Post-classification comparison: You perform a classification of land cover for each composite dataset. You then use raster algebra in R (or any other tool of your choice) to convert the individual results into a change map.
+- Integrated multi-temporal change classification: You stack all features into a single file and collect training data for the change classes of interest. You obtain the change map directly from your classification.
+
+### 2) Inspect and prepare your data
+
+a. Visualize the Landsat images in QGIS. Try out a true color (RGB: 3-2-1), as well as a 4-5-3 false color combination.
+b. Optional: Derive additional features from your data. Do you want to classify based on the spectral bands? What about vegetation indices, principal components, tasseled cap components?
+
+### 3) Training data collection
+
+a. Consider that the way you collect your training data varies with the approach you choose in 1).
+b. Collecting training data is time consuming - try to be efficient. Make use of the QGIS Info-Tool to compare spectral profiles of the three images. You can also link QGIS and Google Earth through the GearthView plugin. For exact pixel locations, use the Landsat pixel grid we provided.
+
+### 4) Model training & classification
+
+a. Choose a classification algorithm: Feel free to use any classifier. In case you´re interested in differences between classifiers, test more than one!
+b. Parametrize the model. Depending on your choice of classification model, think about how to make an informed decision about the model parameters. Optimize parameters wherever possible, e.g. by using the out-of-bag error.
+
+### 5) Change map validation & area estimates
+
+a. We provided reference data for the study area as a shapefile. Use it to perform an accuracy assessment. Why is it challenging to perform an area-adjusted accuracy assessment in this case?
+b. Calculate map-based area estimates for your map and the Global Forest Change data using simple pixel counting. Compare the estimates. What are the major differences?
+
+### 6) Reporting results  
+We collect your main results in this table: https://ethercalc.org/572rg3qh93t2 Please fill in all required fields, i.e. your name and selected approach (e.g. post-classification comparison), overall accuracy and class accuracies in decimal values (e.g. 0.75), as well as class areas in hectares.
+
+## Reading materials.
+
+------
+
+# Session 08: Spectral-temporal metrics
+
+## Learning goals
+
+## Reading materials.
+
+------
+
+# Project work
+
+## Phase I
+
+## Phase II
+
+## Phase III
+
+------ -->
 </div>
 </div>
 <div id="terminology" class="section level1">

@@ -1277,6 +1277,40 @@ Perform a classification of the image stack using the predict() function. Write 
 
 ## Learning goals
 
+## Exercise
+
+In this exercise, you will perform an accuracy assessment of your forest type map. We will perform an area-adjusted accuracy assessment and estimate error-adjusted area for each forest type class.
+
+### 1) Participate in the quiz in moodle. In case you had wrong answers, please discuss with your classmates.
+
+### 2) Creating a stratified set of reference samples
+a. Load your forest type map in R. Create a set of reference samples in R using sampleStratified(). We want to have a stratified equalized sample of 20 pixels per class. Specify the size parameter accordingly.  
+Specify sp = TRUE to receive a spatial points object and na.rm = TRUE to ignore unclassified regions. Write the points to disk using writeOGR().
+
+### 3) Determine class labels for the reference samples
+a. Load the point shapefile in QGIS and add two fields of type Integer: classID and confID.
+b. Link QGIS and GoogleEarth using GearthView. Visit each point and determine the class label according to the high resolution imagery. Enter the class and confidence labels in the attribute table. Work efficiently through the points and save your changes regularly.
+
+| Class name        | classID | Confidence level   | confID |
+| ----------        | ------- | ----------------   | ------ |
+| Deciduous forest  | 1       | Very certain       | 1      |
+| Mixed forest      | 2       | Some uncertainties | 2      |
+| Coniferous forest | 3       | Very uncertain     | 3      |
+| Non-forest        | 4       |                    |        |
+
+
+### 4) Assessing class proportions and creating a confusion matrix
+a. In R, assess the class proportions of your map. To do so, use the freq()function to get pixel counts. Use these for calculating class propotions (0-1). Remember to exclude NAs, so the proportions of your 4 classes sum up to 1.
+b. Load the points in R. Create a confusion matrix from the resulting data.frame using table().
+
+### 5) Deriving accuracies and evaluating results
+Copy & paste the values from your confusion matrix as well as the class proportions into the Excel spreadsheet.   
+Next, answer the following questions:
+
+a. Which class has the highest / lowest user´s accuracy?
+b. Which class has the highest / lowest producer´s accuracy?
+c. How does the overall accuracy differ after area-adjustment? Why?
+
 ## Reading materials.
 
 ------
@@ -1284,6 +1318,65 @@ Perform a classification of the image stack using the predict() function. Write 
 # Session 07: Multi-temporal change detection
 
 ## Learning goals
+
+## Exercise
+
+After completing the last exercises, you gained a lot of experience in using R & QGIS for data handling and pre-processing, training data collection, classification, and accuracy assessment. In other terms: you´re well prepared for performing a change detection using Landsat data. The goal of this exercise is to map forest cover change in the Southern Brazilian Amazon.  
+
+We provided the following datasets at O:/…/S07/data/…  
+
+…sr_data/: Three Landsat 5 surface reflectance stacks (*_crp.tif) at five-year intervals from 2000 to 2010.
+
+- LT052260682000061001T1-SC20170927060330 (10 June 2000)  
+- LT052260682005060801T1-SC20170927060440 (08 June 2005)  
+- LT052260682010062201T1-SC20170927060241 (22 June 2010)  
+
+…vector/: A shapefile and a *.kmz file for GoogleEarth, which will help you to accurately delineate the Landsat pixel locations and extents for training data collection.  
+
+…validation/: A shapefile containing reference data for the accuracy assessment.  
+
+…gfc/: A subset of the Global Forest Change dataset by Hansen et al. (2013). We reclassified the data to match the target classes of today´s exercises.
+
+Your task is to create a change map, which contains the following classes:
+
+| classID | Class                   |
+| ------- | -----                   |
+| 1       | Stable Forest           |
+| 2       | Deforestation 2001-2005 |
+| 3       | Deforestation 2005-2010 |
+| 4       | Forest Gain             |
+| 5       | Stable Non-Forest       |
+
+Different from the previous exercises, you can decide on how the workflow of your map production looks like in detail. Use the code and tools from the last sessions and earlier experiences with remote sensing and associated software packages, if applicable. Consider the following steps:
+
+### 1) Choosing an approach for change detection
+Several change detection approaches can be used to map forest cover changes. You can choose a methodological approach for your change detection. We suggest two approaches for supervised classification:
+
+- Post-classification comparison: You perform a classification of land cover for each composite dataset. You then use raster algebra in R (or any other tool of your choice) to convert the individual results into a change map.
+- Integrated multi-temporal change classification: You stack all features into a single file and collect training data for the change classes of interest. You obtain the change map directly from your classification.
+
+### 2) Inspect and prepare your data
+
+a. Visualize the Landsat images in QGIS. Try out a true color (RGB: 3-2-1), as well as a 4-5-3 false color combination.
+b. Optional: Derive additional features from your data. Do you want to classify based on the spectral bands? What about vegetation indices, principal components, tasseled cap components?
+
+### 3) Training data collection
+
+a. Consider that the way you collect your training data varies with the approach you choose in 1).
+b. Collecting training data is time consuming - try to be efficient. Make use of the QGIS Info-Tool to compare spectral profiles of the three images. You can also link QGIS and Google Earth through the GearthView plugin. For exact pixel locations, use the Landsat pixel grid we provided.
+
+### 4) Model training & classification
+
+a. Choose a classification algorithm: Feel free to use any classifier. In case you´re interested in differences between classifiers, test more than one!
+b. Parametrize the model. Depending on your choice of classification model, think about how to make an informed decision about the model parameters. Optimize parameters wherever possible, e.g. by using the out-of-bag error.
+
+### 5) Change map validation & area estimates
+
+a. We provided reference data for the study area as a shapefile. Use it to perform an accuracy assessment. Why is it challenging to perform an area-adjusted accuracy assessment in this case?
+b. Calculate map-based area estimates for your map and the Global Forest Change data using simple pixel counting. Compare the estimates. What are the major differences?
+
+### 6) Reporting results  
+We collect your main results in this table: https://ethercalc.org/572rg3qh93t2 Please fill in all required fields, i.e. your name and selected approach (e.g. post-classification comparison), overall accuracy and class accuracies in decimal values (e.g. 0.75), as well as class areas in hectares.
 
 ## Reading materials.
 
