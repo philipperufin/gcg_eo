@@ -912,45 +912,279 @@ This paper describes the methods used in the article you read last week. Here, a
 
 ## Learning goals
 
-- Understand the fundamentals of pixel based image compositing
-- Create a cloud free coverage by combining several partially clouded images
-- [Do not confuse terminology: false color composite, multi-temporal composite bands, etc.]
+- Understand the fundamentals of pixel-based image compositing
+- Parameterize a compositing function and create your own composite from multiple Landsat scenes
 
 ------
 
 ## Background:
 
-Parametric best-pixel-compositing allows to use a set of rules (parameters) to determine the observations best suited for analysis. These parameters can include information about distance to clouds, temporal proximity to a target date or seasonal consistency. We use best-pixel-compositing to produce gap-free images of a (large) area, 
+The availability of Landsat images varies by region. Even in areas where obersvation density is high, such as North America, coverage can be reduced by clouds and quality of observations can be impacted by haze or sensor saturation. 
+![Global availability of Landsat images. Source: Wulder et al. 2016;  https://doi.org/10.1016/j.rse.2015.11.032](fig/s04_landsat_availability.jpg) 
+Using best-pixel-compositing, we can use multiple obervations (i.e., from multiple Landsat scenes) and combine them to one consistent image composite. This allows to create cloud-free, radiometrically and phenologically consistent image composites that are contiguous over large areas. A set of rules (parameters) is used to determine the observations best suited for analysis. These parameters can include information about distance to clouds, temporal proximity to a target date and seasonal consistency. 
 
-
-#### Landsat observation density
-
-![Global Landsat observation density. Source: Wulder et al. 2016; doi:10.1016/j.rse.2015.11.032](fig/s04_landsat_density.gif)
-
-Compositing can be extremely helpful for creating gap-free images in regions that are scarce in data density.
-This method allows to create cloud free, radiometrically consistent image datasets over large areas from the Landsat archive.
+One of the first global composites using Landsat data was produced using the WELD compositing approach (Roy et al. 2011, https://doi.org/10.1016/j.rse.2009.08.011). 
+![Monthly global WELD surface reflectance composite for June 2009. Source: https://worldview.earthdata.nasa.gov/](fig/s04_global_weld.jpg)
 
 
 ------
 
-## Pixel-based compositing
+## Parametric pixel-based compositing
 
-- Image compositing now allows to create cloud free, radiometrically consistent image datasets over large areas from the Landsat archive
+- a method to produce a gap-free image of a (large) area
+- representing a specific point in time (target date)
+- best pixel selected according to multiple parameters (e.g. how close to target date, distance to clouds)
+weighted scoring allows for flexible parametrization according to user´s needs and study area characteristics
 
-![Global WELD. Source: Roy et al. 2014](fig/s04_WELD.gif)
-
-- Automated cloud masking has improved greatly (e.g. Fmask, Zhu and Woodcock 2012) or Sentinel cloud screening (e.g. Frantz et al. 2018)
-- Automated pre-processing to surface reflectance products allows integration of L4, L5, L7, L8 (and Sentinel2); e.g. via LEDAPS by Masek et al. 2006, Ju et al. 2012) 
+![Creating one pixel-based composite from three images.](fig/s04_compositing.png)
 
 
 ------
+
+## Best-pixel-based compositing in seven steps
+
+1) Determine compositing parameters, e.g. Target DOY: June 15 +/- 30 days and target year: 2015 +/- 1 year
+2) Calculate DOY and year suitability (0-1) according to parameters  
+
+![Five images to be used for best-pixel compositing and their DOY and year offsets](fig/s04_suitability_offsets.png) 
+
+We use linear functions to determine the suitability of an observation.  
+In the plot for the DOY function below, we're chosing a parameterization that favors observations closest to the target DOY and assign a suitability score of 0 for observations that are 50 or more days from the target date. Being 30 days from the target DOY, the May 16 2015 observation receives a suitability score of 0.4.  
+A second function determines the suitability score for the year of observation. Again, observations close to the target year are assigned high values, while observations acquired five or more years from the target year are considered unsuitable. The resulting suitability score for the May 15 2015 observation is 1.  
+![Linear functions for the DOY and year suitability score ](fig/s04_suitabilityplot_doy_year.png){width=90%}
+
+3) Calculate pixel-level suitability (0-1), e.g. through min. distance to clouds.
+
+![Distance to next cloud in pixels](fig/s04_suitability_clouds.png)
+
+To minimize the likelihood of pixels being affected by clouds, we favor observations that aren't in close proximity to clouds. The cloud distance scoring function below assigns a suitability score of 1 as soon as the distance to the next cloud is 100 or more pixels. An observation that has a distance of 60 pixels (=1800m) to the next cloud receives a cloud distance suitability score of 0.6. 
+
+![Linear function for the cloud suitability score](fig/s04_suitabilityplot_clouds.png){width=40%}
+
+
+
+4) Define which criteria are most important for you (W = weights):
+$$W_{DOY} = 0.5$$
+$$W_{year} = 0.2$$
+$$W_{CloudDist} = 0.3$$
+5) Calculate a score for each pixel in each image. We can use the weighted sum of suitabilities (S = score):
+
+$$score = S_{DOY} * W_{DOY} + S_{Year} * W_{Year} + S_{CloudDist} * W_{CloudDist}$$  
+Using the values from the exemplary plots above yields:  
+$$score = 0.4 * 0.5 + 1 * 0.2 + 0.6 * 0.3$$
+$$score = 0.58$$
+
+![Resulting suitability scores for each image](fig/s04_suitability_score_weighted.png)
+
+6) Use the best observation (= highest score) for the final composite.
+
+
+7) Evaluate the results by checking for seasonal/annual consistency and cloud distance (and re-iterate)
+![](fig/s04_final_composite.jpg)
+
+------
+
 
 ## Exercise
 
 The goal of this week's exercise is to combine several images into best-pixel composites using a parametric compositing function. We will be working with our main script which sources the compositing function from a second script. Outsourcing functions - especially extensive ones - improves the readability of scripts and allows for using functions from different scripts. Check the help for source() if you are not familiar with sourcing R code in your script. 
 
+<details>
+  <summary>Click here to see code for the parametric compositing function</summary>
+  ```{r compositing_script, echo=T, evaluate=F}
+  #############################################################################
+# MSc Earth Observation Exercise 4
+# Function for creating cloud-free composites of multiple Landsat images
+# Requires an input data.frame (here img_list) and eight compositing 
+# parameters. Please see exercise sheet for further details.
+#############################################################################
+
+#############################################################################
+# Loading required packages here...
+library(raster)
+library(lubridate)
+
+# Change raster options to store large rasters in temp files on disk
+rasterOptions(maxmemory = 1e6)
+
+#############################################################################
+# Function definition starts here
+parametric_compositing <- function(img_list, target_date, 
+                                   W_DOY, W_year, W_cloud_dist, 
+                                   max_DOY_offset, max_year_offset, 
+                                   min_cloud_dist, max_cloud_dist) {
+  #...
+  tic <- Sys.time()
+  print(paste('Start of compositing process: ', tic))
+  print(paste('Target date: ', target_date))
+
+  # Extract target DOY and year from target_date
+  target_DOY <- yday(target_date)
+  target_year <- year(target_date)
+  
+  #...
+  if(sum(W_DOY, W_year, W_cloud_dist)!=1) { stop('Error: something wrong.') }
+  
+  #############################################################################
+  # Calculate the scores for the DOY, year, and cloud distance criteria
+  print('Calculating compositing scores')
+  
+  #...
+  obs_DOY <- img_list$DOY
+  DOY_score <- 1 - (abs(target_DOY - img_list$DOY) / max_DOY_offset)
+  DOY_score[DOY_score<0] <- NA
+  
+  #...
+  obs_year <- img_list$year
+  year_score <- 1-(abs(target_year - obs_year) / max_year_offset)
+  
+  if (max_year_offset == 0) {year_score[obs_year==target_year] <- 1}
+  year_score[year_score<0] <- NA
+  
+  # Get candidate images within max_DOY_offset and max_year_offset
+  ix <- which(!is.na(DOY_score) & !is.na(year_score))
+  if (length(ix)>1) { print(paste(length(ix),  'candidate images selected, calculating scores.')) }
+  if (length(ix)<2) { stop('Another error because something is wrong.') }
+  
+  # Stack cloud distance layers of candidate images and reclassify 
+  # values < min_cloud_dist to NA, and values > max_cloud_dist to max_cloud_dist
+  cloud_dist <- stack(as.character(img_list$cloud_dist_files[ix]))
+  cloud_dist <- reclassify(cloud_dist, rcl=c(0, min_cloud_dist, NA), right=NA, datatype='INT2S')
+  cloud_dist <- reclassify(cloud_dist, rcl=c(max_cloud_dist, sqrt(nrow(cloud_dist)^2 + ncol(cloud_dist)^2), max_cloud_dist), right=NA, datatype='INT2S')
+  
+  #...
+  cloud_score <- (cloud_dist - min_cloud_dist) / (max_cloud_dist - min_cloud_dist)
+  
+  #...
+  obs_score <- DOY_score[ix] * W_DOY + year_score[ix] * W_year + cloud_score * W_cloud_dist
+  
+  #...
+  select <- which.max(obs_score)
+  
+  #...
+  candidates <- unique(select)
+  
+  #############################################################################
+  # Fill composite image with pixels from the candidate images
+  for (i in candidates){
+    
+    #...
+    fill_image <- brick(as.character(img_list$image_files[ix[i]]), datatype='INT2S')
+    
+    #...
+    if (i == min(candidates)) { 
+      composite <- brick(fill_image, values=FALSE) 
+      dataType(composite) <- 'INT2S'
+      values(composite) <- 0
+    }
+    
+    print(paste0('Filling raster with acquisition from date ', img_list$date[ix[i]]))
+    fill_image.masked <- mask(fill_image, select, maskvalue=i, inverse=T, updatevalue=0, datatype='INT2S')
+    fill_image.masked[is.na(fill_image.masked)] <- 0
+    composite <- composite + fill_image.masked
+    
+  }
+  
+  #...
+  composite_na <- mask(composite, select, maskvalue=NA, datatype='INT2S')
+  
+  #############################################################################
+  #...
+  print(paste('NAs: ', round(freq(composite[[1]], value=NA)/ncell(composite[[1]])*100, digits=3), ' %'))
+  
+  #...
+  rcl_DOY <- matrix(ncol=2, data=c(candidates, obs_DOY[ix[candidates]]))
+  select_DOY <- reclassify(select, rcl_DOY, datatype = 'INT2S')
+  
+  #...
+  rcl_year <- matrix(ncol=2, data=c(candidates, obs_year[ix[candidates]]))
+  select_year <- reclassify(select, rcl_year)
+
+  #...
+  output <- stack(composite_na, select_DOY, select_year)
+  print(paste('End of compositing process: ', Sys.time()))
+  
+  #...
+  return(output)
+  
+}
+  ```
+</details>
+
+<details>
+  <summary>Click here to see the code for the main script calling the parametric compositing function</summary>
+  ```{r main_script, echo=T, eval=F}
+  #############################################################################
+# MSc Earth Observation Exercise 4
+# [Your Name]
+#############################################################################
+
+#############################################################################
+library(rgdal)
+library(raster)
+library(lubridate)
+library(ggplot2)
+source('') #path to the parametric_compositing function
+
+# Change raster options to store large rasters in temp files on disk
+rasterOptions(maxmemory = 1e6)
+
+######## Define the folder that contains your data...
+data.path <- 'O:/ST19_MSc-EO/S04/data/'
+
+#############################################################################
+# 1)
+#############################################################################
+
+sr <- list.files(paste0(data.path, '/sr_data'), pattern=".tif$", full.names=T, recursive=F)
+fmask <- list.files(paste0(data.path, '/fmask'), pattern=".tif$", full.names=T, recursive=F)
+cd <- list.files(paste0(data.path, '/cloud_dist'), pattern=".tif$", full.names=T, recursive=F)
+
+sta <- nchar(paste0(data.path,'/sr_data/LT05228082')) + 1
+end <- sta + 6
+
+dates <- as.Date(substr(sr, sta, end), format='%Y%j')
+
+sr.sorted <- sr[order(dates)]
+cd.sorted <- cd[order(dates)]
+
+img_list <- data.frame("image_files"=as.character(sr.sorted), "cloud_dist_files"=as.character(cd.sorted) ,"date"=sort(dates), "DOY"=yday(sort(dates)), "year"=year(sort(dates)))
+
+
+#############################################################################
+# 2)
+#############################################################################
+target_date_1 <- ymd('YYYYMMDD')
+target_date_2 <- ymd('YYYYMMDD')
+
+W_DOY <- 0.0
+W_year <- 0.0
+W_cloud_dist <- 0.0
+  
+max_DOY_offset <- 0
+max_year_offset <- 0
+
+min_cloud_dist <- 0
+max_cloud_dist <- 0
+
+composite_1 <- parametric_compositing(img_list, target_date_1, 
+                                       W_DOY, W_year, W_cloud_dist, 
+                                       max_DOY_offset, max_year_offset, 
+                                       min_cloud_dist, max_cloud_dist)
+
+#############################################################################
+# 4)
+#############################################################################
+
+composite_2 <- parametric_compositing(img_list, target_date_2, 
+                                      W_DOY, W_year, W_cloud_dist, 
+                                      max_DOY_offset, max_year_offset, 
+                                      min_cloud_dist, max_cloud_dist)
+```
+</details>
+
 ### 1)	Parameterization
-We provide a function which allows you to produce cloud-free best-pixel composites for a pre-defined target DOY. This function requires one input data.frame (see code template on how to create it) and eight input parameters: 
+The function above allows you to produce cloud-free best-pixel composites for a pre-defined target DOY. This function requires one input data.frame (see code template on how to create it) and eight input parameters: 
 
 a. *img_list*: a data frame containing five variables for each of the Landsat images:  
   
@@ -968,48 +1202,72 @@ d.	*max_DOY_offset*, *max_year_offset*: Thresholds for the maximum allowed diffe
 
 e.	*min_cloud_dist*, *max_cloud_dist*:  The minimum and maximum distance to clouds. min_cloud_dist = 10 will exclude all observations which are less than 10 pixels away from a cloud. The cloud scores are linearly scaled between the minimum (score = 0) and maximum cloud distance (score = 1). Pixels with distances above max_cloud_dist will receive a score of 1. 
 
-### 2) Exploring the script
-Open the parametric_compositing.R script and take time to read through it in groups. Make sure you understand how the function operates. Seek the help pages of functions you don´t know, test single parts of the function and discuss questions with each other.
+### 2) Defining target dates and parameters
+Relying on your insights from collecting training data on forest types, define two target days of the year (DOY) to capture different phenological stages. These will be used as target_date parameters later on.  
+Make a decision concerning the compositing parameters explained in 1c, 1d and 1e.  
 
-### 3) Adding documentation
-The developer did not spend sufficient time on the documentation. Make the script a bit more user-friendly by adding missing comments (#...). Make sure your comments explain what happens in each step of the function, and why. Are there bugs or sections which you would code differently?
+### 3) Exploring the script and adding documentation
+a. Open the parametric_compositing.R script and take time to read through it in groups. Run the code line by line. Make sure you understand how the function operates. Discuss questions in your group and seek the help pages of functions you don´t know.  
 
-### 4) Defining target dates
-Relying on your insights from collecting training data on forest types, define two target days of the year (DOY) to capture different phenological stages. These will be used as target_date parameters later on.
+b. The developer did not spend sufficient time on the documentation. Make the script a bit more user-friendly by adding missing comments (#...). Make sure your comments explain what happens in each step of the function, and why. Are there bugs or sections which you would code differently?
 
-### 5) Setting parameters and running the script
-Make a decision concerning the compositing parameters explained in 1c, 1d and 1e. 
+c. Next, run the parametric_compositing() function with your parameters and write the result to disk. Include the target DOY in the filename. While the function executes, proceed with the next exercise.
 
-Next, run the parametric_compositing() function with your parameters and write the result to disk. Include the target DOY in the filename. While the function executes, proceed with the next exercise.
+### 4) Second run for target date 2
+Repeat the compositing for the second target DOY you specified in 2) and write the results to disk.
 
-### 6) Improving the user-friendliness of the script
+### 5) Visual inspection and evaluation of results
+Visually inspect the quality of your compositing results in QGIS. Look at the bands containing the DOY and year flags (band 7 and 8). What worked out well, what did not? How could the quality of the composites be improved? Re-iterate with different parameters if you wish.
+
+### 6) Improving the user-friendliness of the script (optional/voluntary task)
 Make the compositing function more user friendly. Insert a couple of plot and print commands to enable the users to follow the progress of the compositing while the function is running.  
 
 For instance, print() how many images were used for the final composite, their acquisition dates, etc. Also, you might want to plot() the composited image after each iteration. You could add further status messages telling the user how much time single steps took.  
 
 Don´t forget to save the script and run the source() command in your R script to update the function after you made these changes. 
 
-### 7) Second run for target date 2
-Repeat the compositing for the second target DOY you specified in 4) and write the results to disk.
-
-### 8) Visual inspection and evaluation of results
-Visually inspect the quality of your compositing results in QGIS. Look at the bands containing the DOY and year flags (band 7 and 8). What worked out well, what did not? How could the quality of the composites be improved? Re-iterate with different parameters if you wish.
-
 ------
 
 ## Reading materials.
-
-Griffiths, P., van der Linden, S., Kuemmerle, T., & Hostert, P. (2013). A Pixel-Based Landsat Compositing Algorithm for Large Area Land Cover Mapping. IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing, 6, 2088-2101
-Roy, D.F., Ju, J., Kline, K., Scaramuzza, P. L., Kovalskyy, V., Hansen, M., ... Zhang, C. (2010). Web-enabled Landsat data (WELD): Landsat ETM+ composited mosaics of the conterminous United States. Remote Sensing of Environment, 114,35–49.
-White, J.C., Wulder, M.A., Hobart, G.W., Luther, J.E., Hermosilla, T., Griffiths, P., Coops, N.C., Hall, R.J., Hostert, P., Dyk, A., & Guindon, L. (2014). Pixel-Based Image Compositing for Large-Area Dense Time Series Applications and Science. Canadian Journal of Remote Sensing, 192-212
-
--- Masek 2006, Ju 2012 
 
 ------
 
 # Session 05: Machine learning for image classification
 
 ## Learning goals
+
+
+## Exercise
+
+In this exercise, we will deal with image classification using the Random Forests algorithm. Specifically, we will use your training data and your pixel-based composites from the last exercises to map forest types in the Western Beskids. We will assess the performance of multiple classification models through the out of bag error and will investigate variable importances.  
+
+#### 1) Loading and preparing training data; training the classification model
+a. Load the vector file containing your training data points using readOGR(). Next, create a stack()/brick() of your favourite pixel-based composite (last week´s result).  
+
+b. Use extract()to create a data.frame with training points as rows, and class labels (classID) as well as the spectral bands of your composites as columns. Remove the day of year and year flags (band 7 and 8) for the next steps. As we want to train a classification (and not a regression), the randomForest() function expects the dependent variable to be of type factor - use as.factor() for conversion of the classID column. The Random Forest algorithm cannot deal with NoData (NA) values. Remove NAs from the data.frame.  
+
+c. Train a randomForest() classification model with the data.frame created in the prior step.  
+
+### 2) Training additional models based on different input data 
+Repeat 1) to train an additional randomForest models based on
+
+a. …the other composite.  
+
+b. …a stack of both composites.  
+
+### 3) Investigating the models and classification
+The model object resulting from 2) contains a wealth of information on the model parameters and performance. Assess the out of bag (OOB) error estimates of the trained models (1b, 2a, 2b) by inspecting the err.rate attribute of your model objects.
+a. Which model has the lowest OOB error?
+b. How does the OOB behave when increasing the number of trees in your model (ntrees)? You can access the OOB per number of trees included via err.rate. Use this information to determine a suitable value for ntrees.
+c. Which of the four classes has the highest OOB errors?
+
+### 4) Training a final model and investigating variable importances
+a. Train a final model with the best combination of images (3a) and ntrees (3b).
+b. Investigate the variable importances using varImpPlot(). Use partialPlot() to produce partial dependence plots for your most important predictor and all four classes. Can you explain the differences between classes?
+
+### 5) Classification
+Perform a classification of the image stack using the predict() function. Write the resulting map to disk in ENVI format. When doing so, consider choosing the appropriate datatype argument.
+
 
 ## Reading materials.
 
