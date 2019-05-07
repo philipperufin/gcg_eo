@@ -34,44 +34,70 @@
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; background-color: #ffffff; color: #1f1c1b; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; background-color: #ffffff; color: #a0a0a0; border-right: 1px solid #a0a0a0; }
-td.sourceCode { padding-left: 5px; }
-pre, code { color: #1f1c1b; background-color: #ffffff; }
-code > span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
-code > span.dt { color: #0057ae; } /* DataType */
-code > span.dv { color: #b08000; } /* DecVal */
-code > span.bn { color: #b08000; } /* BaseN */
-code > span.fl { color: #b08000; } /* Float */
-code > span.cn { color: #aa5500; } /* Constant */
-code > span.ch { color: #924c9d; } /* Char */
-code > span.sc { color: #3daee9; } /* SpecialChar */
-code > span.st { color: #bf0303; } /* String */
-code > span.vs { color: #bf0303; } /* VerbatimString */
-code > span.ss { color: #ff5500; } /* SpecialString */
-code > span.im { color: #ff5500; } /* Import */
-code > span.co { color: #898887; } /* Comment */
-code > span.do { color: #607880; } /* Documentation */
-code > span.an { color: #ca60ca; } /* Annotation */
-code > span.cv { color: #0095ff; } /* CommentVar */
-code > span.ot { color: #006e28; } /* Other */
-code > span.fu { color: #644a9b; } /* Function */
-code > span.va { color: #0057ae; } /* Variable */
-code > span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #1f1c1b; } /* Operator */
-code > span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
-code > span.ex { color: #0095ff; font-weight: bold; } /* Extension */
-code > span.pp { color: #006e28; } /* Preprocessor */
-code > span.at { color: #0057ae; } /* Attribute */
-code > span.re { color: #0057ae; } /* RegionMarker */
-code > span.in { color: #b08000; } /* Information */
-code > span.wa { color: #bf0303; } /* Warning */
-code > span.al { color: #bf0303; font-weight: bold; } /* Alert */
-code > span.er { color: #bf0303; text-decoration: underline; } /* Error */
-code > span. { color: #1f1c1b; } /* Normal */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    background-color: #ffffff;
+    color: #a0a0a0;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
+div.sourceCode
+  { color: #1f1c1b; background-color: #ffffff; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span. { color: #1f1c1b; } /* Normal */
+code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+code span.an { color: #ca60ca; } /* Annotation */
+code span.at { color: #0057ae; } /* Attribute */
+code span.bn { color: #b08000; } /* BaseN */
+code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #924c9d; } /* Char */
+code span.cn { color: #aa5500; } /* Constant */
+code span.co { color: #898887; } /* Comment */
+code span.cv { color: #0095ff; } /* CommentVar */
+code span.do { color: #607880; } /* Documentation */
+code span.dt { color: #0057ae; } /* DataType */
+code span.dv { color: #b08000; } /* DecVal */
+code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+code span.fl { color: #b08000; } /* Float */
+code span.fu { color: #644a9b; } /* Function */
+code span.im { color: #ff5500; } /* Import */
+code span.in { color: #b08000; } /* Information */
+code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+code span.op { color: #1f1c1b; } /* Operator */
+code span.ot { color: #006e28; } /* Other */
+code span.pp { color: #006e28; } /* Preprocessor */
+code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+code span.sc { color: #3daee9; } /* SpecialChar */
+code span.ss { color: #ff5500; } /* SpecialString */
+code span.st { color: #bf0303; } /* String */
+code span.va { color: #0057ae; } /* Variable */
+code span.vs { color: #bf0303; } /* VerbatimString */
+code span.wa { color: #bf0303; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="material_adjust.css" type="text/css" />
@@ -117,6 +143,12 @@ $(document).ready(function () {
         <li><a href="#session-02-data-quality-cloud-masking">Session 02: Data quality &amp; cloud masking</a></li>
         <li><a href="#session-03-vegetation-indices-and-data-transforms">Session 03: Vegetation indices and data transforms</a></li>
         <li><a href="#session-03-training-data-collection">Session 03: Training data collection</a></li>
+        <li><a href="#session-04-pixel-based-compositing">Session 04: Pixel-based compositing</a></li>
+        <li><a href="#session-05-machine-learning-for-image-classification">Session 05: Machine learning for image classification</a></li>
+        <li><a href="#session-06-accuracy-assessment-and-area-estimation">Session 06: Accuracy assessment and area estimation</a></li>
+        <li><a href="#session-07-multi-temporal-change-detection">Session 07: Multi-temporal change detection</a></li>
+        <li><a href="#session-08-spectral-temporal-metrics">Session 08: Spectral-temporal metrics</a></li>
+        <li><a href="#project-work">Project work</a></li>
         <li><a href="#terminology">Terminology</a></li>
         </ul>
         </div>
@@ -132,10 +164,7 @@ $(document).ready(function () {
 
 <div id="hello" class="section level1">
 <h1>Hello!</h1>
-<div class="figure">
-<img src="fig/header.png" />
-
-</div>
+<p><img src="fig/header.png" /></p>
 <div id="about-earth-observation" class="section level2">
 <h2>About Earth Observation</h2>
 <p>Earth Observation is an advanced course for students of the Master of Science <a href="https://www.geographie.hu-berlin.de/en/studies/study-programs/master-degree-programs/master-of-science">“Global Change Geography”</a> of Humboldt-Universität zu Berlin. In this course, we cover multiple aspects of optical remote sensing by working with multi-sprectral Landsat and Sentinel 2 imagery. The course is fully based on open source software, including R and QGIS.</p>
@@ -181,32 +210,32 @@ $(document).ready(function () {
 <li><p>Use &lt;-, not =, for assignment.</p></li>
 </ul>
 <p>An example:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">######################################################
-<span class="co"># Creating random data and a correlated response </span>
-<span class="co"># Philippe Rufin, 2019</span>
-
-<span class="co"># Load all required packages</span>
-<span class="kw">library</span>(ggplot2)
-
-<span class="co"># Create random data</span>
-x &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">50</span>, <span class="dv">0</span>, <span class="dv">2</span>)
-
-<span class="co"># Build function to simulate response</span>
-create.response &lt;-<span class="st"> </span><span class="cf">function</span>(x){x <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">50</span>, <span class="dv">0</span>, <span class="fl">0.2</span>)}
-
-<span class="co"># Apply function to random data</span>
-y &lt;-<span class="st"> </span><span class="kw">create.response</span>(x)
-
-<span class="co"># Make a dataframe</span>
-data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">&#39;x&#39;</span> =<span class="st"> </span>x, <span class="st">&#39;y&#39;</span> =<span class="st"> </span>y)
-
-<span class="co"># Plot the simulated dataset</span>
-<span class="kw">ggplot</span>(data, <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>()</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co">######################################################</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="co"># Creating random data and a correlated response </span></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="co"># Philippe Rufin, 2019</span></a>
+<a class="sourceLine" id="cb1-4" title="4"></a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="co"># Load all required packages</span></a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb1-7" title="7"></a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="co"># Create random data</span></a>
+<a class="sourceLine" id="cb1-9" title="9">x &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">50</span>, <span class="dv">0</span>, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb1-10" title="10"></a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="co"># Build function to simulate response</span></a>
+<a class="sourceLine" id="cb1-12" title="12">create.response &lt;-<span class="st"> </span><span class="cf">function</span>(x){x <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">50</span>, <span class="dv">0</span>, <span class="fl">0.2</span>)}</a>
+<a class="sourceLine" id="cb1-13" title="13"></a>
+<a class="sourceLine" id="cb1-14" title="14"><span class="co"># Apply function to random data</span></a>
+<a class="sourceLine" id="cb1-15" title="15">y &lt;-<span class="st"> </span><span class="kw">create.response</span>(x)</a>
+<a class="sourceLine" id="cb1-16" title="16"></a>
+<a class="sourceLine" id="cb1-17" title="17"><span class="co"># Make a dataframe</span></a>
+<a class="sourceLine" id="cb1-18" title="18">data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">&#39;x&#39;</span> =<span class="st"> </span>x, <span class="st">&#39;y&#39;</span> =<span class="st"> </span>y)</a>
+<a class="sourceLine" id="cb1-19" title="19"></a>
+<a class="sourceLine" id="cb1-20" title="20"><span class="co"># Plot the simulated dataset</span></a>
+<a class="sourceLine" id="cb1-21" title="21"><span class="kw">ggplot</span>(data, <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb1-22" title="22"><span class="st">  </span><span class="kw">geom_point</span>()</a></code></pre></div>
 <p><img src="index_files/figure-html/style-1.png" width="288" style="display: block; margin: auto;" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Investigate correlation in the data</span>
-<span class="kw">cor</span>(data<span class="op">$</span>x, data<span class="op">$</span>y)</code></pre></div>
-<pre><code>[1] 0.971865</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># Investigate correlation in the data</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="kw">cor</span>(data<span class="op">$</span>x, data<span class="op">$</span>y)</a></code></pre></div>
+<pre><code>[1] 0.9408059</code></pre>
 <hr />
 </div>
 <div id="help" class="section level2">
@@ -230,37 +259,37 @@ data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span clas
 </div>
 <div id="data" class="section level2">
 <h2>Data</h2>
-<p>All data used in the course is openly accessible. Mostly, we´ll be working with Landsat images, which you can access through the USGS Earth Explorer. We provide download links to the datasets for each session. It will be helpful if you organize your data in a course directory on your local machine (MSc students might want to use drive <code>O:/Student_Data/your_name/EO/</code>). We will refer to this folder as <code>course.dir</code> throughout this course. Create subdirectories for each session, e.g. <code>course.dir/S01/</code> and separate data, code and course materials in additional sub-directories (e.g. <code>/data</code>, <code>/code</code>, <code>/docs</code>).</p>
+<p>All data used in the course is openly accessible. Mostly, we´ll be working with Landsat images, which you can access through the USGS Earth Explorer. We provide download links to the datasets for each session. It will be helpful if you organize your data in a course directory on your local machine (MSc students might want to use drive <code>O:/Student_Data/your_name/EO/</code>). We will refer to this folder as <code>course.dir</code> throughout this course. Create subdirectories for each session, e.g. <code>course.dir/S01/</code> and separate data, code and course materials in additional sub-directories (e.g. <code>/data</code>, <code>/code</code>, <code>/docs</code>).</p>
 </div>
 <div id="exercises" class="section level2">
 <h2>Exercises</h2>
 <p>The weekly exercises are defined in the respective session. Each session comprises several tasks that involve scipting in R. Course participants must submit completed exercises, documented as R scripts, in <a href="http://moodle.hu-berlin.de/">moodle</a> to pass. Weekly submission deadlines are every sunday, 23:59. Please name the script of your work group as SXX_name1_name2.R, e.g. S01_ernst_rufin.R. Please structure your script for every exercise as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">#############################################################################
-<span class="co"># MSc Earth Observation Exercise [Session number]</span>
-<span class="co"># [Your Name]</span>
-#############################################################################
-
-<span class="co"># Load packages, use install.packages(&#39;packagename&#39;) to install if needed</span>
-<span class="kw">library</span>(raster)
-
-<span class="co"># Change raster options to store large rasters in temp files on disk</span>
-<span class="kw">rasterOptions</span>(<span class="dt">maxmemory =</span> <span class="fl">1e6</span>)
-
-<span class="co"># Define the folder that contains your data...</span>
-data.dir &lt;-<span class="st"> &#39;course.dir/S01/data/&#39;</span>
-
-#############################################################################
-<span class="co"># 1)    </span>
-#############################################################################
-
-<span class="co"># Comments for task 1</span>
-
-
-#############################################################################
-<span class="co"># 2)    </span>
-#############################################################################
-
-<span class="co"># ...</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="co"># MSc Earth Observation Exercise [Session number]</span></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="co"># [Your Name]</span></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb4-5" title="5"></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="co"># Load packages, use install.packages(&#39;packagename&#39;) to install if needed</span></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="kw">library</span>(raster)</a>
+<a class="sourceLine" id="cb4-8" title="8"></a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="co"># Change raster options to store large rasters in temp files on disk</span></a>
+<a class="sourceLine" id="cb4-10" title="10"><span class="kw">rasterOptions</span>(<span class="dt">maxmemory =</span> <span class="fl">1e6</span>)</a>
+<a class="sourceLine" id="cb4-11" title="11"></a>
+<a class="sourceLine" id="cb4-12" title="12"><span class="co"># Define the folder that contains your data...</span></a>
+<a class="sourceLine" id="cb4-13" title="13">data.dir &lt;-<span class="st"> &#39;course.dir/S01/data/&#39;</span></a>
+<a class="sourceLine" id="cb4-14" title="14"></a>
+<a class="sourceLine" id="cb4-15" title="15"><span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb4-16" title="16"><span class="co"># 1)    </span></a>
+<a class="sourceLine" id="cb4-17" title="17"><span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb4-18" title="18"></a>
+<a class="sourceLine" id="cb4-19" title="19"><span class="co"># Comments for task 1</span></a>
+<a class="sourceLine" id="cb4-20" title="20"></a>
+<a class="sourceLine" id="cb4-21" title="21"></a>
+<a class="sourceLine" id="cb4-22" title="22"><span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb4-23" title="23"><span class="co"># 2)    </span></a>
+<a class="sourceLine" id="cb4-24" title="24"><span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb4-25" title="25"></a>
+<a class="sourceLine" id="cb4-26" title="26"><span class="co"># ...</span></a></code></pre></div>
 <!-- ################################## SESSION 01 ############################################## -->
 </div>
 </div>
@@ -282,12 +311,12 @@ data.dir &lt;-<span class="st"> &#39;course.dir/S01/data/&#39;</span>
 <p>It´s great, as it facilitates raster data handling. It allows us to access file characteristics before loading data into memory, facilitates handling of coordinate reference systems and spatial extents. We can use it to perform raster algebra, to combine raster and vector datasets (e.g. ESRI shapefiles), or to convert raster files into matrices, which are compatible with the base functions to access image statistics, develop models, slice data dimensions etc.</p>
 <p>There are a couple of things that the raster package does not provide. For example, advanced visualization of spatial datasets and manual operations, such collecting training or validation data, are preferably done in a GIS environment (e.g. QGIS). Furthermore, processing large data volumes in R can be quite time-consuming (we often use Python instead, it´s syntax is quite similar to R).</p>
 <p>You install the raster package just like any other package in R. Dependencies will automatically be installed. On some machines, you might need to install <code>rgdal</code> manually.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Install the raster and rgdal packages</span>
-<span class="kw">install.packages</span>(<span class="st">&#39;raster&#39;</span>)
-<span class="kw">install.packages</span>(<span class="st">&#39;rgdal&#39;</span>)
-
-<span class="co"># Load the package</span>
-<span class="kw">library</span>(raster)</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># Install the raster and rgdal packages</span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="kw">install.packages</span>(<span class="st">&#39;raster&#39;</span>)</a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="kw">install.packages</span>(<span class="st">&#39;rgdal&#39;</span>)</a>
+<a class="sourceLine" id="cb5-4" title="4"></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="co"># Load the package</span></a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="kw">library</span>(raster)</a></code></pre></div>
 <hr />
 </div>
 <div id="exercise" class="section level2">
@@ -322,8 +351,8 @@ data.dir &lt;-<span class="st"> &#39;course.dir/S01/data/&#39;</span>
 <h3>3) Manipulating data</h3>
 <p>Investigate the stack. In which projection is the data delivered?</p>
 <p>Compare the extent of the two images. You will notice that they vary. Trying to stack images of different extent will cause an error message claiming:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">image.stack &lt;-<span class="st"> </span><span class="kw">stack</span>(image.one, image.two)
-Error <span class="cf">in</span> <span class="kw">compareRaster</span>(x) <span class="op">:</span><span class="st"> </span>different extent</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">image.stack &lt;-<span class="st"> </span><span class="kw">stack</span>(image.one, image.two)</a>
+<a class="sourceLine" id="cb6-2" title="2">Error <span class="cf">in</span> <span class="kw">compareRaster</span>(x) <span class="op">:</span><span class="st"> </span>different extent</a></code></pre></div>
 <p>To stack both images, we need to crop (i.e. clip, or cut) the images to their common extent. Find an efficient way to identify the common extent of the images, defined as <code>common.extent &lt;- c(xmin, xmax, ymin, ymax)</code> (in projected coordinates).</p>
 <div class="figure">
 <img src="fig/fig01.png" alt="Identifying the common extent of several images" />
@@ -363,7 +392,7 @@ Error <span class="cf">in</span> <span class="kw">compareRaster</span>(x) <span 
 <h2>Reading materials</h2>
 <p>In the next session, we would like to discuss the following paper:</p>
 <p><a href="https://doi.org/10.1016/j.rse.2011.10.028">Zhu, Z., &amp; Woodcock, C.E. (2012). Object-based cloud and cloud shadow detection in Landsat imagery. Remote Sensing of Environment, 118, 83–94.</a></p>
-<p>This is a rather technical reading, which introduces the Fmask algorithm for automated cloud and cloud shadow detection. It has been widely used for cloud detection on Landsat TM and ETM+ data, and was enhanced for the use with Landsat OLI and Sentinel 2 data (documented in <a href="https://doi.org/10.1016/j.rse.2014.12.014">Zhu et al. 2015</a>).</p>
+<p>This is a rather technical reading, which introduces the Fmask algorithm for automated cloud and cloud shadow detection. It has been widely used for cloud detection on Landsat TM and ETM+ data, and was enhanced for the use with Landsat OLI and Sentinel 2 data (documented in <a href="https://doi.org/10.1016/j.rse.2014.12.014">Zhu et al. 2015</a>).</p>
 <p>While reading focus on the following broad questions:</p>
 <ul>
 <li>Why do we need automated cloud masking?</li>
@@ -399,20 +428,20 @@ Error <span class="cf">in</span> <span class="kw">compareRaster</span>(x) <span 
 <p>Our y-axis label was “DN”, or digital number. Now, what is that again? Earth observing sensors, such as the ones on board the Landsat satellites register radiance at the top of the atmosphere. Radiance is expressed in watt per <a href="https://en.wikipedia.org/wiki/Steradian">steradian</a> per square meter.</p>
 <p>Storing data in radiance units is difficult and therefore sensors translate measured radiance into DNs. Therefore, the range of energy measured by the sensor is broken into distinct units (DNs). Sensor-specific calibration determines the minimum and maximum amount of radiance that can be measured. DNs express the amount of radiance in relation to these sensor-specific calibration coefficients. The total number of possible DNs is what we refer to as the radiometric resolution of the sensor.</p>
 <p>As an example, Landsat 4, 5, and 7 worked with a radiometric resolution of 8 bit. This allows for <code>2^8</code>, or 255 distinct DNs values. Landsat 8 works with 12 bit radiometric resolution, which is artificially quantized to 16 bit. The 16 bit resolution can represent much more different grey shades, exactly <code>2^16</code>, or 65,536 values. Let´s put this into code.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(raster)
-
-<span class="co"># Define the number of bits</span>
-bit &lt;-<span class="st"> </span><span class="dv">4</span>
-
-<span class="co"># How many grey tones can we represent given bit?</span>
-<span class="kw">print</span>(<span class="kw">paste0</span>(bit, <span class="st">&#39; bits produce &#39;</span>, <span class="dv">2</span><span class="op">^</span>bit, <span class="st">&#39; grey tones.&#39;</span>))</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">library</span>(raster)</a>
+<a class="sourceLine" id="cb7-2" title="2"></a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="co"># Define the number of bits</span></a>
+<a class="sourceLine" id="cb7-4" title="4">bit &lt;-<span class="st"> </span><span class="dv">4</span></a>
+<a class="sourceLine" id="cb7-5" title="5"></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="co"># How many grey tones can we represent given bit?</span></a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="kw">print</span>(<span class="kw">paste0</span>(bit, <span class="st">&#39; bits produce &#39;</span>, <span class="dv">2</span><span class="op">^</span>bit, <span class="st">&#39; grey tones.&#39;</span>))</a></code></pre></div>
 <pre><code>[1] &quot;4 bits produce 16 grey tones.&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create a raster with one line and 2^bit columns,</span>
-<span class="co"># whereas cell values are filled with a vector of numbers from 1 2^bit</span>
-r &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="dt">nrows =</span> <span class="dv">1</span>, <span class="dt">ncols =</span> <span class="dv">2</span><span class="op">^</span>bit, <span class="dt">vals =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span><span class="op">^</span>bit))
-
-<span class="co"># Plot the image and assign grey-scale values to the cells</span>
-<span class="kw">image</span>(r, <span class="dt">col =</span> <span class="kw">grey.colors</span>(<span class="dv">2</span><span class="op">^</span>bit, <span class="dt">start =</span> <span class="dv">0</span>, <span class="dt">end =</span> <span class="dv">1</span>), <span class="dt">main =</span> <span class="kw">paste0</span>(bit, <span class="st">&quot; bit raster&quot;</span>))</code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="co"># Create a raster with one line and 2^bit columns,</span></a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="co"># whereas cell values are filled with a vector of numbers from 1 2^bit</span></a>
+<a class="sourceLine" id="cb9-3" title="3">r &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="dt">nrows =</span> <span class="dv">1</span>, <span class="dt">ncols =</span> <span class="dv">2</span><span class="op">^</span>bit, <span class="dt">vals =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span><span class="op">^</span>bit))</a>
+<a class="sourceLine" id="cb9-4" title="4"></a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="co"># Plot the image and assign grey-scale values to the cells</span></a>
+<a class="sourceLine" id="cb9-6" title="6"><span class="kw">image</span>(r, <span class="dt">col =</span> <span class="kw">grey.colors</span>(<span class="dv">2</span><span class="op">^</span>bit, <span class="dt">start =</span> <span class="dv">0</span>, <span class="dt">end =</span> <span class="dv">1</span>), <span class="dt">main =</span> <span class="kw">paste0</span>(bit, <span class="st">&quot; bit raster&quot;</span>))</a></code></pre></div>
 <p><img src="index_files/figure-html/greyscale-1.png" width="576" /></p>
 <hr />
 </div>
@@ -457,23 +486,23 @@ r &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="dt">
 <p>Familiarize yourself with the L1TP data. Visualize individual bands, have a look at the Level-1 metadata file (LC08_L1TP_ XXX_MTL.txt) and the information provided within. Again, we only use the six reflective bands of the OLI sensor in this exercise (3xVIS, nIR, 2xswIR)</p>
 <p>Read the Landsat metadata file in R using <code>read.delim()</code> and extract the necessary information for the top-of-atmosphere conversion: - <code>REFLECTANCE_MULT_BAND</code> - <code>REFLECTANCE_ADD_BAND</code> - <code>SUN_ELEVATION</code></p>
 <p>Use the pattern matching function <code>grep()</code> to find the corresponding entries in the metadata file and store them as numeric vectors. Do this as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define the folder that contains your data...</span>
-path &lt;-<span class="st"> &#39;course.dir/S02/data/DN&#39;</span>
-
-<span class="co"># Read MTL file</span>
-mtl &lt;-<span class="st"> </span><span class="kw">list.files</span>(data.path, <span class="dt">pattern=</span><span class="st">&quot;MTL.txt$&quot;</span>, <span class="dt">recursive=</span>T, <span class="dt">full.names=</span>T)
-mtl.txt &lt;-<span class="st"> </span><span class="kw">read.delim</span>(mtl, <span class="dt">sep =</span> <span class="st">&#39;=&#39;</span>, <span class="dt">stringsAsFactors =</span> F)
-
-<span class="co"># Extract numeric values</span>
-REFLECTANCE_MULT_BAND &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(mtl.txt[<span class="kw">grep</span>(<span class="st">&quot;REFLECTANCE_MULT_BAND&quot;</span>,mtl.txt<span class="op">$</span>GROUP),][<span class="dv">2</span><span class="op">:</span><span class="dv">7</span>,<span class="dv">2</span>])</code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="co"># Define the folder that contains your data...</span></a>
+<a class="sourceLine" id="cb10-2" title="2">path &lt;-<span class="st"> &#39;course.dir/S02/data/DN&#39;</span></a>
+<a class="sourceLine" id="cb10-3" title="3"></a>
+<a class="sourceLine" id="cb10-4" title="4"><span class="co"># Read MTL file</span></a>
+<a class="sourceLine" id="cb10-5" title="5">mtl &lt;-<span class="st"> </span><span class="kw">list.files</span>(data.path, <span class="dt">pattern=</span><span class="st">&quot;MTL.txt$&quot;</span>, <span class="dt">recursive=</span>T, <span class="dt">full.names=</span>T)</a>
+<a class="sourceLine" id="cb10-6" title="6">mtl.txt &lt;-<span class="st"> </span><span class="kw">read.delim</span>(mtl, <span class="dt">sep =</span> <span class="st">&#39;=&#39;</span>, <span class="dt">stringsAsFactors =</span> F)</a>
+<a class="sourceLine" id="cb10-7" title="7"></a>
+<a class="sourceLine" id="cb10-8" title="8"><span class="co"># Extract numeric values</span></a>
+<a class="sourceLine" id="cb10-9" title="9">REFLECTANCE_MULT_BAND &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(mtl.txt[<span class="kw">grep</span>(<span class="st">&quot;REFLECTANCE_MULT_BAND&quot;</span>,mtl.txt<span class="op">$</span>GROUP),][<span class="dv">2</span><span class="op">:</span><span class="dv">7</span>,<span class="dv">2</span>])</a></code></pre></div>
 <p>Convert the DN values to TOA following the “Conversion to TOA Reflectance” section in the <a href="https://www.usgs.gov/land-resources/nli/landsat/using-usgs-landsat-level-1-data-product">USGS guide for conversion to TOA Reflectance</a>. Important things to keep in mind:</p>
 <ul>
 <li>You can apply the conversion to all bands in a stack simultaneously.</li>
 <li>The Landsat data is provided as integer values. When applying the equation, the data will be cast to float. You will have to re-convert to integer at some point. Use a reflectance scaling factor of 10,000 during the conversion.</li>
 <li>The sun elevation angle provided in the metadata file is reported in degrees. The <code>sin()</code> function expects that angles are provided in radians. For the conversion to work correctly, you need to convert <code>SUN_ELEVATION</code> into radians. Make use of this helper function:</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Helper-function to convert degrees to radians</span>
-deg2rad &lt;-<span class="st"> </span><span class="cf">function</span>(deg){ (deg <span class="op">*</span><span class="st"> </span>pi) <span class="op">/</span><span class="st"> </span>(<span class="dv">180</span>) }</code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="co"># Helper-function to convert degrees to radians</span></a>
+<a class="sourceLine" id="cb11-2" title="2">deg2rad &lt;-<span class="st"> </span><span class="cf">function</span>(deg){ (deg <span class="op">*</span><span class="st"> </span>pi) <span class="op">/</span><span class="st"> </span>(<span class="dv">180</span>) }</a></code></pre></div>
 <p>Write the result of your TOA conversion to disk in the <code>GTiff</code> format. Make sure to use an integer data type to save disk space.</p>
 </div>
 <div id="compare-toa-with-boa" class="section level3">
@@ -527,19 +556,19 @@ deg2rad &lt;-<span class="st"> </span><span class="cf">function</span>(deg){ (de
 <p>The binary system represents numbers through sequences of bits. Each bit has a position and a state. The positions are numbered from 0 to the total number of bits, read from right to left. The state of a bit can be either, 0, or 1. Consider the meaning of 0 as „FALSE“ or „NO“, 1 equals „TRUE“ or „YES“.</p>
 <p>In the example above, five bit positions are given. Each position is sequentially numbered, starting with 0, read from right to left. By calculating 2 to the power of the bit position, we receive the value of each bit. For all bits with the value 1, we sum the respective values. Different combinations of states and positions therefore enable us to represent integer numbers.</p>
 <p>The more positions or bits we have the higher numbers we can generate. With 5 bits, we can represent the numbers 0 – 31 (32 unique values), with 16 bits, we can represent the numbers 0 - 65,535 (65,536 unique values). Following the example with 5 bits, we can for instance represent these numbers:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 00001</span>
-<span class="dv">0</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">4</span> <span class="op">+</span><span class="st"> </span><span class="dv">0</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">0</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">0</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">0</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="co"># 00001</span></a>
+<a class="sourceLine" id="cb12-2" title="2"><span class="dv">0</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">4</span> <span class="op">+</span><span class="st"> </span><span class="dv">0</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">0</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">0</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">0</span></a></code></pre></div>
 <pre><code>[1] 1</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 00111</span>
-<span class="dv">0</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">4</span> <span class="op">+</span><span class="st"> </span><span class="dv">0</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">0</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="co"># 00111</span></a>
+<a class="sourceLine" id="cb14-2" title="2"><span class="dv">0</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">4</span> <span class="op">+</span><span class="st"> </span><span class="dv">0</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">0</span></a></code></pre></div>
 <pre><code>[1] 7</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 11111</span>
-<span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">4</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">0</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="co"># 11111</span></a>
+<a class="sourceLine" id="cb16-2" title="2"><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">4</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">0</span></a></code></pre></div>
 <pre><code>[1] 31</code></pre>
 </div>
 <div id="landsat-qa-band" class="section level3">
 <h3>Landsat QA band</h3>
-<p>The Landsat QA band is coded in 16 bit, which are arranged from right to left. Each bit has a specific meaning in terms of data quality e.g. bit 4 (or position 5 from the right) means „cloud“. If bit 4 has the state 1 (or”YES“, or”TRUE“), there was a cloud detected in that pixel. If bit 4 has the state 1, the resulting integer value will be 2^4 = 16. Following this logic, different combinations of true / false conditions result in different integer values.</p>
+<p>The Landsat QA band is coded in 16 bit, which are arranged from right to left. Each bit has a specific meaning in terms of data quality e.g. bit 4 (or position 5 from the right) means „cloud“. If bit 4 has the state 1 (or”YES“, or”TRUE"), there was a cloud detected in that pixel. If bit 4 has the state 1, the resulting integer value will be 2^4 = 16. Following this logic, different combinations of true / false conditions result in different integer values.</p>
 <div class="figure">
 <img src="fig/s02_landsat_qa.png" alt="Landsat QA band bit designation" style="width:80.0%" />
 <p class="caption">Landsat QA band bit designation</p>
@@ -566,18 +595,18 @@ deg2rad &lt;-<span class="st"> </span><span class="cf">function</span>(deg){ (de
 <div id="de-coding-quality-band-values" class="section level2">
 <h2>De-coding quality band values</h2>
 <p>Let´s look at the integer value 2804 to illustrate how this works. R offers a good way of dealing with bit-packed information. The <code>intToBits()</code> function converts integer numbers into sequences of bits, whereas 32 double-digit bits are returned by default.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Convert integer to bit sequence</span>
-<span class="kw">intToBits</span>(<span class="dv">2804</span>)</code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="co"># Convert integer to bit sequence</span></a>
+<a class="sourceLine" id="cb18-2" title="2"><span class="kw">intToBits</span>(<span class="dv">2804</span>)</a></code></pre></div>
 <pre><code> [1] 00 00 01 00 01 01 01 01 00 01 00 01 00 00 00 00 00 00 00 00 00 00 00
 [24] 00 00 00 00 00 00 00 00 00</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Convert the double-digit into single-digit bits</span>
-<span class="kw">as.numeric</span>(<span class="kw">intToBits</span>(<span class="dv">2804</span>))</code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="co"># Convert the double-digit into single-digit bits</span></a>
+<a class="sourceLine" id="cb20-2" title="2"><span class="kw">as.numeric</span>(<span class="kw">intToBits</span>(<span class="dv">2804</span>))</a></code></pre></div>
 <pre><code> [1] 0 0 1 0 1 1 1 1 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># We´re looking at 16 bit data, so let´s deprecate the unused bits</span>
-<span class="kw">as.numeric</span>(<span class="kw">intToBits</span>(<span class="dv">2804</span>)[<span class="dv">1</span><span class="op">:</span><span class="dv">16</span>])</code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="co"># We´re looking at 16 bit data, so let´s deprecate the unused bits</span></a>
+<a class="sourceLine" id="cb22-2" title="2"><span class="kw">as.numeric</span>(<span class="kw">intToBits</span>(<span class="dv">2804</span>)[<span class="dv">1</span><span class="op">:</span><span class="dv">16</span>])</a></code></pre></div>
 <pre><code> [1] 0 0 1 0 1 1 1 1 0 1 0 1 0 0 0 0</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Bit sequences are read from right to left, so we need to reverse the order</span>
-<span class="kw">rev</span>(<span class="kw">as.numeric</span>(<span class="kw">intToBits</span>(<span class="dv">2804</span>)[<span class="dv">1</span><span class="op">:</span><span class="dv">16</span>]))</code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="co"># Bit sequences are read from right to left, so we need to reverse the order</span></a>
+<a class="sourceLine" id="cb24-2" title="2"><span class="kw">rev</span>(<span class="kw">as.numeric</span>(<span class="kw">intToBits</span>(<span class="dv">2804</span>)[<span class="dv">1</span><span class="op">:</span><span class="dv">16</span>]))</a></code></pre></div>
 <pre><code> [1] 0 0 0 0 1 0 1 0 1 1 1 1 0 1 0 0</code></pre>
 <p>Now we can compare with the Landsat 8 Collection 1 Level 1 QA band bit designation. What´s the pixel quality information of the integer value 2804?</p>
 <div class="figure">
@@ -603,8 +632,8 @@ deg2rad &lt;-<span class="st"> </span><span class="cf">function</span>(deg){ (de
 <div id="creating-a-cloud-mask" class="section level3">
 <h3>2) Creating a cloud mask</h3>
 <p>By converting integer values into binary bits, we can extract specific attributes from the BQA. Let´s to this in a systematic manner by defining a function, which yields TRUE for binary codes with bit 0 = 1:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define function to find fill values from Landsat BQA</span>
-fill_pixels &lt;-<span class="st"> </span><span class="cf">function</span>(x) {<span class="kw">intToBits</span>(x)[<span class="dv">1</span>] <span class="op">==</span><span class="st"> </span>T}</code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1"><span class="co"># Define function to find fill values from Landsat BQA</span></a>
+<a class="sourceLine" id="cb27-2" title="2">fill_pixels &lt;-<span class="st"> </span><span class="cf">function</span>(x) {<span class="kw">intToBits</span>(x)[<span class="dv">1</span>] <span class="op">==</span><span class="st"> </span>T}</a></code></pre></div>
 <p>Next, use indexing and Boolean expressions to define functions which return TRUE for</p>
 <ol style="list-style-type: lower-alpha">
 <li>high confidence clouds or high confidence cloud shadows or fill values</li>
@@ -621,7 +650,7 @@ fill_pixels &lt;-<span class="st"> </span><span class="cf">function</span>(x) {<
 <div id="reading-materials-1" class="section level2">
 <h2>Reading materials</h2>
 <p>In the next session, we would like to discuss the following paper:</p>
-<p><a href="https://doi.org/10.1016/j.rse.2013.04.022">Griffiths, P. et al. (2014). Forest disturbances, forest recovery, and changes in forest types across the Carpathian ecoregion from 1985 to 2010 based on Landsat image composites. Remote Sensing of Environment, 151, 72–88.</a></p>
+<p><a href="https://doi.org/10.1016/j.rse.2013.04.022">Griffiths, P. et al. (2014). Forest disturbances, forest recovery, and changes in forest types across the Carpathian ecoregion from 1985 to 2010 based on Landsat image composites. Remote Sensing of Environment, 151, 72–88.</a></p>
 <p>In this paper, a long time series of Landsat image composites at five year intervals is used to study the dynamics of forest disturbance, recovery and changes in forest types across the Carpathian ecoregion. Please make sure to read the paper thoroughly and focus on the following broad questions:</p>
 <ul>
 <li>What is the motivation for this article?</li>
@@ -663,13 +692,13 @@ fill_pixels &lt;-<span class="st"> </span><span class="cf">function</span>(x) {<
 <p>The NDVI relates the difference between the nIR and red reflectance to their sum.</p>
 <p><span class="math inline">\(NDVI = (nIR – red) / (nIR + red)\)</span></p>
 <p>For instance, a red reflectance of 10% and a nIR reflectance of 50% result in</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">red &lt;-<span class="st"> </span><span class="fl">0.1</span>
-nIR &lt;-<span class="st"> </span><span class="fl">0.5</span>
-
-ndvi &lt;-<span class="st"> </span>(nIR <span class="op">-</span><span class="st"> </span>red) <span class="op">/</span><span class="st"> </span>(nIR <span class="op">+</span><span class="st"> </span>red)
-<span class="kw">print</span>(ndvi)</code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1">red &lt;-<span class="st"> </span><span class="fl">0.1</span></a>
+<a class="sourceLine" id="cb28-2" title="2">nIR &lt;-<span class="st"> </span><span class="fl">0.5</span></a>
+<a class="sourceLine" id="cb28-3" title="3"></a>
+<a class="sourceLine" id="cb28-4" title="4">ndvi &lt;-<span class="st"> </span>(nIR <span class="op">-</span><span class="st"> </span>red) <span class="op">/</span><span class="st"> </span>(nIR <span class="op">+</span><span class="st"> </span>red)</a>
+<a class="sourceLine" id="cb28-5" title="5"><span class="kw">print</span>(ndvi)</a></code></pre></div>
 <pre><code>[1] 0.6666667</code></pre>
-<p>The NDVI is not a physical measure, but a proxy integrating different factors, such as land use / cover, incl. the amount of background signal visible in a pixel, photosynthetic activity, vitality and overall vegetation condition. It relates well to vegetation density and structure, e.g., represented by the leaf area index (LAI)</p>
+<p>The NDVI is not a physical measure, but a proxy integrating different factors, such as land use / cover, incl. the amount of background signal visible in a pixel, photosynthetic activity, vitality and overall vegetation condition. It relates well to vegetation density and structure, e.g., represented by the leaf area index (LAI)</p>
 <hr />
 </div>
 <div id="enhanced-vegetation-index-evi" class="section level3">
@@ -731,13 +760,13 @@ ndvi &lt;-<span class="st"> </span>(nIR <span class="op">-</span><span class="st
 <div id="perform-a-tasseled-cap-transformation" class="section level3">
 <h3>2) Perform a Tasseled Cap transformation</h3>
 <p>Perform the TC using the March surface reflectance stack. We use the coefficients derived by <a href="https://www.sciencedirect.com/science/article/pii/0034425785901026">Crist (1985)</a>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tcc &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>( <span class="fl">0.2043</span>,  <span class="fl">0.4158</span>,  <span class="fl">0.5524</span>, <span class="fl">0.5741</span>,  <span class="fl">0.3124</span>,  <span class="fl">0.2303</span>, 
-                <span class="op">-</span><span class="fl">0.1603</span>, <span class="op">-</span><span class="fl">0.2819</span>, <span class="op">-</span><span class="fl">0.4934</span>, <span class="fl">0.7940</span>, <span class="op">-</span><span class="fl">0.0002</span>, <span class="op">-</span><span class="fl">0.1446</span>,
-                 <span class="fl">0.0315</span>,  <span class="fl">0.2021</span>,  <span class="fl">0.3102</span>, <span class="fl">0.1594</span>, <span class="op">-</span><span class="fl">0.6806</span>, <span class="op">-</span><span class="fl">0.6109</span>), 
-                <span class="dt">dimnames =</span> <span class="kw">list</span>(<span class="kw">c</span>(<span class="st">&#39;blue&#39;</span>, <span class="st">&#39;green&#39;</span>, <span class="st">&#39;red&#39;</span>, <span class="st">&#39;nIR&#39;</span>, <span class="st">&#39;swIR1&#39;</span>, <span class="st">&#39;swIR2&#39;</span>), <span class="kw">c</span>(<span class="st">&#39;brightness&#39;</span>, <span class="st">&#39;greenness&#39;</span>, <span class="st">&#39;wetness&#39;</span>)),
-                <span class="dt">ncol =</span> <span class="dv">3</span>)
-
-<span class="kw">print</span>(tcc)</code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1">tcc &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>( <span class="fl">0.2043</span>,  <span class="fl">0.4158</span>,  <span class="fl">0.5524</span>, <span class="fl">0.5741</span>,  <span class="fl">0.3124</span>,  <span class="fl">0.2303</span>, </a>
+<a class="sourceLine" id="cb30-2" title="2">                <span class="fl">-0.1603</span>, <span class="fl">-0.2819</span>, <span class="fl">-0.4934</span>, <span class="fl">0.7940</span>, <span class="fl">-0.0002</span>, <span class="fl">-0.1446</span>,</a>
+<a class="sourceLine" id="cb30-3" title="3">                 <span class="fl">0.0315</span>,  <span class="fl">0.2021</span>,  <span class="fl">0.3102</span>, <span class="fl">0.1594</span>, <span class="fl">-0.6806</span>, <span class="fl">-0.6109</span>), </a>
+<a class="sourceLine" id="cb30-4" title="4">                <span class="dt">dimnames =</span> <span class="kw">list</span>(<span class="kw">c</span>(<span class="st">&#39;blue&#39;</span>, <span class="st">&#39;green&#39;</span>, <span class="st">&#39;red&#39;</span>, <span class="st">&#39;nIR&#39;</span>, <span class="st">&#39;swIR1&#39;</span>, <span class="st">&#39;swIR2&#39;</span>), <span class="kw">c</span>(<span class="st">&#39;brightness&#39;</span>, <span class="st">&#39;greenness&#39;</span>, <span class="st">&#39;wetness&#39;</span>)),</a>
+<a class="sourceLine" id="cb30-5" title="5">                <span class="dt">ncol =</span> <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb30-6" title="6"></a>
+<a class="sourceLine" id="cb30-7" title="7"><span class="kw">print</span>(tcc)</a></code></pre></div>
 <pre><code>      brightness greenness wetness
 blue      0.2043   -0.1603  0.0315
 green     0.4158   -0.2819  0.2021
@@ -746,12 +775,12 @@ nIR       0.5741    0.7940  0.1594
 swIR1     0.3124   -0.0002 -0.6806
 swIR2     0.2303   -0.1446 -0.6109</code></pre>
 <p>The TC is a linear band transformation. We can simply multiply the individual bands in the march stack with the corresponding factor and sum up the result, e.g., for TC Brightness:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">brightness &lt;-<span class="st"> </span>march.stack[[<span class="dv">1</span>]] <span class="op">*</span><span class="st"> </span>tcc[<span class="dv">1</span>,<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>
-<span class="st">              </span>march.stack[[<span class="dv">2</span>]] <span class="op">*</span><span class="st"> </span>tcc[<span class="dv">2</span>,<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>
-<span class="st">              </span>march.stack[[<span class="dv">3</span>]] <span class="op">*</span><span class="st"> </span>tcc[<span class="dv">3</span>,<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>
-<span class="st">              </span>march.stack[[<span class="dv">4</span>]] <span class="op">*</span><span class="st"> </span>tcc[<span class="dv">4</span>,<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>
-<span class="st">              </span>march.stack[[<span class="dv">5</span>]] <span class="op">*</span><span class="st"> </span>tcc[<span class="dv">5</span>,<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>
-<span class="st">              </span>march.stack[[<span class="dv">6</span>]] <span class="op">*</span><span class="st"> </span>tcc[<span class="dv">6</span>,<span class="dv">1</span>]</code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1">brightness &lt;-<span class="st"> </span>march.stack[[<span class="dv">1</span>]] <span class="op">*</span><span class="st"> </span>tcc[<span class="dv">1</span>,<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb32-2" title="2"><span class="st">              </span>march.stack[[<span class="dv">2</span>]] <span class="op">*</span><span class="st"> </span>tcc[<span class="dv">2</span>,<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb32-3" title="3"><span class="st">              </span>march.stack[[<span class="dv">3</span>]] <span class="op">*</span><span class="st"> </span>tcc[<span class="dv">3</span>,<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb32-4" title="4"><span class="st">              </span>march.stack[[<span class="dv">4</span>]] <span class="op">*</span><span class="st"> </span>tcc[<span class="dv">4</span>,<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb32-5" title="5"><span class="st">              </span>march.stack[[<span class="dv">5</span>]] <span class="op">*</span><span class="st"> </span>tcc[<span class="dv">5</span>,<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb32-6" title="6"><span class="st">              </span>march.stack[[<span class="dv">6</span>]] <span class="op">*</span><span class="st"> </span>tcc[<span class="dv">6</span>,<span class="dv">1</span>]</a></code></pre></div>
 <p>Make sure to create an individual layer for Brightness, Greenness, and Wetness. Create a stack from the three layers. While the computation is ongoing, proceed with task 1) of the block on training data collection.</p>
 <p>When the computation is completed, write the results to disk, using the <code>INT2S</code> data type. Add the NDVI, EVI, and the TC stack to the QGIS project you started in the next block. Visually explore the vegetation indices and TC components.</p>
 <hr />
@@ -891,16 +920,16 @@ swIR2     0.2303   -0.1446 -0.6109</code></pre>
 <p>Load your shape in R using <code>readOGR()</code>. Extract the spectral values at your point locations from the March image in R using the <code>extract()</code> function. Specify <code>sp = TRUE</code> to append the spectral values to the point shapefile.</p>
 <p>Make sure the result of this task is an object of type <code>data.frame</code> named <code>sr.march</code>. Your sample points should be represented as rows and the measured variables as columns (i.e. point id, classID, confID, and 6 spectral bands).</p>
 <p>Create boxplots of your surface reflectance measurements for all spectral bands, grouped according to the class number.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load required packages</span>
-<span class="kw">library</span>(ggplot2)
-<span class="kw">library</span>(reshape2)
-
-<span class="co"># Melt dataframe containing point id, classID, confID, and 6 spectral bands</span>
-spectra.df &lt;-<span class="st"> </span><span class="kw">melt</span>(sr.march, <span class="dt">id.vars=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>), <span class="dt">measure.vars=</span><span class="kw">c</span>(<span class="dv">4</span><span class="op">:</span><span class="dv">9</span>))
-
-<span class="co"># Create boxplots of spectral bands per class</span>
-<span class="kw">ggplot</span>(spectra.df, <span class="kw">aes</span>(<span class="dt">x=</span>variable, <span class="dt">y=</span>value, <span class="dt">color=</span>classID)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_boxplot</span>() </code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1"><span class="co"># Load required packages</span></a>
+<a class="sourceLine" id="cb33-2" title="2"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb33-3" title="3"><span class="kw">library</span>(reshape2)</a>
+<a class="sourceLine" id="cb33-4" title="4"></a>
+<a class="sourceLine" id="cb33-5" title="5"><span class="co"># Melt dataframe containing point id, classID, confID, and 6 spectral bands</span></a>
+<a class="sourceLine" id="cb33-6" title="6">spectra.df &lt;-<span class="st"> </span><span class="kw">melt</span>(sr.march, <span class="dt">id.vars=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>), <span class="dt">measure.vars=</span><span class="kw">c</span>(<span class="dv">4</span><span class="op">:</span><span class="dv">9</span>))</a>
+<a class="sourceLine" id="cb33-7" title="7"></a>
+<a class="sourceLine" id="cb33-8" title="8"><span class="co"># Create boxplots of spectral bands per class</span></a>
+<a class="sourceLine" id="cb33-9" title="9"><span class="kw">ggplot</span>(spectra.df, <span class="kw">aes</span>(<span class="dt">x=</span>variable, <span class="dt">y=</span>value, <span class="dt">color=</span>classID)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb33-10" title="10"><span class="st">  </span><span class="kw">geom_boxplot</span>() </a></code></pre></div>
 <p>Make sure you understand what the <code>melt()</code> function is doing. Feel free to adjust the plot layout.</p>
 <p>Similarly to the previous task, extract the values at your point locations from the Tasseled Cap stack. Create boxplots of the three Tasseled Cap components, grouped by the target class. Investigate the boxplots in order to investigate the differences between your target classes. Try to answer the following questions:</p>
 <ul>
@@ -914,7 +943,7 @@ spectra.df &lt;-<span class="st"> </span><span class="kw">melt</span>(sr.march, 
 <div id="reading-materials-2" class="section level2">
 <h2>Reading materials</h2>
 <p>In the next session, we would like to discuss the following paper:</p>
-<p><a href="https://www.researchgate.net/publication/259486369_A_Pixel-Based_Landsat_Compositing_Algorithm_for_Large_Area_Land_Cover_Mapping">Griffiths et al. (2013): Pixel-Based Landsat Compositing for Large Area Land Cover Mapping. IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing, 6(5), 2088-2101.</a></p>
+<p><a href="https://www.researchgate.net/publication/259486369_A_Pixel-Based_Landsat_Compositing_Algorithm_for_Large_Area_Land_Cover_Mapping">Griffiths et al. (2013): Pixel-Based Landsat Compositing for Large Area Land Cover Mapping. IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing, 6(5), 2088-2101.</a></p>
 <p>This paper describes the methods used in the article you read last week. Here, a novel algorithm for large-area pixel-based compositing from Landsat data was developed. Please read the paper thoroughly, make sure you understand the underlying concept and write down any question for the discussion in our next session. Also, answer the following broad questions:</p>
 <ul>
 <li>What is the motivation for this article?</li>
@@ -923,130 +952,408 @@ spectra.df &lt;-<span class="st"> </span><span class="kw">melt</span>(sr.march, 
 <li>What is the difference between annual and seasonal consistency?</li>
 </ul>
 <hr />
-<!-- 
-
-# Session 04: Pixel-based compositing
-
-------
-
-## Learning goals
-
-------
-
-## Compositing
-
-- Create a cloud free coverage by combining several partially clouded images
-- [Do not confuse terminology: false color composite, multi-temporal composite bands, etc.]
-- Originally developed for coarse resolution sensors with daily global coverage that lack cloud masks…
-
-For Landsat and similar data, compositing is still a relatively new topic
-
-Reasons:
-
-- Free data policy started 2008
-- observation frequency improved with the launch of Landsat 8, while Landsat 7 SLC off (and previous Landsat 5 after 25 years in orbit) where limited
-- automation of cloud masking and atmospheric correction
-computational power & storage capacity
-
-------
-
-## Pixel-based compositing
-
-- Image compositing now allows to create cloud free, radiometrically consistent image datasets over large areas from the Landsat archive
-
-![Global WELD. Source: Roy et al. 2014](fig/s04_WELD.gif)
-
-- Automated cloud masking has improved greatly (e.g. Fmask, Zhu and Woodcock 2012) or Sentinel cloud screening (e.g. Frantz et al. 2018)
-- Automated pre-processing to surface reflectance products allows integration of L4, L5, L7, L8 (and Sentinel2); e.g. via LEDAPS by Masek et al. 2006, Ju et al. 2012) 
-
-
-------
-
-## The global Landsat archive
-
-#### Archive consolidation
-
-![Global Landsat archive as of 2013. source: ?????](fig/s04_global_ls_archive.gif)
-
-#### Landsat observation density
-
-![Global Landsat observation density. Source: Wulder et al. 2016; doi:10.1016/j.rse.2015.11.032](fig/s04_landsat_density.gif)
-
-------
-
-## Compositing vs. metrics
-
-Two main types of compositing outputs:
-
-1. Best observation/pixel composites:
-- Parametric scoring approach (DOY, distance cloud/shadow, haze score, etc.)
-- Seasonal tuning
-- Traceability using metaFlag images
-
-2. Spectral-temporal Metrics:
-- Values usually not observed, but derived (e.g. mean or standard deviation)
-
-Rank band Metrics:
-
-- Several features that characterize the statistical distribution of cloud free observations per band and pixel
-- Rank bands used to identify spectral vector of the acquisition that for example relates to the median NDVI
-
-![Rank band metrics plot](fig/s04_metrics_plot.gif)
-
-
-------
-
-## Reading materials.
-
-Griffiths, P., van der Linden, S., Kuemmerle, T., & Hostert, P. (2013). A Pixel-Based Landsat Compositing Algorithm for Large Area Land Cover Mapping. IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing, 6, 2088-2101
-Roy, D.F., Ju, J., Kline, K., Scaramuzza, P. L., Kovalskyy, V., Hansen, M., ... Zhang, C. (2010). Web-enabled Landsat data (WELD): Landsat ETM+ composited mosaics of the conterminous United States. Remote Sensing of Environment, 114,35–49.
-White, J.C., Wulder, M.A., Hobart, G.W., Luther, J.E., Hermosilla, T., Griffiths, P., Coops, N.C., Hall, R.J., Hostert, P., Dyk, A., & Guindon, L. (2014). Pixel-Based Image Compositing for Large-Area Dense Time Series Applications and Science. Canadian Journal of Remote Sensing, 192-212
-
--- Masek 2006, Ju 2012 
-
-------
-
-# Session 05: Machine learning for image classification
-
-## Learning goals
-
-## Reading materials.
-
-------
-
-# Session 06: Accuracy assessment and area estimation
-
-## Learning goals
-
-## Reading materials.
-
-------
-
-# Session 07: Multi-temporal change detection
-
-## Learning goals
-
-## Reading materials.
-
-------
-
-# Session 08: Spectral-temporal metrics
-
-## Learning goals
-
-## Reading materials.
-
-------
-
-# Project work
-
-## Phase I
-
-## Phase II
-
-## Phase III
-
------- -->
+</div>
+</div>
+<div id="session-04-pixel-based-compositing" class="section level1">
+<h1>Session 04: Pixel-based compositing</h1>
+<hr />
+<div id="learning-goals-5" class="section level2">
+<h2>Learning goals</h2>
+<ul>
+<li>Understand the fundamentals of pixel-based image compositing</li>
+<li>Parameterize a compositing function and create your own composite from multiple Landsat scenes</li>
+</ul>
+<hr />
+</div>
+<div id="background-1" class="section level2">
+<h2>Background:</h2>
+<p>The availability of Landsat images varies by region. Even in areas where obersvation density is high, such as North America, coverage can be reduced by clouds and quality of observations can be impacted by haze or sensor saturation. <img src="fig/s04_landsat_availability.jpg" alt="Global availability of Landsat images. Source: Wulder et al. 2016; https://doi.org/10.1016/j.rse.2015.11.032" /> Using best-pixel-compositing, we can use multiple obervations (i.e., from multiple Landsat scenes) and combine them to one consistent image composite. This allows to create cloud-free, radiometrically and phenologically consistent image composites that are contiguous over large areas. A set of rules (parameters) is used to determine the observations best suited for analysis. These parameters can include information about distance to clouds, temporal proximity to a target date and seasonal consistency.</p>
+<p>One of the first global composites using Landsat data was produced using the WELD compositing approach (Roy et al. 2011, <a href="https://doi.org/10.1016/j.rse.2009.08.011" class="uri">https://doi.org/10.1016/j.rse.2009.08.011</a>). <img src="fig/s04_global_weld.jpg" alt="Monthly global WELD surface reflectance composite for June 2009. Source: https://worldview.earthdata.nasa.gov/" /></p>
+<hr />
+</div>
+<div id="parametric-pixel-based-compositing" class="section level2">
+<h2>Parametric pixel-based compositing</h2>
+<ul>
+<li>a method to produce a gap-free image of a (large) area</li>
+<li>representing a specific point in time (target date)</li>
+<li>best pixel selected according to multiple parameters (e.g. how close to target date, distance to clouds) weighted scoring allows for flexible parametrization according to user´s needs and study area characteristics</li>
+</ul>
+<div class="figure">
+<img src="fig/s04_compositing.png" alt="Creating one pixel-based composite from three images." />
+<p class="caption">Creating one pixel-based composite from three images.</p>
+</div>
+<hr />
+</div>
+<div id="best-pixel-based-compositing-in-seven-steps" class="section level2">
+<h2>Best-pixel-based compositing in seven steps</h2>
+<ol style="list-style-type: decimal">
+<li>Determine compositing parameters, e.g. Target DOY: June 15 +/- 30 days and target year: 2015 +/- 1 year</li>
+<li>Calculate DOY and year suitability (0-1) according to parameters</li>
+</ol>
+<div class="figure">
+<img src="fig/s04_suitability_scores.png" alt="Five images to be used for best-pixel compositing and their DOY and year offsets" />
+<p class="caption">Five images to be used for best-pixel compositing and their DOY and year offsets</p>
+</div>
+<p>We use linear functions to determine the suitability of an observation.<br />
+In the plot for the DOY function below, we’re chosing a parameterization that favors observations closest to the target DOY and assign a suitability score of 0 for observations that are 50 or more days from the target date. Being 30 days from the target DOY, the May 16 2015 observation receives a suitability score of 0.4.<br />
+A second function determines the suitability score for the year of observation. Again, observations close to the target year are assigned high values, while observations acquired five or more years from the target year are considered unsuitable. The resulting suitability score for the May 15 2015 observation is 1.<br />
+<img src="fig/s04_suitabilityplot_doy_year.png" alt="Linear functions for the DOY and year suitability score" style="width:90.0%" /></p>
+<ol start="3" style="list-style-type: decimal">
+<li>Calculate pixel-level suitability (0-1), e.g. through min. distance to clouds.</li>
+</ol>
+<div class="figure">
+<img src="fig/s04_suitability_clouds.png" alt="Distance to next cloud in pixels" />
+<p class="caption">Distance to next cloud in pixels</p>
+</div>
+<p>To minimize the likelihood of pixels being affected by clouds, we favor observations that aren’t in close proximity to clouds. The cloud distance scoring function below assigns a suitability score of 1 as soon as the distance to the next cloud is 100 or more pixels. An observation that has a distance of 60 pixels (=1800m) to the next cloud receives a cloud distance suitability score of 0.6.</p>
+<div class="figure">
+<img src="fig/s04_suitabilityplot_clouds.png" alt="Linear function for the cloud suitability score" style="width:40.0%" />
+<p class="caption">Linear function for the cloud suitability score</p>
+</div>
+<ol start="4" style="list-style-type: decimal">
+<li>Define which criteria are most important for you (W = weights): <span class="math display">\[W_{DOY} = 0.5\]</span> <span class="math display">\[W_{year} = 0.2\]</span> <span class="math display">\[W_{CloudDist} = 0.3\]</span></li>
+<li>Calculate a score for each pixel in each image. We can use the weighted sum of suitabilities (S = score):</li>
+</ol>
+<p><span class="math display">\[score = S_{DOY} * W_{DOY} + S_{Year} * W_{Year} + S_{CloudDist} * W_{CloudDist}\]</span><br />
+Using the values from the exemplary plots above yields:<br />
+<span class="math display">\[score = 0.4 * 0.5 + 1 * 0.2 + 0.6 * 0.3\]</span> <span class="math display">\[score = 0.58\]</span></p>
+<div class="figure">
+<img src="fig/s04_suitability_score_weighted.png" alt="Resulting suitability scores for each image" />
+<p class="caption">Resulting suitability scores for each image</p>
+</div>
+<ol start="6" style="list-style-type: decimal">
+<li><p>Use the best observation (= highest score) for the final composite.</p></li>
+<li><p>Evaluate the results by checking for seasonal/annual consistency and cloud distance (and re-iterate) <img src="fig/s04_final_composite.jpg" /></p></li>
+</ol>
+<hr />
+</div>
+<div id="exercise-5" class="section level2">
+<h2>Exercise</h2>
+<p>The goal of this week’s exercise is to combine several images into best-pixel composites using a parametric compositing function. We will be working with our main script which sources the compositing function from a second script. Outsourcing functions - especially extensive ones - improves the readability of scripts and allows for using functions from different scripts. Check the help for source() if you are not familiar with sourcing R code in your script.</p>
+<details>
+<p><summary>Click here to see code for the parametric compositing function</summary></p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1">  <span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb34-2" title="2">  <span class="co"># MSc Earth Observation Exercise 4</span></a>
+<a class="sourceLine" id="cb34-3" title="3">  <span class="co"># Function for creating cloud-free composites of multiple Landsat images</span></a>
+<a class="sourceLine" id="cb34-4" title="4">  <span class="co"># Requires an input data.frame (here img_list) and eight compositing </span></a>
+<a class="sourceLine" id="cb34-5" title="5">  <span class="co"># parameters. Please see exercise sheet for further details.</span></a>
+<a class="sourceLine" id="cb34-6" title="6">  <span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb34-7" title="7">  </a>
+<a class="sourceLine" id="cb34-8" title="8">  <span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb34-9" title="9">  <span class="co"># Loading required packages here...</span></a>
+<a class="sourceLine" id="cb34-10" title="10">  <span class="kw">library</span>(raster)</a>
+<a class="sourceLine" id="cb34-11" title="11">  <span class="kw">library</span>(lubridate)</a>
+<a class="sourceLine" id="cb34-12" title="12">  </a>
+<a class="sourceLine" id="cb34-13" title="13">  <span class="co"># Change raster options to store large rasters in temp files on disk</span></a>
+<a class="sourceLine" id="cb34-14" title="14">  <span class="kw">rasterOptions</span>(<span class="dt">maxmemory =</span> <span class="fl">1e6</span>)</a>
+<a class="sourceLine" id="cb34-15" title="15">  </a>
+<a class="sourceLine" id="cb34-16" title="16">  <span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb34-17" title="17">  <span class="co"># Function definition starts here</span></a>
+<a class="sourceLine" id="cb34-18" title="18">  parametric_compositing &lt;-<span class="st"> </span><span class="cf">function</span>(img_list, target_date, </a>
+<a class="sourceLine" id="cb34-19" title="19">                                   W_DOY, W_year, W_cloud_dist, </a>
+<a class="sourceLine" id="cb34-20" title="20">                                   max_DOY_offset, max_year_offset, </a>
+<a class="sourceLine" id="cb34-21" title="21">                                   min_cloud_dist, max_cloud_dist) {</a>
+<a class="sourceLine" id="cb34-22" title="22">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb34-23" title="23">  tic &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()</a>
+<a class="sourceLine" id="cb34-24" title="24">  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;Start of compositing process: &#39;</span>, tic))</a>
+<a class="sourceLine" id="cb34-25" title="25">  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;Target date: &#39;</span>, target_date))</a>
+<a class="sourceLine" id="cb34-26" title="26">  </a>
+<a class="sourceLine" id="cb34-27" title="27">  <span class="co"># Extract target DOY and year from target_date</span></a>
+<a class="sourceLine" id="cb34-28" title="28">  target_DOY &lt;-<span class="st"> </span><span class="kw">yday</span>(target_date)</a>
+<a class="sourceLine" id="cb34-29" title="29">  target_year &lt;-<span class="st"> </span><span class="kw">year</span>(target_date)</a>
+<a class="sourceLine" id="cb34-30" title="30">  </a>
+<a class="sourceLine" id="cb34-31" title="31">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb34-32" title="32">  <span class="cf">if</span>(<span class="kw">sum</span>(W_DOY, W_year, W_cloud_dist)<span class="op">!=</span><span class="dv">1</span>) { <span class="kw">stop</span>(<span class="st">&#39;Error: something wrong.&#39;</span>) }</a>
+<a class="sourceLine" id="cb34-33" title="33">  </a>
+<a class="sourceLine" id="cb34-34" title="34">  <span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb34-35" title="35">  <span class="co"># Calculate the scores for the DOY, year, and cloud distance criteria</span></a>
+<a class="sourceLine" id="cb34-36" title="36">  <span class="kw">print</span>(<span class="st">&#39;Calculating compositing scores&#39;</span>)</a>
+<a class="sourceLine" id="cb34-37" title="37">  </a>
+<a class="sourceLine" id="cb34-38" title="38">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb34-39" title="39">  obs_DOY &lt;-<span class="st"> </span>img_list<span class="op">$</span>DOY</a>
+<a class="sourceLine" id="cb34-40" title="40">  DOY_score &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>(<span class="kw">abs</span>(target_DOY <span class="op">-</span><span class="st"> </span>img_list<span class="op">$</span>DOY) <span class="op">/</span><span class="st"> </span>max_DOY_offset)</a>
+<a class="sourceLine" id="cb34-41" title="41">  DOY_score[DOY_score<span class="op">&lt;</span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb34-42" title="42">  </a>
+<a class="sourceLine" id="cb34-43" title="43">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb34-44" title="44">  obs_year &lt;-<span class="st"> </span>img_list<span class="op">$</span>year</a>
+<a class="sourceLine" id="cb34-45" title="45">  year_score &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">-</span>(<span class="kw">abs</span>(target_year <span class="op">-</span><span class="st"> </span>obs_year) <span class="op">/</span><span class="st"> </span>max_year_offset)</a>
+<a class="sourceLine" id="cb34-46" title="46">  </a>
+<a class="sourceLine" id="cb34-47" title="47">  <span class="cf">if</span> (max_year_offset <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) {year_score[obs_year<span class="op">==</span>target_year] &lt;-<span class="st"> </span><span class="dv">1</span>}</a>
+<a class="sourceLine" id="cb34-48" title="48">  year_score[year_score<span class="op">&lt;</span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb34-49" title="49">  </a>
+<a class="sourceLine" id="cb34-50" title="50">  <span class="co"># Get candidate images within max_DOY_offset and max_year_offset</span></a>
+<a class="sourceLine" id="cb34-51" title="51">  ix &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="op">!</span><span class="kw">is.na</span>(DOY_score) <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(year_score))</a>
+<a class="sourceLine" id="cb34-52" title="52">  <span class="cf">if</span> (<span class="kw">length</span>(ix)<span class="op">&gt;</span><span class="dv">1</span>) { <span class="kw">print</span>(<span class="kw">paste</span>(<span class="kw">length</span>(ix),  <span class="st">&#39;candidate images selected, calculating scores.&#39;</span>)) }</a>
+<a class="sourceLine" id="cb34-53" title="53">  <span class="cf">if</span> (<span class="kw">length</span>(ix)<span class="op">&lt;</span><span class="dv">2</span>) { <span class="kw">stop</span>(<span class="st">&#39;Another error because something is wrong.&#39;</span>) }</a>
+<a class="sourceLine" id="cb34-54" title="54">  </a>
+<a class="sourceLine" id="cb34-55" title="55">  <span class="co"># Stack cloud distance layers of candidate images and reclassify </span></a>
+<a class="sourceLine" id="cb34-56" title="56">  <span class="co"># values &lt; min_cloud_dist to NA, and values &gt; max_cloud_dist to max_cloud_dist</span></a>
+<a class="sourceLine" id="cb34-57" title="57">  cloud_dist &lt;-<span class="st"> </span><span class="kw">stack</span>(<span class="kw">as.character</span>(img_list<span class="op">$</span>cloud_dist_files[ix]))</a>
+<a class="sourceLine" id="cb34-58" title="58">  cloud_dist &lt;-<span class="st"> </span><span class="kw">reclassify</span>(cloud_dist, <span class="dt">rcl=</span><span class="kw">c</span>(<span class="dv">0</span>, min_cloud_dist, <span class="ot">NA</span>), <span class="dt">right=</span><span class="ot">NA</span>, <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)</a>
+<a class="sourceLine" id="cb34-59" title="59">  cloud_dist &lt;-<span class="st"> </span><span class="kw">reclassify</span>(cloud_dist, <span class="dt">rcl=</span><span class="kw">c</span>(max_cloud_dist, <span class="kw">sqrt</span>(<span class="kw">nrow</span>(cloud_dist)<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="kw">ncol</span>(cloud_dist)<span class="op">^</span><span class="dv">2</span>), max_cloud_dist), <span class="dt">right=</span><span class="ot">NA</span>, <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)</a>
+<a class="sourceLine" id="cb34-60" title="60">  </a>
+<a class="sourceLine" id="cb34-61" title="61">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb34-62" title="62">  cloud_score &lt;-<span class="st"> </span>(cloud_dist <span class="op">-</span><span class="st"> </span>min_cloud_dist) <span class="op">/</span><span class="st"> </span>(max_cloud_dist <span class="op">-</span><span class="st"> </span>min_cloud_dist)</a>
+<a class="sourceLine" id="cb34-63" title="63">  </a>
+<a class="sourceLine" id="cb34-64" title="64">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb34-65" title="65">  obs_score &lt;-<span class="st"> </span>DOY_score[ix] <span class="op">*</span><span class="st"> </span>W_DOY <span class="op">+</span><span class="st"> </span>year_score[ix] <span class="op">*</span><span class="st"> </span>W_year <span class="op">+</span><span class="st"> </span>cloud_score <span class="op">*</span><span class="st"> </span>W_cloud_dist</a>
+<a class="sourceLine" id="cb34-66" title="66">  </a>
+<a class="sourceLine" id="cb34-67" title="67">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb34-68" title="68">  select &lt;-<span class="st"> </span><span class="kw">which.max</span>(obs_score)</a>
+<a class="sourceLine" id="cb34-69" title="69">  </a>
+<a class="sourceLine" id="cb34-70" title="70">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb34-71" title="71">  candidates &lt;-<span class="st"> </span><span class="kw">unique</span>(select)</a>
+<a class="sourceLine" id="cb34-72" title="72">  </a>
+<a class="sourceLine" id="cb34-73" title="73">  <span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb34-74" title="74">  <span class="co"># Fill composite image with pixels from the candidate images</span></a>
+<a class="sourceLine" id="cb34-75" title="75">  <span class="cf">for</span> (i <span class="cf">in</span> candidates){</a>
+<a class="sourceLine" id="cb34-76" title="76">    </a>
+<a class="sourceLine" id="cb34-77" title="77">    <span class="co">#...</span></a>
+<a class="sourceLine" id="cb34-78" title="78">    fill_image &lt;-<span class="st"> </span><span class="kw">brick</span>(<span class="kw">as.character</span>(img_list<span class="op">$</span>image_files[ix[i]]), <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)</a>
+<a class="sourceLine" id="cb34-79" title="79">    </a>
+<a class="sourceLine" id="cb34-80" title="80">    <span class="co">#...</span></a>
+<a class="sourceLine" id="cb34-81" title="81">    <span class="cf">if</span> (i <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(candidates)) { </a>
+<a class="sourceLine" id="cb34-82" title="82">      composite &lt;-<span class="st"> </span><span class="kw">brick</span>(fill_image, <span class="dt">values=</span><span class="ot">FALSE</span>) </a>
+<a class="sourceLine" id="cb34-83" title="83">      <span class="kw">dataType</span>(composite) &lt;-<span class="st"> &#39;INT2S&#39;</span></a>
+<a class="sourceLine" id="cb34-84" title="84">      <span class="kw">values</span>(composite) &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb34-85" title="85">    }</a>
+<a class="sourceLine" id="cb34-86" title="86">    </a>
+<a class="sourceLine" id="cb34-87" title="87">    <span class="kw">print</span>(<span class="kw">paste0</span>(<span class="st">&#39;Filling raster with acquisition from date &#39;</span>, img_list<span class="op">$</span>date[ix[i]]))</a>
+<a class="sourceLine" id="cb34-88" title="88">    fill_image.masked &lt;-<span class="st"> </span><span class="kw">mask</span>(fill_image, select, <span class="dt">maskvalue=</span>i, <span class="dt">inverse=</span>T, <span class="dt">updatevalue=</span><span class="dv">0</span>, <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)</a>
+<a class="sourceLine" id="cb34-89" title="89">    fill_image.masked[<span class="kw">is.na</span>(fill_image.masked)] &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb34-90" title="90">    composite &lt;-<span class="st"> </span>composite <span class="op">+</span><span class="st"> </span>fill_image.masked</a>
+<a class="sourceLine" id="cb34-91" title="91">    </a>
+<a class="sourceLine" id="cb34-92" title="92">  }</a>
+<a class="sourceLine" id="cb34-93" title="93">  </a>
+<a class="sourceLine" id="cb34-94" title="94">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb34-95" title="95">  composite_na &lt;-<span class="st"> </span><span class="kw">mask</span>(composite, select, <span class="dt">maskvalue=</span><span class="ot">NA</span>, <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)</a>
+<a class="sourceLine" id="cb34-96" title="96">  </a>
+<a class="sourceLine" id="cb34-97" title="97">  <span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb34-98" title="98">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb34-99" title="99">  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;NAs: &#39;</span>, <span class="kw">round</span>(<span class="kw">freq</span>(composite[[<span class="dv">1</span>]], <span class="dt">value=</span><span class="ot">NA</span>)<span class="op">/</span><span class="kw">ncell</span>(composite[[<span class="dv">1</span>]])<span class="op">*</span><span class="dv">100</span>, <span class="dt">digits=</span><span class="dv">3</span>), <span class="st">&#39; %&#39;</span>))</a>
+<a class="sourceLine" id="cb34-100" title="100">  </a>
+<a class="sourceLine" id="cb34-101" title="101">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb34-102" title="102">  rcl_DOY &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">ncol=</span><span class="dv">2</span>, <span class="dt">data=</span><span class="kw">c</span>(candidates, obs_DOY[ix[candidates]]))</a>
+<a class="sourceLine" id="cb34-103" title="103">  select_DOY &lt;-<span class="st"> </span><span class="kw">reclassify</span>(select, rcl_DOY, <span class="dt">datatype =</span> <span class="st">&#39;INT2S&#39;</span>)</a>
+<a class="sourceLine" id="cb34-104" title="104">  </a>
+<a class="sourceLine" id="cb34-105" title="105">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb34-106" title="106">  rcl_year &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">ncol=</span><span class="dv">2</span>, <span class="dt">data=</span><span class="kw">c</span>(candidates, obs_year[ix[candidates]]))</a>
+<a class="sourceLine" id="cb34-107" title="107">  select_year &lt;-<span class="st"> </span><span class="kw">reclassify</span>(select, rcl_year)</a>
+<a class="sourceLine" id="cb34-108" title="108">  </a>
+<a class="sourceLine" id="cb34-109" title="109">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb34-110" title="110">  output &lt;-<span class="st"> </span><span class="kw">stack</span>(composite_na, select_DOY, select_year)</a>
+<a class="sourceLine" id="cb34-111" title="111">  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;End of compositing process: &#39;</span>, <span class="kw">Sys.time</span>()))</a>
+<a class="sourceLine" id="cb34-112" title="112">  </a>
+<a class="sourceLine" id="cb34-113" title="113">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb34-114" title="114">  <span class="kw">return</span>(output)</a>
+<a class="sourceLine" id="cb34-115" title="115">  </a>
+<a class="sourceLine" id="cb34-116" title="116">  }</a></code></pre></div>
+</details>
+<details>
+<p><summary>Click here to see the code for the main script calling the parametric compositing function</summary></p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1">  <span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb35-2" title="2">  <span class="co"># MSc Earth Observation Exercise 4</span></a>
+<a class="sourceLine" id="cb35-3" title="3">  <span class="co"># [Your Name]</span></a>
+<a class="sourceLine" id="cb35-4" title="4">  <span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb35-5" title="5">  </a>
+<a class="sourceLine" id="cb35-6" title="6">  <span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb35-7" title="7">  <span class="kw">library</span>(rgdal)</a>
+<a class="sourceLine" id="cb35-8" title="8">  <span class="kw">library</span>(raster)</a>
+<a class="sourceLine" id="cb35-9" title="9">  <span class="kw">library</span>(lubridate)</a>
+<a class="sourceLine" id="cb35-10" title="10">  <span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb35-11" title="11">  <span class="kw">source</span>(<span class="st">&#39;&#39;</span>) <span class="co">#path to the parametric_compositing function</span></a>
+<a class="sourceLine" id="cb35-12" title="12">  </a>
+<a class="sourceLine" id="cb35-13" title="13">  <span class="co"># Change raster options to store large rasters in temp files on disk</span></a>
+<a class="sourceLine" id="cb35-14" title="14">  <span class="kw">rasterOptions</span>(<span class="dt">maxmemory =</span> <span class="fl">1e6</span>)</a>
+<a class="sourceLine" id="cb35-15" title="15">  </a>
+<a class="sourceLine" id="cb35-16" title="16">  <span class="co">######## Define the folder that contains your data...</span></a>
+<a class="sourceLine" id="cb35-17" title="17">  data.path &lt;-<span class="st"> &#39;O:/ST19_MSc-EO/S04/data/&#39;</span></a>
+<a class="sourceLine" id="cb35-18" title="18">  </a>
+<a class="sourceLine" id="cb35-19" title="19">  <span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb35-20" title="20">  <span class="co"># 1)</span></a>
+<a class="sourceLine" id="cb35-21" title="21">  <span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb35-22" title="22">  </a>
+<a class="sourceLine" id="cb35-23" title="23">  sr &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="kw">paste0</span>(data.path, <span class="st">&#39;/sr_data&#39;</span>), <span class="dt">pattern=</span><span class="st">&quot;.tif$&quot;</span>, <span class="dt">full.names=</span>T, <span class="dt">recursive=</span>F)</a>
+<a class="sourceLine" id="cb35-24" title="24">  fmask &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="kw">paste0</span>(data.path, <span class="st">&#39;/fmask&#39;</span>), <span class="dt">pattern=</span><span class="st">&quot;.tif$&quot;</span>, <span class="dt">full.names=</span>T, <span class="dt">recursive=</span>F)</a>
+<a class="sourceLine" id="cb35-25" title="25">  cd &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="kw">paste0</span>(data.path, <span class="st">&#39;/cloud_dist&#39;</span>), <span class="dt">pattern=</span><span class="st">&quot;.tif$&quot;</span>, <span class="dt">full.names=</span>T, <span class="dt">recursive=</span>F)</a>
+<a class="sourceLine" id="cb35-26" title="26">  </a>
+<a class="sourceLine" id="cb35-27" title="27">  sta &lt;-<span class="st"> </span><span class="kw">nchar</span>(<span class="kw">paste0</span>(data.path,<span class="st">&#39;/sr_data/LT05228082&#39;</span>)) <span class="op">+</span><span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb35-28" title="28">  end &lt;-<span class="st"> </span>sta <span class="op">+</span><span class="st"> </span><span class="dv">6</span></a>
+<a class="sourceLine" id="cb35-29" title="29">  </a>
+<a class="sourceLine" id="cb35-30" title="30">  dates &lt;-<span class="st"> </span><span class="kw">as.Date</span>(<span class="kw">substr</span>(sr, sta, end), <span class="dt">format=</span><span class="st">&#39;%Y%j&#39;</span>)</a>
+<a class="sourceLine" id="cb35-31" title="31">  </a>
+<a class="sourceLine" id="cb35-32" title="32">  sr.sorted &lt;-<span class="st"> </span>sr[<span class="kw">order</span>(dates)]</a>
+<a class="sourceLine" id="cb35-33" title="33">  cd.sorted &lt;-<span class="st"> </span>cd[<span class="kw">order</span>(dates)]</a>
+<a class="sourceLine" id="cb35-34" title="34">  </a>
+<a class="sourceLine" id="cb35-35" title="35">  img_list &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">&quot;image_files&quot;</span>=<span class="kw">as.character</span>(sr.sorted), <span class="st">&quot;cloud_dist_files&quot;</span>=<span class="kw">as.character</span>(cd.sorted) ,<span class="st">&quot;date&quot;</span>=<span class="kw">sort</span>(dates), <span class="st">&quot;DOY&quot;</span>=<span class="kw">yday</span>(<span class="kw">sort</span>(dates)), <span class="st">&quot;year&quot;</span>=<span class="kw">year</span>(<span class="kw">sort</span>(dates)))</a>
+<a class="sourceLine" id="cb35-36" title="36">  </a>
+<a class="sourceLine" id="cb35-37" title="37">  </a>
+<a class="sourceLine" id="cb35-38" title="38">  <span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb35-39" title="39">  <span class="co"># 2)</span></a>
+<a class="sourceLine" id="cb35-40" title="40">  <span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb35-41" title="41">  target_date_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">ymd</span>(<span class="st">&#39;YYYYMMDD&#39;</span>)</a>
+<a class="sourceLine" id="cb35-42" title="42">  target_date_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">ymd</span>(<span class="st">&#39;YYYYMMDD&#39;</span>)</a>
+<a class="sourceLine" id="cb35-43" title="43">  </a>
+<a class="sourceLine" id="cb35-44" title="44">  W_DOY &lt;-<span class="st"> </span><span class="fl">0.0</span></a>
+<a class="sourceLine" id="cb35-45" title="45">  W_year &lt;-<span class="st"> </span><span class="fl">0.0</span></a>
+<a class="sourceLine" id="cb35-46" title="46">  W_cloud_dist &lt;-<span class="st"> </span><span class="fl">0.0</span></a>
+<a class="sourceLine" id="cb35-47" title="47">  </a>
+<a class="sourceLine" id="cb35-48" title="48">  max_DOY_offset &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb35-49" title="49">  max_year_offset &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb35-50" title="50">  </a>
+<a class="sourceLine" id="cb35-51" title="51">  min_cloud_dist &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb35-52" title="52">  max_cloud_dist &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb35-53" title="53">  </a>
+<a class="sourceLine" id="cb35-54" title="54">  composite_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">parametric_compositing</span>(img_list, target_date_<span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb35-55" title="55">                                       W_DOY, W_year, W_cloud_dist, </a>
+<a class="sourceLine" id="cb35-56" title="56">                                       max_DOY_offset, max_year_offset, </a>
+<a class="sourceLine" id="cb35-57" title="57">                                       min_cloud_dist, max_cloud_dist)</a>
+<a class="sourceLine" id="cb35-58" title="58">  </a>
+<a class="sourceLine" id="cb35-59" title="59">  <span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb35-60" title="60">  <span class="co"># 4)</span></a>
+<a class="sourceLine" id="cb35-61" title="61">  <span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb35-62" title="62">  </a>
+<a class="sourceLine" id="cb35-63" title="63">  composite_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">parametric_compositing</span>(img_list, target_date_<span class="dv">2</span>, </a>
+<a class="sourceLine" id="cb35-64" title="64">                                      W_DOY, W_year, W_cloud_dist, </a>
+<a class="sourceLine" id="cb35-65" title="65">                                      max_DOY_offset, max_year_offset, </a>
+<a class="sourceLine" id="cb35-66" title="66">                                      min_cloud_dist, max_cloud_dist)</a></code></pre></div>
+</details>
+<div id="parameterization" class="section level3">
+<h3>1) Parameterization</h3>
+<p>The function above allows you to produce cloud-free best-pixel composites for a pre-defined target DOY. This function requires one input data.frame (see code template on how to create it) and eight input parameters:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p><em>img_list</em>: a data frame containing five variables for each of the Landsat images:</p>
+<p>$image_files: the full paths to the files in …sr_data.<br />
+$cloud_dist_files: the full paths to the files in …cloud_dist.<br />
+$date: the acquisition day in Date format (YYYY-MM-DD).<br />
+$DOY: the acquisition day of the year.<br />
+$year: the acquisition year.</p></li>
+<li><p><em>target_date</em>: the target date for your composite in Date format (YYYY-MM-DD)</p></li>
+<li><p><em>W_DOY</em>, <em>W_year</em>, <em>W_cloud_dist</em>: weights for the three available parameters DOY, year and distance to clouds. Must be scaled between 0 and 1 and sum up to 1, the higher the weight, the higher the importance of the criterion.</p></li>
+<li><p><em>max_DOY_offset</em>, <em>max_year_offset</em>: Thresholds for the maximum allowed differences between target DOY and acquisition DOY, as well target year and acquisition year. Images exceeding these thresholds (further away in time) will be fully ignored. For instance, max_year_offset = 0 will not allow observations from a year other than the target year. By choosing these parameters, you will determine whether you prefer seasonal consistency (close to target DOY but from different years) over annual consistency (observations from same year but potentially distant DOYs). Discuss the parametrization in your group.</p></li>
+<li><p><em>min_cloud_dist</em>, <em>max_cloud_dist</em>: The minimum and maximum distance to clouds. min_cloud_dist = 10 will exclude all observations which are less than 10 pixels away from a cloud. The cloud scores are linearly scaled between the minimum (score = 0) and maximum cloud distance (score = 1). Pixels with distances above max_cloud_dist will receive a score of 1.</p></li>
+</ol>
+</div>
+<div id="defining-target-dates-and-parameters" class="section level3">
+<h3>2) Defining target dates and parameters</h3>
+<p>Relying on your insights from collecting training data on forest types, define two target days of the year (DOY) to capture different phenological stages. These will be used as target_date parameters later on.<br />
+Make a decision concerning the compositing parameters explained in 1c, 1d and 1e.</p>
+</div>
+<div id="exploring-the-script-and-adding-documentation" class="section level3">
+<h3>3) Exploring the script and adding documentation</h3>
+<ol style="list-style-type: lower-alpha">
+<li><p>Open the parametric_compositing.R script and take time to read through it in groups. Run the code line by line. Make sure you understand how the function operates. Discuss questions in your group and seek the help pages of functions you don´t know.</p></li>
+<li><p>The developer did not spend sufficient time on the documentation. Make the script a bit more user-friendly by adding missing comments (#…). Make sure your comments explain what happens in each step of the function, and why. Are there bugs or sections which you would code differently?</p></li>
+<li><p>Next, run the parametric_compositing() function with your parameters and write the result to disk. Include the target DOY in the filename. While the function executes, proceed with the next exercise.</p></li>
+</ol>
+</div>
+<div id="second-run-for-target-date-2" class="section level3">
+<h3>4) Second run for target date 2</h3>
+<p>Repeat the compositing for the second target DOY you specified in 2) and write the results to disk.</p>
+</div>
+<div id="visual-inspection-and-evaluation-of-results" class="section level3">
+<h3>5) Visual inspection and evaluation of results</h3>
+<p>Visually inspect the quality of your compositing results in QGIS. Look at the bands containing the DOY and year flags (band 7 and 8). What worked out well, what did not? How could the quality of the composites be improved? Re-iterate with different parameters if you wish.</p>
+</div>
+<div id="improving-the-user-friendliness-of-the-script-optionalvoluntary-task" class="section level3">
+<h3>6) Improving the user-friendliness of the script (optional/voluntary task)</h3>
+<p>Make the compositing function more user friendly. Insert a couple of plot and print commands to enable the users to follow the progress of the compositing while the function is running.</p>
+<p>For instance, print() how many images were used for the final composite, their acquisition dates, etc. Also, you might want to plot() the composited image after each iteration. You could add further status messages telling the user how much time single steps took.</p>
+<p>Don´t forget to save the script and run the source() command in your R script to update the function after you made these changes.</p>
+<hr />
+</div>
+</div>
+<div id="reading-materials." class="section level2">
+<h2>Reading materials.</h2>
+<hr />
+</div>
+</div>
+<div id="session-05-machine-learning-for-image-classification" class="section level1">
+<h1>Session 05: Machine learning for image classification</h1>
+<div id="learning-goals-6" class="section level2">
+<h2>Learning goals</h2>
+</div>
+<div id="exercise-6" class="section level2">
+<h2>Exercise</h2>
+<p>In this exercise, we will deal with image classification using the Random Forests algorithm. Specifically, we will use your training data and your pixel-based composites from the last exercises to map forest types in the Western Beskids. We will assess the performance of multiple classification models through the out of bag error and will investigate variable importances.</p>
+<div id="loading-and-preparing-training-data-training-the-classification-model" class="section level4">
+<h4>1) Loading and preparing training data; training the classification model</h4>
+<ol style="list-style-type: lower-alpha">
+<li><p>Load the vector file containing your training data points using readOGR(). Next, create a stack()/brick() of your favourite pixel-based composite (last week´s result).</p></li>
+<li><p>Use extract()to create a data.frame with training points as rows, and class labels (classID) as well as the spectral bands of your composites as columns. Remove the day of year and year flags (band 7 and 8) for the next steps. As we want to train a classification (and not a regression), the randomForest() function expects the dependent variable to be of type factor - use as.factor() for conversion of the classID column. The Random Forest algorithm cannot deal with NoData (NA) values. Remove NAs from the data.frame.</p></li>
+<li><p>Train a randomForest() classification model with the data.frame created in the prior step.</p></li>
+</ol>
+</div>
+<div id="training-additional-models-based-on-different-input-data" class="section level3">
+<h3>2) Training additional models based on different input data</h3>
+<p>Repeat 1) to train an additional randomForest models based on</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>…the other composite.</p></li>
+<li><p>…a stack of both composites.</p></li>
+</ol>
+</div>
+<div id="investigating-the-models-and-classification" class="section level3">
+<h3>3) Investigating the models and classification</h3>
+<p>The model object resulting from 2) contains a wealth of information on the model parameters and performance. Assess the out of bag (OOB) error estimates of the trained models (1b, 2a, 2b) by inspecting the err.rate attribute of your model objects. a. Which model has the lowest OOB error? b. How does the OOB behave when increasing the number of trees in your model (ntrees)? You can access the OOB per number of trees included via err.rate. Use this information to determine a suitable value for ntrees. c. Which of the four classes has the highest OOB errors?</p>
+</div>
+<div id="training-a-final-model-and-investigating-variable-importances" class="section level3">
+<h3>4) Training a final model and investigating variable importances</h3>
+<ol style="list-style-type: lower-alpha">
+<li>Train a final model with the best combination of images (3a) and ntrees (3b).</li>
+<li>Investigate the variable importances using varImpPlot(). Use partialPlot() to produce partial dependence plots for your most important predictor and all four classes. Can you explain the differences between classes?</li>
+</ol>
+</div>
+<div id="classification" class="section level3">
+<h3>5) Classification</h3>
+<p>Perform a classification of the image stack using the predict() function. Write the resulting map to disk in ENVI format. When doing so, consider choosing the appropriate datatype argument.</p>
+</div>
+</div>
+<div id="reading-materials.-1" class="section level2">
+<h2>Reading materials.</h2>
+<hr />
+</div>
+</div>
+<div id="session-06-accuracy-assessment-and-area-estimation" class="section level1">
+<h1>Session 06: Accuracy assessment and area estimation</h1>
+<div id="learning-goals-7" class="section level2">
+<h2>Learning goals</h2>
+</div>
+<div id="reading-materials.-2" class="section level2">
+<h2>Reading materials.</h2>
+<hr />
+</div>
+</div>
+<div id="session-07-multi-temporal-change-detection" class="section level1">
+<h1>Session 07: Multi-temporal change detection</h1>
+<div id="learning-goals-8" class="section level2">
+<h2>Learning goals</h2>
+</div>
+<div id="reading-materials.-3" class="section level2">
+<h2>Reading materials.</h2>
+<hr />
+</div>
+</div>
+<div id="session-08-spectral-temporal-metrics" class="section level1">
+<h1>Session 08: Spectral-temporal metrics</h1>
+<div id="learning-goals-9" class="section level2">
+<h2>Learning goals</h2>
+</div>
+<div id="reading-materials.-4" class="section level2">
+<h2>Reading materials.</h2>
+<hr />
+</div>
+</div>
+<div id="project-work" class="section level1">
+<h1>Project work</h1>
+<div id="phase-i" class="section level2">
+<h2>Phase I</h2>
+</div>
+<div id="phase-ii" class="section level2">
+<h2>Phase II</h2>
+</div>
+<div id="phase-iii" class="section level2">
+<h2>Phase III</h2>
+<hr />
 </div>
 </div>
 <div id="terminology" class="section level1">
