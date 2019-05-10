@@ -904,8 +904,6 @@ This paper describes the methods used in the article you read last week. Here, a
 
 ------
 
-<!-- 
-
 # Session 04: Pixel-based compositing
 
 ------
@@ -913,7 +911,7 @@ This paper describes the methods used in the article you read last week. Here, a
 ## Learning goals
 
 - Understand the fundamentals of pixel-based image compositing
-- Parameterize a compositing function and create your own composite from multiple Landsat scenes
+- Parameterize a compositing function and create your own composite from multiple Landsat images
 
 ------
 
@@ -921,63 +919,56 @@ This paper describes the methods used in the article you read last week. Here, a
 
 The availability of Landsat images varies by region. Even in areas where obersvation density is high, such as North America, coverage can be reduced by clouds and quality of observations can be impacted by haze or sensor saturation. 
 ![Global availability of Landsat images. Source: Wulder et al. 2016;  https://doi.org/10.1016/j.rse.2015.11.032](fig/s04_landsat_availability.jpg) 
-Using best-pixel-compositing, we can use multiple obervations (i.e., from multiple Landsat scenes) and combine them to one consistent image composite. This allows to create cloud-free, radiometrically and phenologically consistent image composites that are contiguous over large areas. A set of rules (parameters) is used to determine the observations best suited for analysis. These parameters can include information about distance to clouds, temporal proximity to a target date and seasonal consistency. 
 
-One of the first global composites using Landsat data was produced using the WELD compositing approach (Roy et al. 2011, https://doi.org/10.1016/j.rse.2009.08.011). 
+Using pixel-based-compositing, we can integrate multiple obervations (i.e., from multiple Landsat images) and combine them to one consistent image composite. One of the first global Landsat composites was produced using the WELD compositing approach (Roy et al. 2011, https://doi.org/10.1016/j.rse.2009.08.011). 
 ![Monthly global WELD surface reflectance composite for June 2009. Source: https://worldview.earthdata.nasa.gov/](fig/s04_global_weld.jpg)
 
-
-------
-
-## Parametric pixel-based compositing
-
-- a method to produce a gap-free image of a (large) area
-- representing a specific point in time (target date)
-- best pixel selected according to multiple parameters (e.g. how close to target date, distance to clouds)
-weighted scoring allows for flexible parametrization according to user´s needs and study area characteristics
+Pixel-based compositing allows us to create cloud-free, radiometrically and phenologically consistent image composites that are contiguous over large areas. A set of parameters is used to determine the observations best suited for analysis. These parameters can, e.g., include the distance to clouds in the image, or the temporal proximity to a target day of the year. Defining scoring functions allows for a flexible parametrization according to user´s needs and study area characteristics. Different parameters can also be weighted according to their relevance for a given application. 
 
 ![Creating one pixel-based composite from three images.](fig/s04_compositing.png)
-
 
 ------
 
 ## Best-pixel-based compositing in seven steps
 
 1) Determine compositing parameters, e.g. Target DOY: June 15 +/- 30 days and target year: 2015 +/- 1 year
+
 2) Calculate DOY and year suitability (0-1) according to parameters  
 
 ![Five images to be used for best-pixel compositing and their DOY and year offsets](fig/s04_suitability_offsets.png) 
 
-We use linear functions to determine the suitability of an observation.  
-In the plot for the DOY function below, we're chosing a parameterization that favors observations closest to the target DOY and assign a suitability score of 0 for observations that are 50 or more days from the target date. Being 30 days from the target DOY, the May 16 2015 observation receives a suitability score of 0.4.  
+We use linear functions to determine the suitability of an observation. In the plot for the DOY function below, we're chosing a parameterization that favors observations closest to the target DOY and assign a suitability score of 0 for observations that are 50 or more days from the target date. Being 30 days from the target DOY, the May 16 2015 observation receives a suitability score of 0.4.  
 A second function determines the suitability score for the year of observation. Again, observations close to the target year are assigned high values, while observations acquired five or more years from the target year are considered unsuitable. The resulting suitability score for the May 15 2015 observation is 1.  
+
 ![Linear functions for the DOY and year suitability score ](fig/s04_suitabilityplot_doy_year.png){width=90%}
 
 3) Calculate pixel-level suitability (0-1), e.g. through min. distance to clouds.
 
 ![Distance to next cloud in pixels](fig/s04_suitability_clouds.png)
 
-To minimize the likelihood of pixels being affected by clouds, we favor observations that aren't in close proximity to clouds. The cloud distance scoring function below assigns a suitability score of 1 as soon as the distance to the next cloud is 100 or more pixels. An observation that has a distance of 60 pixels (=1800m) to the next cloud receives a cloud distance suitability score of 0.6. 
+To minimize the likelihood of pixels being affected by clouds, we favor observations further away from clouds. The cloud distance scoring function below assigns a suitability score of 1 as soon as the distance to the next cloud is equal or greater than 100 pixels. An observation that has a distance of 60 pixels (=1800m) to the next cloud receives a cloud distance suitability score of 0.6. 
 
 ![Linear function for the cloud suitability score](fig/s04_suitabilityplot_clouds.png){width=40%}
 
-
-
 4) Define which criteria are most important for you (W = weights):
+
+We can weigh the different parameters according to our needs. For instance, by prioritizing the DOY score over the year score.
+
 $$W_{DOY} = 0.5$$
 $$W_{year} = 0.2$$
 $$W_{CloudDist} = 0.3$$
+
 5) Calculate a score for each pixel in each image. We can use the weighted sum of suitabilities (S = score):
 
 $$score = S_{DOY} * W_{DOY} + S_{Year} * W_{Year} + S_{CloudDist} * W_{CloudDist}$$  
-Using the values from the exemplary plots above yields:  
+
+Using the values from the example above yields:  
 $$score = 0.4 * 0.5 + 1 * 0.2 + 0.6 * 0.3$$
 $$score = 0.58$$
 
 ![Resulting suitability scores for each image](fig/s04_suitability_score_weighted.png)
 
-6) Use the best observation (= highest score) for the final composite.
-
+6) Use the best observation (= highest score) for each pixel to create the final composite.
 
 7) Evaluate the results by checking for seasonal/annual consistency and cloud distance (and re-iterate)
 ![](fig/s04_final_composite.jpg)
@@ -987,12 +978,18 @@ $$score = 0.58$$
 
 ## Exercise
 
-The goal of this week's exercise is to combine several images into best-pixel composites using a parametric compositing function. We will be working with our main script which sources the compositing function from a second script. Outsourcing functions - especially extensive ones - improves the readability of scripts and allows for using functions from different scripts. Check the help for source() if you are not familiar with sourcing R code in your script. 
+The goal of this week's exercise is to combine several images into best-pixel composites using a parametric compositing function. We provide the data for this exercise in [our repository](https://box.hu-berlin.de/f/17f0d06cdc164564a019/?dl=1). After unpacking, you will find the following folders:
+
+- sr_data: a total of 43 cloud-masked bottom of atmosphere image chips for our study region, acquired in various seasons, years, and with different degrees of cloud cover.
+- cloud_dist: data on the distance (in pixels) to the closest cloud for each of the BOA images.
+- fmask: the cloud masks used to mask the BOA images and to derive the cloud distance layers.
+
+Today we will be working with pre-defined scripts. We provide both a script containing the compositing function and a main script which sources and executes the compositing function. Outsourcing functions - especially extensive ones - improves the readability of scripts and allows for using functions in different scripts. Check the help for source() if you are not familiar with sourcing R code in your script. You find both codes below. Please copy them into an empty R script and save to disk.
 
 <details>
   <summary>Click here to see code for the parametric compositing function</summary>
-  ```{r compositing_script, echo=T, evaluate=F}
-  #############################################################################
+```{r compositing_script, echo=T, evaluate=F}
+#############################################################################
 # MSc Earth Observation Exercise 4
 # Function for creating cloud-free composites of multiple Landsat images
 # Requires an input data.frame (here img_list) and eight compositing 
@@ -1108,12 +1105,12 @@ parametric_compositing <- function(img_list, target_date,
   return(output)
   
 }
-  ```
+```
 </details>
 
 <details>
-  <summary>Click here to see the code for the main script calling the parametric compositing function</summary>
-  ```{r main_script, echo=T, eval=F}
+  <summary>Click here to see the code for the main script calling the compositing function</summary>
+```{r main_script, echo=T, eval=F}
   #############################################################################
 # MSc Earth Observation Exercise 4
 # [Your Name]
@@ -1184,6 +1181,7 @@ composite_2 <- parametric_compositing(img_list, target_date_2,
 </details>
 
 ### 1)	Parameterization
+
 The function above allows you to produce cloud-free best-pixel composites for a pre-defined target DOY. This function requires one input data.frame (see code template on how to create it) and eight input parameters: 
 
 a. *img_list*: a data frame containing five variables for each of the Landsat images:  
@@ -1203,10 +1201,11 @@ d.	*max_DOY_offset*, *max_year_offset*: Thresholds for the maximum allowed diffe
 e.	*min_cloud_dist*, *max_cloud_dist*:  The minimum and maximum distance to clouds. min_cloud_dist = 10 will exclude all observations which are less than 10 pixels away from a cloud. The cloud scores are linearly scaled between the minimum (score = 0) and maximum cloud distance (score = 1). Pixels with distances above max_cloud_dist will receive a score of 1. 
 
 ### 2) Defining target dates and parameters
-Relying on your insights from collecting training data on forest types, define two target days of the year (DOY) to capture different phenological stages. These will be used as target_date parameters later on.  
-Make a decision concerning the compositing parameters explained in 1c, 1d and 1e.  
+
+Relying on last week´s insights during training data collection, define two target days of the year (DOY) to capture contrasting phenological stages of the different forest types. These will be used as target_date parameters later on. Next, make a decision concerning the compositing parameters explained in 1c, 1d and 1e.  
 
 ### 3) Exploring the script and adding documentation
+
 a. Open the parametric_compositing.R script and take time to read through it in groups. Run the code line by line. Make sure you understand how the function operates. Discuss questions in your group and seek the help pages of functions you don´t know.  
 
 b. The developer did not spend sufficient time on the documentation. Make the script a bit more user-friendly by adding missing comments (#...). Make sure your comments explain what happens in each step of the function, and why. Are there bugs or sections which you would code differently?
@@ -1214,12 +1213,15 @@ b. The developer did not spend sufficient time on the documentation. Make the sc
 c. Next, run the parametric_compositing() function with your parameters and write the result to disk. Include the target DOY in the filename. While the function executes, proceed with the next exercise.
 
 ### 4) Second run for target date 2
+
 Repeat the compositing for the second target DOY you specified in 2) and write the results to disk.
 
 ### 5) Visual inspection and evaluation of results
+
 Visually inspect the quality of your compositing results in QGIS. Look at the bands containing the DOY and year flags (band 7 and 8). What worked out well, what did not? How could the quality of the composites be improved? Re-iterate with different parameters if you wish.
 
 ### 6) Improving the user-friendliness of the script (optional/voluntary task)
+
 Make the compositing function more user friendly. Insert a couple of plot and print commands to enable the users to follow the progress of the compositing while the function is running.  
 
 For instance, print() how many images were used for the final composite, their acquisition dates, etc. Also, you might want to plot() the composited image after each iteration. You could add further status messages telling the user how much time single steps took.  
@@ -1228,14 +1230,25 @@ Don´t forget to save the script and run the source() command in your R script t
 
 ------
 
-## Reading materials.
+## Reading materials
+
+In the next session, we would like to discuss the following paper: 
+
+[Maxwell et al. (2018): Implementation of machine-learning classification in remote sensing: an applied review.  International Journal of Remote Sensing 39(9), 2784-2817](https://doi.org/10.1080/01431161.2018.1433343)
+ 
+In this review, Maxwell and colleagues outline the use of several machine learning classification algorithms for application in remote sensing. Please read the article and note questions and points to discuss. Feel free to omit the details of ANNs and boosted DTs. Please read the paper thoroughly, make sure you understand the underlying concept and write down question for the discussion in our next session. Also, answer the following broad questions: 
+
+- What is the motivation for this article?
+- What are the key differences between classification algorithms from a user perspective?
+- Which classifiers do you reckon to be most suitable for typical EO applications?
 
 ------
+
+<!-- 
 
 # Session 05: Machine learning for image classification
 
 ## Learning goals
-
 
 ## Exercise
 
@@ -1277,40 +1290,6 @@ Perform a classification of the image stack using the predict() function. Write 
 
 ## Learning goals
 
-## Exercise
-
-In this exercise, you will perform an accuracy assessment of your forest type map. We will perform an area-adjusted accuracy assessment and estimate error-adjusted area for each forest type class.
-
-### 1) Participate in the quiz in moodle. In case you had wrong answers, please discuss with your classmates.
-
-### 2) Creating a stratified set of reference samples
-a. Load your forest type map in R. Create a set of reference samples in R using sampleStratified(). We want to have a stratified equalized sample of 20 pixels per class. Specify the size parameter accordingly.  
-Specify sp = TRUE to receive a spatial points object and na.rm = TRUE to ignore unclassified regions. Write the points to disk using writeOGR().
-
-### 3) Determine class labels for the reference samples
-a. Load the point shapefile in QGIS and add two fields of type Integer: classID and confID.
-b. Link QGIS and GoogleEarth using GearthView. Visit each point and determine the class label according to the high resolution imagery. Enter the class and confidence labels in the attribute table. Work efficiently through the points and save your changes regularly.
-
-| Class name        | classID | Confidence level   | confID |
-| ----------        | ------- | ----------------   | ------ |
-| Deciduous forest  | 1       | Very certain       | 1      |
-| Mixed forest      | 2       | Some uncertainties | 2      |
-| Coniferous forest | 3       | Very uncertain     | 3      |
-| Non-forest        | 4       |                    |        |
-
-
-### 4) Assessing class proportions and creating a confusion matrix
-a. In R, assess the class proportions of your map. To do so, use the freq()function to get pixel counts. Use these for calculating class propotions (0-1). Remember to exclude NAs, so the proportions of your 4 classes sum up to 1.
-b. Load the points in R. Create a confusion matrix from the resulting data.frame using table().
-
-### 5) Deriving accuracies and evaluating results
-Copy & paste the values from your confusion matrix as well as the class proportions into the Excel spreadsheet.   
-Next, answer the following questions:
-
-a. Which class has the highest / lowest user´s accuracy?
-b. Which class has the highest / lowest producer´s accuracy?
-c. How does the overall accuracy differ after area-adjustment? Why?
-
 ## Reading materials.
 
 ------
@@ -1318,65 +1297,6 @@ c. How does the overall accuracy differ after area-adjustment? Why?
 # Session 07: Multi-temporal change detection
 
 ## Learning goals
-
-## Exercise
-
-After completing the last exercises, you gained a lot of experience in using R & QGIS for data handling and pre-processing, training data collection, classification, and accuracy assessment. In other terms: you´re well prepared for performing a change detection using Landsat data. The goal of this exercise is to map forest cover change in the Southern Brazilian Amazon.  
-
-We provided the following datasets at O:/…/S07/data/…  
-
-…sr_data/: Three Landsat 5 surface reflectance stacks (*_crp.tif) at five-year intervals from 2000 to 2010.
-
-- LT052260682000061001T1-SC20170927060330 (10 June 2000)  
-- LT052260682005060801T1-SC20170927060440 (08 June 2005)  
-- LT052260682010062201T1-SC20170927060241 (22 June 2010)  
-
-…vector/: A shapefile and a *.kmz file for GoogleEarth, which will help you to accurately delineate the Landsat pixel locations and extents for training data collection.  
-
-…validation/: A shapefile containing reference data for the accuracy assessment.  
-
-…gfc/: A subset of the Global Forest Change dataset by Hansen et al. (2013). We reclassified the data to match the target classes of today´s exercises.
-
-Your task is to create a change map, which contains the following classes:
-
-| classID | Class                   |
-| ------- | -----                   |
-| 1       | Stable Forest           |
-| 2       | Deforestation 2001-2005 |
-| 3       | Deforestation 2005-2010 |
-| 4       | Forest Gain             |
-| 5       | Stable Non-Forest       |
-
-Different from the previous exercises, you can decide on how the workflow of your map production looks like in detail. Use the code and tools from the last sessions and earlier experiences with remote sensing and associated software packages, if applicable. Consider the following steps:
-
-### 1) Choosing an approach for change detection
-Several change detection approaches can be used to map forest cover changes. You can choose a methodological approach for your change detection. We suggest two approaches for supervised classification:
-
-- Post-classification comparison: You perform a classification of land cover for each composite dataset. You then use raster algebra in R (or any other tool of your choice) to convert the individual results into a change map.
-- Integrated multi-temporal change classification: You stack all features into a single file and collect training data for the change classes of interest. You obtain the change map directly from your classification.
-
-### 2) Inspect and prepare your data
-
-a. Visualize the Landsat images in QGIS. Try out a true color (RGB: 3-2-1), as well as a 4-5-3 false color combination.
-b. Optional: Derive additional features from your data. Do you want to classify based on the spectral bands? What about vegetation indices, principal components, tasseled cap components?
-
-### 3) Training data collection
-
-a. Consider that the way you collect your training data varies with the approach you choose in 1).
-b. Collecting training data is time consuming - try to be efficient. Make use of the QGIS Info-Tool to compare spectral profiles of the three images. You can also link QGIS and Google Earth through the GearthView plugin. For exact pixel locations, use the Landsat pixel grid we provided.
-
-### 4) Model training & classification
-
-a. Choose a classification algorithm: Feel free to use any classifier. In case you´re interested in differences between classifiers, test more than one!
-b. Parametrize the model. Depending on your choice of classification model, think about how to make an informed decision about the model parameters. Optimize parameters wherever possible, e.g. by using the out-of-bag error.
-
-### 5) Change map validation & area estimates
-
-a. We provided reference data for the study area as a shapefile. Use it to perform an accuracy assessment. Why is it challenging to perform an area-adjusted accuracy assessment in this case?
-b. Calculate map-based area estimates for your map and the Global Forest Change data using simple pixel counting. Compare the estimates. What are the major differences?
-
-### 6) Reporting results  
-We collect your main results in this table: https://ethercalc.org/572rg3qh93t2 Please fill in all required fields, i.e. your name and selected approach (e.g. post-classification comparison), overall accuracy and class accuracies in decimal values (e.g. 0.75), as well as class areas in hectares.
 
 ## Reading materials.
 
