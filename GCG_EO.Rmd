@@ -1360,7 +1360,6 @@ This is a user guide for map accuracy assessment and area estimation, following 
 - What is the motivation for this technical report?
 - Why is a stratified sampling advised?
 - How can we determine how many samples are needed for accuracy assessment?
-- How do we distribute samples between classes?
 - What is the difference of populating an error matrix with $p_{ij}$ instead of $n_{ij}$?
 - Which data source should be used for producing class area estimates?
 
@@ -1422,6 +1421,7 @@ This is a non-exhaustive list of common terms and their definitions.
 - Archive
 - Collection, Tier, Processing level
 - DN, TOA, BOA
+- VIS, nIR, swIR
 
 ## Sensor characteristics
 
