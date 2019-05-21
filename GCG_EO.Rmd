@@ -1264,7 +1264,7 @@ The basic principles of the RF algorithm can be easily understood when disentang
 
 **"Forest"**: The RF is an ensemble of self-learning decision trees, which - metaphorically speaking - shape a forest. The idea behind the ensemble is that many weak learners can come to one strong decision. The user defines the number of decision trees in the Random Forest (e.g. via the ```ntrees``` parameter in the R implementation). Each decision tree consists of a large number of nodes, which essentially represent simple binary (yes / no) decisions, e.g. "is reflectance in band 4 > 0.65?". 
 
-![Exemplary illustration of a two-dimensional feature space, divided by binary thresholds (left), as well as the corresponding decision tree (right).](fig/s05_dt.png){width=80%}
+![Exemplary illustration of a two-dimensional feature space, divided by binary thresholds (left), as well as the corresponding decision tree (right).](fig/s05_dt.PNG){width=80%}
 
 **"Random"**: The RF has two layers of randomness. First, it uses a bootstrapped random sample (with replacement) of the training dataset for growing each individual tree. The user can control for the fraction of training data used (e.g. via the ```sampsize``` parameter in the R implementation). The second random component is the selection of the feature considered to split the data at each node. 
 
@@ -1272,7 +1272,7 @@ The basic principles of the RF algorithm can be easily understood when disentang
 
 Self-learning decision trees automatically find the "best split" in the feature space to break the training data into two groups, which will be further subdivided until a clear decision for each sample can be made. The algorithm attempts to create splits that divide the data into relatively homogeneous subgroups. 
 
-![A good split creates relatively homogeneous subgroups of the data.](fig/s05_split.png){width=90%}
+![A good split creates relatively homogeneous subgroups of the data.](fig/s05_split.PNG){width=90%}
 
 Finding a good split requires infomration on which feature (e.g. spectral band) and which value (e.g. reflectance) should be used to separate the data. The best split is identified based on a measure of dataset heterogeneity (Gini impurity index). The RF selects the split which minimizes the heterogeneity of the resulting datasets:
 
@@ -1290,7 +1290,7 @@ Once ```ntree``` decision trees are built, we have a readily applicable rule-set
 
 The RF has a great feature: the out-of-bag error. After growing each tree, the left-out samples (i.e. not used for training of this particular tree) can be classified to investigate the performance of our classification model. Doing this allows us to calculate a classification error. For illustration, consider 8 OOB samples, of which 2 are wrongly and 6 are correctly classified. The OOB error will be 2/8 = 0.25. This simple measure of model performance can be useful to parametrize our classification model. We can for instance test various combinations of input features, or investigate the performance across various ```ntrees```. 
 
-![Grid representation of the out-of-bag classification error for various combinations of two input images from different days of the year (left). Decrease of out-of-bag error with increasing number of trees in the Random Forest model (right).](fig/s05_oob.png){width=80%}
+![Grid representation of the out-of-bag classification error for various combinations of two input images from different days of the year (left). Decrease of out-of-bag error with increasing number of trees in the Random Forest model (right).](fig/s05_oob.PNG){width=80%}
 
 ### Variable importances & partial dependence plots 
 

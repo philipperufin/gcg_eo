@@ -1269,7 +1269,7 @@ $year: the acquisition year.</p></li>
 <p>The basic principles of the RF algorithm can be easily understood when disentangling its name:</p>
 <p><strong>“Forest”</strong>: The RF is an ensemble of self-learning decision trees, which - metaphorically speaking - shape a forest. The idea behind the ensemble is that many weak learners can come to one strong decision. The user defines the number of decision trees in the Random Forest (e.g. via the <code>ntrees</code> parameter in the R implementation). Each decision tree consists of a large number of nodes, which essentially represent simple binary (yes / no) decisions, e.g. “is reflectance in band 4 &gt; 0.65?”.</p>
 <div class="figure">
-<img src="fig/s05_dt.png" alt="Exemplary illustration of a two-dimensional feature space, divided by binary thresholds (left), as well as the corresponding decision tree (right)." style="width:80.0%" />
+<img src="fig/s05_dt.PNG" alt="Exemplary illustration of a two-dimensional feature space, divided by binary thresholds (left), as well as the corresponding decision tree (right)." style="width:80.0%" />
 <p class="caption">Exemplary illustration of a two-dimensional feature space, divided by binary thresholds (left), as well as the corresponding decision tree (right).</p>
 </div>
 <p><strong>“Random”</strong>: The RF has two layers of randomness. First, it uses a bootstrapped random sample (with replacement) of the training dataset for growing each individual tree. The user can control for the fraction of training data used (e.g. via the <code>sampsize</code> parameter in the R implementation). The second random component is the selection of the feature considered to split the data at each node.</p>
@@ -1278,7 +1278,7 @@ $year: the acquisition year.</p></li>
 <h3>How a self-learning tree grows</h3>
 <p>Self-learning decision trees automatically find the “best split” in the feature space to break the training data into two groups, which will be further subdivided until a clear decision for each sample can be made. The algorithm attempts to create splits that divide the data into relatively homogeneous subgroups.</p>
 <div class="figure">
-<img src="fig/s05_split.png" alt="A good split creates relatively homogeneous subgroups of the data." style="width:90.0%" />
+<img src="fig/s05_split.PNG" alt="A good split creates relatively homogeneous subgroups of the data." style="width:90.0%" />
 <p class="caption">A good split creates relatively homogeneous subgroups of the data.</p>
 </div>
 <p>Finding a good split requires infomration on which feature (e.g. spectral band) and which value (e.g. reflectance) should be used to separate the data. The best split is identified based on a measure of dataset heterogeneity (Gini impurity index). The RF selects the split which minimizes the heterogeneity of the resulting datasets:</p>
@@ -1292,7 +1292,7 @@ $year: the acquisition year.</p></li>
 <h3>The out-of-bag error</h3>
 <p>The RF has a great feature: the out-of-bag error. After growing each tree, the left-out samples (i.e. not used for training of this particular tree) can be classified to investigate the performance of our classification model. Doing this allows us to calculate a classification error. For illustration, consider 8 OOB samples, of which 2 are wrongly and 6 are correctly classified. The OOB error will be 2/8 = 0.25. This simple measure of model performance can be useful to parametrize our classification model. We can for instance test various combinations of input features, or investigate the performance across various <code>ntrees</code>.</p>
 <div class="figure">
-<img src="fig/s05_oob.png" alt="Grid representation of the out-of-bag classification error for various combinations of two input images from different days of the year (left). Decrease of out-of-bag error with increasing number of trees in the Random Forest model (right)." style="width:80.0%" />
+<img src="fig/s05_oob.PNG" alt="Grid representation of the out-of-bag classification error for various combinations of two input images from different days of the year (left). Decrease of out-of-bag error with increasing number of trees in the Random Forest model (right)." style="width:80.0%" />
 <p class="caption">Grid representation of the out-of-bag classification error for various combinations of two input images from different days of the year (left). Decrease of out-of-bag error with increasing number of trees in the Random Forest model (right).</p>
 </div>
 </div>
