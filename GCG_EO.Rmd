@@ -1244,47 +1244,131 @@ In this review, Maxwell and colleagues outline the use of several machine learni
 
 ------
 
-<!-- 
-
 # Session 05: Machine learning for image classification
 
 ## Learning goals
 
-## Exercise
-
-In this exercise, we will deal with image classification using the Random Forests algorithm. Specifically, we will use your training data and your pixel-based composites from the last exercises to map forest types in the Western Beskids. We will assess the performance of multiple classification models through the out of bag error and will investigate variable importances.  
-
-#### 1) Loading and preparing training data; training the classification model
-a. Load the vector file containing your training data points using readOGR(). Next, create a stack()/brick() of your favourite pixel-based composite (last week´s result).  
-
-b. Use extract()to create a data.frame with training points as rows, and class labels (classID) as well as the spectral bands of your composites as columns. Remove the day of year and year flags (band 7 and 8) for the next steps. As we want to train a classification (and not a regression), the randomForest() function expects the dependent variable to be of type factor - use as.factor() for conversion of the classID column. The Random Forest algorithm cannot deal with NoData (NA) values. Remove NAs from the data.frame.  
-
-c. Train a randomForest() classification model with the data.frame created in the prior step.  
-
-### 2) Training additional models based on different input data 
-Repeat 1) to train an additional randomForest models based on
-
-a. …the other composite.  
-
-b. …a stack of both composites.  
-
-### 3) Investigating the models and classification
-The model object resulting from 2) contains a wealth of information on the model parameters and performance. Assess the out of bag (OOB) error estimates of the trained models (1b, 2a, 2b) by inspecting the err.rate attribute of your model objects.
-a. Which model has the lowest OOB error?
-b. How does the OOB behave when increasing the number of trees in your model (ntrees)? You can access the OOB per number of trees included via err.rate. Use this information to determine a suitable value for ntrees.
-c. Which of the four classes has the highest OOB errors?
-
-### 4) Training a final model and investigating variable importances
-a. Train a final model with the best combination of images (3a) and ntrees (3b).
-b. Investigate the variable importances using varImpPlot(). Use partialPlot() to produce partial dependence plots for your most important predictor and all four classes. Can you explain the differences between classes?
-
-### 5) Classification
-Perform a classification of the image stack using the predict() function. Write the resulting map to disk in ENVI format. When doing so, consider choosing the appropriate datatype argument.
-
-
-## Reading materials.
+- Understanding fundamentals of the Random Forest classification algorithm
+- Conduct sensitivity analyses to parametrize the classification model
+- Produce a forest type map for the Carpathian study region
 
 ------
+
+## Background
+
+This session widely focuses on the Random Forest (RF) algorithm [(Breimann 2001)](https://doi.org/10.1023/A:1010933404324) and its implementation in R. Some background might be useful in this context. 
+
+### Fundamentals of the Random Forest
+
+The basic principles of the RF algorithm can be easily understood when disentangling its name: 
+
+**"Forest"**: The RF is an ensemble of self-learning decision trees, which - metaphorically speaking - shape a forest. The idea behind the ensemble is that many weak learners can come to one strong decision. The user defines the number of decision trees in the Random Forest (e.g. via the ```ntrees``` parameter in the R implementation). Each decision tree consists of a large number of nodes, which essentially represent simple binary (yes / no) decisions, e.g. "is reflectance in band 4 > 0.65?". 
+
+![Exemplary illustration of a two-dimensional feature space, divided by binary thresholds (left), as well as the corresponding decision tree (right).](fig/s05_dt.png){width=80%}
+
+**"Random"**: The RF has two layers of randomness. First, it uses a bootstrapped random sample (with replacement) of the training dataset for growing each individual tree. The user can control for the fraction of training data used (e.g. via the ```sampsize``` parameter in the R implementation). The second random component is the selection of the feature considered to split the data at each node. 
+
+### How a self-learning tree grows
+
+Self-learning decision trees automatically find the "best split" in the feature space to break the training data into two groups, which will be further subdivided until a clear decision for each sample can be made. The algorithm attempts to create splits that divide the data into relatively homogeneous subgroups. 
+
+![A good split creates relatively homogeneous subgroups of the data.](fig/s05_split.png){width=90%}
+
+Finding a good split requires infomration on which feature (e.g. spectral band) and which value (e.g. reflectance) should be used to separate the data. The best split is identified based on a measure of dataset heterogeneity (Gini impurity index). The RF selects the split which minimizes the heterogeneity of the resulting datasets:
+
+$Gini_{D} = 1 - \sum_{j=1}^n p_j^2$
+
+where $D$ is the dataset at hand and $p_j$ is the fraction of class $j$ in the dataset. High class proportions will lead to low Gini index values. The Gini index for a split is a combined measure of the Gini index for the two datasets resulting from our split. To account for different sizes of the dataset, the Gini of each sub-dataset $D_1$ and $D_2$ is weighted according to the number of observations $N_1$ and $N_2$ in the resulting sub-groups of each dataset. 
+
+$Gini_{split} = \frac{N_1}{N} Gini_{D1} + \frac{N_2}{N} Gini_{D2}$
+
+In case we would consider all available features at each split, the decision trees would probably be very similar. This is why we produce a random selection of features, for which identify the feature and value that produces the most homogeneous sub-groups of training data. The user controls for the number of features which should be considered (or tried) at each node (e.g. via the ```mtry``` parameter in the R implementation).
+
+Once ```ntree``` decision trees are built, we have a readily applicable rule-set to classify each pixel in our image. Every tree produces one "vote" regarding the final class outcome and the majority of votes determines the final class label for each pixel. 
+
+### The out-of-bag error
+
+The RF has a great feature: the out-of-bag error. After growing each tree, the left-out samples (i.e. not used for training of this particular tree) can be classified to investigate the performance of our classification model. Doing this allows us to calculate a classification error. For illustration, consider 8 OOB samples, of which 2 are wrongly and 6 are correctly classified. The OOB error will be 2/8 = 0.25. This simple measure of model performance can be useful to parametrize our classification model. We can for instance test various combinations of input features, or investigate the performance across various ```ntrees```. 
+
+![Grid representation of the out-of-bag classification error for various combinations of two input images from different days of the year (left). Decrease of out-of-bag error with increasing number of trees in the Random Forest model (right).](fig/s05_oob.png){width=80%}
+
+### Variable importances & partial dependence plots 
+
+Next, the RF allows us to investigate which features (e.g. spectral bands) were most useful for our classification problem. Variable importances measures for each individual feature can be expressed either as mean decrease in Gini (how much "better"" can we split the data based on this feature) or mean increase in accuracy (how much does the out-of-bag error increase when the feature is left out of the model). It is important to note that these variable importances should be interpreted cautiously, as they are always strongly dependent on the available input features and their collinearity structure, as well as the training data used. Still, the variable importance of a hypothetical model might reveal, for instance, that the swIR 1 reflectance at DOY 196 is quite important.
+
+![Mean decrease in accuracy (increase in OOB error) caused by the features included in the classification model.](fig/s05_varimp.png){width=60%}
+
+In a next step, we can use partial dependence plots to further investigate the relationship between individual features and the likelihood of class occurrence. We can try to interpret this graph and assess relationships between individual features and our classes of interest. While generating meaningful insights is somewhat tricky with reflectance values, we could also imagine including, e.g., a digital elevation model into the RF model to learn about the distribution of our classes across elevation gradients.
+
+![Change in class likelihood across the value range of the swIR 1 reflectance at DOY 196.](fig/s05_pdp.png){width=80%}
+
+Summing it up, there are a bunch of key advantages of the RF algorithm, which make it highly popular in data science and remote sensing. The RF is easy to understand, computationally efficient, parametrization is pretty straightforward, and it often produces great results. It provides quick insights into model performance via the out of bag error and allows for investigating variable importance measures and partial dependence plots.
+
+----- 
+
+## Exercise
+
+In this exercise, we will deal with image classification using the Random Forests algorithm. Specifically, we will use your training data and your pixel-based composites from the last exercises to map forest types in the Western Beskids. We will assess the performance of multiple classification models through the out of bag error and  investigate variable importances.  
+
+### 1) Training a Random Forest model
+
+a. Load the vector file containing your training data points using ```readOGR()```. Next, create a ```stack()``` / ```brick()``` of your favourite pixel-based composite (last week´s result).  
+
+b. Use ```extract()``` to create a ```data.frame``` with training points as rows, and class labels (```classID```) as well as the spectral bands of your composites as columns. Remove the day of year and year flags (band 7 and 8) for the next steps. 
+
+As we want to train a classification (and not a regression), the ```randomForest()``` function expects the dependent variable to be of type factor. Use ```as.factor()``` for conversion of the ```classID``` column. The RF algorithm cannot deal with NoData (```NA```) values. Remove ```NAs``` from the ```data.frame```.  
+
+c. Train a ```randomForest()``` classification model with the ```data.frame``` created in the prior step.  
+
+
+### 2) Training additional models
+
+Repeat the RF training procedure based on...
+
+a. the second composite.  
+b. a stack of both composites.  
+
+
+### 3) Investigating model performance
+
+The model objects resulting from 2) contain a wealth of information on the model parameters and performance. Assess the out of bag (OOB) error estimates of the trained models by inspecting the ```err.rate``` attribute of your model objects. Answer the following questions:
+
+a. Which model has the lowest OOB error?
+b. How does the OOB behave when increasing the number of trees in your model (```ntrees```)? You can access the OOB per number of trees via ```err.rate```. Use this information to roughly determine a suitable value for ```ntrees```.
+c. Which of the four classes has the highest OOB error?
+
+
+### 4) Final model parametrization and variable importances
+
+a. Train a final model with the best combination of images and ```ntrees```.
+b. Investigate the variable importances using ```varImpPlot()```. Use ```partialPlot()``` to produce partial dependence plots for your most important predictor and all four classes. Can you explain the differences between classes?
+
+
+### 5) Classification
+
+Perform a classification of the image stack using the ```predict()``` function. Write the resulting map to disk in ```GTiff``` format. When doing so, consider choosing the appropriate ```datatype``` argument.
+
+
+## Reading materials
+
+In the next session, we would like to discuss the following reading (until page 23): 
+
+[FAO (2016): Map Accuracy Assessment and Area Estimation - A Practical Guide](http://www.fao.org/3/a-i5601e.pdf)
+
+This is a user guide for map accuracy assessment and area estimation, following the good practice recommendations outlined by [Olofsson et al. (2014)](https://doi.org/10.1016/j.rse.2014.02.015). A great piece of literature focussing on the applied side. Please read the document thoroughly, make sure you understand the basic idea behind it and write down question for the discussion in our next session. Also, answer the following broad questions: 
+
+- What is the motivation for this technical report?
+- Why is a stratified sampling advised?
+- How can we determine how many samples are needed for accuracy assessment?
+- How do we distribute samples between classes?
+- What is the difference of populating an error matrix with $p_{ij}$ instead of $n_{ij}$?
+- Which data source should be used for producing class area estimates?
+
+Please take a look at the Excel sheet provided [here](https://box.hu-berlin.de/f/269470b96af54ba687ef/?dl=1). Use this table to improve your understanding of the area adjusted accuracy assessment. You can manipulate values in the confusion matrix / class proportions and trace the formulas which link these values with the resulting class-specific and overall accuracies as well as the area estimates.
+
+------
+
+<!-- 
 
 # Session 06: Accuracy assessment and area estimation
 
