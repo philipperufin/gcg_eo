@@ -1365,7 +1365,6 @@ This is a user guide for map accuracy assessment and area estimation, following 
 Please take a look at the Excel sheet provided [here](https://box.hu-berlin.de/f/269470b96af54ba687ef/?dl=1). Use this table to improve your understanding of the area adjusted accuracy assessment. You can manipulate values in the confusion matrix / class proportions and trace the formulas which link these values with the resulting class-specific and overall accuracies as well as the area estimates.
 
 ------
-
 <!-- 
 
 # Session 06: Accuracy assessment and area estimation
