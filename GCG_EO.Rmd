@@ -1306,6 +1306,7 @@ Summing it up, there are a bunch of key advantages of the RF algorithm, which ma
 
 ----- 
 
+
 ## Exercise
 
 In this exercise, we will deal with image classification using the Random Forests algorithm. Specifically, we will use your training data and your pixel-based composites from the last exercises to map forest types in the Western Beskids. We will assess the performance of multiple classification models through the out of bag error and investigate variable importances. In case you missed the last sessions, we provide exemplary composites and training data [here](https://box.hu-berlin.de/f/85a35c373cdd490180fe/?dl=1).
