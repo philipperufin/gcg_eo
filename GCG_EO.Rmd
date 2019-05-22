@@ -1243,6 +1243,7 @@ In this review, Maxwell and colleagues outline the use of several machine learni
 - What is the motivation for this article?
 - What are the key differences between classification algorithms from a user perspective?
 - Which classifiers do you reckon to be most suitable for typical EO applications?
+- What do the following terms refer to: "overfitting", "imbalanced data", "ensemble classifiers", "parameter optimization"?
 
 ------
 
