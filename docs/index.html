@@ -1325,7 +1325,7 @@ $year: the acquisition year.</p></li>
 </ol>
 </div>
 <div id="investigating-model-performance" class="section level3">
-<h3>3) Investigating model performance</h3>
+<h3>2) Investigating model performance</h3>
 <p>The model objects resulting from 2) contain a wealth of information on the model parameters and performance. Assess the out of bag (OOB) error estimates of the trained models by inspecting the <code>err.rate</code> attribute of your model objects. Answer the following questions:</p>
 <ol style="list-style-type: lower-alpha">
 <li>Which model has the lowest OOB error?</li>
@@ -1335,14 +1335,14 @@ $year: the acquisition year.</p></li>
 </ol>
 </div>
 <div id="final-model-parametrization-and-variable-importances" class="section level3">
-<h3>4) Final model parametrization and variable importances</h3>
+<h3>3) Final model parametrization and variable importances</h3>
 <ol style="list-style-type: lower-alpha">
 <li>Train a final model with the best combination of images and <code>ntrees</code>.</li>
 <li>Investigate the variable importances using <code>varImpPlot()</code>. Use <code>partialPlot()</code> to produce partial dependence plots for your most important predictor and all four classes. Can you explain the differences between classes?</li>
 </ol>
 </div>
 <div id="classification" class="section level3">
-<h3>5) Classification</h3>
+<h3>4) Classification</h3>
 <p>Perform a classification of the image stack using the <code>predict()</code> function. Write the resulting map to disk in <code>GTiff</code> format. When doing so, consider choosing the appropriate <code>datatype</code> argument. Take a look at your result in QGIS.</p>
 </div>
 </div>

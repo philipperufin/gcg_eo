@@ -1326,7 +1326,7 @@ d. Train a ```randomForest()``` classification model with the ```data.frame``` c
 e. Repeat the RF training procedure and produce additional model objects. Use i) the other pixel-based composite, and ii) a stack of both composites as input features.  
 
 
-### 3) Investigating model performance
+### 2) Investigating model performance
 
 The model objects resulting from 2) contain a wealth of information on the model parameters and performance. Assess the out of bag (OOB) error estimates of the trained models by inspecting the ```err.rate``` attribute of your model objects. Answer the following questions:
 
@@ -1336,12 +1336,12 @@ c. Which of the four classes has the highest OOB error?
 d. In case you are not satisfied with your model performance, consider using only high-quality training samples from your dataset, i.e. those samples with ```confID = 1```. You may join forces with your neighbor and merge your training datasets. Feel free to experiment and document your findings. 
 
 
-### 4) Final model parametrization and variable importances
+### 3) Final model parametrization and variable importances
 
 a. Train a final model with the best combination of images and ```ntrees```.
 b. Investigate the variable importances using ```varImpPlot()```. Use ```partialPlot()``` to produce partial dependence plots for your most important predictor and all four classes. Can you explain the differences between classes?
 
-### 5) Classification
+### 4) Classification
 
 Perform a classification of the image stack using the ```predict()``` function. Write the resulting map to disk in ```GTiff``` format. When doing so, consider choosing the appropriate ```datatype``` argument. Take a look at your result in QGIS. 
 
