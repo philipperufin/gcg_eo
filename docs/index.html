@@ -1107,7 +1107,7 @@ parametric_compositing &lt;-<span class="st"> </span><span class="cf">function</
   
   #############################################################################
   <span class="co">#...</span>
-  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;NAs: &#39;</span>, <span class="kw">round</span>(<span class="kw">freq</span>(composite[[<span class="dv">1</span>]], <span class="dt">value=</span><span class="ot">NA</span>)<span class="op">/</span><span class="kw">ncell</span>(composite[[<span class="dv">1</span>]])<span class="op">*</span><span class="dv">100</span>, <span class="dt">digits=</span><span class="dv">3</span>), <span class="st">&#39; %&#39;</span>))
+  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;NAs: &#39;</span>, <span class="kw">round</span>(<span class="kw">freq</span>(composite_na[[<span class="dv">1</span>]], <span class="dt">value=</span><span class="ot">NA</span>)<span class="op">/</span><span class="kw">ncell</span>(composite_na[[<span class="dv">1</span>]])<span class="op">*</span><span class="dv">100</span>, <span class="dt">digits=</span><span class="dv">3</span>), <span class="st">&#39; %&#39;</span>))
   
   <span class="co">#...</span>
   rcl_DOY &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">ncol=</span><span class="dv">2</span>, <span class="dt">data=</span><span class="kw">c</span>(candidates, obs_DOY[ix[candidates]]))

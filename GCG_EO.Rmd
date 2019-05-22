@@ -1089,7 +1089,7 @@ parametric_compositing <- function(img_list, target_date,
   
   #############################################################################
   #...
-  print(paste('NAs: ', round(freq(composite[[1]], value=NA)/ncell(composite[[1]])*100, digits=3), ' %'))
+  print(paste('NAs: ', round(freq(composite_na[[1]], value=NA)/ncell(composite_na[[1]])*100, digits=3), ' %'))
   
   #...
   rcl_DOY <- matrix(ncol=2, data=c(candidates, obs_DOY[ix[candidates]]))
