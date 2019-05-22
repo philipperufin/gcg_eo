@@ -1313,24 +1313,24 @@ $year: the acquisition year.</p></li>
 </div>
 <div id="exercise-6" class="section level2">
 <h2>Exercise</h2>
-<p>In this exercise, we will deal with image classification using the Random Forest algorithm. Specifically, we will use your training data and your pixel-based composites from the last exercises to map forest types in the Western Beskids. We will assess the performance of multiple classification models through the out of bag error and investigate variable importances. In case you missed the last sessions, we provide exemplary composites and training data <a href="https://box.hu-berlin.de/f/85a35c373cdd490180fe/?dl=1">here</a>.</p>
+<p>In this exercise, we will deal with image classification using the Random Forest algorithm, as implemented in the <code>randomForest</code> package. Specifically, we will use your training data and your pixel-based composites from the last exercises to map forest types in the Western Beskids. We will assess the performance of multiple classification models through the out of bag error and investigate variable importances. In case you missed the last sessions, we provide exemplary composites and training data <a href="https://box.hu-berlin.de/f/85a35c373cdd490180fe/?dl=1">here</a>.</p>
 <div id="training-a-random-forest-model" class="section level3">
 <h3>1) Training a Random Forest model</h3>
 <ol style="list-style-type: lower-alpha">
 <li><p>Load the vector file containing your training data points using <code>readOGR()</code>. Next, create a <code>stack()</code> / <code>brick()</code> of your favourite pixel-based composite (last week´s result).</p></li>
 <li><p>Use <code>extract()</code> to create a <code>data.frame</code> with training points as rows, and class labels (<code>classID</code>) as well as the spectral bands of your composites as columns. Remove the day of year and year flags (band 7 and 8) for the next steps.</p></li>
 <li><p>As we want to train a classification (and not a regression), the <code>randomForest()</code> function expects the dependent variable to be of type factor. Use <code>as.factor()</code> for conversion of the <code>classID</code> column. The RF algorithm cannot deal with NoData (<code>NA</code>) values. Remove <code>NAs</code> from the <code>data.frame</code>.</p></li>
-<li><p>Train a <code>randomForest()</code> classification model with the <code>data.frame</code> created in the prior step.</p></li>
+<li><p>Train a <code>randomForest()</code> classification model with the <code>data.frame</code> created in the prior step. Make sure to include only useful predictors.</p></li>
 <li><p>Repeat the RF training procedure and produce additional model objects. Use i) the other pixel-based composite, and ii) a stack of both composites as input features.</p></li>
 </ol>
 </div>
 <div id="investigating-model-performance" class="section level3">
 <h3>2) Investigating model performance</h3>
-<p>The model objects resulting from 2) contain a wealth of information on the model parameters and performance. Assess the out of bag (OOB) error estimates of the trained models by inspecting the <code>err.rate</code> attribute of your model objects. Answer the following questions:</p>
+<p>The RF model objects contain a wealth of information on the model parameters and performance. Assess the out of bag (OOB) error estimates of the trained models by inspecting the <code>err.rate</code> attribute of your model objects. Answer the following questions:</p>
 <ol style="list-style-type: lower-alpha">
 <li>Which model has the lowest OOB error?</li>
 <li>How does the OOB behave when increasing the number of trees in your model (<code>ntrees</code>)? You can access the OOB per number of trees via <code>err.rate</code>. Use this information to roughly determine a suitable value for <code>ntrees</code>.</li>
-<li>Which of the four classes has the highest OOB error?</li>
+<li>In the model with the lowest OOB error, Which of the four classes has the highest OOB error?</li>
 <li>In case you are not satisfied with your model performance, consider using only high-quality training samples from your dataset, i.e. those samples with <code>confID = 1</code>. You may join forces with your neighbor and merge your training datasets. Feel free to experiment and document your findings.</li>
 </ol>
 </div>

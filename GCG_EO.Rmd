@@ -1311,7 +1311,7 @@ Summing it up, there are a some key advantages of the RF algorithm, which make i
 
 ## Exercise
 
-In this exercise, we will deal with image classification using the Random Forest algorithm. Specifically, we will use your training data and your pixel-based composites from the last exercises to map forest types in the Western Beskids. We will assess the performance of multiple classification models through the out of bag error and investigate variable importances. In case you missed the last sessions, we provide exemplary composites and training data [here](https://box.hu-berlin.de/f/85a35c373cdd490180fe/?dl=1).
+In this exercise, we will deal with image classification using the Random Forest algorithm, as implemented in the ```randomForest``` package. Specifically, we will use your training data and your pixel-based composites from the last exercises to map forest types in the Western Beskids. We will assess the performance of multiple classification models through the out of bag error and investigate variable importances. In case you missed the last sessions, we provide exemplary composites and training data [here](https://box.hu-berlin.de/f/85a35c373cdd490180fe/?dl=1).
 
 ### 1) Training a Random Forest model
 
@@ -1321,18 +1321,18 @@ b. Use ```extract()``` to create a ```data.frame``` with training points as rows
 
 c. As we want to train a classification (and not a regression), the ```randomForest()``` function expects the dependent variable to be of type factor. Use ```as.factor()``` for conversion of the ```classID``` column. The RF algorithm cannot deal with NoData (```NA```) values. Remove ```NAs``` from the ```data.frame```.  
 
-d. Train a ```randomForest()``` classification model with the ```data.frame``` created in the prior step.  
+d. Train a ```randomForest()``` classification model with the ```data.frame``` created in the prior step. Make sure to include only useful predictors.  
 
 e. Repeat the RF training procedure and produce additional model objects. Use i) the other pixel-based composite, and ii) a stack of both composites as input features.  
 
 
 ### 2) Investigating model performance
 
-The model objects resulting from 2) contain a wealth of information on the model parameters and performance. Assess the out of bag (OOB) error estimates of the trained models by inspecting the ```err.rate``` attribute of your model objects. Answer the following questions:
+The RF model objects contain a wealth of information on the model parameters and performance. Assess the out of bag (OOB) error estimates of the trained models by inspecting the ```err.rate``` attribute of your model objects. Answer the following questions:
 
 a. Which model has the lowest OOB error?
 b. How does the OOB behave when increasing the number of trees in your model (```ntrees```)? You can access the OOB per number of trees via ```err.rate```. Use this information to roughly determine a suitable value for ```ntrees```.
-c. Which of the four classes has the highest OOB error?
+c. In the model with the lowest OOB error, Which of the four classes has the highest OOB error?
 d. In case you are not satisfied with your model performance, consider using only high-quality training samples from your dataset, i.e. those samples with ```confID = 1```. You may join forces with your neighbor and merge your training datasets. Feel free to experiment and document your findings. 
 
 
