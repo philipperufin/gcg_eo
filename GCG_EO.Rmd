@@ -1318,17 +1318,11 @@ a. Load the vector file containing your training data points using ```readOGR()`
 
 b. Use ```extract()``` to create a ```data.frame``` with training points as rows, and class labels (```classID```) as well as the spectral bands of your composites as columns. Remove the day of year and year flags (band 7 and 8) for the next steps. 
 
-As we want to train a classification (and not a regression), the ```randomForest()``` function expects the dependent variable to be of type factor. Use ```as.factor()``` for conversion of the ```classID``` column. The RF algorithm cannot deal with NoData (```NA```) values. Remove ```NAs``` from the ```data.frame```.  
+c. As we want to train a classification (and not a regression), the ```randomForest()``` function expects the dependent variable to be of type factor. Use ```as.factor()``` for conversion of the ```classID``` column. The RF algorithm cannot deal with NoData (```NA```) values. Remove ```NAs``` from the ```data.frame```.  
 
-c. Train a ```randomForest()``` classification model with the ```data.frame``` created in the prior step.  
+d. Train a ```randomForest()``` classification model with the ```data.frame``` created in the prior step.  
 
-
-### 2) Training additional models
-
-Repeat the RF training procedure based on...
-
-a. the second composite.  
-b. a stack of both composites.  
+e. Repeat the RF training procedure and produce additional model objects. Use i) the other pixel-based composite, and ii) a stack of both composites as input features.  
 
 
 ### 3) Investigating model performance
@@ -1338,8 +1332,7 @@ The model objects resulting from 2) contain a wealth of information on the model
 a. Which model has the lowest OOB error?
 b. How does the OOB behave when increasing the number of trees in your model (```ntrees```)? You can access the OOB per number of trees via ```err.rate```. Use this information to roughly determine a suitable value for ```ntrees```.
 c. Which of the four classes has the highest OOB error?
-
-In case you are not satisfied with your model performance, consider using only high-quality training samples from your dataset, i.e. those samples with ```confID = 1```. You may join forces with your neighbor and merge your training datasets. Feel free to experiment and document your findings. 
+d. In case you are not satisfied with your model performance, consider using only high-quality training samples from your dataset, i.e. those samples with ```confID = 1```. You may join forces with your neighbor and merge your training datasets. Feel free to experiment and document your findings. 
 
 
 ### 4) Final model parametrization and variable importances
@@ -1349,7 +1342,7 @@ b. Investigate the variable importances using ```varImpPlot()```. Use ```partial
 
 ### 5) Classification
 
-Perform a classification of the image stack using the ```predict()``` function. Write the resulting map to disk in ```GTiff``` format. When doing so, consider choosing the appropriate ```datatype``` argument.
+Perform a classification of the image stack using the ```predict()``` function. Write the resulting map to disk in ```GTiff``` format. When doing so, consider choosing the appropriate ```datatype``` argument. Take a look at your result in QGIS. 
 
 
 ## Reading materials
