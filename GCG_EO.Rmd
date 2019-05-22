@@ -904,6 +904,8 @@ This paper describes the methods used in the article you read last week. Here, a
 
 ------
 
+<!-- ################################## SESSION 04 ############################################## -->
+
 # Session 04: Pixel-based compositing
 
 ------
@@ -1244,6 +1246,8 @@ In this review, Maxwell and colleagues outline the use of several machine learni
 
 ------
 
+<!-- ################################## SESSION 05 ############################################## -->
+
 # Session 05: Machine learning for image classification
 
 ## Learning goals
@@ -1256,17 +1260,13 @@ In this review, Maxwell and colleagues outline the use of several machine learni
 
 ## Background
 
-This session widely focuses on the Random Forest (RF) algorithm [(Breimann 2001)](https://doi.org/10.1023/A:1010933404324) and its implementation in R. Some background might be useful in this context. 
+This session widely focuses on the Random Forest (RF) algorithm [(Breimann 2001)](https://doi.org/10.1023/A:1010933404324) and its implementation in R. Some background might be useful in this context. The basic principles of the RF algorithm can be easily understood when disentangling its name: 
 
-### Fundamentals of the Random Forest
-
-The basic principles of the RF algorithm can be easily understood when disentangling its name: 
-
-**"Forest"**: The RF is an ensemble of self-learning decision trees, which - metaphorically speaking - shape a forest. The idea behind the ensemble is that many weak learners can come to one strong decision. The user defines the number of decision trees in the Random Forest (e.g. via the ```ntrees``` parameter in the R implementation). Each decision tree consists of a large number of nodes, which essentially represent simple binary (yes / no) decisions, e.g. "is reflectance in band 4 > 0.65?". 
+**"Forest"**: The RF is an ensemble of self-learning decision trees, which - metaphorically speaking - shape a forest. The idea behind the ensemble is that many weak learners can come to one strong decision. Each decision tree consists of a large number of splits, which essentially represent simple binary (yes / no) decisions, e.g. "is reflectance in band 4 > 0.65?". The sequential binary branching creates a tree-like shape. The user defines the number of decision trees in the forest (e.g. via the ```ntrees``` parameter in the R implementation). 
 
 ![Exemplary illustration of a two-dimensional feature space, divided by binary thresholds (left), as well as the corresponding decision tree (right).](fig/s05_dt.PNG){width=80%}
 
-**"Random"**: The RF has two layers of randomness. First, it uses a bootstrapped random sample (with replacement) of the training dataset for growing each individual tree. The user can control for the fraction of training data used (e.g. via the ```sampsize``` parameter in the R implementation). The second random component is the selection of the feature considered to split the data at each node. 
+**"Random"**: The RF has two layers of randomness. First, it uses a bootstrapped random sample (with replacement) of the training dataset for growing each individual decision tree. The user can control for the fraction of training data used (e.g. via the ```sampsize``` parameter in the R implementation). The second random component is the selection of the features considered at each binary split. 
 
 ### How a self-learning tree grows
 
@@ -1274,23 +1274,23 @@ Self-learning decision trees automatically find the "best split" in the feature 
 
 ![A good split creates relatively homogeneous subgroups of the data.](fig/s05_split.PNG){width=90%}
 
-Finding a good split requires infomration on which feature (e.g. spectral band) and which value (e.g. reflectance) should be used to separate the data. The best split is identified based on a measure of dataset heterogeneity (Gini impurity index). The RF selects the split which minimizes the heterogeneity of the resulting datasets:
+Finding a good split requires infomration on which feature (e.g. spectral band) and which value (e.g. reflectance) should be used to separate the data. The best split is identified based on a measure of dataset heterogeneity (Gini impurity index). The RF selects the split (feature and value) which minimizes the heterogeneity of the resulting datasets:
 
 $Gini_{D} = 1 - \sum_{j=1}^n p_j^2$
 
-where $D$ is the dataset at hand and $p_j$ is the fraction of class $j$ in the dataset. High class proportions will lead to low Gini index values. The Gini index for a split is a combined measure of the Gini index for the two datasets resulting from our split. To account for different sizes of the dataset, the Gini of each sub-dataset $D_1$ and $D_2$ is weighted according to the number of observations $N_1$ and $N_2$ in the resulting sub-groups of each dataset. 
+where $D$ is the dataset at hand and $p_j$ is the fraction of class $j$ in the dataset. High class proportions in the dataset produce low Gini index values. The Gini index for a split is a combined measure of the Gini index for the two datasets $D_1$ and $D_2$ resulting from the split. To account for different sizes of the two datasets, the Gini of each sub-dataset is weighted according to the number of observations $N_1$ and $N_2$ in the resulting sub-groups of each dataset. 
 
-$Gini_{split} = \frac{N_1}{N} Gini_{D1} + \frac{N_2}{N} Gini_{D2}$
+$Gini_{split} = \frac{N_1}{N} Gini_{D_1} + \frac{N_2}{N} Gini_{D_2}$
 
-In case we would consider all available features at each split, the decision trees would probably be very similar. This is why we produce a random selection of features, for which identify the feature and value that produces the most homogeneous sub-groups of training data. The user controls for the number of features which should be considered (or tried) at each node (e.g. via the ```mtry``` parameter in the R implementation).
+In case we would consider all available features at each split, the decision trees would probably be very similar. This is why we produce a random selection of features, for which identify the split (feature and value) that produces the most homogeneous sub-groups of training data. The user controls for the number of features which should be considered (or tried) at each split (e.g. via the ```mtry``` parameter in the R implementation). Decreasing the number of variables tried at each split de-correlates the structure of the trees.
 
 Once ```ntree``` decision trees are built, we have a readily applicable rule-set to classify each pixel in our image. Every tree produces one "vote" regarding the final class outcome and the majority of votes determines the final class label for each pixel. 
 
 ### The out-of-bag error
 
-The RF has a great feature: the out-of-bag error. After growing each tree, the left-out samples (i.e. not used for training of this particular tree) can be classified to investigate the performance of our classification model. Doing this allows us to calculate a classification error. For illustration, consider 8 OOB samples, of which 2 are wrongly and 6 are correctly classified. The OOB error will be 2/8 = 0.25. This simple measure of model performance can be useful to parametrize our classification model. We can for instance test various combinations of input features, or investigate the performance across various ```ntrees```. 
+The RF has a great feature: the out-of-bag error. After growing each tree, the left-out samples (i.e. not used for training of this particular tree) can be classified to investigate the performance of our classification model. Doing this allows us to calculate a classification error. For illustration, consider 8 OOB samples, of which 2 are wrongly and 6 are correctly classified. The OOB error will be 2/8 = 0.25. This simple measure of model performance can be useful to parametrize our classification model. We can for instance test various combinations of input features, training datasets, or investigate the RF performance with increasing ```ntrees```. 
 
-![Grid representation of the out-of-bag classification error for various combinations of two input images from different days of the year (left). Decrease of out-of-bag error with increasing number of trees in the Random Forest model (right).](fig/s05_oob.PNG){width=80%}
+![Grid representation of the out-of-bag classification error for various combinations of two input images from different days of the year (left). Decreasing out-of-bag error with increasing number of trees in the RF model (right).](fig/s05_oob.PNG){width=80%}
 
 ### Variable importances & partial dependence plots 
 
@@ -1302,13 +1302,15 @@ In a next step, we can use partial dependence plots to further investigate the r
 
 ![Change in class likelihood across the value range of the swIR 1 reflectance at DOY 196.](fig/s05_pdp.png){width=80%}
 
-Summing it up, there are a bunch of key advantages of the RF algorithm, which make it highly popular in data science and remote sensing. The RF is easy to understand, computationally efficient, parametrization is pretty straightforward, and it often produces great results. It provides quick insights into model performance via the out of bag error and allows for investigating variable importance measures and partial dependence plots.
+
+
+Summing it up, there are a some key advantages of the RF algorithm, which make it highly popular in data science and remote sensing. The RF is easy to understand, computationally efficient, parametrization is pretty straightforward, and it often produces great results. It provides quick insights into model performance via the out of bag error and allows for investigating variable importance measures and partial dependence plots.
 
 ----- 
 
 ## Exercise
 
-In this exercise, we will deal with image classification using the Random Forests algorithm. Specifically, we will use your training data and your pixel-based composites from the last exercises to map forest types in the Western Beskids. We will assess the performance of multiple classification models through the out of bag error and investigate variable importances. In case you missed the last sessions, we provide exemplary composites and training data [here](https://box.hu-berlin.de/f/85a35c373cdd490180fe/?dl=1).
+In this exercise, we will deal with image classification using the Random Forest algorithm. Specifically, we will use your training data and your pixel-based composites from the last exercises to map forest types in the Western Beskids. We will assess the performance of multiple classification models through the out of bag error and investigate variable importances. In case you missed the last sessions, we provide exemplary composites and training data [here](https://box.hu-berlin.de/f/85a35c373cdd490180fe/?dl=1).
 
 ### 1) Training a Random Forest model
 
@@ -1336,6 +1338,8 @@ The model objects resulting from 2) contain a wealth of information on the model
 a. Which model has the lowest OOB error?
 b. How does the OOB behave when increasing the number of trees in your model (```ntrees```)? You can access the OOB per number of trees via ```err.rate```. Use this information to roughly determine a suitable value for ```ntrees```.
 c. Which of the four classes has the highest OOB error?
+
+In case you are not satisfied with your model performance, consider using only high-quality training samples from your dataset, i.e. those samples with ```confID = 1```. You may join forces with your neighbor and merge your training datasets. Feel free to experiment and document your findings. 
 
 
 ### 4) Final model parametrization and variable importances
@@ -1366,21 +1370,181 @@ Please take a look at the Excel sheet provided [here](https://box.hu-berlin.de/f
 
 ------
 
-<!-- 
+<!-- ################################## SESSION 06 ############################################## 
 
 # Session 06: Accuracy assessment and area estimation
 
 ## Learning goals
 
-## Reading materials.
+- Improve your understanding of area-adjusted accuracy assessment
+- Assess the map errors of your forest type classification
+- Calculate error-adjusted class area estimates
+
+## Background
+
+Independent map accuracy assessment aims at getting an unbiased estimate of map accuracy. Generally, we determine the "true" class label at a variety of sample locations and compare those with the map. It should be noted that sample-based estimates of map accuracy are statistical estimates. In order to get a statistically sound estimate of map accuracy, we need to pay some attention to the way our sample locations are selected. Also, the more samples are included, the more robust our estimates will become. Collecting good reference data can be time consuming and we thus strive to reduce these activities to a required minimum.
+
+Typical sampling schemes include pure random, systematic random, and stratified random sampling. When is it useful to use stratified sampling over a systematic or pure random? Imagine you want to map forest loss in an area dominated by forest, where deforestation accounts for roughly 0.2% of the area. In order to get a sufficiently large sample (let´s assume 60 samples) for the deforestation class using pure random sampling, we would approximately need to sample 30,000 locations. Stratified random sample helps us to precisely allocate the number of desired samples within each class of interest. 
+
+Let´s bring this into the context of our study site. A map of our study region reveals imbalances in class extent, e.g., the deciduous forest class accounts for only 7% of the study area, while coniferous forests account for 40%.
+
+|Class name	      | Proportion ($w_i$)|
+|-------------    |-------------      |
+|Deciduous forest	|$0.07$             |
+|Mixed forest	    |$0.25$             |
+|Coniferous forest|$0.40$             |
+|Non-forest       |$0.28$             |
+
+Let´s assume we want to validate our map using 50 points for each for the four classes. This is how a confusion matrix of the map validation could look like. Rows here relate to the map classes $i$ and columns indicate reference classes $j$. Note that the number of samples ($n$) per class differs quite substantially between map and reference. This will be of importance later on. 
+
+
+|Class name	        |Deciduous forest  |Mixed forest  |Coniferous forest  |Non-forest   |             |$n$          |
+|-------------      |-------------     |------------- |-------------      |-------------|-------------|-------------|
+|Deciduous forest	  |$39$              |$5$           |$1$                |$5$          |             |$50$         |
+|Mixed forest	      |$15$              |$19$          |$10$               |$6$          |             |$50$         |
+|Coniferous forest  |$0$               |$7$           |$39$               |$4$          |             |$50$         |
+|Non-forest         |$11$              |$1$           |$4$                |$34$         |             |$50$         |
+|                   |                  |              |                   |             |             |             |
+|$n$                |$65$              |$32$          |$54$               |$49$         |             |$200$        |
+
+From this table, we can derive the unadjusted accuracy values, such as the overall accuracy as follows: 
+
+$OA_{unadjusted} = \frac{(39 + 19 + 34 + 34)}{200} = 0.63 = 63\%$. 
+
+However, this estimate of overall accuracy incorporates all classes equally (independent of their true area proportion) and does not account for the sampling bias introduced through the stratified sampling. 
+
+An example: If our map contains a total of 10,000 pixels, we have mapped 700 pixels as deciduous forest and 4,000 pixels as coniferous forest. By verifying 50 pixels of each class, we checked $\frac{50}{700} = 0.071 = 7.1\%$ of the deciduous forest class pixels, while only $\frac{50}{4,000} = 0.013 = 1.3\%$ of the coniferous forest class were investigated. 
+
+**An assumption**: The samples drawn from the deciduous forest stratum further represent a much smaller area in our map (7%), as compared to the coniferous forest class (40%). In terms of overall accuracy, this means that the 39 correctly classified pixels of the deciduous forest class are probably less "relevant" than the 39 correctly classified pixels in the coniferous class. 
+
+We have to account for this bias when estimating map accuracies from a stratified random sample. This can be accomplished by populating the confusion matrix with probabilities of encountering the combination of map class $i$ and reference class $j$, expressed as: 
+
+$p_{ij} = \frac{n_{ij}}{n_i} * w_i$
+
+$n_{ij}$ = Number of pixels belonging to map class $i$ and reference class $j$
+$n_i$ = Total number of pixels of map class $i$
+$w_i$ = Proportion of map class $i$
+
+In the resulting matrix, each cell value represents the probability of occurrence of map class $i$ and reference class $j$. 
+
+|Class name	        |Deciduous forest      |Mixed forest        |Coniferous forest  |Non-forest         |
+|-------------      |-------------         |-------------       |-------------      |-------------      |
+|Deciduous forest	  |$\frac{39}{50}0.07$   |$\frac{5/}{50}0.07$ |$\frac{1}{50}0.07$ |$\frac{5}{50}0.07$ |
+|Mixed forest	      |$\frac{15}{50}0.25$	 |$\frac{19}{50}0.25$ |$\frac{10}{50}0.25$|$\frac{6}{50}0.25$ |
+|Coniferous forest  |$\frac{0}{50}0.40$    |$\frac{7}{50}0.40$  |$\frac{39}{50}0.40$|$\frac{4}{50}0.40$ |
+|Non-forest         |$\frac{11}{50}0.28$   |$\frac{1}{50}0.28$  |$\frac{4}{50}0.28$ |$\frac{34}{50}0.28$|
+
+Which yields the confusion matrix populated with probabilities:
+
+|Class name	        |Deciduous forest      |Mixed forest        |Coniferous forest  |Non-forest         |               |$\sum p_{i}$ |
+|-------------      |-------------         |-------------       |-------------      |-------------      | ------------- |-------------|
+|Deciduous forest	  |$0.055$               |$0.007$             |$0.001$            |$0.007$            |               |$0.070$      |
+|Mixed forest	      |$0.075$	             |$0.095$             |$0.050$            |$0.030$            |               |$0.250$      |
+|Coniferous forest  |$0.000$               |$0.056$             |$0.312$            |$0.032$            |               |$0.400$      |
+|Non-forest         |$0.062$               |$0.006$             |$0.022$            |$0.190$            |               |$0.280$      |
+|                   |                      |                    |                   |                   |               |             |
+|$\sum p_{j}$       |$0.192$               |$0.164$             |$0.385$            |$0.259$            |               |$1.000$      |
+
+This table sums to 1 and the row sums correspond to the map class proportions from above. We can now confirm our assumption from above. The 39 correct pixels of the deciduous forest class represents a smaller map proportion as compared to the 34 correctly classified pixels of the coniferous forest class (5.5% vs. 27.2%). The deciduous forest class is therefore less relevant for the area-adjusted overall map accuracy.
+
+Based on this probability confusion matrix, we can calculate the overall and class-wise accuracy scores as usual, while implicitly accounting for different class proportions and the sampling bias. 
+
+$OA_{adjusted} = 0.055 + 0.095 + 0.312 + 0.190 = 0.652$
+
+We can notice that our overall accuracy increased after area-adjustment. This makes sense, as we were doing quite good in mapping coniferous forests accurately. 
+
+Let´s have a look at the user´s and producer´s accuracy of the deciduous forest class. First, we calculate the unadjusted accuracy scores:
+
+$UA_{unadjusted} =  \frac{39}{50} = 0.78 = 78\%$
+$PA_{unadjusted} =  \frac{39}{65} = 0.60 = 60\%$
+
+Let´s do the same using the probability matrix: 
+
+$UA_{adjusted} =  \frac{0.055}{0.070} = 0.78 = 78\%$
+$PA_{adjusted} =  \frac{0.055}{0.192} = 0.29 = 29\%$
+
+We can see that the user´s accuracy stays the same after adjustment. This makes sense, as we do not incorporate the sampling bias when considering only samples drawn from one map stratum. For the producer´s accuracy, we combine information from samples across all strata. We hence automatically consider the different class proportions and sampling bias when calculating the producer´s accuracy from the confusion matrix populated with probabilities. The producer´s accuracy is relatively low after adjustment, owing to the fact that we likely omit a lot of deciduous forest, which we falsely classified as mixed forest or non-forest.
+
+### Error-adjusted area estimates
+
+Class-wise area estimates can be derived directly from the map by multiplying the map´s class proportions with the total size of the study area. Assuming a study area of $S = 10,000 ha$, our area estimates for deciduous forest will be: 
+
+$area_{DF} = w_{i=DF} * S$
+$area_{DF} = 0.070 * 10,000 ha = 700 ha$
+
+We already know that the reference data at hand is of better quality as compared to our map. We therefore preferably estimate class area directly from the reference data:
+
+$area_{DF} = \sum_{p_{j=DF}}^i * S$
+$area_{DF} = 0.192 * 10,000 ha = 1,920 ha$
+
+So the better area estimate for deciduous forest in our study region is 1,920 ha, as compared to the map-based estimate of 700 ha. Here again, the substantial omission of deciduous forest in our map was taken into account, which in turn largely increases the area estimate for this class. 
+
+Wrapping it up, area adjustment can make quite a substantial difference for overall accuracy and producer´s accuracy. User´s accuracy remains unaffected. Producing area estimates directly from the reference data is advised in order to produce more accurate estimations of land cover, land use, or land change. All procedures which were only briefly described here are explained in more detail in [Olofsson et al. (2014)](https://doi.org/10.1016/j.rse.2014.02.015). This is a great read documenting the current state-of-the-art in regards to accuracy assessment. 
+
+## Exercise
+
+In this exercise, you will perform an accuracy assessment of your forest type map. We will perform an area-adjusted accuracy assessment and estimate error-adjusted area for each forest type class. 
+
+### 1) Producing reference data
+
+Load your forest type map in R. Create a stratified reference sample using ```sampleStratified()```. We want to have a stratified equalized sample of 20 pixels per class. Specify the ```size``` parameter accordingly. Specify ```sp = TRUE``` to receive a spatial points object and ```na.rm = TRUE``` to ignore unclassified regions. Write the points to disk using ```writeOGR()```.
+
+Load the point shapefile in QGIS and add two fields of type Integer: ```classID``` and ```confID```. Visit each point and determine the class label according to the high resolution imagery in GoogleEarth. You can install and use the Send2GE plugin in QGIS to identify the precise pixel location. Enter the class and confidence labels in the attribute table. Work efficiently through the points and save your changes regularly. 
+
+|Class name	      | classID	    | Confidence level | confID       |
+|-------------    |-------------|-------------     |------------- |
+|Deciduous forest	| 1	          |Very certain      | 1            |
+|Mixed forest	    | 2	          |Some uncertainties| 2            |
+|Coniferous forest|	3           |Very uncertain    | 3            |
+|Non-forest       |	4           |                  |              |	
+
+
+### 2) Area-adjusted accuracy assessment
+
+Assess the class proportions of your map in R. To do so, use the ```freq()``` function to get pixel counts. Use these for calculating class propotions (0-1). Remember to exclude ```NAs```, so the proportions of your 4 classes sum up to 1.
+ 
+Load the reference point shapefile in R and ```extract()``` the class values at the point locations. Create a confusion matrix from the resulting ```data.frame``` using ```table()```.
+
+Copy & paste the values from your confusion matrix as well as the class proportions into the Excel spreadsheet. Next, answer the following questions: 
+
+a. Which class has the highest / lowest user´s accuracy?
+b. Which class has the highest / lowest producer´s accuracy?
+c. How does the overall accuracy differ after area-adjustment? Why?
+d. How do the map-based area estimates differ from those obtained using the reference data?
+
+### 3) Knowledge transfer
+
+Implement three basic components of the accuracy assessment in R. 
+
+a.	Generate the confusion matrix containing probabilities. In this matrix, each cell value represents the probability of occurrence on map class $i$ and reference class $j$: 
+
+$p_{ij} = \frac{n_{ij}}{n_i} * w_i$
+
+$n_{ij}$ = Number of pixels belonging to map class $i$ and reference class $j$
+$n_i$ = Total number of pixels of map class $i$
+$w_i$ = Proportion of map class $i$
+
+b.	Calculate overall accuracy and class-wise user´s and producer´s accuracy from the confusion matrix. 
+c.	Produce error-adjusted area estimates from the confusion matrix. 
+
+To do this, track the underlying formulas of the respective sections in the Excel sheet. Find a way on how to do this in R. Use helper functions such as ```diag()```, ```sum()``` and ```apply()```. Avoid ```for``` loops. 
+
+Compare the results with the values in the Excel table. If they differ, something went wrong. Check again! 
+
+
+## Reading materials
+
+In this paper, [Hansen et al. (2013)](http://doi.org/10.1126/science.1244693) presented the first global Landsat-based map of forest cover change processes. Please make sure to read the paper and the supplementary materials and take notes on questions of understanding and issues to discuss during the course.
 
 ------
+
+<!-- 
 
 # Session 07: Multi-temporal change detection
 
 ## Learning goals
 
-## Reading materials.
+## Reading materials
 
 ------
 
@@ -1400,7 +1564,9 @@ Please take a look at the Excel sheet provided [here](https://box.hu-berlin.de/f
 
 ## Phase III
 
------- -->
+------ 
+
+-->
 
 # Terminology
 
