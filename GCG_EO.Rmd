@@ -1364,7 +1364,7 @@ Please take a look at the Excel sheet provided [here](https://box.hu-berlin.de/f
 
 ------
 
-<!-- ################################## SESSION 06 ############################################## 
+<!-- ################################## SESSION 06 ##############################################  -->
 
 # Session 06: Accuracy assessment and area estimation
 
@@ -1376,9 +1376,17 @@ Please take a look at the Excel sheet provided [here](https://box.hu-berlin.de/f
 
 ## Background
 
-Independent map accuracy assessment aims at getting an unbiased estimate of map accuracy. Generally, we determine the "true" class label at a variety of sample locations and compare those with the map. It should be noted that sample-based estimates of map accuracy are statistical estimates. In order to get a statistically sound estimate of map accuracy, we need to pay some attention to the way our sample locations are selected. Also, the more samples are included, the more robust our estimates will become. Collecting good reference data can be time consuming and we thus strive to reduce these activities to a required minimum.
+Independent map accuracy assessment aims at getting an unbiased estimate of map accuracy. Generally, we identify a number of sample locations and compare the predicted class in the map with "true" class, which we determine using high quality reference information (e.g., very high resolution imagery). The following section requires understanding of the basic concepts of map accuracy assessment, i.e. the confusion matrix, overall, producer´s, and user´s accuracy. Read in, e.g. [here](http://gsp.humboldt.edu/olm_2015/Courses/GSP_216_Online/lesson6-2/metrics.html) if you don´t know what these are.
 
-Typical sampling schemes include pure random, systematic random, and stratified random sampling. When is it useful to use stratified sampling over a systematic or pure random? Imagine you want to map forest loss in an area dominated by forest, where deforestation accounts for roughly 0.2% of the area. In order to get a sufficiently large sample (let´s assume 60 samples) for the deforestation class using pure random sampling, we would approximately need to sample 30,000 locations. Stratified random sample helps us to precisely allocate the number of desired samples within each class of interest. 
+![Forest type map with stratified random sample](fig/s06_map.png)
+
+### Why is area-adjustment necessary?
+
+Sample-based estimates of map accuracy are statistical estimates - we infer information about the total population (i.e. all pixels in the map) from a sub-population (i.e. the sample pixels). In order to get a statistically sound estimate of map accuracy, we need to pay attention to the way our sample locations are selected. Sample selection should be random and all pixels should have an inclusion probability greater than zero. 
+
+Typical sampling schemes include pure random, systematic random, and stratified random sampling. When is it useful to use stratified sampling over a systematic or pure random? Imagine a map forest loss in an area dominated by forest, where deforestation accounts for roughly 0.2% of the area. In order to get a sufficiently large sample (let´s assume 60 samples) for the deforestation class using pure random sampling, we would approximately need to sample 30,000 locations. Stratified random sample helps us to overcome this issue by precisely allocating the number of desired samples within each class (or region) of interest. 
+
+![Illustration of pure random, systematic, and stratified random sampling designs. Source: gsp.humboldt.edu](fig/s06_sampling.jpg)
 
 Let´s bring this into the context of our study site. A map of our study region reveals imbalances in class extent, e.g., the deciduous forest class accounts for only 7% of the study area, while coniferous forests account for 40%.
 
@@ -1389,34 +1397,38 @@ Let´s bring this into the context of our study site. A map of our study region 
 |Coniferous forest|$0.40$             |
 |Non-forest       |$0.28$             |
 
-Let´s assume we want to validate our map using 50 points for each for the four classes. This is how a confusion matrix of the map validation could look like. Rows here relate to the map classes $i$ and columns indicate reference classes $j$. Note that the number of samples ($n$) per class differs quite substantially between map and reference. This will be of importance later on. 
+Stratified random sampling helps us to validate the map using a sufficient amount of samples for each for the four classes, let´s say 50. Below, you find a confusion matrix of the map validation. Rows here relate to the map classes $i$ and columns indicate reference classes $j$. Note that the sum of samples per class differs quite substantially between map ($n_i$)  and reference ($n_j$).  
 
-
-|Class name	        |Deciduous forest  |Mixed forest  |Coniferous forest  |Non-forest   |             |$n$          |
+|Class name	        |Deciduous forest  |Mixed forest  |Coniferous forest  |Non-forest   |             |$n_i$        |
 |-------------      |-------------     |------------- |-------------      |-------------|-------------|-------------|
 |Deciduous forest	  |$39$              |$5$           |$1$                |$5$          |             |$50$         |
 |Mixed forest	      |$15$              |$19$          |$10$               |$6$          |             |$50$         |
 |Coniferous forest  |$0$               |$7$           |$39$               |$4$          |             |$50$         |
 |Non-forest         |$11$              |$1$           |$4$                |$34$         |             |$50$         |
 |                   |                  |              |                   |             |             |             |
-|$n$                |$65$              |$32$          |$54$               |$49$         |             |$200$        |
+|$n_j$              |$65$              |$32$          |$54$               |$49$         |             |$200$        |
 
 From this table, we can derive the unadjusted accuracy values, such as the overall accuracy as follows: 
 
 $OA_{unadjusted} = \frac{(39 + 19 + 34 + 34)}{200} = 0.63 = 63\%$. 
 
-However, this estimate of overall accuracy incorporates all classes equally (independent of their true area proportion) and does not account for the sampling bias introduced through the stratified sampling. 
+The above estimate of overall accuracy implicitly weighs each class according to the number of correctly classified samples in it. The more samples, the higher the influence on the overall accuracy score. The unadjusted overall accuracy is thus independent of the true area proportions of the map classes. 
 
-An example: If our map contains a total of 10,000 pixels, we have mapped 700 pixels as deciduous forest and 4,000 pixels as coniferous forest. By verifying 50 pixels of each class, we checked $\frac{50}{700} = 0.071 = 7.1\%$ of the deciduous forest class pixels, while only $\frac{50}{4,000} = 0.013 = 1.3\%$ of the coniferous forest class were investigated. 
+Furthermore, the unadjusted overall accuracy does not account for the sampling bias introduced through the stratified sampling. You can imagine this bias as varying sampling densities between the map classes. Let´s assume our map contains a total of 10,000 pixels, we have mapped 700 pixels as deciduous forest and 4,000 pixels as coniferous forest. By verifying 50 samples of each class, we assessed $\frac{50}{700} = 0.071 = 7.1\%$ of the deciduous forest class pixels, while only $\frac{50}{4,000} = 0.013 = 1.3\%$ of the coniferous forest class were investigated. The other way around, one sample of the deciduous forest class is considered representative for  $\frac{700}{50} = 14$ pixels, while one sample of the coniferous forest class represents $\frac{4,000}{50} = 80$ pixels. 
 
-**An assumption**: The samples drawn from the deciduous forest stratum further represent a much smaller area in our map (7%), as compared to the coniferous forest class (40%). In terms of overall accuracy, this means that the 39 correctly classified pixels of the deciduous forest class are probably less "relevant" than the 39 correctly classified pixels in the coniferous class. 
+**An assumption**: The samples drawn from the deciduous forest stratum represent a much smaller area in our map (7%), as compared to the coniferous forest class (40%). In terms of overall accuracy, this means that the 39 correctly classified pixels of the deciduous forest class are probably less "relevant" than the 39 correctly classified pixels in the coniferous class. According to the numbers above, one sample of coniferous forest shold thus weigh $\frac{80}{14} = 5.7$ times as much as a deciduous forest pixel. 
+
+### How to implement it?
 
 We have to account for this bias when estimating map accuracies from a stratified random sample. This can be accomplished by populating the confusion matrix with probabilities of encountering the combination of map class $i$ and reference class $j$, expressed as: 
 
 $p_{ij} = \frac{n_{ij}}{n_i} * w_i$
 
+
 $n_{ij}$ = Number of pixels belonging to map class $i$ and reference class $j$
+
 $n_i$ = Total number of pixels of map class $i$
+
 $w_i$ = Proportion of map class $i$
 
 In the resulting matrix, each cell value represents the probability of occurrence of map class $i$ and reference class $j$. 
@@ -1439,51 +1451,55 @@ Which yields the confusion matrix populated with probabilities:
 |                   |                      |                    |                   |                   |               |             |
 |$\sum p_{j}$       |$0.192$               |$0.164$             |$0.385$            |$0.259$            |               |$1.000$      |
 
-This table sums to 1 and the row sums correspond to the map class proportions from above. We can now confirm our assumption from above. The 39 correct pixels of the deciduous forest class represents a smaller map proportion as compared to the 34 correctly classified pixels of the coniferous forest class (5.5% vs. 27.2%). The deciduous forest class is therefore less relevant for the area-adjusted overall map accuracy.
+This table sums to 1 and the row sums correspond to the map class proportions from above. We can now confirm our assumption from above. The 39 correct pixels of the deciduous forest class represents a smaller map proportion as compared to the 39 correctly classified pixels of the coniferous forest class (5.5% vs. 31.2%). The coniferous forest samples are therefore more relevant for the area-adjusted overall map accuracy. More precisely, they are $\frac{0.312}{0.055} = 5.7$ times more important.
 
-Based on this probability confusion matrix, we can calculate the overall and class-wise accuracy scores as usual, while implicitly accounting for different class proportions and the sampling bias. 
+Based on this probabilistic confusion matrix, we can calculate the overall and class-wise accuracy scores as usual, while implicitly accounting for different class proportions and the sampling bias. 
 
 $OA_{adjusted} = 0.055 + 0.095 + 0.312 + 0.190 = 0.652$
 
-We can notice that our overall accuracy increased after area-adjustment. This makes sense, as we were doing quite good in mapping coniferous forests accurately. 
-
-Let´s have a look at the user´s and producer´s accuracy of the deciduous forest class. First, we calculate the unadjusted accuracy scores:
+We can notice that our overall accuracy increased after area-adjustment. This makes sense, as we were doing quite good in mapping coniferous forests accurately. Now let´s have a look at the user´s and producer´s accuracy of the deciduous forest class. First, we calculate the unadjusted accuracy scores:
 
 $UA_{unadjusted} =  \frac{39}{50} = 0.78 = 78\%$
+
 $PA_{unadjusted} =  \frac{39}{65} = 0.60 = 60\%$
 
 Let´s do the same using the probability matrix: 
 
 $UA_{adjusted} =  \frac{0.055}{0.070} = 0.78 = 78\%$
+
 $PA_{adjusted} =  \frac{0.055}{0.192} = 0.29 = 29\%$
 
-We can see that the user´s accuracy stays the same after adjustment. This makes sense, as we do not incorporate the sampling bias when considering only samples drawn from one map stratum. For the producer´s accuracy, we combine information from samples across all strata. We hence automatically consider the different class proportions and sampling bias when calculating the producer´s accuracy from the confusion matrix populated with probabilities. The producer´s accuracy is relatively low after adjustment, owing to the fact that we likely omit a lot of deciduous forest, which we falsely classified as mixed forest or non-forest.
+We can see that the user´s accuracy stays the same after adjustment. This makes sense, as we do not incorporate the sampling bias when considering only samples drawn from one map stratum. For the producer´s accuracy, we combine information from samples across all strata. We hence automatically consider the different class proportions and sampling densities when calculating the producer´s accuracy from the confusion matrix populated with probabilities. The producer´s accuracy is relatively low after adjustment, owing to the fact that we likely omit a lot of deciduous forest, which we falsely classified as mixed forest or non-forest.
 
 ### Error-adjusted area estimates
 
-Class-wise area estimates can be derived directly from the map by multiplying the map´s class proportions with the total size of the study area. Assuming a study area of $S = 10,000 ha$, our area estimates for deciduous forest will be: 
+There are several methods to obtain class-wise area estimates.  They can either be derived directly from the map by multiplying the map´s class proportions with the total size of the study area. Assuming a study area of $S = 10,000 ha$, our area estimates for deciduous forest would thereby be: 
 
 $area_{DF} = w_{i=DF} * S$
+
 $area_{DF} = 0.070 * 10,000 ha = 700 ha$
 
-We already know that the reference data at hand is of better quality as compared to our map. We therefore preferably estimate class area directly from the reference data:
+However, we already know that the reference data at hand is of better quality as compared to our map. Therefore class-area should preferably be estimated from the reference data:
 
 $area_{DF} = \sum_{p_{j=DF}}^i * S$
+
 $area_{DF} = 0.192 * 10,000 ha = 1,920 ha$
 
 So the better area estimate for deciduous forest in our study region is 1,920 ha, as compared to the map-based estimate of 700 ha. Here again, the substantial omission of deciduous forest in our map was taken into account, which in turn largely increases the area estimate for this class. 
 
-Wrapping it up, area adjustment can make quite a substantial difference for overall accuracy and producer´s accuracy. User´s accuracy remains unaffected. Producing area estimates directly from the reference data is advised in order to produce more accurate estimations of land cover, land use, or land change. All procedures which were only briefly described here are explained in more detail in [Olofsson et al. (2014)](https://doi.org/10.1016/j.rse.2014.02.015). This is a great read documenting the current state-of-the-art in regards to accuracy assessment. 
+Wrapping it up, area adjustment can make quite a substantial difference for overall accuracy and producer´s accuracy. User´s accuracy remains unaffected. Producing area estimates directly from the reference data is advised in order to produce more accurate estimations of land cover, land use, or land change. 
+
+All procedures which were only briefly described here and are explained in more detail in [Olofsson et al. (2014)](https://doi.org/10.1016/j.rse.2014.02.015). We recommend this read, as it is documenting the current state-of-the-art in regards to accuracy assessment in high detail. 
 
 ## Exercise
 
-In this exercise, you will perform an accuracy assessment of your forest type map. We will perform an area-adjusted accuracy assessment and estimate error-adjusted area for each forest type class. 
+In this exercise, you will perform an area-adjusted accuracy assessment of your forest type map and estimate error-adjusted area for each forest type class. In a first step, the accuracy scores will be investigated in an [Excel spreadsheet](https://box.hu-berlin.de/f/269470b96af54ba687ef/?dl=1). In case you do not yet have a forest type map, please use the one provided [here](https://box.hu-berlin.de/f/00fd4fdd12b34560b836/?dl=1).
 
 ### 1) Producing reference data
 
 Load your forest type map in R. Create a stratified reference sample using ```sampleStratified()```. We want to have a stratified equalized sample of 20 pixels per class. Specify the ```size``` parameter accordingly. Specify ```sp = TRUE``` to receive a spatial points object and ```na.rm = TRUE``` to ignore unclassified regions. Write the points to disk using ```writeOGR()```.
 
-Load the point shapefile in QGIS and add two fields of type Integer: ```classID``` and ```confID```. Visit each point and determine the class label according to the high resolution imagery in GoogleEarth. You can install and use the Send2GE plugin in QGIS to identify the precise pixel location. Enter the class and confidence labels in the attribute table. Work efficiently through the points and save your changes regularly. 
+Load the point shapefile in QGIS and add two fields of type Integer: ```classID``` and ```confID```. Visit each point and determine the class label according to the high resolution imagery in GoogleEarth. Install and use the Send2GE plugin in QGIS to identify the precise pixel location. Enter the class and confidence labels in the attribute table. Work efficiently through the points and save your changes regularly. 
 
 |Class name	      | classID	    | Confidence level | confID       |
 |-------------    |-------------|-------------     |------------- |
@@ -1497,7 +1513,7 @@ Load the point shapefile in QGIS and add two fields of type Integer: ```classID`
 
 Assess the class proportions of your map in R. To do so, use the ```freq()``` function to get pixel counts. Use these for calculating class propotions (0-1). Remember to exclude ```NAs```, so the proportions of your 4 classes sum up to 1.
  
-Load the reference point shapefile in R and ```extract()``` the class values at the point locations. Create a confusion matrix from the resulting ```data.frame``` using ```table()```.
+Load the reference point shapefile in R and ```extract()``` the map values at the point locations. Create a confusion matrix from the resulting ```data.frame``` using ```table()```.
 
 Copy & paste the values from your confusion matrix as well as the class proportions into the Excel spreadsheet. Next, answer the following questions: 
 
@@ -1521,14 +1537,14 @@ $w_i$ = Proportion of map class $i$
 b.	Calculate overall accuracy and class-wise user´s and producer´s accuracy from the confusion matrix. 
 c.	Produce error-adjusted area estimates from the confusion matrix. 
 
-To do this, track the underlying formulas of the respective sections in the Excel sheet. Find a way on how to do this in R. Use helper functions such as ```diag()```, ```sum()``` and ```apply()```. Avoid ```for``` loops. 
+To do this, track the underlying formulas of the respective sections in the Excel sheet and transfer them to R. Use helper functions such as ```diag()```, ```sum()``` and ```apply()```. Avoid ```for``` loops. 
 
 Compare the results with the values in the Excel table. If they differ, something went wrong. Check again! 
 
 
 ## Reading materials
 
-In this paper, [Hansen et al. (2013)](http://doi.org/10.1126/science.1244693) presented the first global Landsat-based map of forest cover change processes. Please make sure to read the paper and the supplementary materials and take notes on questions of understanding and issues to discuss during the course.
+In this paper, [Hansen et al. (2013)](http://doi.org/10.1126/science.1244693) presented the first global Landsat-based map of forest cover change. Please make sure to read the paper and the supplementary materials and take notes on questions of understanding and issues to discuss during the course.
 
 ------
 
