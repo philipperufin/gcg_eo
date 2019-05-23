@@ -1384,7 +1384,7 @@ Independent map accuracy assessment aims at getting an unbiased estimate of map 
 
 Sample-based estimates of map accuracy are statistical estimates - we infer information about the total population (i.e. all pixels in the map) from a sub-population (i.e. the sample pixels). In order to get a statistically sound estimate of map accuracy, we need to pay attention to the way our sample locations are selected. Sample selection should be random and all pixels should have an inclusion probability greater than zero. 
 
-Typical sampling schemes include pure random, systematic random, and stratified random sampling. When is it useful to use stratified sampling over a systematic or pure random? Imagine a map forest loss in an area dominated by forest, where deforestation accounts for roughly 0.2% of the area. In order to get a sufficiently large sample (let´s assume 60 samples) for the deforestation class using pure random sampling, we would approximately need to sample 30,000 locations. Stratified random sample helps us to overcome this issue by precisely allocating the number of desired samples within each class (or region) of interest. 
+Typical sampling schemes include pure random, systematic random, and stratified random sampling. When is it useful to use stratified sampling over a systematic or pure random sample? Imagine a map forest loss in an area dominated by forest, where deforestation accounts for roughly 0.2% of the area. In order to get a sufficiently large sample (let´s assume 60 samples) for the deforestation class using pure random sampling, we would approximately need to sample 30,000 locations. Stratified random sample helps us to overcome this issue by precisely allocating the number of desired samples within each class (or region) of interest. 
 
 ![Illustration of pure random, systematic, and stratified random sampling designs. Source: gsp.humboldt.edu](fig/s06_sampling.jpg)
 
@@ -1414,7 +1414,7 @@ $OA_{unadjusted} = \frac{(39 + 19 + 34 + 34)}{200} = 0.63 = 63\%$.
 
 The above estimate of overall accuracy implicitly weighs each class according to the number of correctly classified samples in it. The more samples, the higher the influence on the overall accuracy score. The unadjusted overall accuracy is thus independent of the true area proportions of the map classes. 
 
-Furthermore, the unadjusted overall accuracy does not account for the sampling bias introduced through the stratified sampling. You can imagine this bias as varying sampling densities between the map classes. Let´s assume our map contains a total of 10,000 pixels, we have mapped 700 pixels as deciduous forest and 4,000 pixels as coniferous forest. By verifying 50 samples of each class, we assessed $\frac{50}{700} = 0.071 = 7.1\%$ of the deciduous forest class pixels, while only $\frac{50}{4,000} = 0.013 = 1.3\%$ of the coniferous forest class were investigated. The other way around, one sample of the deciduous forest class is considered representative for  $\frac{700}{50} = 14$ pixels, while one sample of the coniferous forest class represents $\frac{4,000}{50} = 80$ pixels. 
+Furthermore, the unadjusted overall accuracy does not account for the sampling bias introduced by the stratified sampling. You can imagine this bias as varying sampling densities between the map classes. Let´s assume our map contains a total of 10,000 pixels, we have mapped 700 pixels as deciduous forest and 4,000 pixels as coniferous forest. By verifying 50 samples of each class, we assessed $\frac{50}{700} = 0.071 = 7.1\%$ of the deciduous forest class pixels, while only $\frac{50}{4,000} = 0.013 = 1.3\%$ of the coniferous forest class were investigated. The other way around, one sample of the deciduous forest class is considered representative for  $\frac{700}{50} = 14$ pixels, while one sample of the coniferous forest class represents $\frac{4,000}{50} = 80$ pixels. 
 
 **An assumption**: The samples drawn from the deciduous forest stratum represent a much smaller area in our map (7%), as compared to the coniferous forest class (40%). In terms of overall accuracy, this means that the 39 correctly classified pixels of the deciduous forest class are probably less "relevant" than the 39 correctly classified pixels in the coniferous class. According to the numbers above, one sample of coniferous forest shold thus weigh $\frac{80}{14} = 5.7$ times as much as a deciduous forest pixel. 
 
@@ -1451,7 +1451,7 @@ Which yields the confusion matrix populated with probabilities:
 |                   |                      |                    |                   |                   |               |             |
 |$\sum p_{j}$       |$0.192$               |$0.164$             |$0.385$            |$0.259$            |               |$1.000$      |
 
-This table sums to 1 and the row sums correspond to the map class proportions from above. We can now confirm our assumption from above. The 39 correct pixels of the deciduous forest class represents a smaller map proportion as compared to the 39 correctly classified pixels of the coniferous forest class (5.5% vs. 31.2%). The coniferous forest samples are therefore more relevant for the area-adjusted overall map accuracy. More precisely, they are $\frac{0.312}{0.055} = 5.7$ times more important.
+This table sums to 1 and the row sums correspond to the map class proportions from above. We can now confirm our assumption from above. The 39 correct pixels of the deciduous forest class represents a smaller map proportion as compared to the 39 correctly classified pixels of the coniferous forest class (5.5% vs. 31.2%). The coniferous forest samples are therefore more relevant for the area-adjusted overall map accuracy than the deciduous forest samples. More precisely, they are $\frac{0.312}{0.055} = 5.7$ times more important.
 
 Based on this probabilistic confusion matrix, we can calculate the overall and class-wise accuracy scores as usual, while implicitly accounting for different class proportions and the sampling bias. 
 
@@ -1553,6 +1553,66 @@ In this paper, [Hansen et al. (2013)](http://doi.org/10.1126/science.1244693) pr
 # Session 07: Multi-temporal change detection
 
 ## Learning goals
+
+## Exercise
+
+After completing the last exercises, you gained a lot of experience in using R & QGIS for data handling and pre-processing, training data collection, classification, and accuracy assessment. In other terms: you´re well prepared for performing a change detection using Landsat data. The goal of this exercise is to map forest cover change in the Southern Brazilian Amazon.  
+
+We provided the following datasets in our repository [LINK!] and on drive O:  
+
+…sr_data/: Three Landsat 5 surface reflectance stacks (*_crp.tif) at five-year intervals from 2000 to 2010.
+
+- LT052260682000061001T1-SC20170927060330 (10 June 2000)  
+- LT052260682005060801T1-SC20170927060440 (08 June 2005)  
+- LT052260682010062201T1-SC20170927060241 (22 June 2010)  
+
+…vector/: A shapefile and a *.kmz file for GoogleEarth, which will help you to accurately delineate the Landsat pixel locations and extents for training data collection.  
+
+…validation/: A shapefile containing reference data for the accuracy assessment.  
+
+…gfc/: A subset of the Global Forest Change dataset by Hansen et al. (2013). We reclassified the data to match the target classes of today´s exercises.
+
+Your task is to create a change map, which contains the following classes:
+
+| classID | Class                   |
+| ------- | -----                   |
+| 1       | Stable Forest           |
+| 2       | Deforestation 2001-2005 |
+| 3       | Deforestation 2005-2010 |
+| 4       | Forest Gain             |
+| 5       | Stable Non-Forest       |
+
+Different from the previous exercises, you can decide on how the workflow of your map production looks like in detail. Use the code and tools from the last sessions and earlier experiences with remote sensing and associated software packages, if applicable. Consider the following steps:
+
+### 1) Choosing an approach for change detection
+Several change detection approaches can be used to map forest cover changes. You can choose a methodological approach for your change detection. We suggest two approaches for supervised classification:
+
+- Post-classification comparison: You perform a classification of land cover for each composite dataset. You then use raster algebra in R (or any other tool of your choice) to convert the individual results into a change map.
+- Integrated multi-temporal change classification: You stack all features into a single file and collect training data for the change classes of interest. You obtain the change map directly from your classification.
+
+### 2) Inspect and prepare your data
+
+a. Visualize the Landsat images in QGIS. Try out a true color (RGB: 3-2-1), as well as a 4-5-3 false color combination.
+b. Optional: Derive additional features from your data. Do you want to classify based on the spectral bands? What about vegetation indices, principal components, tasseled cap components?
+
+### 3) Training data collection
+
+a. Consider that the way you collect your training data varies with the approach you choose in 1).
+b. Collecting training data is time consuming - try to be efficient. Make use of the QGIS Info-Tool to compare spectral profiles of the three images. You can also link QGIS and Google Earth through the GearthView plugin. For exact pixel locations, use the Landsat pixel grid we provided.
+
+### 4) Model training & classification
+
+a. Choose a classification algorithm: Feel free to use any classifier. In case you´re interested in differences between classifiers, test more than one!
+b. Parametrize the model. Depending on your choice of classification model, think about how to make an informed decision about the model parameters. Optimize parameters wherever possible, e.g. by using the out-of-bag error.
+
+### 5) Change map validation & area estimates
+
+a. We provided reference data for the study area as a shapefile. Use it to perform an accuracy assessment. Why is it challenging to perform an area-adjusted accuracy assessment in this case?
+b. Calculate map-based area estimates for your map and the Global Forest Change data using simple pixel counting. Compare the estimates. What are the major differences?
+
+### 6) Reporting results  
+We collect your main results in this table: https://ethercalc.org/572rg3qh93t2 [UPDATE!] Please fill in all required fields, i.e. your name and selected approach (e.g. post-classification comparison), overall accuracy and class accuracies in decimal values (e.g. 0.75), as well as class areas in hectares.
+
 
 ## Reading materials
 
