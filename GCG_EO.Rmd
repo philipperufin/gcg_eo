@@ -1410,7 +1410,7 @@ Stratified random sampling helps us to validate the map using a sufficient amoun
 
 From this table, we can derive the unadjusted accuracy values, such as the overall accuracy as follows: 
 
-$OA_{unadjusted} = \frac{(39 + 19 + 34 + 34)}{200} = 0.63 = 63\%$. 
+$OA_{unadjusted} = \frac{(39 + 19 + 39 + 34)}{200} = 0.63 = 63\%$. 
 
 The above estimate of overall accuracy implicitly weighs each class according to the number of correctly classified samples in it. The more samples, the higher the influence on the overall accuracy score. The unadjusted overall accuracy is thus independent of the true area proportions of the map classes. 
 
@@ -1531,7 +1531,9 @@ a.	Generate the confusion matrix containing probabilities. In this matrix, each 
 $p_{ij} = \frac{n_{ij}}{n_i} * w_i$
 
 $n_{ij}$ = Number of pixels belonging to map class $i$ and reference class $j$
+
 $n_i$ = Total number of pixels of map class $i$
+
 $w_i$ = Proportion of map class $i$
 
 b.	Calculate overall accuracy and class-wise user´s and producer´s accuracy from the confusion matrix. 
