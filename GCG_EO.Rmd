@@ -1559,11 +1559,33 @@ I like remote sensing stuff.
 
 ## Learning goals
 
+- Bundle your experiences to develop a supervised classification workflow
+- Map forest dynamics in the Southern Brazilian Amazon
+- Generate map-based estimates of forest loss and gain in the study region
+
+## Background
+
+Deforestation processes are widespread across the globe. Remote sensing technologies are often used to map these processes, their spatial patterns and temporal evolution over large areas. An impressive case of the use of operational forest monitoring schemes is Brazil´s Amazon forest. Here, large-area deforestation for cattle ranching and crop cultivation occurs. 
+
+![Aerial photograph of deforestation in southern Pará, Brazil. Source: Patrick Hostert](fig/s07_para.jpg){width=80%}
+
+The [PRODES]() project, run by the National Institute for Space Research (INPE) provides information on spatially explicit information of forest loss using visual interpretation of Landsat and CBERS data. Often, visual interpretation is however not feasible and we desire an automated detection of change processes. 
+
+![Landsat images of study area for 2000, 2005, and 2010.](fig/s07_ls.png){width=80%}
+
+
+But how do we get to the change map? Similar to the production of a land cover map, we can produce maps of land cover or land use change. This inherently incorporates the integration of multiple observation dates. Broadly speaking, change detection can occur in two ways: 
+
+- **Post-classification change detection**: This refers to the independent production of land use or land cover maps for each time point of interest. In a next stept, differencing techniques are applied to investigate the change between two (or more) maps. While training data collection is relatively straight-forward, error propagation is a core issue for post-classification comparisons.
+
+- **Multi-temporal change classification**: This refers to the direct classification of a stack of two (or more) images to assess the change classes of interest. Image stacks can be based on reflectance data, vegetation indices, or any other indicators that are comparable over time. Defining good change classes and collecting training data can be challenging. As an example: mapping change between 4 classes A, B, C and D, already requires training data for 16 change trajectories: AA, AB, AC, AD, BA, BB, …, DC, DD.
+
+
 ## Exercise
 
 After completing the last exercises, you gained a lot of experience in using R & QGIS for data handling and pre-processing, training data collection, classification, and accuracy assessment. In other terms: you´re well prepared for performing a change detection using Landsat data. The goal of this exercise is to map forest cover change in the Southern Brazilian Amazon.  
 
-We provided the following datasets in our repository [LINK!] and on drive O:  
+We provided the following datasets in [our repository](https://box.hu-berlin.de/f/bb4553666dff42c29cb9/?dl=1) and on drive O:  
 
 …sr_data/: Three Landsat 5 surface reflectance stacks (*_crp.tif) at five-year intervals from 2000 to 2010.
 
