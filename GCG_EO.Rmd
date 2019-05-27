@@ -1554,6 +1554,9 @@ In this paper, [Hansen et al. (2013)](http://doi.org/10.1126/science.1244693) pr
 
 # Session 07: Multi-temporal change detection
 
+I like remote sensing stuff.
+
+
 ## Learning goals
 
 ## Exercise
