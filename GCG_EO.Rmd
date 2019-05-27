@@ -1556,6 +1556,14 @@ In this paper, [Hansen et al. (2013)](http://doi.org/10.1126/science.1244693) pr
 
 ## Learning goals
 
+text
+
+text
+
+text
+text
+
+
 ## Exercise
 
 After completing the last exercises, you gained a lot of experience in using R & QGIS for data handling and pre-processing, training data collection, classification, and accuracy assessment. In other terms: you´re well prepared for performing a change detection using Landsat data. The goal of this exercise is to map forest cover change in the Southern Brazilian Amazon.  
