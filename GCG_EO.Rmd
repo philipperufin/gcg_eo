@@ -1554,8 +1554,6 @@ In this paper, [Hansen et al. (2013)](http://doi.org/10.1126/science.1244693) pr
 
 # Session 07: Multi-temporal change detection
 
-I like remote sensing stuff.
-
 
 ## Learning goals
 
@@ -1617,28 +1615,24 @@ Several change detection approaches can be used to map forest cover changes. You
 - Post-classification comparison: You perform a classification of land cover for each composite dataset. You then use raster algebra in R (or any other tool of your choice) to convert the individual results into a change map.
 - Integrated multi-temporal change classification: You stack all features into a single file and collect training data for the change classes of interest. You obtain the change map directly from your classification.
 
-### 2) Inspect and prepare your data
+### 2) Screening of input data and training data collection
 
-a. Visualize the Landsat images in QGIS. Try out a true color (RGB: 3-2-1), as well as a 4-5-3 false color combination.
-b. Optional: Derive additional features from your data. Do you want to classify based on the spectral bands? What about vegetation indices, principal components, tasseled cap components?
+a. Visualize the Landsat images in QGIS. Try out a true color (RGB: 3-2-1), as well as a 4-5-3 false color combination.  
+Optional: Derive additional features from your data. Do you want to classify based on the spectral bands? What about vegetation indices, principal components, tasseled cap components?
+b. Consider that the way you collect your training data varies with the approach you choose in 1).
+c. Collecting training data is time consuming - try to be efficient. Make use of the QGIS Info-Tool to compare spectral profiles of the three images. You can also link QGIS and Google Earth through the GearthView plugin. For exact pixel locations, use the Landsat pixel grid we provided.
 
-### 3) Training data collection
-
-a. Consider that the way you collect your training data varies with the approach you choose in 1).
-b. Collecting training data is time consuming - try to be efficient. Make use of the QGIS Info-Tool to compare spectral profiles of the three images. You can also link QGIS and Google Earth through the GearthView plugin. For exact pixel locations, use the Landsat pixel grid we provided.
-
-### 4) Model training & classification
+### 3) Model training & classification
 
 a. Choose a classification algorithm: Feel free to use any classifier. In case you´re interested in differences between classifiers, test more than one!
 b. Parametrize the model. Depending on your choice of classification model, think about how to make an informed decision about the model parameters. Optimize parameters wherever possible, e.g. by using the out-of-bag error.
 
-### 5) Change map validation & area estimates
+### 4) Change map validation & area estimates
 
 a. We provided reference data for the study area as a shapefile. Use it to perform an accuracy assessment. Why is it challenging to perform an area-adjusted accuracy assessment in this case?
 b. Calculate map-based area estimates for your map and the Global Forest Change data using simple pixel counting. Compare the estimates. What are the major differences?
 
-### 6) Reporting results  
-We collect your main results in this table: https://ethercalc.org/572rg3qh93t2 [UPDATE!] Please fill in all required fields, i.e. your name and selected approach (e.g. post-classification comparison), overall accuracy and class accuracies in decimal values (e.g. 0.75), as well as class areas in hectares.
+We collect your main results in this table: https://ethercalc.org/rlko1iq98pqi. Please fill in all required fields, i.e. your name and selected approach (e.g. post-classification comparison), overall accuracy and class accuracies in decimal values (e.g. 0.75), as well as class areas in hectares.
 
 
 ## Reading materials
