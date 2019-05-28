@@ -120,6 +120,7 @@ $(document).ready(function () {
         <li><a href="#session-04-pixel-based-compositing">Session 04: Pixel-based compositing</a></li>
         <li><a href="#session-05-machine-learning-for-image-classification">Session 05: Machine learning for image classification</a></li>
         <li><a href="#session-06-accuracy-assessment-and-area-estimation">Session 06: Accuracy assessment and area estimation</a></li>
+        <li><a href="#session-07-multi-temporal-change-detection">Session 07: Multi-temporal change detection</a></li>
         <li><a href="#terminology">Terminology</a></li>
         </ul>
         </div>
@@ -1729,97 +1730,130 @@ $year: the acquisition year.</p></li>
 <h2>Reading materials</h2>
 <p>In this paper, <a href="http://doi.org/10.1126/science.1244693">Hansen et al. (2013)</a> presented the first global Landsat-based map of forest cover change. Please make sure to read the paper and the supplementary materials and take notes on questions of understanding and issues to discuss during the course.</p>
 <hr />
+</div>
+</div>
+<div id="session-07-multi-temporal-change-detection" class="section level1">
+<h1>Session 07: Multi-temporal change detection</h1>
+<div id="learning-goals-8" class="section level2">
+<h2>Learning goals</h2>
+<ul>
+<li>Bundle your experiences to develop a supervised classification workflow</li>
+<li>Map forest dynamics in the Southern Brazilian Amazon</li>
+<li>Generate map-based estimates of forest loss and gain in the study region</li>
+</ul>
+</div>
+<div id="background-4" class="section level2">
+<h2>Background</h2>
+<p>Deforestation processes are widespread across the globe. Remote sensing technologies are often used to map these processes, their spatial patterns and temporal evolution over large areas. An impressive case of the use of operational forest monitoring schemes is Brazil´s Amazon forest. Here, large-area deforestation for cattle ranching and crop cultivation occurs.</p>
+<div class="figure">
+<img src="fig/s07_para.jpg" alt="Aerial photograph of deforestation in southern Pará, Brazil. Source: Patrick Hostert" style="width:80.0%" />
+<p class="caption">Aerial photograph of deforestation in southern Pará, Brazil. Source: Patrick Hostert</p>
+</div>
+<p>The <a href="">PRODES</a> project, run by the National Institute for Space Research (INPE) provides information on spatially explicit information of forest loss using visual interpretation of Landsat and CBERS data. Often, visual interpretation is however not feasible and we desire an automated detection of change processes.</p>
+<p>But how do we get to the change map? Similar to the production of a land cover map, we can produce maps of land cover or land use change. This inherently incorporates the integration of multiple observation dates. Broadly speaking, change detection can occur in two ways:</p>
+<ul>
+<li><p><strong>Post-classification change detection</strong>: This refers to the independent production of land use or land cover maps for each time point of interest. In a next stept, differencing techniques are applied to investigate the change between two (or more) maps. While training data collection is relatively straight-forward, error propagation is a core issue for post-classification comparisons.</p></li>
+<li><p><strong>Multi-temporal change classification</strong>: This refers to the direct classification of a stack of two (or more) images to assess the change classes of interest. Image stacks can be based on reflectance data, vegetation indices, or any other indicators that are comparable over time. Defining good change classes and collecting training data can be challenging. As an example: mapping change between 4 classes A, B, C and D, already requires training data for 16 change trajectories: AA, AB, AC, AD, BA, BB, …, DC, DD.</p></li>
+</ul>
+<div class="figure">
+<img src="fig/s07_change.png" alt="Schematic illustration of change detection methods." />
+<p class="caption">Schematic illustration of change detection methods.</p>
+</div>
+</div>
+<div id="exercise-8" class="section level2">
+<h2>Exercise</h2>
+<p>After completing the last exercises, you gained a lot of experience in using R &amp; QGIS for data handling and pre-processing, training data collection, classification, and accuracy assessment. In other terms: you´re well prepared for performing a change detection using Landsat data. The goal of this exercise is to map forest cover change in the Southern Brazilian Amazon.</p>
+<div class="figure">
+<img src="fig/s07_ls.png" alt="Landsat images of study area for 2000, 2005, and 2010." />
+<p class="caption">Landsat images of study area for 2000, 2005, and 2010.</p>
+</div>
+<p>We provided the following datasets in <a href="https://box.hu-berlin.de/f/bb4553666dff42c29cb9/?dl=1">our repository</a> and on drive O:</p>
+<p>…sr_data/: Three Landsat 5 surface reflectance stacks (*_crp.tif) at five-year intervals from 2000 to 2010.</p>
+<ul>
+<li>LT052260682000061001T1-SC20170927060330 (10 June 2000)<br />
+</li>
+<li>LT052260682005060801T1-SC20170927060440 (08 June 2005)<br />
+</li>
+<li>LT052260682010062201T1-SC20170927060241 (22 June 2010)</li>
+</ul>
+<p>…vector/: A shapefile and a *.kmz file for GoogleEarth, which will help you to accurately delineate the Landsat pixel locations and extents for training data collection.</p>
+<p>…validation/: A shapefile containing reference data for the accuracy assessment.</p>
+<p>…gfc/: A subset of the Global Forest Change dataset by Hansen et al. (2013). We reclassified the data to match the target classes of today´s exercises.</p>
+<p>Your task is to create a change map, which contains the following classes:</p>
+<table>
+<thead>
+<tr class="header">
+<th>classID</th>
+<th>Class</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Stable forest</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Deforestation 2001-2005</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Deforestation 2006-2010</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Forest gain</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Stable non-forest</td>
+</tr>
+</tbody>
+</table>
+<p>Different from the previous exercises, you can decide on how the workflow of your map production looks like in detail. Use the code and tools from the last sessions and earlier experiences with remote sensing and associated software packages, if applicable. Consider the following steps:</p>
+<div id="choosing-an-approach-for-change-detection" class="section level3">
+<h3>1) Choosing an approach for change detection</h3>
+<p>Several change detection approaches can be used to map forest cover changes. You can choose a methodological approach for your change detection. We suggest two approaches for supervised classification:</p>
+<ul>
+<li>Post-classification comparison: You perform a classification of land cover for each composite dataset. You then use raster algebra in R (or any other tool of your choice) to convert the individual results into a change map.</li>
+<li>Integrated multi-temporal change classification: You stack all features into a single file and collect training data for the change classes of interest. You obtain the change map directly from your classification.</li>
+</ul>
+</div>
+<div id="screening-of-input-data-and-training-data-collection" class="section level3">
+<h3>2) Screening of input data and training data collection</h3>
+<ol style="list-style-type: lower-alpha">
+<li><p>Visualize the Landsat images in QGIS. Test a true color (RGB), as well as a nIR-swIR1-red false color combination.<br />
+Optional: Derive additional features from your data. Do you want to classify based on the spectral bands? What about vegetation indices, principal components, tasseled cap components?</p></li>
+<li><p>Consider that the way you collect your training data varies with the approach you choose in 1).</p></li>
+<li><p>Collecting training data is time consuming - try to be efficient. Make use of the QGIS Info-Tool to compare spectral profiles of the three images. You can also link QGIS and Google Earth through the GearthView plugin. For exact pixel locations, use the Landsat pixel grid we provided.</p></li>
+</ol>
+</div>
+<div id="model-training-classification" class="section level3">
+<h3>3) Model training &amp; classification</h3>
+<ol style="list-style-type: lower-alpha">
+<li><p>Choose a classification algorithm: Feel free to use any classifier. In case you´re interested in differences between classifiers, test more than one!</p></li>
+<li><p>Parametrize the model. Depending on your choice of classification model, think about how to make an informed decision about the model parameters. Optimize parameters wherever possible, e.g. by using the out-of-bag error.</p></li>
+</ol>
+</div>
+<div id="change-map-validation-area-estimates" class="section level3">
+<h3>4) Change map validation &amp; area estimates</h3>
+<ol style="list-style-type: lower-alpha">
+<li><p>We provided reference data for the study area as a shapefile. Use it to perform an accuracy assessment. Why is it challenging to perform an area-adjusted accuracy assessment in this case?</p></li>
+<li><p>Calculate map-based area estimates for your map and the Global Forest Change data using simple pixel counting. Compare the estimates. What are the major differences?</p></li>
+</ol>
+<p>We collect your main results in <a href="https://ethercalc.org/rlko1iq98pqi">this table</a>. Please fill in all required fields, i.e. your name and selected approach (e.g. post-classification comparison), overall accuracy and class accuracies in decimal values (e.g. 0.75), as well as class areas in hectares.</p>
+<hr />
+</div>
+</div>
+<div id="reading-materials-6" class="section level2">
+<h2>Reading materials</h2>
+<p>In the next session, we would like to discuss <a href="https://doi.org/10.1016/j.rse.2014.10.014">Müller et al. (2015): Mining dense Landsat time series for separating cropland and pasture in a heterogeneous Brazilian savanna landscape</a>. In this paper, the authors explored the concept of spectral-temporal metrics for separating spectrally similar land cover classes in the Brazilian Cerrado. Please read the paper and make sure you understand the underlying concept. Write down questions of understanding and issues to discuss during the next session. Also, try to answer the following questions:</p>
+<ul>
+<li>How do spectral-temporal metrics conceptually differ from pixel-based composites?</li>
+<li>For which type of (classification) problems can spectral-temporal metrics be useful?</li>
+</ul>
+<hr />
 <!-- 
-
-# Session 07: Multi-temporal change detection
-
-## Learning goals
-
-- Bundle your experiences to develop a supervised classification workflow
-- Map forest dynamics in the Southern Brazilian Amazon
-- Generate map-based estimates of forest loss and gain in the study region
-
-## Background
-
-Deforestation processes are widespread across the globe. Remote sensing technologies are often used to map these processes, their spatial patterns and temporal evolution over large areas. An impressive case of the use of operational forest monitoring schemes is Brazil´s Amazon forest. Here, large-area deforestation for cattle ranching and crop cultivation occurs. 
-
-![Aerial photograph of deforestation in southern Pará, Brazil. Source: Patrick Hostert](fig/s07_para.jpg){width=80%}
-
-The [PRODES]() project, run by the National Institute for Space Research (INPE) provides information on spatially explicit information of forest loss using visual interpretation of Landsat and CBERS data. Often, visual interpretation is however not feasible and we desire an automated detection of change processes. 
-
-![Landsat images of study area for 2000, 2005, and 2010.](fig/s07_ls.png){width=80%}
-
-
-But how do we get to the change map? Similar to the production of a land cover map, we can produce maps of land cover or land use change. This inherently incorporates the integration of multiple observation dates. Broadly speaking, change detection can occur in two ways: 
-
-- **Post-classification change detection**: This refers to the independent production of land use or land cover maps for each time point of interest. In a next stept, differencing techniques are applied to investigate the change between two (or more) maps. While training data collection is relatively straight-forward, error propagation is a core issue for post-classification comparisons.
-
-- **Multi-temporal change classification**: This refers to the direct classification of a stack of two (or more) images to assess the change classes of interest. Image stacks can be based on reflectance data, vegetation indices, or any other indicators that are comparable over time. Defining good change classes and collecting training data can be challenging. As an example: mapping change between 4 classes A, B, C and D, already requires training data for 16 change trajectories: AA, AB, AC, AD, BA, BB, …, DC, DD.
-
-
-## Exercise
-
-After completing the last exercises, you gained a lot of experience in using R & QGIS for data handling and pre-processing, training data collection, classification, and accuracy assessment. In other terms: you´re well prepared for performing a change detection using Landsat data. The goal of this exercise is to map forest cover change in the Southern Brazilian Amazon.  
-
-We provided the following datasets in [our repository](https://box.hu-berlin.de/f/bb4553666dff42c29cb9/?dl=1) and on drive O:  
-
-…sr_data/: Three Landsat 5 surface reflectance stacks (*_crp.tif) at five-year intervals from 2000 to 2010.
-
-- LT052260682000061001T1-SC20170927060330 (10 June 2000)  
-- LT052260682005060801T1-SC20170927060440 (08 June 2005)  
-- LT052260682010062201T1-SC20170927060241 (22 June 2010)  
-
-…vector/: A shapefile and a *.kmz file for GoogleEarth, which will help you to accurately delineate the Landsat pixel locations and extents for training data collection.  
-
-…validation/: A shapefile containing reference data for the accuracy assessment.  
-
-…gfc/: A subset of the Global Forest Change dataset by Hansen et al. (2013). We reclassified the data to match the target classes of today´s exercises.
-
-Your task is to create a change map, which contains the following classes:
-
-| classID | Class                   |
-| ------- | -----                   |
-| 1       | Stable Forest           |
-| 2       | Deforestation 2001-2005 |
-| 3       | Deforestation 2005-2010 |
-| 4       | Forest Gain             |
-| 5       | Stable Non-Forest       |
-
-Different from the previous exercises, you can decide on how the workflow of your map production looks like in detail. Use the code and tools from the last sessions and earlier experiences with remote sensing and associated software packages, if applicable. Consider the following steps:
-
-### 1) Choosing an approach for change detection
-Several change detection approaches can be used to map forest cover changes. You can choose a methodological approach for your change detection. We suggest two approaches for supervised classification:
-
-- Post-classification comparison: You perform a classification of land cover for each composite dataset. You then use raster algebra in R (or any other tool of your choice) to convert the individual results into a change map.
-- Integrated multi-temporal change classification: You stack all features into a single file and collect training data for the change classes of interest. You obtain the change map directly from your classification.
-
-### 2) Inspect and prepare your data
-
-a. Visualize the Landsat images in QGIS. Try out a true color (RGB: 3-2-1), as well as a 4-5-3 false color combination.
-b. Optional: Derive additional features from your data. Do you want to classify based on the spectral bands? What about vegetation indices, principal components, tasseled cap components?
-
-### 3) Training data collection
-
-a. Consider that the way you collect your training data varies with the approach you choose in 1).
-b. Collecting training data is time consuming - try to be efficient. Make use of the QGIS Info-Tool to compare spectral profiles of the three images. You can also link QGIS and Google Earth through the GearthView plugin. For exact pixel locations, use the Landsat pixel grid we provided.
-
-### 4) Model training & classification
-
-a. Choose a classification algorithm: Feel free to use any classifier. In case you´re interested in differences between classifiers, test more than one!
-b. Parametrize the model. Depending on your choice of classification model, think about how to make an informed decision about the model parameters. Optimize parameters wherever possible, e.g. by using the out-of-bag error.
-
-### 5) Change map validation & area estimates
-
-a. We provided reference data for the study area as a shapefile. Use it to perform an accuracy assessment. Why is it challenging to perform an area-adjusted accuracy assessment in this case?
-b. Calculate map-based area estimates for your map and the Global Forest Change data using simple pixel counting. Compare the estimates. What are the major differences?
-
-### 6) Reporting results  
-We collect your main results in this table: https://ethercalc.org/572rg3qh93t2 [UPDATE!] Please fill in all required fields, i.e. your name and selected approach (e.g. post-classification comparison), overall accuracy and class accuracies in decimal values (e.g. 0.75), as well as class areas in hectares.
-
-
-## Reading materials
-
-------
 
 # Session 08: Spectral-temporal metrics
 
