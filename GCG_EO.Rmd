@@ -1489,7 +1489,7 @@ So the better area estimate for deciduous forest in our study region is 1,920 ha
 
 Wrapping it up, area adjustment can make quite a substantial difference for overall accuracy and producer´s accuracy. User´s accuracy remains unaffected. Producing area estimates directly from the reference data is advised in order to produce more accurate estimations of land cover, land use, or land change. 
 
-All procedures which were only briefly described here and are explained in more detail in [Olofsson et al. (2014)](https://doi.org/10.1016/j.rse.2014.02.015). We recommend this read, as it is documenting the current state-of-the-art in regards to accuracy assessment in high detail. 
+All procedures which were only briefly described here and are explained in more detail in [Olofsson et al. (2014)](https://doi.org/10.1016/j.rse.2014.02.015). We recommend this read, as it is documenting the current state-of-the-art in regards to accuracy assessment in high detail. Another source of background information is the [technical documentation of the AREA² tools for accuracy assessment](https://area2.readthedocs.io/en/latest/background.html).
 
 ## Exercise
 
@@ -1564,15 +1564,14 @@ Deforestation processes are widespread across the globe. Remote sensing technolo
 
 ![Aerial photograph of deforestation in southern Pará, Brazil. Source: Patrick Hostert](fig/s07_para.jpg){width=80%}
 
-The [PRODES]() project, run by the National Institute for Space Research (INPE) provides information on spatially explicit information of forest loss using visual interpretation of Landsat and CBERS data. Often, visual interpretation is however not feasible and we desire an automated detection of change processes. 
 
+The [PRODES](http://www.dpi.inpe.br/prodesdigital/prodes.php?LANGUAGE=EN&) project, run by the National Institute for Space Research  [INPE](http://www.inpe.br/) provides information on spatially explicit information of forest loss using visual interpretation of Landsat and CBERS data. Often, visual interpretation is however not feasible and we desire an automated detection of change processes. 
 
+How do we get to the change map? Similar to the production of a land cover map, we can produce maps of land cover or land use change. This inherently incorporates the integration of multiple observation dates. Broadly speaking, change detection can occur in two ways: 
 
-But how do we get to the change map? Similar to the production of a land cover map, we can produce maps of land cover or land use change. This inherently incorporates the integration of multiple observation dates. Broadly speaking, change detection can occur in two ways: 
+- **Post-classification change detection**: This refers to the independent production of land use or land cover maps for each time point of interest. In a next stept, differencing techniques are applied to investigate the change between two (or more) maps. While training data collection is relatively straight-forward, error propagation is a core issue for post-classification comparisons. It is therefore advised to assess the map quality of the final change map independently.
 
-- **Post-classification change detection**: This refers to the independent production of land use or land cover maps for each time point of interest. In a next stept, differencing techniques are applied to investigate the change between two (or more) maps. While training data collection is relatively straight-forward, error propagation is a core issue for post-classification comparisons.
-
-- **Multi-temporal change classification**: This refers to the direct classification of a stack of two (or more) images to assess the change classes of interest. Image stacks can be based on reflectance data, vegetation indices, or any other indicators that are comparable over time. Defining good change classes and collecting training data can be challenging. As an example: mapping change between 4 classes A, B, C and D, already requires training data for 16 change trajectories: AA, AB, AC, AD, BA, BB, …, DC, DD.
+- **Multi-temporal change classification**: This refers to the direct classification of a stack of two (or more) images to assess the change classes of interest. Image stacks can be based on reflectance data, vegetation indices, or any other indicators that are comparable over time. Defining good change classes and collecting training data can be challenging. As an example: mapping change between 4 classes A, B, C and D, already requires training data for 16 change trajectories: A-A, A-B, A-C, A-D, B-A, B-B, ..., D-C, D-D.
 
 ![Schematic illustration of change detection methods.](fig/s07_change.png)
 
