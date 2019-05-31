@@ -1687,7 +1687,7 @@ Different metrics might be more or less useful depending on the application. Goo
 
 In this exercise you will map pastures and croplands in deforested areas of the Brazilian Amazon. You will use and generate spectral-temporal metrics to separate these two land covers which are difficult to discriminate using single images. you will thereby be able to investigate which land cover is primarily replacing forests in the region.
 
-We provide the following data in [our repository]() and on drive O:
+We provide the following data in [our repository](https://box.hu-berlin.de/f/cdc86f7993194946930f/?dl=1) and on drive O:
 
 a. …ts_stacks/: cloud-masked stacks of TC brightness (TCB), TC greenness (TCG), TC wetness (TCW) derived from 30 Landsat images acquired throughout 2010. Observation dates and sensors for each band in the stacks are listed in *.csv file.
 
