@@ -1661,11 +1661,11 @@ In the next session, we would like to discuss [Müller et al. (2015): Mining den
 
 Understanding post-deforestation land use is essential to disentangle the drivers of deforestation.
 
-![Post-deforestation land uses in the study region include intensive soy cultivation (left) and rather extensive cattle ranching (right). Images: Philippe Rufin](fig/s08_lu.png)
+![Post-deforestation land uses in the study region include intensive soy cultivation (left) and extensive cattle ranching (right). Images: Philippe Rufin](fig/s08_lu.png)
 
-From a remote sensing perspective, separating cropland and grassland is difficult due to similar spectral signatures, coupled with diverse management regimes. Looking at single points in time, croplands and pastures are difficult to discriminate. By creating an intra-annual time series, we might be able to capture exactly these differences in land surface phenology. 
+From a remote sensing perspective, separating cropland and grassland is challenging due to similar spectral signatures in most periods of the year. In selected periods however, differences in land surface phenology become apparent. We can investigate these differences by creating an intra-annual time series of Tasseled Cap Greenness. 
 
-![Intra-annual time series of Tasseled Cap Greenness for 2010.](fig/s08_tcg_ts.gif)
+![Intra-annual time series of Tasseled Cap Greenness for 2010.](fig/s08_tcg_ts.gif){width=80%}
 
 Let´s investigate if we can see differences between pastures and croplands which play out over time. We collected 50 reference samples for pastures and 50 for cropland in the study region. We then extract the TCG value for all those locations in each of the time series bands. In a next step, we can create class-wise boxplots for each class and observation date, which shape a trajectory of land surface dynamics for each class.
 
@@ -1677,7 +1677,7 @@ Can you identify differences between the classes? Looking at the above graph sug
 
 We can see that these "temporal statistics" can be useful to discriminate the two spectrally similar classes. Features combining the spectral appearance of a surface with its behaviour over time are increasingly popular in the remote sensing community. We refer to such features as spectral-temporal metrics (STM). STM are descriptive statistics of the spectral behaviour over time. They provide an efficient means to capture seasonal variations of land surface dynamics, while reducing the impact of clouds and cloud-shadows. STM can be calculated directly from the spectral bands, but also indices such as the NDVI, or TC components. 
 
-![Exemplary metrics calculated from intra-annual time series of Tasseled Cap Greenness.](fig/s08_stm.png)
+![Exemplary metrics calculated from intra-annual time series of Tasseled Cap Greenness.](fig/s08_stm.png){width=80%}
 
 Different metrics might be more or less useful depending on the application. Good process understanding is key in finding out which STM are relevant for the problem at hand. We should decide on the type of spectral information and a set of statistics (metrics) to compute. Providing such information to a classifier can enable the production of thematically detailed land cover maps over large areas, such as a [pan-European land cover map](https://www2.hu-berlin.de/geomultisens/europeanLandCover/euroLandCover.html).
 
@@ -1685,13 +1685,13 @@ Different metrics might be more or less useful depending on the application. Goo
 
 ## Exercise
 
-In this exercise you will map pastures and croplands in deforested areas of the Brazilian Amazon. You will use and generate spectral-temporal metrics to separate these two land covers which are difficult to discriminate using mono-temporal image data. This will allow you to investigate which land cover is primarily replacing forests in the region.
+In this exercise you will map pastures and croplands in deforested areas of the Brazilian Amazon. You will use and generate spectral-temporal metrics to separate these two land covers which are difficult to discriminate using single images. you will thereby be able to investigate which land cover is primarily replacing forests in the region.
 
 We provide the following data in [our repository]() and on drive O:
 
 a. …ts_stacks/: cloud-masked stacks of TC brightness (TCB), TC greenness (TCG), TC wetness (TCW) derived from 30 Landsat images acquired throughout 2010. Observation dates and sensors for each band in the stacks are listed in *.csv file.
 
-b. …spectemp/: eight spectral temporal metrics for TCB, TCG and TCW describing
+b. …spectemp/: eight spectral temporal metrics for TCB, TCG and TCW:
 min, max, mean: minimum, maximum and mean value  
 p25, p50, p75: 25%, 50%, 75% percentile values  
 iqr: interquartile-range (25%-75%)  
@@ -1706,12 +1706,12 @@ e. …training/: a set of points to explore the spectral-temporal behaviour of y
 f. …validation/: a set of points to assess the accuracy of your final classification.
 
 
-Your tasks are as follows:
-
 ### 1) Inspect the input data 
+
 Open a new QGIS project and inspect the spectral-temporal metrics. Choose one indicator (e.g. Tasseled Cap Greenness) and load all layers. Make sure you understand what the metrics represent and discuss their meaning, robustness (e.g. against cloud contamination), and behaviour over different land cover types with your neighbor(s).
 
 ### 2) Assess suitability of spectral-temporal metrics
+
 We provide a shapefile with training points for the following classes  
 
 | classID | Class    |
@@ -1720,29 +1720,33 @@ We provide a shapefile with training points for the following classes
 | 2       | Cropland |
 | 3       | Others   |
 
-```extract()``` the values at your training locations from the temporal stacks (e.g., …/ts_stacks/TCB.tif). Compare the phenological behavior of the classes with boxplots or line plots. Use the following code to import the acquisition dates of the Landsat images:
-
+```extract()``` the values at your training locations from the temporal stacks (e.g., …/ts_stacks/TCG.tif). Compare the phenological behavior of the classes with boxplots or line plots. Use the following code to import the acquisition dates of the Landsat images:
 
 ```{r import_dates, echo=T, eval=F}
 data.path <- 'O:/ST19_MSc-EO/S08/data/'
 sensor_date <- read.table(paste0(data.path, 'ts_stacks/Landsat_2010_Sensor_Date.csv', sep=";", header=T)
 ```
 
-Summarize the main characteristics of the three classes over the growing season and identify major differences. Please add your insights in comments in your script.
-Select spectral-temporal metrics that capture the differences between croplands, pastures, and others well. Select at most six different metrics from the ones provided.
+Summarize the main characteristics of the three classes over the growing season and identify major differences. Please add your insights in comments in your script. Select spectral-temporal metrics that capture the differences between croplands, pastures, and others well. Select at most six different metrics from the ones provided.
 
 ### 3) Compute additional spectral-temporal metrics
+
 Let´s compute two additional spectral-temporal metrics from the time series stacks.
 
 a. First, think about creating a temporal subset of your time series for highlighting differences which are most pronounced during specific seasons (e.g. 'dry season', 'third quarter' or 'August').
-b. Second, decide on the statistic to calculate. Your metrics can be for instance additional percentiles, information on the timing of specific events, such as the observation date of the minimum value, or differences between metrics. Be creative!
-How to do that: A number of summarizing functions can be applied directly to raster stacks (```mean()```, ```max()```, ```min()```, ```range()```). If you want to calculate metrics other than those, you need to convert your raster stack into a matrix using as.matrix() and perform your calculations on this matrix using ```apply()```. You can then write the results into a new raster, which you create using ```raster()``` and assign the results of your computation with the *vals* parameter.  
-See the following code template for a detailed example to compute the median Tasseled Cap Greenness. Computation might take several minutes - make use of the processing time by preparing the subsequent tasks.
 
-<details>
-<summary>Click here to see code</summary>
+b. Second, decide on the statistic to calculate. Your metrics can be for instance additional percentiles, information on the timing of specific events, such as the observation date of the minimum value, or differences between metrics. Be creative!
+
+How to do that: A number of summarizing functions can be applied directly to raster stacks (```mean()```, ```max()```, ```min()```, ```range()```). If you want to calculate metrics other than those, you need to convert your raster stack into a matrix using ```as.matrix()```. The below figure helps to understand how a three-dimensional raster stack is being transformed into a two-dimensional matrix.
+
+![Schematic illstration of converting a raster stack to a matrix using the as.matrix() function.](fig/s08_matrix.png)
+
+Based on the resulting matrix, you can perform basic calculations using, e.g., ```apply()```. You can then write the results into a new raster, which you create using ```raster()``` and assign the results of your computation with the ```vals``` parameter.  
+
+The following code template gives an example for computing the median Tasseled Cap Greenness. Computation might take several minutes - make use of the processing time by preparing the subsequent tasks.
+
 ```{r compute_median, echo=T, eval=F}
-# Read TCG stack
+# Read TCG time series stack
 tcg.stack <- stack('O:/ST19_MSc-EO/S08/data/ts_stacks/TCG_stack.tif')
 
 # Convert to matrix
@@ -1760,17 +1764,18 @@ tcg.median.raster <- raster(nrows=tcg.stack@nrows,
 # Plot result
 plot(tcg.median.raster)
 ```
-</details>
 
 ### 4) Train and apply Random Forest Model
-a. Train a Random Forest model based on your selected / computed spectral-temporal metrics. As always, make an informed decision about the ntree and mtry parameters.
 
-b. Produce a map using your Random Forest model and ```mask()``` the result with last week´s forest map, so only non-forest areas in 2010 are left. Write the result to disk.
+a. Train a Random Forest model based on your selected and computed spectral-temporal metrics. As always, make an informed decision about the ```ntree``` and ```mtry``` parameters.
 
-### 5) Accuracy Assessment and explore land change processes
+b. Produce a map using your Random Forest model and ```mask()``` the result with last week´s forest map, so only non-forest areas in 2010 are left. Write the result to disk using the appropriate ```datatype```.
+
+### 5) Accuracy assessment and area estimates
+
 a. Assess the accuracy of the map using the validation data we provided. Run an additional iteration using different metrics in case you are not satisifed with your results.
 
-b. Combine the resulting map with your forest change map from last week to get a better insight into the land change processes of the study area. Calculate the fractions of deforested land occupied by pasture or cropland for each of the two time periods. Was forest primarily replaced by pastures or by cropland? How did this process change over the periods 2001-2005 and 2006-2010? Please enter your main results in [this table](https://ethercalc.org/sputdinazkck).
+b. Combine the resulting map with your forest change map from last week to get a better insight into the land change processes of the study area. Calculate the fractions of deforested land occupied by pasture or cropland for each of the two time periods. Was forest primarily replaced by pastures or by cropland? Did this process change over the periods 2001-2005 and 2006-2010? Please enter your main results in [this table](https://ethercalc.org/sputdinazkck).
 
 <!-- 
 ## Reading materials.
