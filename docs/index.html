@@ -1878,12 +1878,22 @@ Optional: Derive additional features from your data. Do you want to classify bas
 <img src="fig/s08_tcg_ts.gif" alt="Intra-annual time series of Tasseled Cap Greenness for 2010." />
 <p class="caption">Intra-annual time series of Tasseled Cap Greenness for 2010.</p>
 </div>
-<p>Those differences can be emphasized by aggregation into spectral-temporal metrics. Spectral-temporal metrics are descriptive statistics of the spectral behaviour over time. They provide an efficient means to capture seasonal variations of land surface dynamics, while reducing the impact of clouds and cloud-shadows.</p>
-<p>Can be calculated from spectral bands, but also indices or TC components Different metrics might be more or less useful depending on the application.</p>
+<p>Let´s investigate if we can see differences between pastures and croplands which play out over time. We collected 50 reference samples for pastures and 50 for cropland in the study region. We then extract the TCG value for all those locations in each of the time series bands. In a next step, we can create class-wise boxplots for each class and observation date, which shape a trajectory of land surface dynamics for each class.</p>
+<div class="figure">
+<img src="fig/s08_boxplots_ts.png" alt="Boxplots showing the distribution of TCG for pastures and cropland across all observations of the year 2010." />
+<p class="caption">Boxplots showing the distribution of TCG for pastures and cropland across all observations of the year 2010.</p>
+</div>
+<p>Can you identify differences between the classes? Looking at the above graph suggests that croplands have a somewhat higher variability throughout the year, but on average, pastures show a slightly elevated level of TCG. We can try to verify this by calculating descriptive statistics of all TCG observations in the year and then comparing those between the classes. Let´s take a look at the maximum, mean, minimum, and standard deviation of TCG throughout 2010.</p>
+<div class="figure">
+<img src="fig/s08_boxplots_stm.png" alt="Boxplots showing the distribution of maximum, mean, minimum and standard deviation of TCG for 50 samples of pastures and 50 samples of cropland in 2010." />
+<p class="caption">Boxplots showing the distribution of maximum, mean, minimum and standard deviation of TCG for 50 samples of pastures and 50 samples of cropland in 2010.</p>
+</div>
+<p>We can see that these “temporal statistics” can be useful to discriminate the two spectrally similar classes. Features combining the spectral appearance of a surface with its behaviour over time are increasingly popular in the remote sensing community. We refer to such features as spectral-temporal metrics (STM). STM are descriptive statistics of the spectral behaviour over time. They provide an efficient means to capture seasonal variations of land surface dynamics, while reducing the impact of clouds and cloud-shadows. STM can be calculated directly from the spectral bands, but also indices such as the NDVI, or TC components.</p>
 <div class="figure">
 <img src="fig/s08_stm.png" alt="Exemplary metrics calculated from intra-annual time series of Tasseled Cap Greenness." />
 <p class="caption">Exemplary metrics calculated from intra-annual time series of Tasseled Cap Greenness.</p>
 </div>
+<p>Different metrics might be more or less useful depending on the application. Good process understanding is key in finding out which STM are relevant for the problem at hand. We should decide on the type of spectral information and a set of statistics (metrics) to compute. Providing such information to a classifier can enable the production of thematically detailed land cover maps over large areas, such as a <a href="https://www2.hu-berlin.de/geomultisens/europeanLandCover/euroLandCover.html">pan-European land cover map</a>.</p>
 <hr />
 </div>
 <div id="exercise-9" class="section level2">
