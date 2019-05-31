@@ -1878,10 +1878,12 @@ Optional: Derive additional features from your data. Do you want to classify bas
 <img src="fig/s08_tcg_ts.gif" alt="Intra-annual time series of Tasseled Cap Greenness for 2010." />
 <p class="caption">Intra-annual time series of Tasseled Cap Greenness for 2010.</p>
 </div>
-<p>Those differences can be emphasized by aggregation into spectral-temporal metrics.</p>
-<p>Spectral-temporal metrics are descriptive statistics of the spectral behaviour over time.</p>
-<p>Spectral-temporal metrics provided an efficient means to capture seasonal variations of land surface spectra and to reduce the impact of clouds and cloud-shadows by relaxing the otherwise strong cloud cover limitations imposed by image-based classification methods. (Pflugmacher)</p>
+<p>Those differences can be emphasized by aggregation into spectral-temporal metrics. Spectral-temporal metrics are descriptive statistics of the spectral behaviour over time. They provide an efficient means to capture seasonal variations of land surface dynamics, while reducing the impact of clouds and cloud-shadows.</p>
 <p>Can be calculated from spectral bands, but also indices or TC components Different metrics might be more or less useful depending on the application.</p>
+<div class="figure">
+<img src="fig/s08_stm.png" alt="Exemplary metrics calculated from intra-annual time series of Tasseled Cap Greenness." />
+<p class="caption">Exemplary metrics calculated from intra-annual time series of Tasseled Cap Greenness.</p>
+</div>
 <hr />
 </div>
 <div id="exercise-9" class="section level2">
@@ -1930,9 +1932,9 @@ std: standard deviation.</p></li>
 </tbody>
 </table>
 <p><code>extract()</code> the values at your training locations from the temporal stacks (e.g., …/ts_stacks/TCB.tif). Compare the phenological behavior of the classes with boxplots or line plots. Use the following code to import the acquisition dates of the Landsat images:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sensor_date &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&#39;O:/ST19_MSc-EO/S08/data/ts_stacks/Landsat_2010_Sensor_Date.csv&#39;</span>, <span class="dt">sep=</span><span class="st">&quot;;&quot;</span>, <span class="dt">header=</span>T)</code></pre></div>
-<p>Summarize the main characteristics of the three classes over the growing season and identify major differences (please add your insights in comments in your script).<br />
-Select spectral-temporal metrics that capture the differences between croplands, pastures, and others well. Select at most six different metrics from the ones provided.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data.path &lt;-<span class="st"> &#39;O:/ST19_MSc-EO/S08/data/&#39;</span>
+sensor_date &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="kw">paste0</span>(data.path, <span class="st">&#39;ts_stacks/Landsat_2010_Sensor_Date.csv&#39;</span>, <span class="dt">sep=</span><span class="st">&quot;;&quot;</span>, <span class="dt">header=</span>T)</code></pre></div>
+<p>Summarize the main characteristics of the three classes over the growing season and identify major differences. Please add your insights in comments in your script. Select spectral-temporal metrics that capture the differences between croplands, pastures, and others well. Select at most six different metrics from the ones provided.</p>
 </div>
 <div id="compute-additional-spectral-temporal-metrics" class="section level3">
 <h3>3) Compute additional spectral-temporal metrics</h3>
@@ -1943,11 +1945,22 @@ Select spectral-temporal metrics that capture the differences between croplands,
 See the following code template for a detailed example to compute the median Tasseled Cap Greenness. Computation might take several minutes - make use of the processing time by preparing the subsequent tasks.</li>
 </ol>
 <p><details> <summary>Click here to see code</summary></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(raster)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Read TCG stack</span>
 tcg.stack &lt;-<span class="st"> </span><span class="kw">stack</span>(<span class="st">&#39;O:/ST19_MSc-EO/S08/data/ts_stacks/TCG_stack.tif&#39;</span>)
+
+<span class="co"># Convert to matrix</span>
 tcg.matrix &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(tcg.stack)
+
+<span class="co"># Calculate median across rows in matrix</span>
 tcg.median &lt;-<span class="st"> </span><span class="kw">apply</span>(tcg.matrix, <span class="dv">1</span>, <span class="dt">FUN=</span>median, <span class="dt">na.rm=</span>T)
-tcg.median.raster &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="dt">nrows=</span>tcg.stack<span class="op">@</span>nrows, <span class="dt">ncols=</span>tcg.stack<span class="op">@</span>ncols, <span class="dt">crs=</span>tcg.stack<span class="op">@</span>crs, <span class="dt">vals=</span>tcg.median)
+
+<span class="co"># Write results to empty raster</span>
+tcg.median.raster &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="dt">nrows=</span>tcg.stack<span class="op">@</span>nrows, 
+                            <span class="dt">ncols=</span>tcg.stack<span class="op">@</span>ncols, 
+                            <span class="dt">crs=</span>tcg.stack<span class="op">@</span>crs, 
+                            <span class="dt">vals=</span>tcg.median)
+
+<span class="co"># Plot result</span>
 <span class="kw">plot</span>(tcg.median.raster)</code></pre></div>
 <p></details></p>
 </div>

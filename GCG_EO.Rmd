@@ -1663,8 +1663,7 @@ Understanding post-deforestation land use is essential to disentangle the driver
 
 ![Post-deforestation land uses in the study region include intensive soy cultivation (left) and rather extensive cattle ranching (right). Images: Philippe Rufin](fig/s08_lu.png)
 
-From a remote sensing perspective, separating cropland and grassland is difficult due to similar spectral signatures, coupled with diverse management regimes.
-Looking at single points in time, croplands and pastures are difficult to discriminate. By creating an intra-annual time series, we might be able to capture exactly these differences in land surface phenology.
+From a remote sensing perspective, separating cropland and grassland is difficult due to similar spectral signatures, coupled with diverse management regimes. Looking at single points in time, croplands and pastures are difficult to discriminate. By creating an intra-annual time series, we might be able to capture exactly these differences in land surface phenology. Wow.!
 
 ![Intra-annual time series of Tasseled Cap Greenness for 2010.](fig/s08_tcg_ts.gif)
 
@@ -1738,7 +1737,6 @@ See the following code template for a detailed example to compute the median Tas
 
 <details>
 <summary>Click here to see code</summary>
-
 ```{r compute_median, echo=T, eval=F}
 # Read TCG stack
 tcg.stack <- stack('O:/ST19_MSc-EO/S08/data/ts_stacks/TCG_stack.tif')
@@ -1758,7 +1756,6 @@ tcg.median.raster <- raster(nrows=tcg.stack@nrows,
 # Plot result
 plot(tcg.median.raster)
 ```
-
 </details>
 
 ### 4) Train and apply Random Forest Model
@@ -1818,7 +1815,7 @@ This is a non-exhaustive list of common terms and their definitions.
 - Spectral resolution
 - Radiometric resolution
 - Bits, Bytes
-
+ 
 ## Data characteristics
 
 - Spectral band
