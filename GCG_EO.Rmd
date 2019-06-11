@@ -1805,26 +1805,36 @@ Think about training and validation data collection early on. Make sure there is
 
 Today you will start working on your individual projects! As a first step, we need to define a clear research question, objective(s) and sketch a workflow. The outcome of this block will be an abstract of max. 200 words per group. The abstract should be brief, but contain your motivation & objectives, study area & period, datasets (image data, training / validation) as well as a description of the main methods used for your analysis. Here is how you get there in three broad steps: 
 
-1) Defining the scope of your project:
+### 1) Defining the scope of your project:  
 
 a. Specify a research question or hypotheses, around which you can develop one or two main objectives.
+
 b. Search for relevant literature in your project context. Stick to recent publications in good remote sensing journals, (e.g. Remote Sensing of Environment, Remote Sensing, Applied Earth Observation and Geoinformation, IEEE JSTARS).
+
 c. Evaluate the relevance of selected publications in more detail after you made a first selection. Go through the papers and try to identify aspects of the study which deserve further research.
 
-2) Defining data requirements and methods:
+### 2) Defining data requirements and methods:  
 
 a. Specify the exact study area (location, extent) and time frame relevant for your analysis. 
+
 b. Define the sensor and data product of your choice (e.g. Landsat BOA, Sentinel-2 BOA).
+
 c. Develop a class catalogue including precise class definitions.
+
 d. Define the required temporal resolution (e.g. 5-yearly, annual, intra-annual).
+
 e. Choose a suitable method (e.g. pixel-based compositing, spectral-temporal metrics).
 
-3) Screen data availability:
+### 3) Screen data availability:  
 
-a. Visit the [USGS EarthExplorer](https://earthexplorer.usgs.gov/) or the [ESA Copernicus Open Access Hub](https://scihub.copernicus.eu/dhus/#/home).
+a. Visit the [USGS EarthExplorer](https://earthexplorer.usgs.gov/) or any other data distributio service you might know.
+
 b. Define your study area and period, and have a look at the available data sets.
+
 c. Select the required data product (e.g. Landsat Level-2) and specify additional criteria (e.g. cloud cover, collection category).
+
 d. Browse through the search results. Are there images available for you time period? How about cloudiness in the study region? Any other limiting factors?
+
 e. Check any other source of data that you might know of.
 
 
