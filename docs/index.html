@@ -122,6 +122,7 @@ $(document).ready(function () {
         <li><a href="#session-06-accuracy-assessment-and-area-estimation">Session 06: Accuracy assessment and area estimation</a></li>
         <li><a href="#session-07-multi-temporal-change-detection">Session 07: Multi-temporal change detection</a></li>
         <li><a href="#session-08-spectral-temporal-metrics">Session 08: Spectral-temporal metrics</a></li>
+        <li><a href="#session-09-project-phase-i">Session 09: Project phase I</a></li>
         <li><a href="#terminology">Terminology</a></li>
         </ul>
         </div>
@@ -1990,16 +1991,73 @@ tcg.median.raster &lt;-<span class="st"> </span><span class="kw">raster</span>(<
 <li><p>Assess the accuracy of the map using the validation data we provided. Run an additional iteration using different metrics in case you are not satisifed with your results.</p></li>
 <li><p>Combine the resulting map with your forest change map from last week to get a better insight into the land change processes of the study area. Calculate the fractions of deforested land occupied by pasture or cropland for each of the two time periods. Was forest primarily replaced by pastures or by cropland? Did this process change over the periods 2001-2005 and 2006-2010? Please enter your main results in <a href="https://ethercalc.org/sputdinazkck">this table</a>.</p></li>
 </ol>
+<hr />
+</div>
+</div>
+</div>
+<div id="session-09-project-phase-i" class="section level1">
+<h1>Session 09: Project phase I</h1>
+<div id="general-advice" class="section level2">
+<h2>General advice</h2>
+<p>We offer you three weeks of time for project work in teams of two. You should use this time to develop and execute a research objective in a guided setting. We iteratively give feedback. The overall goal is to strengthen your competence in problem-solving and thus to increase your confidence in working with remote sensing and other geospatial datasets. Developing a research idea is an iterative process. Running into problems and realizing things don´t work as expected is <a href="doi.org/10.1016/j.molcel.2009.09.013">part of research</a>. In case you notice that your project idea will not work out, try to identify alternative pathways out of “the cloud”.</p>
+<div class="figure">
+<img src="fig/s09_cloud.png" alt="The cloud (Alon 2009)" />
+<p class="caption">“The cloud” (Alon 2009)</p>
+</div>
+<p>So how to find an interesting research strand? Existing literature can be a good source of inspiration. Think about papers you have read, which deserve further investigation or could be interesting to reproduce using different methods or datasets. Further, you may have stumbled upon interesting study sites in other classes. Did you ever consider mapping that peculiarity in your home region? The <a href="https://na.unep.net/atlas/google.php">UNEP Atlas of Environmental Change</a> can maybe get your thinking going.</p>
+<p>Once you come up with an idea, answer the following questions:</p>
+<p><strong>Is this research relevant?</strong> Try to chose a relevant topic for your project. However, remember that time is very limited, so don´t be too ambitious. A lot of research presents relatively incremental progress in a specific field. You could, e.g., improve existing research using different datasets, methods, class catalogs, or study periods.</p>
+<p><strong>Are there existing studies guiding a way forward?</strong> If there are none, we recommend to rethink your proposed idea. Most relevant research strands were already approached, proposing valuable knowledge (gaps) to build upon. If there are several studies available, identify one key piece of literature, along which you can specify your research question and objective(s).</p>
+<p><strong>How much data will I need?</strong> If the answer is “a lot”, you might be on the wrong path. Keep data volumes and processing time at a manageable scale to avoid frustration. Limit the size of your study region, the study period, and the temporal resolution to the minimum required to map the process of interest. Do not acquire more than 20GB of uncompressed raw satellite data. Always keep your working directory tidy by removing redundant data. Experienced students may consider using Google Earth Engine for the project.</p>
+<p><strong>Are there reference datasets?</strong> Think about training and validation data collection early on. Make sure there is VHR data in GoogleEarth that allows for training your classes of interest, or figure out a way to extract reference data from the imagery itself. If the answer to this question is “no”, things will become very complex.</p>
+</div>
+<div id="practical-guidelines" class="section level2">
+<h2>Practical guidelines</h2>
+<p>Today you will start working on your individual projects! As a first step, we need to define a clear research question, objective(s) and sketch a workflow. The outcome of this block will be an abstract of max. 200 words per group. The abstract should be brief, but contain your motivation &amp; objectives, study area &amp; period, datasets (image data, training / validation) as well as a description of the main methods used for your analysis. Here is how you get there in three broad steps:</p>
+<ol style="list-style-type: decimal">
+<li>Defining the scope of your project:</li>
+</ol>
+<ol style="list-style-type: lower-alpha">
+<li>Specify a research question or hypotheses, around which you can develop one or two main objectives.</li>
+<li>Search for relevant literature in your project context. Stick to recent publications in good remote sensing journals, (e.g. Remote Sensing of Environment, Remote Sensing, Applied Earth Observation and Geoinformation, IEEE JSTARS).</li>
+<li>Evaluate the relevance of selected publications in more detail after you made a first selection. Go through the papers and try to identify aspects of the study which deserve further research.</li>
+</ol>
+<ol start="2" style="list-style-type: decimal">
+<li>Defining data requirements and methods:</li>
+</ol>
+<ol style="list-style-type: lower-alpha">
+<li>Specify the exact study area (location, extent) and time frame relevant for your analysis.</li>
+<li>Define the sensor and data product of your choice (e.g. Landsat BOA, Sentinel-2 BOA).</li>
+<li>Develop a class catalogue including precise class definitions.</li>
+<li>Define the required temporal resolution (e.g. 5-yearly, annual, intra-annual).</li>
+<li>Choose a suitable method (e.g. pixel-based compositing, spectral-temporal metrics).</li>
+</ol>
+<ol start="3" style="list-style-type: decimal">
+<li>Screen data availability:</li>
+</ol>
+<ol style="list-style-type: lower-alpha">
+<li>Visit the <a href="https://earthexplorer.usgs.gov/">USGS EarthExplorer</a> or the <a href="https://scihub.copernicus.eu/dhus/#/home">ESA Copernicus Open Access Hub</a>.</li>
+<li>Define your study area and period, and have a look at the available data sets.</li>
+<li>Select the required data product (e.g. Landsat Level-2) and specify additional criteria (e.g. cloud cover, collection category).</li>
+<li>Browse through the search results. Are there images available for you time period? How about cloudiness in the study region? Any other limiting factors?</li>
+<li>Check any other source of data that you might know of.</li>
+<li>Order and download the images, so we can proceed with the pre-processing of your data next week.</li>
+</ol>
 <!-- 
-## Reading materials.
 
-------
-
-# Project work
-
-## Phase I
 
 ## Phase II
+
+Perform pre-processing!
+– order & download your image data.
+- unpack and stack image data.
+- crop to study region.
+- mask images from clouds & cloud shadows.
+
+Proceed with your processing workflow!
+- TC transform, pixel-based compositing, spectral-temporal metrics...
+– collect training data.
+
 
 ## Phase III
 
@@ -2008,14 +2066,13 @@ tcg.median.raster &lt;-<span class="st"> </span><span class="kw">raster</span>(<
 -->
 </div>
 </div>
-</div>
 <div id="terminology" class="section level1">
 <h1>Terminology</h1>
-<p>This is a non-exhaustive list of common terms and their definitions.</p>
+<p>This is a non-exhaustive list of common terms.</p>
 <div id="observations" class="section level2">
 <h2>Observations</h2>
 <ul>
-<li><a href="https://en.wikipedia.org/wiki/Pixel">Pixel</a></li>
+<li>Pixel</li>
 <li>Observation</li>
 <li>Path/Row; WRS-2; Footprint; Scene: Partitions of Landsat images into approximately 185 × 185 km squares.</li>
 <li>Grid: an arbitrary subdivision with square units in the target coordinate system.</li>

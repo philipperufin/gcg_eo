@@ -1777,16 +1777,74 @@ a. Assess the accuracy of the map using the validation data we provided. Run an 
 
 b. Combine the resulting map with your forest change map from last week to get a better insight into the land change processes of the study area. Calculate the fractions of deforested land occupied by pasture or cropland for each of the two time periods. Was forest primarily replaced by pastures or by cropland? Did this process change over the periods 2001-2005 and 2006-2010? Please enter your main results in [this table](https://ethercalc.org/sputdinazkck).
 
-<!-- 
-## Reading materials.
-
 ------
 
-# Project work
+# Session 09: Project phase I
 
-## Phase I
+## General advice 
+
+We offer you three weeks of time for project work in teams of two. You should use this time to develop and execute a research objective in a guided setting. We iteratively give feedback. The overall goal is to strengthen your competence in problem-solving and thus to increase your confidence in working with remote sensing and other geospatial datasets. Developing a research idea is an iterative process. Running into problems and realizing things don´t work as expected is [part of research](doi.org/10.1016/j.molcel.2009.09.013). In case you notice that your project idea will not work out, try to identify alternative pathways out of "the cloud". 
+
+!["The cloud" (Alon 2009)](fig/s09_cloud.png)
+
+So how to find an interesting research strand? Existing literature can be a good source of inspiration. Think about papers you have read, which deserve further investigation or could be interesting to reproduce using different methods or datasets. Further, you may have stumbled upon interesting study sites in other classes. Did you ever consider mapping that peculiarity in your home region? The [UNEP Atlas of Environmental Change](https://na.unep.net/atlas/google.php) can maybe get your thinking going.
+
+Once you come up with an idea, answer the following questions:
+
+**Is this research relevant?** Try to chose a relevant topic for your project. However, remember that time is very limited, so don´t be too ambitious. A lot of research presents relatively incremental progress in a specific field. You could, e.g., improve existing research using different datasets, methods, class catalogs, or study periods.
+
+**Are there existing studies guiding a way forward?**
+If there are none, we recommend to rethink your proposed idea. Most relevant research strands were already approached, proposing valuable knowledge (gaps) to build upon. If there are several studies available, identify one key piece of literature, along which you can specify your research question and objective(s). 
+
+**How much data will I need?** If the answer is "a lot", you might be on the wrong path. Keep data volumes and processing time at a manageable scale to avoid frustration. Limit the size of your study region, the study period, and the temporal resolution to the minimum required to map the process of interest. Do not acquire more than 20GB of uncompressed raw satellite data. Always keep your working directory tidy by removing redundant data. Experienced students may consider using Google Earth Engine for the project. 
+
+**Are there reference datasets?** 
+Think about training and validation data collection early on. Make sure there is VHR data in GoogleEarth that allows for training your classes of interest, or figure out a way to extract reference data from the imagery itself. If the answer to this question is "no", things will become very complex.
+
+## Practical guidelines
+
+Today you will start working on your individual projects! As a first step, we need to define a clear research question, objective(s) and sketch a workflow. The outcome of this block will be an abstract of max. 200 words per group. The abstract should be brief, but contain your motivation & objectives, study area & period, datasets (image data, training / validation) as well as a description of the main methods used for your analysis. Here is how you get there in three broad steps: 
+
+1) Defining the scope of your project:
+
+a. Specify a research question or hypotheses, around which you can develop one or two main objectives.
+b. Search for relevant literature in your project context. Stick to recent publications in good remote sensing journals, (e.g. Remote Sensing of Environment, Remote Sensing, Applied Earth Observation and Geoinformation, IEEE JSTARS).
+c. Evaluate the relevance of selected publications in more detail after you made a first selection. Go through the papers and try to identify aspects of the study which deserve further research.
+
+2) Defining data requirements and methods:
+
+a. Specify the exact study area (location, extent) and time frame relevant for your analysis. 
+b. Define the sensor and data product of your choice (e.g. Landsat BOA, Sentinel-2 BOA).
+c. Develop a class catalogue including precise class definitions.
+d. Define the required temporal resolution (e.g. 5-yearly, annual, intra-annual).
+e. Choose a suitable method (e.g. pixel-based compositing, spectral-temporal metrics).
+
+3) Screen data availability:
+
+a. Visit the [USGS EarthExplorer](https://earthexplorer.usgs.gov/) or the [ESA Copernicus Open Access Hub](https://scihub.copernicus.eu/dhus/#/home).
+b. Define your study area and period, and have a look at the available data sets.
+c. Select the required data product (e.g. Landsat Level-2) and specify additional criteria (e.g. cloud cover, collection category).
+d. Browse through the search results. Are there images available for you time period? How about cloudiness in the study region? Any other limiting factors?
+e. Check any other source of data that you might know of.
+d. Order and download the images, so we can proceed with the pre-processing of your data next week.
+
+
+
+<!-- 
+
 
 ## Phase II
+
+Perform pre-processing!
+– order & download your image data.
+- unpack and stack image data.
+- crop to study region.
+- mask images from clouds & cloud shadows.
+
+Proceed with your processing workflow!
+- TC transform, pixel-based compositing, spectral-temporal metrics...
+– collect training data.
+
 
 ## Phase III
 
@@ -1796,11 +1854,11 @@ b. Combine the resulting map with your forest change map from last week to get a
 
 # Terminology
 
-This is a non-exhaustive list of common terms and their definitions.
+This is a non-exhaustive list of common terms.
 
 ## Observations
 
-- [Pixel](https://en.wikipedia.org/wiki/Pixel)
+- Pixel
 - Observation
 - Path/Row; WRS-2; Footprint; Scene: Partitions of Landsat images into approximately 185 × 185 km squares.
 - Grid: an arbitrary subdivision with square units in the target coordinate system.
