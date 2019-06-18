@@ -123,6 +123,7 @@ $(document).ready(function () {
         <li><a href="#session-07-multi-temporal-change-detection">Session 07: Multi-temporal change detection</a></li>
         <li><a href="#session-08-spectral-temporal-metrics">Session 08: Spectral-temporal metrics</a></li>
         <li><a href="#session-09-project-phase-i">Session 09: Project phase I</a></li>
+        <li><a href="#session-10-project-phase-ii">Session 10: Project phase II</a></li>
         <li><a href="#terminology">Terminology</a></li>
         </ul>
         </div>
@@ -1997,6 +1998,14 @@ tcg.median.raster &lt;-<span class="st"> </span><span class="kw">raster</span>(<
 </div>
 <div id="session-09-project-phase-i" class="section level1">
 <h1>Session 09: Project phase I</h1>
+<div id="learning-goals-10" class="section level2">
+<h2>Learning goals:</h2>
+<ul>
+<li>Develop a research question and specific objectives.</li>
+<li>Sketch a workflow.</li>
+<li>Acquire remote sensing data.</li>
+</ul>
+</div>
 <div id="general-advice" class="section level2">
 <h2>General advice</h2>
 <p>We offer you three weeks of time for project work in teams of two. You should use this time to develop and execute a research objective in a guided setting. We iteratively give feedback. The overall goal is to strengthen your competence in problem-solving and thus to increase your confidence in working with remote sensing and other geospatial datasets. Developing a research idea is an iterative process. Running into problems and realizing things don´t work as expected is <a href="doi.org/10.1016/j.molcel.2009.09.013">part of research</a>. In case you notice that your project idea will not work out, try to identify alternative pathways out of “the cloud”.</p>
@@ -2042,20 +2051,44 @@ tcg.median.raster &lt;-<span class="st"> </span><span class="kw">raster</span>(<
 <li><p>Check any other source of data that you might know of.</p></li>
 </ol>
 <p><strong>Until next week:</strong> Order and download the required data, so we can proceed with pre-processing.</p>
+</div>
+</div>
+</div>
+<div id="session-10-project-phase-ii" class="section level1">
+<h1>Session 10: Project phase II</h1>
+<p>Until here, you successfully managed to develop a research idea and acquired remote sensing datasets for further analyses. The next steps will vary largely depending on the specific project workflow and the following guidelines might therefore not suit every project. Feel free to follow, modify, or ignore them as you like.</p>
+<div id="practical-guidelines-1" class="section level2">
+<h2>Practical guidelines</h2>
+<div id="produce-level-2-data" class="section level3">
+<h3>1) Produce level 2 data</h3>
+<p>In this step, you should perform the necessary pre-processing steps to prepare your downloaded data for the next steps. Often these data come as compressed archives with individual band and metadata files. To avoid unnecessary processing time in further steps, we need a cloud-masked stack covering the extent of our study region.</p>
+<p>To get there, we need to do the following:</p>
+<ul>
+<li>Unpack the archives.</li>
+<li>Stack the image bands of interest.</li>
+<li>Crop the image(s) to the study region extent.</li>
+<li>Mask clouds &amp; cloud shadows in the image(s).</li>
+</ul>
+</div>
+<div id="further-processing-to-produce-level-3-data" class="section level3">
+<h3>2) Further processing to produce level 3 data</h3>
+<p>Producing meaningful features for classification or regression algorithms is a critical step towards good reults. Make use of the methods and skillsets you acquired during the course. Depending on your research project, it might make sense to perform pixel-based compositing, or to calculate spectral-temporal metrics. Remember, many of these steps can be performed using spectral bands, band indices, or Tasseled Cap components. Take enough time to discuss these issues in your team before making a final choice.</p>
+</div>
+<div id="training-data-collection" class="section level3">
+<h3>3) Training data collection</h3>
+<p>You have already done this a couple of times by now. Here are some guidelines that can make your life easier.</p>
+<ul>
+<li>Clearly define the class catalogue of interest and aggregate thematically irrelevant classes wherever it appears useful.</li>
+<li>Define a minimum number of samples per class.<br />
+</li>
+<li>Set up an efficient work environment, e.g., a QGIS project containing your image data, other ancillary datasets, and a VHR baselayer (e.g., using the QuickMapServices plugin).</li>
+<li>Make use of VHR data from Google Earth, but always consult the historic imagery toolbar to verify the acquisition dates of these data.<br />
+</li>
+<li>Save your progress after each collected point or polygon.</li>
+<li>Explore the spectral and / or temporal characteristics of your training locations. Do they behave as expected? Are there outliers? Are your image features good discriminators for your classes of interest?</li>
+</ul>
+<p><strong>Until next week:</strong> Have your input features and training data ready, so we can proceed with producing results. Decide for an algorithm to use in your classification / regression problem. Discuss the parametrization of these algorithms in your team, i.e., which are the required parameters and how to determine useful parameter settings.</p>
 <!-- 
-
-
-## Phase II
-
-Perform pre-processing!
-– order & download your image data.
-- unpack and stack image data.
-- crop to study region.
-- mask images from clouds & cloud shadows.
-
-Proceed with your processing workflow!
-- TC transform, pixel-based compositing, spectral-temporal metrics...
-– collect training data.
 
 
 ## Phase III

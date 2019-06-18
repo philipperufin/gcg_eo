@@ -1781,6 +1781,12 @@ b. Combine the resulting map with your forest change map from last week to get a
 
 # Session 09: Project phase I
 
+## Learning goals: 
+
+- Develop a research question and specific objectives.
+- Sketch a workflow.
+- Acquire remote sensing data.
+
 ## General advice 
 
 We offer you three weeks of time for project work in teams of two. You should use this time to develop and execute a research objective in a guided setting. We iteratively give feedback. The overall goal is to strengthen your competence in problem-solving and thus to increase your confidence in working with remote sensing and other geospatial datasets. Developing a research idea is an iterative process. Running into problems and realizing things don´t work as expected is [part of research](doi.org/10.1016/j.molcel.2009.09.013). In case you notice that your project idea will not work out, try to identify alternative pathways out of "the cloud". 
@@ -1842,20 +1848,41 @@ e. Check any other source of data that you might know of.
 
 
 
+# Session 10: Project phase II
+
+Until here, you successfully managed to develop a research idea and acquired remote sensing datasets for further analyses. The next steps will vary largely depending on the specific project workflow and the following guidelines might therefore not suit every project. Feel free to follow, modify, or ignore them as you like.
+
+## Practical guidelines
+
+### 1) Produce level 2 data
+
+In this step, you should perform the necessary pre-processing steps to prepare your downloaded data for the next steps. Often these data come as compressed archives with individual band and metadata files. To avoid unnecessary processing time in further steps, we need a cloud-masked stack covering the extent of our study region.
+
+To get there, we need to do the following: 
+
+- Unpack the archives.
+- Stack the image bands of interest.
+- Crop the image(s) to the study region extent.
+- Mask clouds & cloud shadows in the image(s).
+
+### 2) Further processing to produce level 3 data
+
+Producing meaningful features for classification or regression algorithms is a critical step towards good reults. Make use of the methods and skillsets you acquired during the course. Depending on your research project, it might make sense to perform pixel-based compositing, or to calculate spectral-temporal metrics. Remember, many of these steps can be performed using spectral bands, band indices, or Tasseled Cap components. Take enough time to discuss these issues in your team before making a final choice. 
+
+### 3) Training data collection
+
+You have already done this a couple of times by now. Here are some guidelines that can make your life easier.
+
+- Clearly define the class catalogue of interest and aggregate thematically irrelevant classes wherever it appears useful. 
+- Define a minimum number of samples per class.  
+- Set up an efficient work environment, e.g., a QGIS project containing your image data, other ancillary datasets, and a VHR baselayer (e.g., using the QuickMapServices plugin). 
+- Make use of VHR data from Google Earth, but always consult the historic imagery toolbar to verify the acquisition dates of these data.  
+- Save your progress after each collected point or polygon.
+- Explore the spectral and / or temporal characteristics of your training locations. Do they behave as expected? Are there outliers? Are your image features good discriminators for your classes of interest?
+
+**Until next week:** Have your input features and training data ready, so we can proceed with producing results. Decide for an algorithm to use in your classification / regression problem. Discuss the parametrization of these algorithms in your team, i.e., which are the required parameters and how to determine useful parameter settings.
+
 <!-- 
-
-
-## Phase II
-
-Perform pre-processing!
-– order & download your image data.
-- unpack and stack image data.
-- crop to study region.
-- mask images from clouds & cloud shadows.
-
-Proceed with your processing workflow!
-- TC transform, pixel-based compositing, spectral-temporal metrics...
-– collect training data.
 
 
 ## Phase III
