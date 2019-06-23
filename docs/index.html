@@ -124,6 +124,7 @@ $(document).ready(function () {
         <li><a href="#session-08-spectral-temporal-metrics">Session 08: Spectral-temporal metrics</a></li>
         <li><a href="#session-09-project-phase-i">Session 09: Project phase I</a></li>
         <li><a href="#session-10-project-phase-ii">Session 10: Project phase II</a></li>
+        <li><a href="#session-11-project-phase-iii">Session 11: Project phase III</a></li>
         <li><a href="#terminology">Terminology</a></li>
         </ul>
         </div>
@@ -2056,9 +2057,16 @@ tcg.median.raster &lt;-<span class="st"> </span><span class="kw">raster</span>(<
 </div>
 <div id="session-10-project-phase-ii" class="section level1">
 <h1>Session 10: Project phase II</h1>
-<p>Until here, you successfully managed to develop a research idea and acquired remote sensing datasets for further analyses. The next steps will vary largely depending on the specific project workflow and the following guidelines might therefore not suit every project. Feel free to follow, modify, or ignore them as you like.</p>
+<div id="learning-goals-11" class="section level2">
+<h2>Learning goals:</h2>
+<ul>
+<li>Convert raw satellite data to analysis-ready level 3 datasets</li>
+<li>Develop a protocol for training data collection</li>
+</ul>
+</div>
 <div id="practical-guidelines-1" class="section level2">
 <h2>Practical guidelines</h2>
+<p>Until here, you successfully managed to develop a research idea and acquired remote sensing datasets for further analyses. The next steps will vary largely depending on the specific project workflow and the following guidelines might therefore not suit every project. Feel free to follow, modify, or ignore them as you like.</p>
 <div id="produce-level-2-data" class="section level3">
 <h3>1) Produce level 2 data</h3>
 <p>In this step, you should perform the necessary pre-processing steps to prepare your downloaded data for the next steps. Often these data come as compressed archives with individual band and metadata files. To avoid unnecessary processing time in further steps, we need a cloud-masked stack covering the extent of our study region.</p>
@@ -2088,14 +2096,47 @@ tcg.median.raster &lt;-<span class="st"> </span><span class="kw">raster</span>(<
 <li>Explore the spectral and / or temporal characteristics of your training locations. Do they behave as expected? Are there outliers? Are your image features good discriminators for your classes of interest?</li>
 </ul>
 <p><strong>Until next week:</strong> Have your input features and training data ready, so we can proceed with producing results. Decide for an algorithm to use in your classification / regression problem. Discuss the parametrization of these algorithms in your team, i.e., which are the required parameters and how to determine useful parameter settings.</p>
-<!-- 
-
-
-## Phase III
-
------- 
-
--->
+</div>
+</div>
+</div>
+<div id="session-11-project-phase-iii" class="section level1">
+<h1>Session 11: Project phase III</h1>
+<div id="learning-goals-12" class="section level2">
+<h2>Learning goals:</h2>
+<ul>
+<li>Generate, investigate, and improve your results</li>
+<li>Design and perform an accuracy assessment</li>
+<li>Prepare a project presentation</li>
+</ul>
+</div>
+<div id="practical-guidelines-2" class="section level2">
+<h2>Practical guidelines</h2>
+<div id="produce-results-using-classification-or-regression" class="section level3">
+<h3>1) Produce results using classification or regression</h3>
+<p>Depending on your problem, choose a suitable classification / regression algorithm. Most of you will probably see RandomForest as the logical option. If it is of interest to you, try other classifiers, e.g., Support Vector Machines. Aim to make informed decisions during the parametrization of the algorithm, e.g., by conducting sensitivity analysis based on OOB errors or cross-validation. Avoid overfitting.</p>
+<p>Once your model is readily trained, perform a prediction. Write your results to disk and take some time for visual assessment of the result in a GIS environment. Some of you may encounter frequently occurring errors, such as misclassification of specific land surfaces. To overcome these, try to understand where the errors come from.</p>
+<ul>
+<li>Is the error a result of erroneous or incomplete training data?</li>
+<li>Can you think about additional input features which allow the classifier to better separate your classes?</li>
+<li>Could you revise your class nomenclature in order to aggregate the confused classes while still being able to answer your research questions?</li>
+<li>Is post-processing a useful idea? You could, e.g., remove unlogical class-transitions in change analyses, or use a spatial filter in order to remove “salt and pepper” effects?</li>
+</ul>
+<p>In some of the above cases, it will be necessary to train a new model and conduct another prediction. Re-iterate if necessary.</p>
+</div>
+<div id="validation" class="section level3">
+<h3>2) Validation</h3>
+<p>Perform an accuracy assessment following the method for area-adjusted accuracy assessment discussed in this course. The materials for session 06 contain a lot of information on the broad steps.</p>
+<p>Broadly speaking, you can perform an area-adjusted accuracy assessment in case you are able to generate reference information at any random location of your study area from available datasets. If you can, the use of a stratified random sample is advised in order to control for the number of samples used per class. A formula by Cochran (1977) can help you decide how many samples should overall be collected.</p>
+<p>Feel free to use any software environment or tool for the area-adjusted accuracy assessment, including the <a href="https://box.hu-berlin.de/f/269470b96af54ba687ef/?dl=1">Excel spreadsheet</a>. Remember that it was designed for a four class-problem, so you need to adjust it if necessary. If you do, please share the adjusted tables with the other groups.</p>
+<p>In some cases, area-adjusted accuracy assessment is not applicable, e.g., when the classes of interest cannot be identified from available data sources. A common example are crop types or tree species. In these cases, you have two options: - Split your reference (e.g., field) data into training and validation datasets. Make sure to make the two datasets as independent as possible, e.g., by introducing a minimum distance criterion, or by avoiding training and validation samples from the same polygon. - Rely on cross-validation, e.g., k-fold cross-validation. This could be beneficial if, e.g., the number of reference datapoints is too small to allow for splitting.</p>
+<p>Most importantly, be aware of which validation strategy is appropriate for your case and make sure you understand why.</p>
+</div>
+<div id="presentation" class="section level3">
+<h3>3) Presentation</h3>
+<p>During the final session of Earth Observation, we will organize a mini-symposium. We kindly ask the presenting groups to <strong>upload their presentation in advance</strong>. Presentations must consist of <strong>at most 6 slides</strong> and include project background and study area, a comprehensive graph of the project workflow, three main results, as well as three discussion items.</p>
+<p>The schedule is very tight and presenters are urged to strictly stay within pre-defined time slots. For every group, an <strong>oral presentation of at most 10 minutes</strong> is foreseen. Presentations exceeding this time limit will be interrupted. The conference organizers further grant a maximum of 5 minutes for discussion.</p>
+<p><strong>Until next week:</strong> Prepare your presentation in PowerPoint and PDF format and upload them as a *.zip file on moodle the latest on July 2.</p>
+<hr />
 </div>
 </div>
 </div>
