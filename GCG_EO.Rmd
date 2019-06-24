@@ -1915,22 +1915,23 @@ In some of the above cases, it will be necessary to train a new model and conduc
 
 Perform an accuracy assessment following the method for area-adjusted accuracy assessment discussed in this course. The materials for session 06 contain a lot of information on the broad steps. 
 
-Broadly speaking, you can perform an area-adjusted accuracy assessment in case you are able to generate reference information at any random location of your study area from available datasets. If you can, the use of a stratified random sample is advised in order to control for the number of samples used per class. A formula by Cochran (1977) can help you decide how many samples should overall be collected.  
+Broadly speaking, you can perform an area-adjusted accuracy assessment in case you are able to generate reference information at any random location of your study area from available datasets. If you can, the use of a stratified random sample is advised in order to control for the number of samples used per class. A method by Cochran (1977) can help you decide how many samples should overall be collected. See the second tab of the [Excel spreadsheet](https://box.hu-berlin.de/f/269470b96af54ba687ef/?dl=1) used earlier.
 
 Feel free to use any software environment or tool for the area-adjusted accuracy assessment, including the [Excel spreadsheet](https://box.hu-berlin.de/f/269470b96af54ba687ef/?dl=1). Remember that it was designed for a four class-problem, so you need to adjust it if necessary. If you do, please share the adjusted tables with the other groups. 
 
-In some cases, area-adjusted accuracy assessment is not applicable, e.g., when the classes of interest cannot be identified from available data sources. A common example are crop types or tree species. In these cases, you have two options: 
+In some cases, area-adjusted accuracy assessment is not applicable, e.g., when the classes of interest cannot be identified from available data sources. A common example are crop types or tree species. In these cases, you have two options:
+
 - Split your reference (e.g., field) data into training and validation datasets. Make sure to make the two datasets as independent as possible, e.g., by introducing a minimum distance criterion, or by avoiding training and validation samples from the same polygon. 
+
 - Rely on cross-validation, e.g., k-fold cross-validation. This could be beneficial if, e.g., the number of reference datapoints is too small to allow for splitting. 
 
 Most importantly, be aware of which validation strategy is appropriate for your case and make sure you understand why. 
 
 ### 3) Presentation
 
-During the final session of Earth Observation, we will organize a mini-symposium. We kindly ask the presenting groups to **upload their presentation in advance**. Presentations must consist of **at most 6 slides** and include project background and study area, a comprehensive graph of the project workflow, three main results, as well as three discussion items. 
+During the final session of Earth Observation, we will organize a mini-symposium. We kindly ask the presenting groups to **upload their presentation in advance**. Presentations must consist of **at most 6 slides** and include project background and study area, a comprehensive graph of the project workflow, three main results, as well as three discussion items. Please use the conference [slide template](https://box.hu-berlin.de/f/40425a5aa7c245f78c29/?dl=1) for your presentation. 
 
-The schedule is very tight and presenters are urged to strictly stay within pre-defined time slots. For every group, an **oral presentation of at most 10 minutes** is foreseen. Presentations exceeding this time limit will be interrupted. The conference organizers further grant a maximum of 5 minutes for discussion. 
-
+The schedule is very tight and presenters are urged to strictly stay within pre-defined time slots. For every group, an **oral presentation of at most 10 minutes** is scheduled. Presentations exceeding this time limit will be interrupted. The organizers further grant a maximum of 5 minutes for discussion. 
 
 **Until next week:** Prepare your presentation in PowerPoint and PDF format and upload them as a *.zip file on moodle the latest on July 2.
 
