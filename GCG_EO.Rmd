@@ -45,7 +45,7 @@ Earth Observation is an advanced course for students of the Master of Science ["
 
 The main goal of this course is to provide you with the necessary knowledge and tools for using optical remote sensing datasets and methods in the geo-scientific context. We want you to enhance your ability of problem-solving, empowering you to perform research independently. To that end, we cover aspects of data acquisition, spatial data handling in R and QGIS, basics of image pre-processing, higher-level processing such as pixel-based compositing and time-series binning. The course contents are related to our lab´s research foci, both in terms of methods and study regions. You may want to check out our [publications](https://www.geographie.hu-berlin.de/en/professorships/geomatics/publications-en), [current projects](https://www.geographie.hu-berlin.de/en/professorships/geomatics/projects), or have a look at [this example](https://www2.hu-berlin.de/geomultisens/europeanLandCover/euroLandCover.html). 
 
-In the course you will learn about current state-of-the-art methods in image processing and time series analyses of optical satellite imagery. The course covers methods related to data quality, cloud masking, vegetation indices, multi-temporal image analyses, machine learning classification algorithms, area adjusted accuracy assessment, time series analyses, and image compositing. We use these methods for mapping of forest types, forest cover changes, agricultural dynamics in the Carpathian ecoregion (Poland), the  Southern Brazilian Amazon, and Crete in Greece.
+In the course you will learn about current state-of-the-art methods in image processing and time series analyses of optical satellite imagery. The course covers methods related to data quality, cloud masking, vegetation indices, multi-temporal image analyses, machine learning classification algorithms, area adjusted accuracy assessment, time series analyses, and image compositing. We use these methods for mapping of forest types, forest cover changes, agricultural dynamics in the Carpathian ecoregion (Poland), and the  Southern Brazilian Amazon.
 
 ------
 
@@ -53,11 +53,11 @@ In the course you will learn about current state-of-the-art methods in image pro
 
 A good understanding of basic principles of remote sensing is needed to follow this course. Participants should furthermore have a basic understanding of R, including syntax, data types and knowledge on how to read, manipulate and write data. As you followed the curriculum of the MSc program, you most likely joined the module "Quantitative Methods for Geographers", in which you learned using R for statistical problems. Here, we built on your existing knowledge. If you are not enrolled in the MSc program, feel free to look at the [course materials](https://github.com/corneliussenf/quantitative_methods). 
 
-Alternatively, you may want to follow one of the numerous tutorials for R fundamentals (e.g., [RStudio](https://www.rstudio.com/online-learning/), [DataCamp](https://www.datacamp.com/courses/free-introduction-to-r), [UMC Utrecht](http://www.r-tutorial.nl/), [Advanced R by Hadley Wickham](http://adv-r.had.co.nz/), [R Graphics Cookbook](https://r-graphics.org/)), or one of those specifically for geodata processing (e.g., [Wageningen University](https://geoscripting-wur.github.io/), [University of Colorado](https://www.earthdatascience.org/)).
+Alternatively, you may want to follow one of the numerous tutorials for R fundamentals (e.g., [RStudio](https://resources.rstudio.com/), [DataCamp](https://www.datacamp.com/courses/free-introduction-to-r), [UMC Utrecht](http://www.r-tutorial.nl/), [Advanced R by Hadley Wickham](http://adv-r.had.co.nz/), [R Graphics Cookbook](https://r-graphics.org/)), or one of those specifically for geodata processing (e.g., [Wageningen University](https://geoscripting-wur.github.io/), [University of Colorado](https://www.earthdatascience.org/)).
 
 -----------
 
-<!-- ################################## INTRO R ############################################## -->
+<!-- ################################## INTRO R ##############################################  -->
 
 # Introducing R 
 
@@ -145,7 +145,7 @@ All data used in the course is openly accessible. Mostly, we´ll be working with
 
 ## Exercises
 
-The weekly exercises are defined in the respective session. Each session comprises several tasks that involve scipting in R. Course participants must submit completed exercises, documented as R scripts, in [moodle](http://moodle.hu-berlin.de/) to pass. Weekly submission deadlines are every sunday, 23:59. Please name the script of your work group as SXX_name1_name2.R, e.g. S01_ernst_rufin.R. Please structure your script for every exercise as follows:
+The weekly exercises are defined in the respective session. Each session comprises several tasks that involve scipting in R. Course participants must submit completed exercises, documented as R scripts, in [moodle](http://moodle.hu-berlin.de/) to pass. Weekly submission deadlines are every sunday, 23:59. Please name the script of your work group as SXX_name1_name2.R. Please structure your script for every exercise as follows:
 
 ```{r template, echo=TRUE, eval=FALSE}
 #############################################################################
@@ -313,8 +313,7 @@ More specifically, think about the following:
 - How were the thresholds for spectral tests derived?
 - How will different error types impact further analyses?
 
-<!-- ################################## SESSION 02 ############################################## -->
-
+<!-- ################################## SESSION 02 ############################################## 
 # Session 02: From DNs to TOA
 
 ------
@@ -624,7 +623,7 @@ In this paper, a long time series of Landsat image composites at five year inter
 
 ------
 
-<!-- ################################## SESSION 03 ############################################## -->
+<!-- ################################## SESSION 03 ############################################## 
 
 # Session 03: Vegetation indices and data transforms
 
@@ -904,7 +903,7 @@ This paper describes the methods used in the article you read last week. Here, a
 
 ------
 
-<!-- ################################## SESSION 04 ############################################## -->
+<!-- ################################## SESSION 04 ##############################################  
 
 # Session 04: Pixel-based compositing
 
@@ -1247,7 +1246,7 @@ In this review, Maxwell and colleagues outline the use of several machine learni
 
 ------
 
-<!-- ################################## SESSION 05 ############################################## -->
+<!-- ################################## SESSION 05 ##############################################  
 
 # Session 05: Machine learning for image classification
 
@@ -1364,7 +1363,7 @@ Please take a look at the Excel sheet provided [here](https://box.hu-berlin.de/f
 
 ------
 
-<!-- ################################## SESSION 06 ##############################################  -->
+<!-- ################################## SESSION 06 ##############################################   
 
 # Session 06: Accuracy assessment and area estimation
 
@@ -1936,6 +1935,7 @@ The schedule is very tight and presenters are urged to strictly stay within pre-
 **Until next week:** Prepare your presentation in PowerPoint and PDF format and upload them as a *.zip file on moodle the latest on July 2.
 
 ------ 
+-->
 
 # Terminology
 
