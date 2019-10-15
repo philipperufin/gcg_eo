@@ -96,7 +96,7 @@ $(document).ready(function () {
         <div id="header">
     <h1 class="title">Earth Observation</h1>
                 <h4 class="author">MSc Global Change Geography</h4>
-                <h4 class="date">Summer term 2019</h4>
+                <h4 class="date">Winter term 2019/2020</h4>
         </div>
     </div>
 </div>
@@ -139,7 +139,7 @@ $(document).ready(function () {
 </div>
 <div id="learning-goals-course-contents" class="section level2">
 <h2>Learning goals &amp; course contents</h2>
-<p>The main goal of this course is to provide you with the necessary knowledge and tools for using optical remote sensing datasets and methods in the geo-scientific context. We want you to enhance your ability of problem-solving, empowering you to perform research independently. To that end, we cover aspects of data acquisition, spatial data handling in R and QGIS, basics of image pre-processing, higher-level processing such as pixel-based compositing and time-series binning. The course contents are related to our lab´s research foci, both in terms of methods and study regions. You may want to check out our <a href="https://www.geographie.hu-berlin.de/en/professorships/geomatics/publications-en">publications</a>, <a href="https://www.geographie.hu-berlin.de/en/professorships/geomatics/projects">current projects</a>, or have a look at <a href="https://www2.hu-berlin.de/geomultisens/europeanLandCover/euroLandCover.html">this example</a>.</p>
+<p>The main goal of this course is to provide you with the necessary knowledge and tools for using optical remote sensing datasets and methods in the geo-scientific context. We want you to enhance your ability of problem-solving, empowering you to perform research independently. To that end, we cover aspects of data acquisition, spatial data handling in R and QGIS, basics of image pre-processing, higher-level processing such as pixel-based compositing and time-series binning. The course contents are related to our lab´s research foci, both in terms of methods and study regions. You may want to check out our <a href="https://www.geographie.hu-berlin.de/en/professorships/geomatics/publications-en">publications</a>, <a href="https://www.geographie.hu-berlin.de/en/professorships/geomatics/projects">current projects</a>, or have a look at <a href="https://www2.hu-berlin.de/geovis/eolab/europeanlandcover/euroLandCover.html">this example</a>.</p>
 <p>In the course you will learn about current state-of-the-art methods in image processing and time series analyses of optical satellite imagery. The course covers methods related to data quality, cloud masking, vegetation indices, multi-temporal image analyses, machine learning classification algorithms, area adjusted accuracy assessment, time series analyses, and image compositing. We use these methods for mapping of forest types, forest cover changes, agricultural dynamics in the Carpathian ecoregion (Poland), and the Southern Brazilian Amazon.</p>
 <hr />
 </div>
@@ -306,7 +306,7 @@ data.dir &lt;-<span class="st"> &#39;course.dir/S01/data/&#39;</span>
 <p>Today, you will make use of R´s raster package classes and functions which are well described in the package documentation. Get acquainted with the following classes and functions and find out what they are useful for: <code>raster()</code>, <code>stack()</code> ,<code>extent()</code>, <code>crop()</code>, <code>extract()</code>, <code>CRS()</code>, <code>projectRaster()</code>, <code>plotRGB()</code>, <code>writeRaster()</code></p>
 <p>Visit the folder containing the unpacked Landsat image. Did you take a close look at the <a href="https://www.usgs.gov/media/images/landsat-collection-1-product-identifier">Landsat file naming convention</a>? Practically, it provides some basic meta-information. For instance, <code>LC08_L1TP_189025_20140310_20170425_01_T1</code> is a sequence of information on the sensor, processing level, WRS path and row, acquisition date, processing date, collection, and collection tier, separated by ’_’.</p>
 <p>As you can see, the Landsat images are delivered as single-band files. The single bands should be stacked for further analyses. For stacking, all input files must have matching extents and the identical projection. Create a stack for each of the two Landsat 8 images.</p>
-<p>Important: Please include only the following bands: blue, green, red, near infrared, shortwave infrared 1, shortwave infrared 2 (in this order). Check the list of <a href="https://landsat.usgs.gov/what-are-band-designations-landsat-satellites/">Landsat spectral bands</a> for a recap. Always keep the band designations in mind, as this can cause confusion, e.g. when combining Landsat 5 and Landsat 8 data.</p>
+<p>Important: Please include only the following bands: blue, green, red, near infrared, shortwave infrared 1, shortwave infrared 2 (in this order). Check the list of <a href="https://www.usgs.gov/faqs/what-are-band-designations-landsat-satellites?qt-news_science_products=0#qt-news_science_products">Landsat spectral bands</a> for a recap. Always keep the band designations in mind, as this can cause confusion, e.g. when combining Landsat 5 and Landsat 8 data.</p>
 <div class="figure">
 <img src="fig/ls_bands.jpg" alt="Band designations for Landsat satellites" style="width:70.0%" />
 <p class="caption">Band designations for Landsat satellites</p>
@@ -1255,7 +1255,7 @@ source('') #path to the parametric_compositing function
 rasterOptions(maxmemory = 1e6)
 
 ######## Define the folder that contains your data...
-data.path <- 'O:/ST19_MSc-EO/S04/data/'
+data.path <- 'O:/WS19_MSc-EO/S04/data/'
 
 #############################################################################
 # 1)
@@ -1850,7 +1850,7 @@ We provide a shapefile with training points for the following classes
 
 
 ```r
-data.path <- 'O:/ST19_MSc-EO/S08/data/'
+data.path <- 'O:/WS1920_MSc-EO/S08/data/'
 sensor_date <- read.table(paste0(data.path, 'ts_stacks/Landsat_2010_Sensor_Date.csv', sep=";", header=T)
 ```
 
@@ -1875,7 +1875,7 @@ The following code template gives an example for computing the median Tasseled C
 
 ```r
 # Read TCG time series stack
-tcg.stack <- stack('O:/ST19_MSc-EO/S08/data/ts_stacks/TCG_stack.tif')
+tcg.stack <- stack('O:/WS1920_MSc-EO/S08/data/ts_stacks/TCG_stack.tif')
 
 # Convert to matrix
 tcg.matrix <- as.matrix(tcg.stack)

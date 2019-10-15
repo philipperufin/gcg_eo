@@ -1,6 +1,6 @@
 ---
 title: "Earth Observation"
-date: "Summer term 2019"
+date: "Winter term 2019/2020"
 author: MSc Global Change Geography
 output: 
   rmdformats::material:
@@ -43,7 +43,7 @@ Earth Observation is an advanced course for students of the Master of Science ["
 
 ## Learning goals & course contents
 
-The main goal of this course is to provide you with the necessary knowledge and tools for using optical remote sensing datasets and methods in the geo-scientific context. We want you to enhance your ability of problem-solving, empowering you to perform research independently. To that end, we cover aspects of data acquisition, spatial data handling in R and QGIS, basics of image pre-processing, higher-level processing such as pixel-based compositing and time-series binning. The course contents are related to our lab´s research foci, both in terms of methods and study regions. You may want to check out our [publications](https://www.geographie.hu-berlin.de/en/professorships/geomatics/publications-en), [current projects](https://www.geographie.hu-berlin.de/en/professorships/geomatics/projects), or have a look at [this example](https://www2.hu-berlin.de/geomultisens/europeanLandCover/euroLandCover.html). 
+The main goal of this course is to provide you with the necessary knowledge and tools for using optical remote sensing datasets and methods in the geo-scientific context. We want you to enhance your ability of problem-solving, empowering you to perform research independently. To that end, we cover aspects of data acquisition, spatial data handling in R and QGIS, basics of image pre-processing, higher-level processing such as pixel-based compositing and time-series binning. The course contents are related to our lab´s research foci, both in terms of methods and study regions. You may want to check out our [publications](https://www.geographie.hu-berlin.de/en/professorships/geomatics/publications-en), [current projects](https://www.geographie.hu-berlin.de/en/professorships/geomatics/projects), or have a look at [this example](https://www2.hu-berlin.de/geovis/eolab/europeanlandcover/euroLandCover.html). 
 
 In the course you will learn about current state-of-the-art methods in image processing and time series analyses of optical satellite imagery. The course covers methods related to data quality, cloud masking, vegetation indices, multi-temporal image analyses, machine learning classification algorithms, area adjusted accuracy assessment, time series analyses, and image compositing. We use these methods for mapping of forest types, forest cover changes, agricultural dynamics in the Carpathian ecoregion (Poland), and the  Southern Brazilian Amazon.
 
@@ -239,7 +239,7 @@ Visit the folder containing the unpacked Landsat image. Did you take a close loo
 
 As you can see, the Landsat images are delivered as single-band files. The single bands should be stacked for further analyses. For stacking, all input files must have matching extents and the identical projection. Create a stack for each of the two Landsat 8 images. 
 
-Important: Please include only the following bands: blue, green, red, near infrared, shortwave infrared 1, shortwave infrared 2 (in this order). Check the list of [Landsat spectral bands](https://landsat.usgs.gov/what-are-band-designations-landsat-satellites/) for a recap. Always keep the band designations in mind, as this can cause confusion, e.g. when combining Landsat 5 and Landsat 8 data. 
+Important: Please include only the following bands: blue, green, red, near infrared, shortwave infrared 1, shortwave infrared 2 (in this order). Check the list of [Landsat spectral bands](https://www.usgs.gov/faqs/what-are-band-designations-landsat-satellites?qt-news_science_products=0#qt-news_science_products) for a recap. Always keep the band designations in mind, as this can cause confusion, e.g. when combining Landsat 5 and Landsat 8 data. 
 
 ![Band designations for Landsat satellites](fig/ls_bands.jpg){width=70%}
 
@@ -1128,7 +1128,7 @@ source('') #path to the parametric_compositing function
 rasterOptions(maxmemory = 1e6)
 
 ######## Define the folder that contains your data...
-data.path <- 'O:/ST19_MSc-EO/S04/data/'
+data.path <- 'O:/WS19_MSc-EO/S04/data/'
 
 #############################################################################
 # 1)
@@ -1722,7 +1722,7 @@ We provide a shapefile with training points for the following classes
 ```extract()``` the values at your training locations from the temporal stacks (e.g., …/ts_stacks/TCG.tif). Compare the phenological behavior of the classes with boxplots or line plots. Use the following code to import the acquisition dates of the Landsat images:
 
 ```{r import_dates, echo=T, eval=F}
-data.path <- 'O:/ST19_MSc-EO/S08/data/'
+data.path <- 'O:/WS1920_MSc-EO/S08/data/'
 sensor_date <- read.table(paste0(data.path, 'ts_stacks/Landsat_2010_Sensor_Date.csv', sep=";", header=T)
 ```
 
@@ -1746,7 +1746,7 @@ The following code template gives an example for computing the median Tasseled C
 
 ```{r compute_median, echo=T, eval=F}
 # Read TCG time series stack
-tcg.stack <- stack('O:/ST19_MSc-EO/S08/data/ts_stacks/TCG_stack.tif')
+tcg.stack <- stack('O:/WS1920_MSc-EO/S08/data/ts_stacks/TCG_stack.tif')
 
 # Convert to matrix
 tcg.matrix <- as.matrix(tcg.stack)
