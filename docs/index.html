@@ -466,7 +466,7 @@ mtl.txt &lt;-<span class="st"> </span><span class="kw">read.delim</span>(mtl, <s
 REFLECTANCE_MULT_BAND &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(mtl.txt[<span class="kw">grep</span>(<span class="st">&quot;REFLECTANCE_MULT_BAND&quot;</span>,mtl.txt<span class="op">$</span>GROUP),][<span class="dv">2</span><span class="op">:</span><span class="dv">7</span>,<span class="dv">2</span>])</code></pre></div>
 <p>Convert the DN values to TOA following the “Conversion to TOA Reflectance” section in the <a href="https://www.usgs.gov/land-resources/nli/landsat/using-usgs-landsat-level-1-data-product">USGS guide for conversion to TOA Reflectance</a>. Important things to keep in mind:</p>
 <ul>
-<li>You can apply the conversion to all bands in a stack simultaneously.</li>
+<li>You can apply the conversion to all bands in a stack simultaneously. Simply apply the calculation the entire stack.</li>
 <li>The Landsat data is provided as integer values. When applying the equation, the data will be cast to float. You will have to re-convert to integer at some point. Use a reflectance scaling factor of 10,000 during the conversion.</li>
 <li>The sun elevation angle provided in the metadata file is reported in degrees. The <code>sin()</code> function expects that angles are provided in radians. For the conversion to work correctly, you need to convert <code>SUN_ELEVATION</code> into radians. Make use of this helper function:</li>
 </ul>
