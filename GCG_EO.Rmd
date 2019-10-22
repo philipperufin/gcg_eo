@@ -11,7 +11,7 @@ knit: (function(input_file, encoding) {
       out_dir <- 'docs';
       rmarkdown::render(input_file, encoding=encoding, output_file=file.path(dirname(input_file), out_dir, 'index.html'))})
 ---
-
+ 
 
 ```{r knitr_init, echo=FALSE, cache=FALSE, message=FALSE, include=FALSE}
 library(knitr)
@@ -313,7 +313,7 @@ More specifically, think about the following:
 - How were the thresholds for spectral tests derived?
 - How will different error types impact further analyses?
 
-<!-- ################################## SESSION 02 ############################################## 
+<!-- ################################## SESSION 02 ############################################## -->
 # Session 02: From DNs to TOA
 
 ------
@@ -333,7 +333,7 @@ This session is the most technical of the entire course. Today we will be dealin
 
 Our y-axis label was "DN", or digital number. Now, what is that again? Earth observing sensors, such as the ones on board the Landsat satellites register radiance at the top of the atmosphere. Radiance is expressed in watt per [steradian](https://en.wikipedia.org/wiki/Steradian) per square meter. 
 
-Storing data in radiance units is difficult and therefore sensors translate measured radiance into DNs. Therefore, the range of energy measured by the sensor is broken into distinct units (DNs). Sensor-specific calibration determines the minimum and maximum amount of radiance that can be measured. DNs express the amount of radiance in relation to these sensor-specific calibration coefficients. The total number of possible DNs is what we refer to as the radiometric resolution of the sensor. 
+Storing data in radiance units is difficult and therefore sensors translate measured radiance into DNs. Therefore, the range of energy measured by the sensor is broken into distinct units (digital numbers, or DNs). Sensor-specific calibration determines the minimum and maximum amount of radiance that can be measured. DNs express the amount of radiance in relation to these sensor-specific calibration coefficients. The total number of possible DNs is what we refer to as the radiometric resolution of the sensor. 
 
 As an example, Landsat 4, 5, and 7 worked with a radiometric resolution of 8 bit. This allows for ```2^8```, or 255 distinct DNs values. Landsat 8 works with 12 bit radiometric resolution, which is artificially quantized to 16 bit. The 16 bit resolution can represent much more different grey shades, exactly ```2^16```, or 65,536 values. Let´s put this into code. 
 
@@ -359,15 +359,15 @@ image(r, col = grey.colors(2^bit, start = 0, end = 1), main = paste0(bit, " bit 
 
 ## DNs to TOA
 
-As DNs are dependent on the sensor calibration, identical measurements yield differing DNs across sensors. DNs are physically not meaningful. Instead of DNs, often we are interested in reflectance. Reflectance expresses the fraction of reflected radiance relative to the total incoming energy (sun), and is scaled between 0 and 1.  Many applications require data converted to reflectance and/or corrected for the influence of the atmosphere. 
+As DNs are dependent on the sensor calibration, identical measurements yield differing DNs across sensors. DNs are physically not meaningful. Instead of DNs, often we are interested in reflectance. Reflectance expresses the fraction of reflected radiance relative to the total incoming energy (sun), and is scaled between 0 and 1.  Many applications require data converted to reflectance and/or corrected for the influence of the atmosphere. The following steps are necessary to convert DNs into (atmospherically corrected) bottom-of-atmosphere reflectance:
 
 - Sensor calibration (DN to radiance)
 - Conversion to top-of-atmosphere reflectance (radiance to TOA)
-- Atmospheric correction yielding bottom-of-atmosphere reflectance (TOA to BOA, or surface reflectance)
+- Atmospheric correction yielding bottom-of-atmosphere reflectance (TOA to BOA, or TOA to surface reflectance)
 
 A conversion of DNs into radiance can be easily undertaken. By accounting for sun-sensor geometries and solar irradiance, we can easily infer top-of-atmosphere reflectance (TOA) from radiance. This facilitates, e.g., a comparison of measurements from different sensors. 
 
-Practically, this involves a linear scaling of the DN values which uses two band-specific rescaling factors. One is multiplicative, one is additive. Formulas are explained in the [USGS guide for conversion to TOA Reflectance](https://www.usgs.gov/land-resources/nli/landsat/using-usgs-landsat-level-1-data-product). With Landsat 8 Collection 1 data, we can use a single set of coefficients to convert DNs to TOA reflectance. Note that this is not the case for all sensors.  
+Practically, this involves a linear scaling of the DN values which uses two band-specific rescaling factors. One is multiplicative, one is additive. Formulas are explained in the [USGS guide for conversion to TOA Reflectance](https://www.usgs.gov/land-resources/nli/landsat/using-usgs-landsat-level-1-data-product). With Landsat 8 Collection 1 data, we can use a single set of coefficients to convert DNs directly to TOA reflectance. Note that this is not the case for all sensors.  
 
 $ρλ' = M_ρ * Q_{cal} + A_ρ$
 
@@ -397,7 +397,7 @@ $θ_{SE}$	= Local sun elevation angle.
 
 ## TOA to BOA
 
-A final step towards comparable measurements of the Earth surface is the atmospheric correction. By doing atmospheric correction, we (theoretically) eliminate the influence of the atmosphere. We therefore call the product "surface reflectance" or "bottom of atmosphere reflectance" (BOA). Theoretically, the space-borne sensor´s measurements should be identical to ground-based measurements. 
+A final step towards comparable measurements of the Earth surface is the atmospheric correction. By doing atmospheric correction, we (theoretically) eliminate the influence of the atmosphere. We therefore call the product "surface reflectance" or "bottom-of-atmosphere reflectance" (BOA). Theoretically, the space-borne sensor´s measurements should be comparable to ground-based measurements. 
 
 ------
 
@@ -407,7 +407,7 @@ During this exercise you will learn how to convert Landsat-8 Collection 1 DNs to
 
 - DN/LC08_L1TP_189025_20141105_20170417_01_T1/ - the directory containing the “L1TP” Landsat product (i.e. terrain-corrected (“orthorectified”) data in DNs), including the metadata file (MTL.txt) and the Quality Band (BQA.tif) which contains information on radiometric saturation, clouds, cloud shadows and more.
 
-- SR/LC081890252014110501T1-SC20170927102137/ – the directory containing Level-2 data, i.e. atmospherically corrected, or bottom-of-atmosphere data. 
+- SR/LC081890252014110501T1-SC20170927102137/ – the directory containing atmospherically corrected, or bottom-of-atmosphere data. This type of data is commonly referred to as Level-2 data.  
 
 ### 1) DN to TOA conversion
 
@@ -434,7 +434,7 @@ REFLECTANCE_MULT_BAND <- as.numeric(mtl.txt[grep("REFLECTANCE_MULT_BAND",mtl.txt
 
 Convert the DN values to TOA following the “Conversion to TOA Reflectance” section in the [USGS guide for conversion to TOA Reflectance](https://www.usgs.gov/land-resources/nli/landsat/using-usgs-landsat-level-1-data-product). Important things to keep in mind:
 
-- You can apply the conversion to all bands in a stack simultaneously.
+- You can apply the conversion to all bands in a stack simultaneously. Simply apply the calculation the entire stack. 
 - The Landsat data is provided as integer values. When applying the equation, the data will be cast to float. You will have to re-convert to integer at some point. Use a reflectance scaling factor of 10,000 during the conversion.
 - The sun elevation angle provided in the metadata file is reported in degrees. The ```sin()``` function expects that angles are provided in radians. For the conversion to work correctly, you need to convert ```SUN_ELEVATION``` into radians. Make use of this helper function:
 
