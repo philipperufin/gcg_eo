@@ -430,6 +430,8 @@ mtl.txt <- read.delim(mtl, sep = '=', stringsAsFactors = F)
 
 # Extract numeric values
 REFLECTANCE_MULT_BAND <- as.numeric(mtl.txt[grep("REFLECTANCE_MULT_BAND",mtl.txt$GROUP),][2:7,2])
+REFLECTANCE_ADD_BAND <- as.numeric(mtl.txt[grep("REFLECTANCE_ADD_BAND",mtl.txt$GROUP),][2:7,2])
+SUN_ELEVATION <- as.numeric(mtl.txt[grep("SUN_ELEVATION",mtl.txt$GROUP),][2])
 ```
 
 Convert the DN values to TOA following the “Conversion to TOA Reflectance” section in the [USGS guide for conversion to TOA Reflectance](https://www.usgs.gov/land-resources/nli/landsat/using-usgs-landsat-level-1-data-product). Important things to keep in mind:
