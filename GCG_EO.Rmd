@@ -481,11 +481,13 @@ b) Briefly summarize the spectral appearance of the six land cover types, and th
 Think about the following question and exchange with your neighbor: 
 Which issues affect the data quality of optical satellite images?
 
-How to find out if a pixel is affected by any of these issues? Luckily, the USGS provides quality bands for the Landsat Collection 1 products. If we look up the [Landsat QA band website](https://www.usgs.gov/land-resources/nli/landsat/landsat-collection-1-level-1-quality-assessment-band) to find out what this band contains, we find the following information: 
-
-*“Each pixel in the QA band contains unsigned integers that represent bit-packed combinations of surface, atmospheric, and sensor conditions that can affect the overall usefulness of a given pixel.”*
+How to find out if a pixel is affected by any of these issues? Luckily, the USGS provides quality bands for the Landsat Collection 1 products. 
 
 ![False-color representation of a cloudy Landsat Level 1 image (left) and a grey-scale visualization of the Landsat QA band (right)](fig/s02_qa_band.png){width=60%}
+
+If we look up the [Landsat QA band website](https://www.usgs.gov/land-resources/nli/landsat/landsat-collection-1-level-1-quality-assessment-band) to find out what this band contains, we find the following statement: 
+
+*“Each pixel in the QA band contains unsigned integers that represent bit-packed combinations of surface, atmospheric, and sensor conditions that can affect the overall usefulness of a given pixel.”*
 
 In the following, you will learn to understand what that means. Please read this section carefully and exchange with your neighbor. 
 
@@ -625,7 +627,7 @@ In this paper, a long time series of Landsat image composites at five year inter
 
 ------
 
-<!-- ################################## SESSION 03 ############################################## 
+<!-- ################################## SESSION 03 ############################################## -->
 
 # Session 03: Vegetation indices and data transforms
 
