@@ -117,6 +117,7 @@ $(document).ready(function () {
         <li><a href="#session-02-data-quality-cloud-masking">Session 02: Data quality &amp; cloud masking</a></li>
         <li><a href="#session-03-vegetation-indices-and-data-transforms">Session 03: Vegetation indices and data transforms</a></li>
         <li><a href="#session-03-training-data-collection">Session 03: Training data collection</a></li>
+        <li><a href="#session-04-pixel-based-compositing">Session 04: Pixel-based compositing</a></li>
         <li><a href="#terminology">Terminology</a></li>
         </ul>
         </div>
@@ -523,11 +524,11 @@ deg2rad &lt;-<span class="st"> </span><span class="cf">function</span>(deg){ (de
 <div id="the-binary-system" class="section level3">
 <h3>The binary system</h3>
 <p>Remember the binary numeral system (0 / FALSE or 1 / TRUE)?</p>
+<p>The binary system represents numbers through sequences of bits. Each bit has a position and a state. The positions are numbered from 0 to the total number of bits, read from right to left. The state of a bit can be either, 0, or 1. Consider the meaning of 0 as „FALSE“ or „NO“, 1 equals „TRUE“ or „YES“.</p>
 <div class="figure">
 <img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Binary_counter.gif" alt="The binary number system. Source: Wikipedia" style="width:100.0%" />
 <p class="caption">The binary number system. Source: Wikipedia</p>
 </div>
-<p>The binary system represents numbers through sequences of bits. Each bit has a position and a state. The positions are numbered from 0 to the total number of bits, read from right to left. The state of a bit can be either, 0, or 1. Consider the meaning of 0 as „FALSE“ or „NO“, 1 equals „TRUE“ or „YES“.</p>
 <p>In the example above, five bit positions are given. Each position is sequentially numbered, starting with 0, read from right to left. By calculating 2 to the power of the bit position, we receive the value of each bit. For all bits with the value 1, we sum the respective values. Different combinations of states and positions therefore enable us to represent integer numbers.</p>
 <p>The more positions or bits we have the higher numbers we can generate. With 5 bits, we can represent the numbers 0 – 31 (32 unique values), with 16 bits, we can represent the numbers 0 - 65,535 (65,536 unique values). Following the example with 5 bits, we can for instance represent these numbers:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 00001</span>
@@ -926,275 +927,267 @@ spectra.df &lt;-<span class="st"> </span><span class="kw">melt</span>(sr.march, 
 <li>What is the difference between annual and seasonal consistency?</li>
 </ul>
 <hr />
-<!-- ################################## SESSION 04 ##############################################  
-
-# Session 04: Pixel-based compositing
-
-------
-
-## Learning goals
-
-- Understand the fundamentals of pixel-based image compositing
-- Parameterize a compositing function and create your own composite from multiple Landsat images
-
-------
-
-## Background:
-
-The availability of Landsat images varies by region. Even in areas where obersvation density is high, such as North America, coverage can be reduced by clouds and quality of observations can be impacted by haze or sensor saturation. 
-![Global availability of Landsat images. Source: Wulder et al. 2016;  https://doi.org/10.1016/j.rse.2015.11.032](fig/s04_landsat_availability.jpg) 
-
-Using pixel-based-compositing, we can integrate multiple obervations (i.e., from multiple Landsat images) and combine them to one consistent image composite. One of the first global Landsat composites was produced using the WELD compositing approach (Roy et al. 2011, https://doi.org/10.1016/j.rse.2009.08.011). 
-![Monthly global WELD surface reflectance composite for June 2009. Source: https://worldview.earthdata.nasa.gov/](fig/s04_global_weld.jpg)
-
-Pixel-based compositing allows us to create cloud-free, radiometrically and phenologically consistent image composites that are contiguous over large areas. A set of parameters is used to determine the observations best suited for analysis. These parameters can, e.g., include the distance to clouds in the image, or the temporal proximity to a target day of the year. Defining scoring functions allows for a flexible parametrization according to user´s needs and study area characteristics. Different parameters can also be weighted according to their relevance for a given application. 
-
-![Creating one pixel-based composite from three images.](fig/s04_compositing.png)
-
-------
-
-## Best-pixel-based compositing in seven steps
-
-1) Determine compositing parameters, e.g. Target DOY: June 15 +/- 30 days and target year: 2015 +/- 1 year
-
-2) Calculate DOY and year suitability (0-1) according to parameters  
-
-![Five images to be used for best-pixel compositing and their DOY and year offsets](fig/s04_suitability_offsets.png) 
-
-We use linear functions to determine the suitability of an observation. In the plot for the DOY function below, we're chosing a parameterization that favors observations closest to the target DOY and assign a suitability score of 0 for observations that are 50 or more days from the target date. Being 30 days from the target DOY, the May 16 2015 observation receives a suitability score of 0.4.  
-A second function determines the suitability score for the year of observation. Again, observations close to the target year are assigned high values, while observations acquired five or more years from the target year are considered unsuitable. The resulting suitability score for the May 15 2015 observation is 1.  
-
-![Linear functions for the DOY and year suitability score ](fig/s04_suitabilityplot_doy_year.png){width=90%}
-
-3) Calculate pixel-level suitability (0-1), e.g. through min. distance to clouds.
-
-![Distance to next cloud in pixels](fig/s04_suitability_clouds.png)
-
-To minimize the likelihood of pixels being affected by clouds, we favor observations further away from clouds. The cloud distance scoring function below assigns a suitability score of 1 as soon as the distance to the next cloud is equal or greater than 100 pixels. An observation that has a distance of 60 pixels (=1800m) to the next cloud receives a cloud distance suitability score of 0.6. 
-
-![Linear function for the cloud suitability score](fig/s04_suitabilityplot_clouds.png){width=40%}
-
-4) Define which criteria are most important for you (W = weights):
-
-We can weigh the different parameters according to our needs. For instance, by prioritizing the DOY score over the year score.
-
-$$W_{DOY} = 0.5$$
-$$W_{year} = 0.2$$
-$$W_{CloudDist} = 0.3$$
-
-5) Calculate a score for each pixel in each image. We can use the weighted sum of suitabilities (S = score):
-
-$$score = S_{DOY} * W_{DOY} + S_{Year} * W_{Year} + S_{CloudDist} * W_{CloudDist}$$  
-
-Using the values from the example above yields:  
-$$score = 0.4 * 0.5 + 1 * 0.2 + 0.6 * 0.3$$
-$$score = 0.58$$
-
-![Resulting suitability scores for each image](fig/s04_suitability_score_weighted.png)
-
-6) Use the best observation (= highest score) for each pixel to create the final composite.
-
-7) Evaluate the results by checking for seasonal/annual consistency and cloud distance (and re-iterate)
-![](fig/s04_final_composite.jpg)
-
-------
-
-
-## Exercise
-
-The goal of this week's exercise is to combine several images into best-pixel composites using a parametric compositing function. We provide the data for this exercise in [our repository](https://box.hu-berlin.de/f/17f0d06cdc164564a019/?dl=1). After unpacking, you will find the following folders:
-
-- sr_data: a total of 43 cloud-masked bottom of atmosphere image chips for our study region, acquired in various seasons, years, and with different degrees of cloud cover.
-- cloud_dist: data on the distance (in pixels) to the closest cloud for each of the BOA images.
-- fmask: the cloud masks used to mask the BOA images and to derive the cloud distance layers.
-
-Today we will be working with pre-defined scripts. We provide both a script containing the compositing function and a main script which sources and executes the compositing function. Outsourcing functions - especially extensive ones - improves the readability of scripts and allows for using functions in different scripts. Check the help for source() if you are not familiar with sourcing R code in your script. You find both codes below. Please copy them into an empty R script and save to disk.
-
-<details>
-  <summary>Click here to see code for the parametric compositing function</summary>
-
-```r
-#############################################################################
-# MSc Earth Observation Exercise 4
-# Function for creating cloud-free composites of multiple Landsat images
-# Requires an input data.frame (here img_list) and eight compositing 
-# parameters. Please see exercise sheet for further details.
+<!-- ################################## SESSION 04 ##############################################  -->
+</div>
+</div>
+<div id="session-04-pixel-based-compositing" class="section level1">
+<h1>Session 04: Pixel-based compositing</h1>
+<hr />
+<div id="learning-goals-5" class="section level2">
+<h2>Learning goals</h2>
+<ul>
+<li>Understand the fundamentals of pixel-based image compositing</li>
+<li>Parameterize a compositing function and create your own composite from multiple Landsat images</li>
+</ul>
+<hr />
+</div>
+<div id="background-1" class="section level2">
+<h2>Background:</h2>
+<p>The availability of Landsat images varies by region. Even in areas where obersvation density is high, such as North America, coverage can be reduced by clouds and quality of observations can be impacted by haze or sensor saturation. <img src="fig/s04_landsat_availability.jpg" alt="Global availability of Landsat images. Source: Wulder et al. 2016; https://doi.org/10.1016/j.rse.2015.11.032" /></p>
+<p>Using pixel-based-compositing, we can integrate multiple obervations (i.e., from multiple Landsat images) and combine them to one consistent image composite. One of the first global Landsat composites was produced using the WELD compositing approach (Roy et al. 2011, <a href="https://doi.org/10.1016/j.rse.2009.08.011" class="uri">https://doi.org/10.1016/j.rse.2009.08.011</a>). <img src="fig/s04_global_weld.jpg" alt="Monthly global WELD surface reflectance composite for June 2009. Source: https://worldview.earthdata.nasa.gov/" /></p>
+<p>Pixel-based compositing allows us to create cloud-free, radiometrically and phenologically consistent image composites that are contiguous over large areas. A set of parameters is used to determine the observations best suited for analysis. These parameters can, e.g., include the distance to clouds in the image, or the temporal proximity to a target day of the year. Defining scoring functions allows for a flexible parametrization according to user´s needs and study area characteristics. Different parameters can also be weighted according to their relevance for a given application.</p>
+<div class="figure">
+<img src="fig/s04_compositing.png" alt="Creating one pixel-based composite from three images." />
+<p class="caption">Creating one pixel-based composite from three images.</p>
+</div>
+<hr />
+</div>
+<div id="best-pixel-based-compositing-in-seven-steps" class="section level2">
+<h2>Best-pixel-based compositing in seven steps</h2>
+<ol style="list-style-type: decimal">
+<li><p>Determine compositing parameters, e.g. Target DOY: June 15 +/- 30 days and target year: 2015 +/- 1 year</p></li>
+<li><p>Calculate DOY and year suitability (0-1) according to parameters</p></li>
+</ol>
+<div class="figure">
+<img src="fig/s04_suitability_offsets.png" alt="Five images to be used for best-pixel compositing and their DOY and year offsets" />
+<p class="caption">Five images to be used for best-pixel compositing and their DOY and year offsets</p>
+</div>
+<p>We use linear functions to determine the suitability of an observation. In the plot for the DOY function below, we’re chosing a parameterization that favors observations closest to the target DOY and assign a suitability score of 0 for observations that are 50 or more days from the target date. Being 30 days from the target DOY, the May 16 2015 observation receives a suitability score of 0.4.<br />
+A second function determines the suitability score for the year of observation. Again, observations close to the target year are assigned high values, while observations acquired five or more years from the target year are considered unsuitable. The resulting suitability score for the May 15 2015 observation is 1.</p>
+<div class="figure">
+<img src="fig/s04_suitabilityplot_doy_year.png" alt="Linear functions for the DOY and year suitability score" style="width:90.0%" />
+<p class="caption">Linear functions for the DOY and year suitability score</p>
+</div>
+<ol start="3" style="list-style-type: decimal">
+<li>Calculate pixel-level suitability (0-1), e.g. through min. distance to clouds.</li>
+</ol>
+<div class="figure">
+<img src="fig/s04_suitability_clouds.png" alt="Distance to next cloud in pixels" />
+<p class="caption">Distance to next cloud in pixels</p>
+</div>
+<p>To minimize the likelihood of pixels being affected by clouds, we favor observations further away from clouds. The cloud distance scoring function below assigns a suitability score of 1 as soon as the distance to the next cloud is equal or greater than 100 pixels. An observation that has a distance of 60 pixels (=1800m) to the next cloud receives a cloud distance suitability score of 0.6.</p>
+<div class="figure">
+<img src="fig/s04_suitabilityplot_clouds.png" alt="Linear function for the cloud suitability score" style="width:40.0%" />
+<p class="caption">Linear function for the cloud suitability score</p>
+</div>
+<ol start="4" style="list-style-type: decimal">
+<li>Define which criteria are most important for you (W = weights):</li>
+</ol>
+<p>We can weigh the different parameters according to our needs. For instance, by prioritizing the DOY score over the year score.</p>
+<p><span class="math display">\[W_{DOY} = 0.5\]</span> <span class="math display">\[W_{year} = 0.2\]</span> <span class="math display">\[W_{CloudDist} = 0.3\]</span></p>
+<ol start="5" style="list-style-type: decimal">
+<li>Calculate a score for each pixel in each image. We can use the weighted sum of suitabilities (S = score):</li>
+</ol>
+<p><span class="math display">\[score = S_{DOY} * W_{DOY} + S_{Year} * W_{Year} + S_{CloudDist} * W_{CloudDist}\]</span></p>
+<p>Using the values from the example above yields:<br />
+<span class="math display">\[score = 0.4 * 0.5 + 1 * 0.2 + 0.6 * 0.3\]</span> <span class="math display">\[score = 0.58\]</span></p>
+<div class="figure">
+<img src="fig/s04_suitability_score_weighted.png" alt="Resulting suitability scores for each image" />
+<p class="caption">Resulting suitability scores for each image</p>
+</div>
+<ol start="6" style="list-style-type: decimal">
+<li><p>Use the best observation (= highest score) for each pixel to create the final composite.</p></li>
+<li><p>Evaluate the results by checking for seasonal/annual consistency and cloud distance (and re-iterate) <img src="fig/s04_final_composite.jpg" /></p></li>
+</ol>
+<hr />
+</div>
+<div id="exercise-5" class="section level2">
+<h2>Exercise</h2>
+<p>The goal of this week’s exercise is to combine several images into best-pixel composites using a parametric compositing function. We provide the data for this exercise in <a href="https://box.hu-berlin.de/f/17f0d06cdc164564a019/?dl=1">our repository</a>. After unpacking, you will find the following folders:</p>
+<ul>
+<li>sr_data: a total of 43 cloud-masked bottom of atmosphere image chips for our study region, acquired in various seasons, years, and with different degrees of cloud cover.</li>
+<li>cloud_dist: data on the distance (in pixels) to the closest cloud for each of the BOA images.</li>
+<li>fmask: the cloud masks used to mask the BOA images and to derive the cloud distance layers.</li>
+</ul>
+<p>Today we will be working with pre-defined scripts. We provide both a script containing the compositing function and a main script which sources and executes the compositing function. Outsourcing functions - especially extensive ones - improves the readability of scripts and allows for using functions in different scripts. Check the help for source() if you are not familiar with sourcing R code in your script. You find both codes below. Please copy them into an empty R script and save to disk.</p>
+<p><details> <summary>Click here to see code for the parametric compositing function</summary></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">#############################################################################
+<span class="co"># MSc Earth Observation Exercise 4</span>
+<span class="co"># Function for creating cloud-free composites of multiple Landsat images</span>
+<span class="co"># Requires an input data.frame (here img_list) and eight compositing </span>
+<span class="co"># parameters. Please see exercise sheet for further details.</span>
 #############################################################################
 
 #############################################################################
-# Loading required packages here...
-library(raster)
-library(lubridate)
+<span class="co"># Loading required packages here...</span>
+<span class="kw">library</span>(raster)
+<span class="kw">library</span>(lubridate)
 
-# Change raster options to store large rasters in temp files on disk
-rasterOptions(maxmemory = 1e6)
+<span class="co"># Change raster options to store large rasters in temp files on disk</span>
+<span class="kw">rasterOptions</span>(<span class="dt">maxmemory =</span> <span class="fl">1e6</span>)
 
 #############################################################################
-# Function definition starts here
-parametric_compositing <- function(img_list, target_date, 
+<span class="co"># Function definition starts here</span>
+parametric_compositing &lt;-<span class="st"> </span><span class="cf">function</span>(img_list, target_date, 
                                    W_DOY, W_year, W_cloud_dist, 
                                    max_DOY_offset, max_year_offset, 
                                    min_cloud_dist, max_cloud_dist) {
-  #...
-  tic <- Sys.time()
-  print(paste('Start of compositing process: ', tic))
-  print(paste('Target date: ', target_date))
+  <span class="co">#...</span>
+  tic &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()
+  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;Start of compositing process: &#39;</span>, tic))
+  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;Target date: &#39;</span>, target_date))
 
-  # Extract target DOY and year from target_date
-  target_DOY <- yday(target_date)
-  target_year <- year(target_date)
+  <span class="co"># Extract target DOY and year from target_date</span>
+  target_DOY &lt;-<span class="st"> </span><span class="kw">yday</span>(target_date)
+  target_year &lt;-<span class="st"> </span><span class="kw">year</span>(target_date)
   
-  #...
-  if(sum(W_DOY, W_year, W_cloud_dist)!=1) { stop('Error: something wrong.') }
-  
-  #############################################################################
-  # Calculate the scores for the DOY, year, and cloud distance criteria
-  print('Calculating compositing scores')
-  
-  #...
-  obs_DOY <- img_list$DOY
-  DOY_score <- 1 - (abs(target_DOY - img_list$DOY) / max_DOY_offset)
-  DOY_score[DOY_score<0] <- NA
-  
-  #...
-  obs_year <- img_list$year
-  year_score <- 1-(abs(target_year - obs_year) / max_year_offset)
-  
-  if (max_year_offset == 0) {year_score[obs_year==target_year] <- 1}
-  year_score[year_score<0] <- NA
-  
-  # Get candidate images within max_DOY_offset and max_year_offset
-  ix <- which(!is.na(DOY_score) & !is.na(year_score))
-  if (length(ix)>1) { print(paste(length(ix),  'candidate images selected, calculating scores.')) }
-  if (length(ix)<2) { stop('Another error because something is wrong.') }
-  
-  # Stack cloud distance layers of candidate images and reclassify 
-  # values < min_cloud_dist to NA, and values > max_cloud_dist to max_cloud_dist
-  cloud_dist <- stack(as.character(img_list$cloud_dist_files[ix]))
-  cloud_dist <- reclassify(cloud_dist, rcl=c(0, min_cloud_dist, NA), right=NA, datatype='INT2S')
-  cloud_dist <- reclassify(cloud_dist, rcl=c(max_cloud_dist, sqrt(nrow(cloud_dist)^2 + ncol(cloud_dist)^2), max_cloud_dist), right=NA, datatype='INT2S')
-  
-  #...
-  cloud_score <- (cloud_dist - min_cloud_dist) / (max_cloud_dist - min_cloud_dist)
-  
-  #...
-  obs_score <- DOY_score[ix] * W_DOY + year_score[ix] * W_year + cloud_score * W_cloud_dist
-  
-  #...
-  select <- which.max(obs_score)
-  
-  #...
-  candidates <- unique(select)
+  <span class="co">#...</span>
+  <span class="cf">if</span>(<span class="kw">sum</span>(W_DOY, W_year, W_cloud_dist)<span class="op">!=</span><span class="dv">1</span>) { <span class="kw">stop</span>(<span class="st">&#39;Error: something wrong.&#39;</span>) }
   
   #############################################################################
-  # Fill composite image with pixels from the candidate images
-  for (i in candidates){
+  <span class="co"># Calculate the scores for the DOY, year, and cloud distance criteria</span>
+  <span class="kw">print</span>(<span class="st">&#39;Calculating compositing scores&#39;</span>)
+  
+  <span class="co">#...</span>
+  obs_DOY &lt;-<span class="st"> </span>img_list<span class="op">$</span>DOY
+  DOY_score &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>(<span class="kw">abs</span>(target_DOY <span class="op">-</span><span class="st"> </span>img_list<span class="op">$</span>DOY) <span class="op">/</span><span class="st"> </span>max_DOY_offset)
+  DOY_score[DOY_score<span class="op">&lt;</span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="ot">NA</span>
+  
+  <span class="co">#...</span>
+  obs_year &lt;-<span class="st"> </span>img_list<span class="op">$</span>year
+  year_score &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">-</span>(<span class="kw">abs</span>(target_year <span class="op">-</span><span class="st"> </span>obs_year) <span class="op">/</span><span class="st"> </span>max_year_offset)
+  
+  <span class="cf">if</span> (max_year_offset <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) {year_score[obs_year<span class="op">==</span>target_year] &lt;-<span class="st"> </span><span class="dv">1</span>}
+  year_score[year_score<span class="op">&lt;</span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="ot">NA</span>
+  
+  <span class="co"># Get candidate images within max_DOY_offset and max_year_offset</span>
+  ix &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="op">!</span><span class="kw">is.na</span>(DOY_score) <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(year_score))
+  <span class="cf">if</span> (<span class="kw">length</span>(ix)<span class="op">&gt;</span><span class="dv">1</span>) { <span class="kw">print</span>(<span class="kw">paste</span>(<span class="kw">length</span>(ix),  <span class="st">&#39;candidate images selected, calculating scores.&#39;</span>)) }
+  <span class="cf">if</span> (<span class="kw">length</span>(ix)<span class="op">&lt;</span><span class="dv">2</span>) { <span class="kw">stop</span>(<span class="st">&#39;Another error because something is wrong.&#39;</span>) }
+  
+  <span class="co"># Stack cloud distance layers of candidate images and reclassify </span>
+  <span class="co"># values &lt; min_cloud_dist to NA, and values &gt; max_cloud_dist to max_cloud_dist</span>
+  cloud_dist &lt;-<span class="st"> </span><span class="kw">stack</span>(<span class="kw">as.character</span>(img_list<span class="op">$</span>cloud_dist_files[ix]))
+  cloud_dist &lt;-<span class="st"> </span><span class="kw">reclassify</span>(cloud_dist, <span class="dt">rcl=</span><span class="kw">c</span>(<span class="dv">0</span>, min_cloud_dist, <span class="ot">NA</span>), <span class="dt">right=</span><span class="ot">NA</span>, <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)
+  cloud_dist &lt;-<span class="st"> </span><span class="kw">reclassify</span>(cloud_dist, <span class="dt">rcl=</span><span class="kw">c</span>(max_cloud_dist, <span class="kw">sqrt</span>(<span class="kw">nrow</span>(cloud_dist)<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="kw">ncol</span>(cloud_dist)<span class="op">^</span><span class="dv">2</span>), max_cloud_dist), <span class="dt">right=</span><span class="ot">NA</span>, <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)
+  
+  <span class="co">#...</span>
+  cloud_score &lt;-<span class="st"> </span>(cloud_dist <span class="op">-</span><span class="st"> </span>min_cloud_dist) <span class="op">/</span><span class="st"> </span>(max_cloud_dist <span class="op">-</span><span class="st"> </span>min_cloud_dist)
+  
+  <span class="co">#...</span>
+  obs_score &lt;-<span class="st"> </span>DOY_score[ix] <span class="op">*</span><span class="st"> </span>W_DOY <span class="op">+</span><span class="st"> </span>year_score[ix] <span class="op">*</span><span class="st"> </span>W_year <span class="op">+</span><span class="st"> </span>cloud_score <span class="op">*</span><span class="st"> </span>W_cloud_dist
+  
+  <span class="co">#...</span>
+  select &lt;-<span class="st"> </span><span class="kw">which.max</span>(obs_score)
+  
+  <span class="co">#...</span>
+  candidates &lt;-<span class="st"> </span><span class="kw">unique</span>(select)
+  
+  #############################################################################
+  <span class="co"># Fill composite image with pixels from the candidate images</span>
+  <span class="cf">for</span> (i <span class="cf">in</span> candidates){
     
-    #...
-    fill_image <- brick(as.character(img_list$image_files[ix[i]]), datatype='INT2S')
+    <span class="co">#...</span>
+    fill_image &lt;-<span class="st"> </span><span class="kw">brick</span>(<span class="kw">as.character</span>(img_list<span class="op">$</span>image_files[ix[i]]), <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)
     
-    #...
-    if (i == min(candidates)) { 
-      composite <- brick(fill_image, values=FALSE) 
-      dataType(composite) <- 'INT2S'
-      values(composite) <- 0
+    <span class="co">#...</span>
+    <span class="cf">if</span> (i <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(candidates)) { 
+      composite &lt;-<span class="st"> </span><span class="kw">brick</span>(fill_image, <span class="dt">values=</span><span class="ot">FALSE</span>) 
+      <span class="kw">dataType</span>(composite) &lt;-<span class="st"> &#39;INT2S&#39;</span>
+      <span class="kw">values</span>(composite) &lt;-<span class="st"> </span><span class="dv">0</span>
     }
     
-    print(paste0('Filling raster with acquisition from date ', img_list$date[ix[i]]))
-    fill_image.masked <- mask(fill_image, select, maskvalue=i, inverse=T, updatevalue=0, datatype='INT2S')
-    fill_image.masked[is.na(fill_image.masked)] <- 0
-    composite <- composite + fill_image.masked
+    <span class="kw">print</span>(<span class="kw">paste0</span>(<span class="st">&#39;Filling raster with acquisition from date &#39;</span>, img_list<span class="op">$</span>date[ix[i]]))
+    fill_image.masked &lt;-<span class="st"> </span><span class="kw">mask</span>(fill_image, select, <span class="dt">maskvalue=</span>i, <span class="dt">inverse=</span>T, <span class="dt">updatevalue=</span><span class="dv">0</span>, <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)
+    fill_image.masked[<span class="kw">is.na</span>(fill_image.masked)] &lt;-<span class="st"> </span><span class="dv">0</span>
+    composite &lt;-<span class="st"> </span>composite <span class="op">+</span><span class="st"> </span>fill_image.masked
     
   }
   
-  #...
-  composite_na <- mask(composite, select, maskvalue=NA, datatype='INT2S')
+  <span class="co">#...</span>
+  composite_na &lt;-<span class="st"> </span><span class="kw">mask</span>(composite, select, <span class="dt">maskvalue=</span><span class="ot">NA</span>, <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)
   
   #############################################################################
-  #...
-  print(paste('NAs: ', round(freq(composite_na[[1]], value=NA)/ncell(composite_na[[1]])*100, digits=3), ' %'))
+  <span class="co">#...</span>
+  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;NAs: &#39;</span>, <span class="kw">round</span>(<span class="kw">freq</span>(composite_na[[<span class="dv">1</span>]], <span class="dt">value=</span><span class="ot">NA</span>)<span class="op">/</span><span class="kw">ncell</span>(composite_na[[<span class="dv">1</span>]])<span class="op">*</span><span class="dv">100</span>, <span class="dt">digits=</span><span class="dv">3</span>), <span class="st">&#39; %&#39;</span>))
   
-  #...
-  rcl_DOY <- matrix(ncol=2, data=c(candidates, obs_DOY[ix[candidates]]))
-  select_DOY <- reclassify(select, rcl_DOY, datatype = 'INT2S')
+  <span class="co">#...</span>
+  rcl_DOY &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">ncol=</span><span class="dv">2</span>, <span class="dt">data=</span><span class="kw">c</span>(candidates, obs_DOY[ix[candidates]]))
+  select_DOY &lt;-<span class="st"> </span><span class="kw">reclassify</span>(select, rcl_DOY, <span class="dt">datatype =</span> <span class="st">&#39;INT2S&#39;</span>)
   
-  #...
-  rcl_year <- matrix(ncol=2, data=c(candidates, obs_year[ix[candidates]]))
-  select_year <- reclassify(select, rcl_year)
+  <span class="co">#...</span>
+  rcl_year &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">ncol=</span><span class="dv">2</span>, <span class="dt">data=</span><span class="kw">c</span>(candidates, obs_year[ix[candidates]]))
+  select_year &lt;-<span class="st"> </span><span class="kw">reclassify</span>(select, rcl_year)
 
-  #...
-  output <- stack(composite_na, select_DOY, select_year)
-  print(paste('End of compositing process: ', Sys.time()))
+  <span class="co">#...</span>
+  output &lt;-<span class="st"> </span><span class="kw">stack</span>(composite_na, select_DOY, select_year)
+  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;End of compositing process: &#39;</span>, <span class="kw">Sys.time</span>()))
   
-  #...
-  return(output)
+  <span class="co">#...</span>
+  <span class="kw">return</span>(output)
   
-}
-```
-</details>
-
-<details>
-  <summary>Click here to see the code for the main script calling the compositing function</summary>
-
-```r
-  #############################################################################
-# MSc Earth Observation Exercise 4
-# [Your Name]
+}</code></pre></div>
+<p></details></p>
+<p><details> <summary>Click here to see the code for the main script calling the compositing function</summary></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  #############################################################################
+<span class="co"># MSc Earth Observation Exercise 4</span>
+<span class="co"># [Your Name]</span>
 #############################################################################
 
 #############################################################################
-library(rgdal)
-library(raster)
-library(lubridate)
-library(ggplot2)
-source('') #path to the parametric_compositing function
+<span class="kw">library</span>(rgdal)
+<span class="kw">library</span>(raster)
+<span class="kw">library</span>(lubridate)
+<span class="kw">library</span>(ggplot2)
+<span class="kw">source</span>(<span class="st">&#39;&#39;</span>) <span class="co">#path to the parametric_compositing function</span>
 
-# Change raster options to store large rasters in temp files on disk
-rasterOptions(maxmemory = 1e6)
+<span class="co"># Change raster options to store large rasters in temp files on disk</span>
+<span class="kw">rasterOptions</span>(<span class="dt">maxmemory =</span> <span class="fl">1e6</span>)
 
 ######## Define the folder that contains your data...
-data.path <- 'O:/WS19_MSc-EO/S04/data/'
+data.path &lt;-<span class="st"> &#39;O:/WS19_MSc-EO/S04/data/&#39;</span>
 
 #############################################################################
-# 1)
+<span class="co"># 1)</span>
 #############################################################################
 
-sr <- list.files(paste0(data.path, '/sr_data'), pattern=".tif$", full.names=T, recursive=F)
-fmask <- list.files(paste0(data.path, '/fmask'), pattern=".tif$", full.names=T, recursive=F)
-cd <- list.files(paste0(data.path, '/cloud_dist'), pattern=".tif$", full.names=T, recursive=F)
+sr &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="kw">paste0</span>(data.path, <span class="st">&#39;/sr_data&#39;</span>), <span class="dt">pattern=</span><span class="st">&quot;.tif$&quot;</span>, <span class="dt">full.names=</span>T, <span class="dt">recursive=</span>F)
+fmask &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="kw">paste0</span>(data.path, <span class="st">&#39;/fmask&#39;</span>), <span class="dt">pattern=</span><span class="st">&quot;.tif$&quot;</span>, <span class="dt">full.names=</span>T, <span class="dt">recursive=</span>F)
+cd &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="kw">paste0</span>(data.path, <span class="st">&#39;/cloud_dist&#39;</span>), <span class="dt">pattern=</span><span class="st">&quot;.tif$&quot;</span>, <span class="dt">full.names=</span>T, <span class="dt">recursive=</span>F)
 
-sta <- nchar(paste0(data.path,'/sr_data/LT05228082')) + 1
-end <- sta + 6
+sta &lt;-<span class="st"> </span><span class="kw">nchar</span>(<span class="kw">paste0</span>(data.path,<span class="st">&#39;/sr_data/LT05228082&#39;</span>)) <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+end &lt;-<span class="st"> </span>sta <span class="op">+</span><span class="st"> </span><span class="dv">6</span>
 
-dates <- as.Date(substr(sr, sta, end), format='%Y%j')
+dates &lt;-<span class="st"> </span><span class="kw">as.Date</span>(<span class="kw">substr</span>(sr, sta, end), <span class="dt">format=</span><span class="st">&#39;%Y%j&#39;</span>)
 
-sr.sorted <- sr[order(dates)]
-cd.sorted <- cd[order(dates)]
+sr.sorted &lt;-<span class="st"> </span>sr[<span class="kw">order</span>(dates)]
+cd.sorted &lt;-<span class="st"> </span>cd[<span class="kw">order</span>(dates)]
 
-img_list <- data.frame("image_files"=as.character(sr.sorted), "cloud_dist_files"=as.character(cd.sorted) ,"date"=sort(dates), "DOY"=yday(sort(dates)), "year"=year(sort(dates)))
+img_list &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">&quot;image_files&quot;</span>=<span class="kw">as.character</span>(sr.sorted), <span class="st">&quot;cloud_dist_files&quot;</span>=<span class="kw">as.character</span>(cd.sorted) ,<span class="st">&quot;date&quot;</span>=<span class="kw">sort</span>(dates), <span class="st">&quot;DOY&quot;</span>=<span class="kw">yday</span>(<span class="kw">sort</span>(dates)), <span class="st">&quot;year&quot;</span>=<span class="kw">year</span>(<span class="kw">sort</span>(dates)))
 
 
 #############################################################################
-# 2)
+<span class="co"># 2)</span>
 #############################################################################
-target_date_1 <- ymd('YYYYMMDD')
-target_date_2 <- ymd('YYYYMMDD')
+target_date_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">ymd</span>(<span class="st">&#39;YYYYMMDD&#39;</span>)
+target_date_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">ymd</span>(<span class="st">&#39;YYYYMMDD&#39;</span>)
 
-W_DOY <- 0.0
-W_year <- 0.0
-W_cloud_dist <- 0.0
+W_DOY &lt;-<span class="st"> </span><span class="fl">0.0</span>
+W_year &lt;-<span class="st"> </span><span class="fl">0.0</span>
+W_cloud_dist &lt;-<span class="st"> </span><span class="fl">0.0</span>
   
-max_DOY_offset <- 0
-max_year_offset <- 0
+max_DOY_offset &lt;-<span class="st"> </span><span class="dv">0</span>
+max_year_offset &lt;-<span class="st"> </span><span class="dv">0</span>
 
-min_cloud_dist <- 0
-max_cloud_dist <- 0
+min_cloud_dist &lt;-<span class="st"> </span><span class="dv">0</span>
+max_cloud_dist &lt;-<span class="st"> </span><span class="dv">0</span>
 
-composite_1 <- parametric_compositing(img_list, target_date_1, 
+composite_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">parametric_compositing</span>(img_list, target_date_<span class="dv">1</span>, 
                                        W_DOY, W_year, W_cloud_dist, 
                                        max_DOY_offset, max_year_offset, 
-                                       min_cloud_dist, max_cloud_dist)
-
+                                       min_cloud_dist, max_cloud_dist)</code></pre></div>
+<p></details></p>
+<!-- second compositing step was made voluntary exercise in winter term 19/20
 #############################################################################
 # 4)
 #############################################################################
@@ -1203,74 +1196,63 @@ composite_2 <- parametric_compositing(img_list, target_date_2,
                                       W_DOY, W_year, W_cloud_dist, 
                                       max_DOY_offset, max_year_offset, 
                                       min_cloud_dist, max_cloud_dist)
-```
-</details>
-
-### 1)  Parameterization
-
-The function above allows you to produce cloud-free best-pixel composites for a pre-defined target DOY. This function requires one input data.frame (see code template on how to create it) and eight input parameters: 
-
-a. *img_list*: a data frame containing five variables for each of the Landsat images:  
-  
-    $image_files: the full paths to the files in …sr_data.  
-    $cloud_dist_files: the full paths to the files in …cloud_dist.  
-    $date: the acquisition day in Date format (YYYY-MM-DD).  
-    $DOY: the acquisition day of the year.  
-    $year: the acquisition year.  
-
-b.  *target_date*: the target date for your composite in Date format (YYYY-MM-DD)
-
-c.  *W_DOY*, *W_year*, *W_cloud_dist*: weights for the three available parameters DOY, year and distance to clouds. Must be scaled between 0 and 1 and sum up to 1, the higher the weight, the higher the importance of the criterion. 
-
-d.  *max_DOY_offset*, *max_year_offset*: Thresholds for the maximum allowed differences between target DOY and acquisition DOY, as well target year and acquisition year. Images exceeding these thresholds (further away in time) will be fully ignored. For instance, max_year_offset = 0 will not allow observations from a year other than the target year. By choosing these parameters, you will determine whether you prefer seasonal consistency (close to target DOY but from different years) over annual consistency (observations from same year but potentially distant DOYs). Discuss the parametrization in your group. 
-
-e.  *min_cloud_dist*, *max_cloud_dist*:  The minimum and maximum distance to clouds. min_cloud_dist = 10 will exclude all observations which are less than 10 pixels away from a cloud. The cloud scores are linearly scaled between the minimum (score = 0) and maximum cloud distance (score = 1). Pixels with distances above max_cloud_dist will receive a score of 1. 
-
-### 2) Defining target dates and parameters
-
-Relying on last week´s insights during training data collection, define two target days of the year (DOY) to capture contrasting phenological stages of the different forest types. These will be used as target_date parameters later on. Next, make a decision concerning the compositing parameters explained in 1c, 1d and 1e.  
-
-### 3) Exploring the script and adding documentation
-
-a. Open the parametric_compositing.R script and take time to read through it in groups. Run the code line by line. Make sure you understand how the function operates. Discuss questions in your group and seek the help pages of functions you don´t know.  
-
-b. The developer did not spend sufficient time on the documentation. Make the script a bit more user-friendly by adding missing comments (#...). Make sure your comments explain what happens in each step of the function, and why. Are there bugs or sections which you would code differently?
-
-c. Next, run the parametric_compositing() function with your parameters and write the result to disk. Include the target DOY in the filename. While the function executes, proceed with the next exercise.
-
-### 4) Second run for target date 2
-
-Repeat the compositing for the second target DOY you specified in 2) and write the results to disk.
-
-### 5) Visual inspection and evaluation of results
-
-Visually inspect the quality of your compositing results in QGIS. Look at the bands containing the DOY and year flags (band 7 and 8). What worked out well, what did not? How could the quality of the composites be improved? Re-iterate with different parameters if you wish.
-
-### 6) Improving the user-friendliness of the script (optional/voluntary task)
-
-Make the compositing function more user friendly. Insert a couple of plot and print commands to enable the users to follow the progress of the compositing while the function is running.  
-
-For instance, print() how many images were used for the final composite, their acquisition dates, etc. Also, you might want to plot() the composited image after each iteration. You could add further status messages telling the user how much time single steps took.  
-
-Don´t forget to save the script and run the source() command in your R script to update the function after you made these changes. 
-
-------
-
-## Reading materials
-
-In the next session, we would like to discuss the following paper: 
-
-[Maxwell et al. (2018): Implementation of machine-learning classification in remote sensing: an applied review.  International Journal of Remote Sensing 39(9), 2784-2817](https://doi.org/10.1080/01431161.2018.1433343)
- 
-In this review, Maxwell and colleagues outline the use of several machine learning classification algorithms for application in remote sensing. Please read the article and note questions and points to discuss. Feel free to omit the details of ANNs and boosted DTs. Please read the paper thoroughly, make sure you understand the underlying concept and write down question for the discussion in our next session. Also, answer the following broad questions: 
-
-- What is the motivation for this article?
-- What are the key differences between classification algorithms from a user perspective?
-- Which classifiers do you reckon to be most suitable for typical EO applications?
-- What do the following terms refer to: "overfitting", "imbalanced data", "ensemble classifiers", "parameter optimization"?
-
-------
-
+-->
+<div id="parameterization" class="section level3">
+<h3>1) Parameterization</h3>
+<p>The function above allows you to produce cloud-free best-pixel composites for a pre-defined target DOY. This function requires one input data.frame (see code template on how to create it) and eight input parameters:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p><em>img_list</em>: a data frame containing five variables for each of the Landsat images:</p>
+<p>$image_files: the full paths to the files in …sr_data.<br />
+$cloud_dist_files: the full paths to the files in …cloud_dist.<br />
+$date: the acquisition day in Date format (YYYY-MM-DD).<br />
+$DOY: the acquisition day of the year.<br />
+$year: the acquisition year.</p></li>
+<li><p><em>target_date</em>: the target date for your composite in Date format (YYYY-MM-DD)</p></li>
+<li><p><em>W_DOY</em>, <em>W_year</em>, <em>W_cloud_dist</em>: weights for the three available parameters DOY, year and distance to clouds. Must be scaled between 0 and 1 and sum up to 1, the higher the weight, the higher the importance of the criterion.</p></li>
+<li><p><em>max_DOY_offset</em>, <em>max_year_offset</em>: Thresholds for the maximum allowed differences between target DOY and acquisition DOY, as well target year and acquisition year. Images exceeding these thresholds (further away in time) will be fully ignored. For instance, max_year_offset = 0 will not allow observations from a year other than the target year. By choosing these parameters, you will determine whether you prefer seasonal consistency (close to target DOY but from different years) over annual consistency (observations from same year but potentially distant DOYs). Discuss the parametrization in your group.</p></li>
+<li><p><em>min_cloud_dist</em>, <em>max_cloud_dist</em>: The minimum and maximum distance to clouds. min_cloud_dist = 10 will exclude all observations which are less than 10 pixels away from a cloud. The cloud scores are linearly scaled between the minimum (score = 0) and maximum cloud distance (score = 1). Pixels with distances above max_cloud_dist will receive a score of 1.</p></li>
+</ol>
+</div>
+<div id="defining-target-dates-and-parameters" class="section level3">
+<h3>2) Defining target dates and parameters</h3>
+<p>Relying on last week´s insights during training data collection, define two target days of the year (DOY) to capture contrasting phenological stages of the different forest types. These will be used as target_date parameters later on. Next, make a decision concerning the compositing parameters explained in 1c, 1d and 1e.</p>
+</div>
+<div id="exploring-the-script-and-adding-documentation" class="section level3">
+<h3>3) Exploring the script and adding documentation</h3>
+<ol style="list-style-type: lower-alpha">
+<li><p>Open the parametric_compositing.R script and take time to read through it in groups. Run the code line by line. Make sure you understand how the function operates. Discuss questions in your group and seek the help pages of functions you don´t know.</p></li>
+<li><p>The developer did not spend sufficient time on the documentation. Make the script a bit more user-friendly by adding missing comments (#…). Make sure your comments explain what happens in each step of the function, and why. Are there bugs or sections which you would code differently?</p></li>
+<li><p>Next, run the parametric_compositing() function with your parameters and write the result to disk. Include the target DOY in the filename. While the function executes, proceed with the next exercise.</p></li>
+</ol>
+</div>
+<div id="visual-inspection-and-evaluation-of-results" class="section level3">
+<h3>4) Visual inspection and evaluation of results</h3>
+<p>Visually inspect the quality of your compositing results in QGIS. Look at the bands containing the DOY and year flags (band 7 and 8). What worked out well, what did not? How could the quality of the composites be improved? Re-iterate with different parameters if you wish.</p>
+</div>
+<div id="optional-task-second-run-for-target-date-2" class="section level3">
+<h3>5) Optional task: Second run for target date 2</h3>
+<p>Repeat the compositing for the second target DOY you specified in 2) and write the results to disk.</p>
+</div>
+<div id="optional-task-improving-the-user-friendliness-of-the-script" class="section level3">
+<h3>6) Optional task: Improving the user-friendliness of the script</h3>
+<p>Make the compositing function more user friendly. Insert a couple of plot and print commands to enable the users to follow the progress of the compositing while the function is running.</p>
+<p>For instance, print() how many images were used for the final composite, their acquisition dates, etc. Also, you might want to plot() the composited image after each iteration. You could add further status messages telling the user how much time single steps took.</p>
+<p>Don´t forget to save the script and run the source() command in your R script to update the function after you made these changes.</p>
+<hr />
+</div>
+</div>
+<div id="reading-materials-3" class="section level2">
+<h2>Reading materials</h2>
+<p>In the next session, we would like to discuss the following paper:</p>
+<p><a href="https://doi.org/10.1080/01431161.2018.1433343">Maxwell et al. (2018): Implementation of machine-learning classification in remote sensing: an applied review. International Journal of Remote Sensing 39(9), 2784-2817</a></p>
+<p>In this review, Maxwell and colleagues outline the use of several machine learning classification algorithms for application in remote sensing. Please read the article and note questions and points to discuss. Feel free to omit the details of ANNs and boosted DTs. Please read the paper thoroughly, make sure you understand the underlying concept and write down question for the discussion in our next session. Also, answer the following broad questions:</p>
+<ul>
+<li>What is the motivation for this article?</li>
+<li>What are the key differences between classification algorithms from a user perspective?</li>
+<li>Which classifiers do you reckon to be most suitable for typical EO applications?</li>
+<li>What do the following terms refer to: “overfitting”, “imbalanced data”, “ensemble classifiers”, “parameter optimization”?</li>
+</ul>
+<hr />
 <!-- ################################## SESSION 05 ##############################################  
 
 # Session 05: Machine learning for image classification

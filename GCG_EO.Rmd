@@ -495,9 +495,9 @@ In the following, you will learn to understand what that means. Please read this
 
 Remember the binary numeral system (0 / FALSE or 1 / TRUE)?
 
-![The binary number system. Source: Wikipedia](https://upload.wikimedia.org/wikipedia/commons/7/75/Binary_counter.gif){width=100%}
-
 The binary system represents numbers through sequences of bits. Each bit has a position and a state. The positions are numbered from 0 to the total number of bits, read from right to left. The state of a bit can be either, 0, or 1. Consider the meaning of 0 as „FALSE“ or „NO“, 1 equals „TRUE“ or „YES“. 
+
+![The binary number system. Source: Wikipedia](https://upload.wikimedia.org/wikipedia/commons/7/75/Binary_counter.gif){width=100%}
 
 In the example above, five bit positions are given. Each position is sequentially numbered, starting with 0, read from right to left.
 By calculating 2 to the power of the bit position, we receive the value of each bit. For all bits with the value 1, we sum the respective values. Different combinations of states and positions therefore enable us to represent integer numbers. 
@@ -907,7 +907,7 @@ This paper describes the methods used in the article you read last week. Here, a
 
 ------
 
-<!-- ################################## SESSION 04 ##############################################  
+<!-- ################################## SESSION 04 ##############################################  -->
 
 # Session 04: Pixel-based compositing
 
@@ -1174,6 +1174,10 @@ composite_1 <- parametric_compositing(img_list, target_date_1,
                                        max_DOY_offset, max_year_offset, 
                                        min_cloud_dist, max_cloud_dist)
 
+```
+</details>
+
+<!-- second compositing step was made voluntary exercise in winter term 19/20
 #############################################################################
 # 4)
 #############################################################################
@@ -1182,8 +1186,7 @@ composite_2 <- parametric_compositing(img_list, target_date_2,
                                       W_DOY, W_year, W_cloud_dist, 
                                       max_DOY_offset, max_year_offset, 
                                       min_cloud_dist, max_cloud_dist)
-```
-</details>
+-->
 
 ### 1)	Parameterization
 
@@ -1217,15 +1220,15 @@ b. The developer did not spend sufficient time on the documentation. Make the sc
 
 c. Next, run the parametric_compositing() function with your parameters and write the result to disk. Include the target DOY in the filename. While the function executes, proceed with the next exercise.
 
-### 4) Second run for target date 2
-
-Repeat the compositing for the second target DOY you specified in 2) and write the results to disk.
-
-### 5) Visual inspection and evaluation of results
+### 4) Visual inspection and evaluation of results
 
 Visually inspect the quality of your compositing results in QGIS. Look at the bands containing the DOY and year flags (band 7 and 8). What worked out well, what did not? How could the quality of the composites be improved? Re-iterate with different parameters if you wish.
 
-### 6) Improving the user-friendliness of the script (optional/voluntary task)
+### 5) Optional task: Second run for target date 2
+
+Repeat the compositing for the second target DOY you specified in 2) and write the results to disk.
+
+### 6) Optional task: Improving the user-friendliness of the script
 
 Make the compositing function more user friendly. Insert a couple of plot and print commands to enable the users to follow the progress of the compositing while the function is running.  
 
