@@ -156,8 +156,9 @@ The weekly exercises are defined in the respective session. Each session compris
 # Load packages, use install.packages('packagename') to install if needed
 library(raster)
 
-# Change raster options to store large rasters in temp files on disk
-rasterOptions(maxmemory = 1e6)
+# In case you run into memory issues
+# change raster options to store large rasters in temp files on disk
+# rasterOptions(maxmemory = 1e12)
 
 # Define the folder that contains your data...
 data.dir <- 'course.dir/S01/data/'
@@ -1006,9 +1007,6 @@ Today we will be working with pre-defined scripts. We provide both a script cont
 library(raster)
 library(lubridate)
 
-# Change raster options to store large rasters in temp files on disk
-rasterOptions(maxmemory = 1e6)
-
 #############################################################################
 # Function definition starts here
 parametric_compositing <- function(img_list, target_date, 
@@ -1128,8 +1126,9 @@ library(lubridate)
 library(ggplot2)
 source('') #path to the parametric_compositing function including filename.R
 
-# Change raster options to store large rasters in temp files on disk
-rasterOptions(maxmemory = 1e6)
+# In case you run into memory issues
+# change raster options to store large rasters in temp files on disk
+# rasterOptions(maxmemory = 1e12)
 
 ######## Define the folder that contains your data...
 data.path <- 'O:/WS1920_MSc-EO/S04/data/'

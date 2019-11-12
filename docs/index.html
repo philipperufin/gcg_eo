@@ -244,8 +244,9 @@ data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span clas
 <span class="co"># Load packages, use install.packages(&#39;packagename&#39;) to install if needed</span>
 <span class="kw">library</span>(raster)
 
-<span class="co"># Change raster options to store large rasters in temp files on disk</span>
-<span class="kw">rasterOptions</span>(<span class="dt">maxmemory =</span> <span class="fl">1e6</span>)
+<span class="co"># In case you run into memory issues</span>
+<span class="co"># change raster options to store large rasters in temp files on disk</span>
+<span class="co"># rasterOptions(maxmemory = 1e12)</span>
 
 <span class="co"># Define the folder that contains your data...</span>
 data.dir &lt;-<span class="st"> &#39;course.dir/S01/data/&#39;</span>
@@ -1023,9 +1024,6 @@ A second function determines the suitability score for the year of observation. 
 <span class="kw">library</span>(raster)
 <span class="kw">library</span>(lubridate)
 
-<span class="co"># Change raster options to store large rasters in temp files on disk</span>
-<span class="kw">rasterOptions</span>(<span class="dt">maxmemory =</span> <span class="fl">1e6</span>)
-
 #############################################################################
 <span class="co"># Function definition starts here</span>
 parametric_compositing &lt;-<span class="st"> </span><span class="cf">function</span>(img_list, target_date, 
@@ -1141,8 +1139,9 @@ parametric_compositing &lt;-<span class="st"> </span><span class="cf">function</
 <span class="kw">library</span>(ggplot2)
 <span class="kw">source</span>(<span class="st">&#39;&#39;</span>) <span class="co">#path to the parametric_compositing function including filename.R</span>
 
-<span class="co"># Change raster options to store large rasters in temp files on disk</span>
-<span class="kw">rasterOptions</span>(<span class="dt">maxmemory =</span> <span class="fl">1e6</span>)
+<span class="co"># In case you run into memory issues</span>
+<span class="co"># change raster options to store large rasters in temp files on disk</span>
+<span class="co"># rasterOptions(maxmemory = 1e12)</span>
 
 ######## Define the folder that contains your data...
 data.path &lt;-<span class="st"> &#39;O:/WS1920_MSc-EO/S04/data/&#39;</span>
