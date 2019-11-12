@@ -1126,13 +1126,13 @@ library(rgdal)
 library(raster)
 library(lubridate)
 library(ggplot2)
-source('') #path to the parametric_compositing function
+source('') #path to the parametric_compositing function including filename.R
 
 # Change raster options to store large rasters in temp files on disk
 rasterOptions(maxmemory = 1e6)
 
 ######## Define the folder that contains your data...
-data.path <- 'O:/WS19_MSc-EO/S04/data/'
+data.path <- 'O:/WS1920_MSc-EO/S04/data/'
 
 #############################################################################
 # 1)
@@ -1150,8 +1150,11 @@ dates <- as.Date(substr(sr, sta, end), format='%Y%j')
 sr.sorted <- sr[order(dates)]
 cd.sorted <- cd[order(dates)]
 
-img_list <- data.frame("image_files"=as.character(sr.sorted), "cloud_dist_files"=as.character(cd.sorted) ,"date"=sort(dates), "DOY"=yday(sort(dates)), "year"=year(sort(dates)))
-
+img_list <- data.frame("image_files"=as.character(sr.sorted), 
+                       "cloud_dist_files"=as.character(cd.sorted),
+                       "date"=sort(dates), 
+                       "DOY"=yday(sort(dates)), 
+                       "year"=year(sort(dates)))
 
 #############################################################################
 # 2)
@@ -1214,21 +1217,21 @@ Relying on last week´s insights during training data collection, define two tar
 
 ### 3) Exploring the script and adding documentation
 
-a. Open the parametric_compositing.R script and take time to read through it in groups. Run the code line by line. Make sure you understand how the function operates. Discuss questions in your group and seek the help pages of functions you don´t know.  
+a. First, let´s try to understand how the function operates. Open the parametric_compositing.R script and take time to read through it in groups. Define the necessary parameters and objects (see above) and run the script line by line. Investigate the outcomes of each line and discuss questions in your group. Seek the help pages of functions you don´t know.  
 
-b. The developer did not spend sufficient time on the documentation. Make the script a bit more user-friendly by adding missing comments (#...). Make sure your comments explain what happens in each step of the function, and why. Are there bugs or sections which you would code differently?
+b. Next, run the parametric_compositing() function with your parameters and write the result to disk. Include the target DOY in the filename. While the function executes, proceed with the next exercise.
 
-c. Next, run the parametric_compositing() function with your parameters and write the result to disk. Include the target DOY in the filename. While the function executes, proceed with the next exercise.
+c. The developer did not spend sufficient time on the documentation. Make the script a bit more user-friendly by adding missing comments (#...). Make sure your comments explain what happens in each step of the function, and why. Are there bugs or sections which you would code differently?
 
 ### 4) Visual inspection and evaluation of results
 
 Visually inspect the quality of your compositing results in QGIS. Look at the bands containing the DOY and year flags (band 7 and 8). What worked out well, what did not? How could the quality of the composites be improved? Re-iterate with different parameters if you wish.
 
-### 5) Optional task: Second run for target date 2
+### *5) Voluntary exercise*: Second run for target date 2
 
 Repeat the compositing for the second target DOY you specified in 2) and write the results to disk.
 
-### 6) Optional task: Improving the user-friendliness of the script
+### *6) Voluntary exercise*: Improving the user-friendliness of the script
 
 Make the compositing function more user friendly. Insert a couple of plot and print commands to enable the users to follow the progress of the compositing while the function is running.  
 

@@ -1139,13 +1139,13 @@ parametric_compositing &lt;-<span class="st"> </span><span class="cf">function</
 <span class="kw">library</span>(raster)
 <span class="kw">library</span>(lubridate)
 <span class="kw">library</span>(ggplot2)
-<span class="kw">source</span>(<span class="st">&#39;&#39;</span>) <span class="co">#path to the parametric_compositing function</span>
+<span class="kw">source</span>(<span class="st">&#39;&#39;</span>) <span class="co">#path to the parametric_compositing function including filename.R</span>
 
 <span class="co"># Change raster options to store large rasters in temp files on disk</span>
 <span class="kw">rasterOptions</span>(<span class="dt">maxmemory =</span> <span class="fl">1e6</span>)
 
 ######## Define the folder that contains your data...
-data.path &lt;-<span class="st"> &#39;O:/WS19_MSc-EO/S04/data/&#39;</span>
+data.path &lt;-<span class="st"> &#39;O:/WS1920_MSc-EO/S04/data/&#39;</span>
 
 #############################################################################
 <span class="co"># 1)</span>
@@ -1163,8 +1163,11 @@ dates &lt;-<span class="st"> </span><span class="kw">as.Date</span>(<span class=
 sr.sorted &lt;-<span class="st"> </span>sr[<span class="kw">order</span>(dates)]
 cd.sorted &lt;-<span class="st"> </span>cd[<span class="kw">order</span>(dates)]
 
-img_list &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">&quot;image_files&quot;</span>=<span class="kw">as.character</span>(sr.sorted), <span class="st">&quot;cloud_dist_files&quot;</span>=<span class="kw">as.character</span>(cd.sorted) ,<span class="st">&quot;date&quot;</span>=<span class="kw">sort</span>(dates), <span class="st">&quot;DOY&quot;</span>=<span class="kw">yday</span>(<span class="kw">sort</span>(dates)), <span class="st">&quot;year&quot;</span>=<span class="kw">year</span>(<span class="kw">sort</span>(dates)))
-
+img_list &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">&quot;image_files&quot;</span>=<span class="kw">as.character</span>(sr.sorted), 
+                       <span class="st">&quot;cloud_dist_files&quot;</span>=<span class="kw">as.character</span>(cd.sorted),
+                       <span class="st">&quot;date&quot;</span>=<span class="kw">sort</span>(dates), 
+                       <span class="st">&quot;DOY&quot;</span>=<span class="kw">yday</span>(<span class="kw">sort</span>(dates)), 
+                       <span class="st">&quot;year&quot;</span>=<span class="kw">year</span>(<span class="kw">sort</span>(dates)))
 
 #############################################################################
 <span class="co"># 2)</span>
@@ -1220,21 +1223,21 @@ $year: the acquisition year.</p></li>
 <div id="exploring-the-script-and-adding-documentation" class="section level3">
 <h3>3) Exploring the script and adding documentation</h3>
 <ol style="list-style-type: lower-alpha">
-<li><p>Open the parametric_compositing.R script and take time to read through it in groups. Run the code line by line. Make sure you understand how the function operates. Discuss questions in your group and seek the help pages of functions you don´t know.</p></li>
-<li><p>The developer did not spend sufficient time on the documentation. Make the script a bit more user-friendly by adding missing comments (#…). Make sure your comments explain what happens in each step of the function, and why. Are there bugs or sections which you would code differently?</p></li>
+<li><p>First, let´s try to understand how the function operates. Open the parametric_compositing.R script and take time to read through it in groups. Define the necessary parameters and objects (see above) and run the script line by line. Investigate the outcomes of each line and discuss questions in your group. Seek the help pages of functions you don´t know.</p></li>
 <li><p>Next, run the parametric_compositing() function with your parameters and write the result to disk. Include the target DOY in the filename. While the function executes, proceed with the next exercise.</p></li>
+<li><p>The developer did not spend sufficient time on the documentation. Make the script a bit more user-friendly by adding missing comments (#…). Make sure your comments explain what happens in each step of the function, and why. Are there bugs or sections which you would code differently?</p></li>
 </ol>
 </div>
 <div id="visual-inspection-and-evaluation-of-results" class="section level3">
 <h3>4) Visual inspection and evaluation of results</h3>
 <p>Visually inspect the quality of your compositing results in QGIS. Look at the bands containing the DOY and year flags (band 7 and 8). What worked out well, what did not? How could the quality of the composites be improved? Re-iterate with different parameters if you wish.</p>
 </div>
-<div id="optional-task-second-run-for-target-date-2" class="section level3">
-<h3>5) Optional task: Second run for target date 2</h3>
+<div id="voluntary-exercise-second-run-for-target-date-2" class="section level3">
+<h3><em>5) Voluntary exercise</em>: Second run for target date 2</h3>
 <p>Repeat the compositing for the second target DOY you specified in 2) and write the results to disk.</p>
 </div>
-<div id="optional-task-improving-the-user-friendliness-of-the-script" class="section level3">
-<h3>6) Optional task: Improving the user-friendliness of the script</h3>
+<div id="voluntary-exercise-improving-the-user-friendliness-of-the-script" class="section level3">
+<h3><em>6) Voluntary exercise</em>: Improving the user-friendliness of the script</h3>
 <p>Make the compositing function more user friendly. Insert a couple of plot and print commands to enable the users to follow the progress of the compositing while the function is running.</p>
 <p>For instance, print() how many images were used for the final composite, their acquisition dates, etc. Also, you might want to plot() the composited image after each iteration. You could add further status messages telling the user how much time single steps took.</p>
 <p>Don´t forget to save the script and run the source() command in your R script to update the function after you made these changes.</p>
