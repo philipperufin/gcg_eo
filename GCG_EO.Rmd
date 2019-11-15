@@ -1137,11 +1137,11 @@ data.path <- 'O:/WS1920_MSc-EO/S04/data/'
 # 1)
 #############################################################################
 
-sr <- list.files(paste0(data.path, '/sr_data'), pattern=".tif$", full.names=T, recursive=F)
-fmask <- list.files(paste0(data.path, '/fmask'), pattern=".tif$", full.names=T, recursive=F)
-cd <- list.files(paste0(data.path, '/cloud_dist'), pattern=".tif$", full.names=T, recursive=F)
+sr <- list.files(paste0(data.path, 'sr_data'), pattern=".tif$", full.names=T, recursive=F)
+fmask <- list.files(paste0(data.path, 'fmask'), pattern=".tif$", full.names=T, recursive=F)
+cd <- list.files(paste0(data.path, 'cloud_dist'), pattern=".tif$", full.names=T, recursive=F)
 
-sta <- nchar(paste0(data.path,'/sr_data/LT05228082')) + 1
+sta <- nchar(paste0(data.path,'sr_data/LT05228082')) + 1
 end <- sta + 6
 
 dates <- as.Date(substr(sr, sta, end), format='%Y%j')

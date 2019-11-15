@@ -1150,11 +1150,11 @@ data.path &lt;-<span class="st"> &#39;O:/WS1920_MSc-EO/S04/data/&#39;</span>
 <span class="co"># 1)</span>
 #############################################################################
 
-sr &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="kw">paste0</span>(data.path, <span class="st">&#39;/sr_data&#39;</span>), <span class="dt">pattern=</span><span class="st">&quot;.tif$&quot;</span>, <span class="dt">full.names=</span>T, <span class="dt">recursive=</span>F)
-fmask &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="kw">paste0</span>(data.path, <span class="st">&#39;/fmask&#39;</span>), <span class="dt">pattern=</span><span class="st">&quot;.tif$&quot;</span>, <span class="dt">full.names=</span>T, <span class="dt">recursive=</span>F)
-cd &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="kw">paste0</span>(data.path, <span class="st">&#39;/cloud_dist&#39;</span>), <span class="dt">pattern=</span><span class="st">&quot;.tif$&quot;</span>, <span class="dt">full.names=</span>T, <span class="dt">recursive=</span>F)
+sr &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="kw">paste0</span>(data.path, <span class="st">&#39;sr_data&#39;</span>), <span class="dt">pattern=</span><span class="st">&quot;.tif$&quot;</span>, <span class="dt">full.names=</span>T, <span class="dt">recursive=</span>F)
+fmask &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="kw">paste0</span>(data.path, <span class="st">&#39;fmask&#39;</span>), <span class="dt">pattern=</span><span class="st">&quot;.tif$&quot;</span>, <span class="dt">full.names=</span>T, <span class="dt">recursive=</span>F)
+cd &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="kw">paste0</span>(data.path, <span class="st">&#39;cloud_dist&#39;</span>), <span class="dt">pattern=</span><span class="st">&quot;.tif$&quot;</span>, <span class="dt">full.names=</span>T, <span class="dt">recursive=</span>F)
 
-sta &lt;-<span class="st"> </span><span class="kw">nchar</span>(<span class="kw">paste0</span>(data.path,<span class="st">&#39;/sr_data/LT05228082&#39;</span>)) <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+sta &lt;-<span class="st"> </span><span class="kw">nchar</span>(<span class="kw">paste0</span>(data.path,<span class="st">&#39;sr_data/LT05228082&#39;</span>)) <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
 end &lt;-<span class="st"> </span>sta <span class="op">+</span><span class="st"> </span><span class="dv">6</span>
 
 dates &lt;-<span class="st"> </span><span class="kw">as.Date</span>(<span class="kw">substr</span>(sr, sta, end), <span class="dt">format=</span><span class="st">&#39;%Y%j&#39;</span>)
