@@ -1255,7 +1255,7 @@ In this review, Maxwell and colleagues outline the use of several machine learni
 
 ------
 
-<!-- ################################## SESSION 05 ##############################################  
+<!-- ################################## SESSION 05 ##############################################  -->
 
 # Session 05: Machine learning for image classification
 
@@ -1297,7 +1297,7 @@ Once ```ntree``` decision trees are built, we have a readily applicable rule-set
 
 ### The out-of-bag error
 
-The RF has a great feature: the out-of-bag error. After growing each tree, the left-out samples (i.e. not used for training of this particular tree) can be classified to investigate the performance of our classification model. Doing this allows us to calculate a classification error. For illustration, consider 8 OOB samples, of which 2 are wrongly and 6 are correctly classified. The OOB error will be 2/8 = 0.25. This simple measure of model performance can be useful to parametrize our classification model. We can for instance test various combinations of input features, training datasets, or investigate the RF performance with increasing ```ntrees```. 
+The RF has a great feature: the out-of-bag (OOB) error. After growing each tree, the left-out samples (i.e. not used for training of this particular tree) can be classified to investigate the performance of our classification model. Doing this allows us to calculate a classification error. For illustration, consider 8 left-out samples, of which 2 are wrongly and 6 are correctly classified. The OOB error will be 2/8 = 0.25. This simple measure of model performance can be useful to parametrize our classification model. We can for instance test various combinations of input features, training datasets, or investigate the RF performance with increasing ```ntrees```. 
 
 ![Grid representation of the out-of-bag classification error for various combinations of two input images from different days of the year (left). Decreasing out-of-bag error with increasing number of trees in the RF model (right).](fig/s05_oob.PNG){width=80%}
 
@@ -1307,19 +1307,17 @@ Next, the RF allows us to investigate which features (e.g. spectral bands) were 
 
 ![Mean decrease in accuracy (increase in OOB error) caused by the features included in the classification model.](fig/s05_varimp.png){width=60%}
 
-In a next step, we can use partial dependence plots to further investigate the relationship between individual features and the likelihood of class occurrence. We can try to interpret this graph and assess relationships between individual features and our classes of interest. While generating meaningful insights is somewhat tricky with reflectance values, we could also imagine including, e.g., a digital elevation model into the RF model to learn about the distribution of our classes across elevation gradients.
+In a next step, we can use partial dependence plots to further investigate the relationship between individual features and the likelihood of class occurrence. We can try to interpret this graph and assess relationships between individual features and our classes of interest. While generating meaningful insights is somewhat tricky with reflectance values, we could also imagine including, e.g., a digital elevation model into the RF model to learn about the likelihood of class occurrence across elevation gradients.
 
 ![Change in class likelihood across the value range of the swIR 1 reflectance at DOY 196.](fig/s05_pdp.png){width=80%}
 
-
-
-Summing it up, there are a some key advantages of the RF algorithm, which make it highly popular in data science and remote sensing. The RF is easy to understand, computationally efficient, parametrization is pretty straightforward, and it often produces great results. It provides quick insights into model performance via the out of bag error and allows for investigating variable importance measures and partial dependence plots.
+Summing it up, there are a some key advantages of the RF algorithm, which make it highly popular in data science and remote sensing. The RF is easy to understand, computationally efficient, parametrization is pretty straightforward, and it often produces great results. It provides quick insights into model performance via the out-of-bag error and allows for investigating variable importance measures and partial dependence plots.
 
 ----- 
 
 ## Exercise
 
-In this exercise, we will deal with image classification using the Random Forest algorithm, as implemented in the ```randomForest``` package. Specifically, we will use your training data and your pixel-based composites from the last exercises to map forest types in the Western Beskids. We will assess the performance of multiple classification models through the out of bag error and investigate variable importances. In case you missed the last sessions, we provide exemplary composites and training data [here](https://box.hu-berlin.de/f/85a35c373cdd490180fe/?dl=1).
+In this exercise, we will deal with image classification using the Random Forest algorithm, as implemented in the ```randomForest``` package. Specifically, we will use your training data and your pixel-based composites from the last exercises to map forest types in the Western Beskids. We will assess the performance of multiple classification models through the out-of-bag error and investigate variable importances. In case you missed the last sessions, we provide exemplary composites and training data [here](https://box.hu-berlin.de/f/85a35c373cdd490180fe/?dl=1).
 
 ### 1) Training a Random Forest model
 
@@ -1336,7 +1334,7 @@ e. Repeat the RF training procedure and produce additional model objects. Use i)
 
 ### 2) Investigating model performance
 
-The RF model objects contain a wealth of information on the model parameters and performance. Assess the out of bag (OOB) error estimates of the trained models by inspecting the ```err.rate``` attribute of your model objects. Answer the following questions:
+The RF model objects contain a wealth of information on the model parameters and performance. Assess the out-of-bag (OOB) error estimates of the trained models by inspecting the ```err.rate``` attribute of your model objects. Answer the following questions:
 
 a. Which model has the lowest OOB error?
 b. How does the OOB behave when increasing the number of trees in your model (```ntrees```)? You can access the OOB per number of trees via ```err.rate```. Use this information to roughly determine a suitable value for ```ntrees```.
