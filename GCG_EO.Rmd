@@ -1370,7 +1370,7 @@ Please take a look at the Excel sheet provided [here](https://box.hu-berlin.de/f
 
 ------
 
-<!-- ################################## SESSION 06 ##############################################   
+<!-- ################################## SESSION 06 ############################################## -->
 
 # Session 06: Accuracy assessment and area estimation
 
@@ -1382,7 +1382,7 @@ Please take a look at the Excel sheet provided [here](https://box.hu-berlin.de/f
 
 ## Background
 
-Independent map accuracy assessment aims at getting an unbiased estimate of map accuracy. Generally, we identify a number of sample locations and compare the predicted class in the map with "true" class, which we determine using high quality reference information (e.g., very high resolution imagery). The following section requires understanding of the basic concepts of map accuracy assessment, i.e. the confusion matrix, overall, producer´s, and user´s accuracy. Read in, e.g. [here](http://gsp.humboldt.edu/olm_2015/Courses/GSP_216_Online/lesson6-2/metrics.html) if you don´t know what these are.
+Independent map accuracy assessment aims at getting an unbiased estimate of map accuracy. Generally, we identify a number of sample locations and compare the predicted class in the map with "true" class, which we determine using high quality reference information (e.g., very high resolution imagery). The following section requires understanding of the basic concepts of map accuracy assessment, i.e. the confusion matrix, overall, producer´s, and user´s accuracy. Read in, (e.g., [here](http://gsp.humboldt.edu/olm_2019/courses/GSP_216_Online/lesson6-2/metrics.html)) if you don´t know what these are.
 
 ![Forest type map with stratified random sample](fig/s06_map.png)
 
@@ -1552,11 +1552,74 @@ Compare the results with the values in the Excel table. If they differ, somethin
 
 ## Reading materials
 
-In this paper, [Hansen et al. (2013)](http://doi.org/10.1126/science.1244693) presented the first global Landsat-based map of forest cover change. Please make sure to read the paper and the supplementary materials and take notes on questions of understanding and issues to discuss during the course.
+In this paper, [Hansen et al. (2013)](http://doi.org/10.1126/science.1244693) presented the first global Landsat-based map of forest cover change. Please make sure to read the paper and the supplementary materials.
 
-------
+In order to make the discussion more vivid, we simulate a discussion on the applicability of the Global Forest Data as a baseline for REDD+ policy decisions. We therefore divide the classroom into two groups. Group A are "proponents" of the global product, whereas group B are its "opponents". Students placed in odd row numbers in the classroom (starting from the front) belong to group A (proponents), whereas students in even row numbers belong to group B (opponents). 
 
-# Session 07: Multi-temporal change detection
+Please prepare arguments for your group based on the core article and the supplementary material, as well as additional scientific literature if you wish (e.g. case studies). Arguments can target conceptual issues, methodological components, or other scientific evidence arguing for or against the suitability of the Global Forest Data in the context of REDD+. 
+
+---------
+
+<!--  SESSION 07 
+
+# Session 07: Fraction mapping
+
+## Learning goals
+- Understand the basic concept of spectral mixture analysis
+- Implement linear spectral mixture analysis for a single pixel
+- Map fractions of deciduous and evergreen forest in the Carpathians
+
+## Background
+Discrete classification assign to dominant class.
+Pixels often mixed signatures of several land covers.
+Workarounds: SMA, regression.
+Practical aspects...
+
+## Exercise
+
+provide mixed spectrum A (Landsat). 
+
+spectrum <- data.frame('wavelength'=c(515, 600, 680, 885, 1660, 2300), 
+                      'reflectance'=c())
+ggplot(profile, aes(x=wavelength, y=values, group=DOY)) + 
+      geom_line(aes(color=DOY), lwd=1) + 
+      scale_y_continuous(name="DN") + 
+      scale_x_continuous(name="Wavelength (nm)") + 
+      theme_bw()
+      
+
+endmembers A, B, C? soil, water, grass
+endmembers <- data.frame('wavelength'=c(515, 600, 680, 885, 1660, 2300), 
+                        'soil'=c(),
+                        'grass'=c(),
+                        'shade'=c())
+
+ggplot(profile, aes(x=wavelength, y=values, group=DOY)) + 
+      geom_line(aes(color=DOY), lwd=1) + 
+      scale_y_continuous(name="DN") + 
+      scale_x_continuous(name="Wavelength (nm)") + 
+      scale_colour_discrete(name="Acquisition DOY") +
+      theme_bw()
+
+synthetic mixing -> apply unmixing
+
+```{r sma_1, echo=TRUE, eval=FALSE}
+
+fraction_a <- 0.34
+fraction_b <- 0.41
+fraction_c <- 0.25
+fraction_a + fraction_b + fraction_c == 1
+target <- fraction_a * A + fraction_b * B + fraction_c * C
+
+```
+find out the error term?
+
+select endmembers for: 
+deciduous, conifer, understory, shade?
+
+<!--  SESSION 08
+
+# Session 08: Multi-temporal change detection
 
 ## Learning goals
 
@@ -1655,7 +1718,7 @@ In the next session, we would like to discuss [Müller et al. (2015): Mining den
 
 
 
-# Session 08: Spectral-temporal metrics
+# Session 09: Spectral-temporal metrics
 
 ## Learning goals
 
@@ -1785,7 +1848,7 @@ b. Combine the resulting map with your forest change map from last week to get a
 
 ------
 
-# Session 09: Project phase I
+# Session 10: Project phase I
 
 ## Learning goals: 
 
@@ -1854,7 +1917,7 @@ e. Check any other source of data that you might know of.
 
 
 
-# Session 10: Project phase II
+# Session 11: Project phase II
 
 ## Learning goals:
 
@@ -1894,7 +1957,7 @@ You have already done this a couple of times by now. Here are some guidelines th
 **Until next week:** Have your input features and training data ready, so we can proceed with producing results. Decide for an algorithm to use in your classification / regression problem. Discuss the parametrization of these algorithms in your team, i.e., which are the required parameters and how to determine useful parameter settings.
 
 
-# Session 11: Project phase III
+# Session 12: Project phase III
 
 ## Learning goals:
 
