@@ -120,6 +120,7 @@ $(document).ready(function () {
         <li><a href="#session-04-pixel-based-compositing">Session 04: Pixel-based compositing</a></li>
         <li><a href="#session-05-machine-learning-for-image-classification">Session 05: Machine learning for image classification</a></li>
         <li><a href="#session-06-accuracy-assessment-and-area-estimation">Session 06: Accuracy assessment and area estimation</a></li>
+        <li><a href="#session-07-multi-temporal-change-detection">Session 07: Multi-temporal change detection</a></li>
         <li><a href="#terminology">Terminology</a></li>
         </ul>
         </div>
@@ -1496,11 +1497,11 @@ $year: the acquisition year.</p></li>
 <p><span class="math inline">\(OA_{unadjusted} = \frac{(39 + 19 + 39 + 34)}{200} = 0.63 = 63\%\)</span>.</p>
 <p>The above estimate of overall accuracy implicitly weighs each class according to the number of correctly classified samples in it. The more samples, the higher the influence on the overall accuracy score. The unadjusted overall accuracy is thus independent of the true area proportions of the map classes.</p>
 <p>Furthermore, the unadjusted overall accuracy does not account for the sampling bias introduced by the stratified sampling. You can imagine this bias as varying sampling densities between the map classes. Let´s assume our map contains a total of 10,000 pixels, we have mapped 700 pixels as deciduous forest and 4,000 pixels as coniferous forest. By verifying 50 samples of each class, we assessed <span class="math inline">\(\frac{50}{700} = 0.071 = 7.1\%\)</span> of the deciduous forest class pixels, while only <span class="math inline">\(\frac{50}{4,000} = 0.013 = 1.3\%\)</span> of the coniferous forest class were investigated. The other way around, one sample of the deciduous forest class is considered representative for <span class="math inline">\(\frac{700}{50} = 14\)</span> pixels, while one sample of the coniferous forest class represents <span class="math inline">\(\frac{4,000}{50} = 80\)</span> pixels.</p>
-<p><strong>An assumption</strong>: The samples drawn from the deciduous forest stratum represent a much smaller area in our map (7%), as compared to the coniferous forest class (40%). In terms of overall accuracy, this means that the 39 correctly classified pixels of the deciduous forest class are probably less “relevant” than the 39 correctly classified pixels in the coniferous class. According to the numbers above, one sample of coniferous forest shold thus weigh <span class="math inline">\(\frac{80}{14} = 5.7\)</span> times as much as a deciduous forest pixel.</p>
+<p><strong>An assumption</strong>: The samples drawn from the deciduous forest stratum represent a much smaller area in our map (7%), as compared to the coniferous forest class (40%). In terms of overall accuracy, this means that the 39 correctly classified pixels of the deciduous forest class are probably less “relevant” than the 39 correctly classified pixels in the coniferous class. According to the numbers above, one sample of coniferous forest shold thus weigh <span class="math inline">\(\frac{80}{14} = 5.7\)</span> times as much as a deciduous forest pixel. We have to account for this bias when estimating map accuracies from a stratified random sample.</p>
 </div>
-<div id="how-to-implement-it" class="section level3">
-<h3>How to implement it?</h3>
-<p>We have to account for this bias when estimating map accuracies from a stratified random sample. This can be accomplished by populating the confusion matrix with probabilities of encountering the combination of map class <span class="math inline">\(i\)</span> and reference class <span class="math inline">\(j\)</span>, expressed as:</p>
+<div id="how-to-do-it" class="section level3">
+<h3>How to do it?</h3>
+<p>This can be accomplished by populating the confusion matrix with probabilities of encountering the combination of map class <span class="math inline">\(i\)</span> and reference class <span class="math inline">\(j\)</span>, expressed as:</p>
 <p><span class="math inline">\(p_{ij} = \frac{n_{ij}}{n_i} * w_i\)</span></p>
 <p><span class="math inline">\(n_{ij}\)</span> = Number of pixels belonging to map class <span class="math inline">\(i\)</span> and reference class <span class="math inline">\(j\)</span></p>
 <p><span class="math inline">\(n_i\)</span> = Total number of pixels of map class <span class="math inline">\(i\)</span></p>
@@ -1527,7 +1528,7 @@ $year: the acquisition year.</p></li>
 <tr class="odd">
 <td>Deciduous forest</td>
 <td><span class="math inline">\(\frac{39}{50}0.07\)</span></td>
-<td><span class="math inline">\(\frac{5/}{50}0.07\)</span></td>
+<td><span class="math inline">\(\frac{5}{50}0.07\)</span></td>
 <td><span class="math inline">\(\frac{1}{50}0.07\)</span></td>
 <td><span class="math inline">\(\frac{5}{50}0.07\)</span></td>
 </tr>
@@ -1729,8 +1730,7 @@ $year: the acquisition year.</p></li>
 </ol>
 <p>To do this, track the underlying formulas of the respective sections in the Excel sheet and transfer them to R. Use helper functions such as <code>diag()</code>, <code>sum()</code> and <code>apply()</code>. Avoid <code>for</code> loops.</p>
 <p>Compare the results with the values in the Excel table. If they differ, something went wrong. Check again!</p>
-<!-- 
-## Reading materials
+<!-- ## Reading materials 
 
 In this paper, [Hansen et al. (2013)](http://doi.org/10.1126/science.1244693) presented the first global Landsat-based map of forest cover change. Please make sure to read the paper and the supplementary materials.
 
@@ -1738,261 +1738,131 @@ In order to make the discussion more vivid, we simulate a discussion on the appl
 
 Please prepare arguments for your group based on the core article and the supplementary material, as well as additional scientific literature if you wish (e.g. case studies). Arguments can target conceptual issues, methodological components, or other scientific evidence arguing for or against the suitability of the Global Forest Data in the context of REDD+. 
 
----------
-
-<!--  SESSION 07 
-
-# Session 07: Fraction mapping
-
-## Learning goals
-
-- Understand the basic concept of spectral mixture analysis
-- Implement linear spectral mixture analysis for a single pixel
-- Map fractions of deciduous and evergreen forest in the Carpathians
-
-## Background
-
-The spatial resolution of satellite imagery is determining the composition of surface materials within a measurement unit, i.e., a pixel. A coarse spatial resolution will lead to an increasing level of mixed surfaces within a pixel. 
-
-Classification approaches assign discrete labels to a pixel and can thus be of limited use for estimating the true distribution of a surface material. In many cases (but very much depending on the training dataset), the dominant class label will be assigned by the classification model. We thereby underestimate the proportion(s) of the minority class(es), while overestimating the proportion of the dominant class.
-
-Fraction mapping is an alternative approach, which attempts to map the fraction of a variety of classes within a pixel. This can either be done by using spectral mixture analysis or regression approaches. 
-
-Practical aspects...
-
-Subject to the following constraints:0 <= fi<= 1CONSTRAINT 1f1+ f2+ ...fn= 1CONSTRAINT 2Researchers have noted that 2 is easy to implement, but 1 is not.As a result, most studies only implement the 2nd Constraint in the model and then apply the 1st constraint to the results.
-
-There  is  no  significant  occurrence  of  multiple  scattering  between  the  different surface components.•Each  surface  component  within  the  image  has  sufficient  spectralcontrast  to allow their separation.•In each pixel the total land cover is unity.•Each surface component (endmember) is known
-
-Unter der Bedingung, dass jedes Photon nur mit einer Fläche interagiert, kann angenommen werden, dass der Anteil am Signal einzig vom Anteil der Fläche am Pixel bestimmt wird.
-
-Wenn es gelingt das Gleichungssystem in Richtung Flächenanteil zu lösen, ergeben sich für jedes Pixel zwei Werte, die jeweils als Ergebniskarten für den Anteil der jeweiligen Komponenten an den Oberflächen betrachtet werden kann. 
-Dies bezeichnet man als Lineare spektrale Mischungsanalyse (LSMA; linear spectral mixture analysis) bzw. spektrale Entmischung (spectral unmixing
-
-Bildpixel kann i.d.R. nicht exakt modelliert werden
-Fehlende oder unpassende Endmember (Dachfenster, Pflanzenstress)
-Nicht-lineare Mischung, Rauschen
-Neben den einzelnen Residuen bzw. dem Residualspektrum dient der kann RMSE als Maß für die Güte der Mischungsanalyse: 
-
-
-## Exercise
-
-In today´s exercise, we will spent quite some time to deal with the concept of the linear spectral unmixing. The idea is to use LSMA to tackle the mixed forest problem we encountered in the forest type classification. 
-
-Forest types in the peak growing season do likely not provide sufficient spectral contrast in order to produce useful unmixing results. However, we can produce a multi-temporal image stack that also features the contrasting reflectance signals we observed in the leaf-off phenological phase. 
-
-Based on our pixel-based composites, we can define...
-
-```r
-# Define endmember sprectra from composite images at DOY 074 and 196
-endmembers <- data.frame('band'= c('blue', 'green', 'red', 'nIR', 'swIR1', 'swIR2'), 
-                         'wavelength'= c(515, 600, 680, 885, 1660, 2300), 
-                         'beech_074'= c(0.0236, 0.0445, 0.0709, 0.2151, 0.2377, 0.1527),
-                         'beech_196'= c(0.0205, 0.0415, 0.0232, 0.4590, 0.2023, 0.0825),
-                         'spruce_074' = c(0.0057, 0.0165, 0.0139, 0.1146, 0.0526, 0.0261), 
-                         'spruce_196' = c(0.0123, 0.0286, 0.0209, 0.1617, 0.0861, 0.0436),
-                         'shade'= c(0.0001,0.0001,0.0001,0.0001,0.0001,0.0001))
-
-
-ggplot(endmembers) + 
-      geom_line(aes(x=wavelength, y=beech_074), color='darkgreen', lwd=1) +
-      #geom_line(aes(x=wavelength, y=beech_summer), color='forestgreen', lwd=1) + 
-      geom_line(aes(x=wavelength, y=spruce_074), color='steelblue4', lwd=1) + 
-      #geom_line(aes(x=wavelength, y=spruce_summer), color='steelblue3', lwd=1) +
-      scale_y_continuous(name="BOA reflectance") + 
-      scale_x_continuous(name="Wavelength (nm)") + 
-      scale_color_manual('Spectrum', 
-                       values = c('black', 'darkgreen','steelblue4'), 
-                       labels=c('Shade', 'Beech', 'Spruce'), guide='legend') +
-      theme_bw()
-```
-
-<img src="index_files/figure-html/sma_1-1.png" width="576" />
-synthetic mixing -> apply unmixing
-
-
-
-```r
-fraction_beech <- 0.60
-fraction_spruce <- 0.30
-fraction_shade <- 0.10
-
-fraction_beech + fraction_spruce + fraction_shade == 1
-```
-
-```
-[1] FALSE
-```
-
-```r
-model_spectrum <- fraction_beech * endmembers$beech_074 + 
-                  fraction_spruce * endmembers$spruce_074 + 
-                  fraction_shade * endmembers$shade
-
-noise <- rnorm(6, mean=0, sd=0.008)
-
-endmembers$model_spectrum <- model_spectrum + noise
-
-ggplot(endmembers) + 
-    geom_line(aes(x=wavelength, y=model_spectrum, color='firebrick4'), linetype=2) + 
-    geom_line(aes(x=wavelength, y=beech_074, color='darkgreen'), lwd=1) +
-    geom_line(aes(x=wavelength, y=spruce_074, color='steelblue4'), lwd=1) +
-    geom_line(aes(x=wavelength, y=shade, color='black'), lwd=1) + 
-
-    scale_y_continuous(name="BOA reflectance") + 
-    scale_x_continuous(name="Wavelength (nm)") +
-    scale_color_manual('Spectrum', 
-                       values = c('black', 'darkgreen', 'firebrick4', 'steelblue4'), 
-                       labels=c('Shade', 'Beech',  'Mixed', 'Spruce'), guide='legend') +
-    theme_bw()
-```
-
-<img src="index_files/figure-html/sma_2-1.png" width="576" />
-
-find out fractions by iteratively testing combinations?
-
-use math to solve equation system...
-$$
-\left(\begin{array}{cc} 
-beech_{blue} & spruce_{blue} & shade_{blue}\\
-beech_{green} & spruce_{green} & shade_{green}\\
-beech_{red} & spruce_{red} & shade_{red}\\
-beech_{nIR} & spruce_{nIR} & shade_{nIR}\\
-beech_{swIR1} & spruce_{swIR1} & shade_{swIR1}\\
-beech_{swIR2} & spruce_{swIR2} & shade_{swIR2}
-\end{array}\right)
-*
-\left(\begin{array}{cc} 
-fraction_{beech}\\
-fraction_{spruce}\\
-fraction_{shade}
-\end{array}\right)
-=
-\left(\begin{array}{cc} 
-pixel_{blue}\\ pixel_{green}\\ pixel_{red}\\ pixel_{nIR}\\ pixel_{swIR1}\\ pixel_{swIR2}
-\end{array}\right)
-+
-\left(\begin{array}{cc} 
-\epsilon_{blue}\\ \epsilon_{green}\\ \epsilon_{red}\\ \epsilon_{nIR}\\ \epsilon_{swIR1}\\ \epsilon_{swIR2}
-\end{array}\right)
-$$ 
-
-
-```r
-library(MASS)
-
-EM <- as.matrix(endmembers[,c('beech_074','spruce_074','shade')])
-MS <- as.matrix(endmembers[,'model_spectrum'])
-
-EM_fractions <- ginv(EM) %*% MS
-residuals <- EM %*% fractions - endmembers$model_spectrum
-sqrt(mean(residuals^2))
-sqrt(mean(noise^2))
-```
-
-## Exercise
-
-<!--  SESSION 08
-
-# Session 08: Multi-temporal change detection
-
-## Learning goals
-
-- Bundle your experiences to develop a supervised classification workflow
-- Map forest dynamics in the Southern Brazilian Amazon
-- Generate map-based estimates of forest loss and gain in the study region
-
-## Background
-
-Deforestation processes are widespread across the globe. Remote sensing technologies are often used to map these processes, their spatial patterns and temporal evolution over large areas. An impressive case of the use of operational forest monitoring schemes is Brazil´s Amazon forest. Here, large-area deforestation for cattle ranching and crop cultivation occurs. 
-
-![Aerial photograph of deforestation in southern Pará, Brazil. Source: Patrick Hostert](fig/s07_para.jpg){width=80%}
-
-
-The [PRODES](http://www.dpi.inpe.br/prodesdigital/prodes.php?LANGUAGE=EN&) project, run by the National Institute for Space Research  [INPE](http://www.inpe.br/) provides information on spatially explicit information of forest loss using visual interpretation of Landsat and CBERS data. Often, visual interpretation is however not feasible and we desire an automated detection of change processes. 
-
-How do we get to the change map? Similar to the production of a land cover map, we can produce maps of land cover or land use change. This inherently incorporates the integration of multiple observation dates. Broadly speaking, change detection can occur in two ways: 
-
-- **Post-classification change detection**: This refers to the independent production of land use or land cover maps for each time point of interest. In a next stept, differencing techniques are applied to investigate the change between two (or more) maps. While training data collection is relatively straight-forward, error propagation is a core issue for post-classification comparisons. It is therefore advised to assess the map quality of the final change map independently.
-
-- **Multi-temporal change classification**: This refers to the direct classification of a stack of two (or more) images to assess the change classes of interest. Image stacks can be based on reflectance data, vegetation indices, or any other indicators that are comparable over time. Defining good change classes and collecting training data can be challenging. As an example: mapping change between 4 classes A, B, C and D, already requires training data for 16 change trajectories: A-A, A-B, A-C, A-D, B-A, B-B, ..., D-C, D-D.
-
-![Schematic illustration of change detection methods.](fig/s07_change.png)
-
-## Exercise
-
-After completing the last exercises, you gained a lot of experience in using R & QGIS for data handling and pre-processing, training data collection, classification, and accuracy assessment. In other terms: you´re well prepared for performing a change detection using Landsat data. The goal of this exercise is to map forest cover change in the Southern Brazilian Amazon.  
-
-![Landsat images of study area for 2000, 2005, and 2010.](fig/s07_ls.png)
-
-We provided the following datasets in [our repository](https://box.hu-berlin.de/f/bb4553666dff42c29cb9/?dl=1) and on drive O:  
-
-…sr_data/: Three Landsat 5 surface reflectance stacks (*_crp.tif) at five-year intervals from 2000 to 2010.
-
-- LT052260682000061001T1-SC20170927060330 (10 June 2000)  
-- LT052260682005060801T1-SC20170927060440 (08 June 2005)  
-- LT052260682010062201T1-SC20170927060241 (22 June 2010)  
-
-…vector/: A shapefile and a *.kmz file for GoogleEarth, which will help you to accurately delineate the Landsat pixel locations and extents for training data collection.  
-
-…validation/: A shapefile containing reference data for the accuracy assessment.  
-
-…gfc/: A subset of the Global Forest Change dataset by Hansen et al. (2013). We reclassified the data to match the target classes of today´s exercises.
-
-Your task is to create a change map, which contains the following classes:
-
-| classID | Class                   |
-| ------- | -----                   |
-| 1       | Stable forest           |
-| 2       | Deforestation 2001-2005 |
-| 3       | Deforestation 2006-2010 |
-| 4       | Forest gain             |
-| 5       | Stable non-forest       |
-
-Different from the previous exercises, you can decide on how the workflow of your map production looks like in detail. Use the code and tools from the last sessions and earlier experiences with remote sensing and associated software packages, if applicable. Consider the following steps:
-
-### 1) Choosing an approach for change detection
-Several change detection approaches can be used to map forest cover changes. You can choose a methodological approach for your change detection. We suggest two approaches for supervised classification:
-
-- Post-classification comparison: You perform a classification of land cover for each composite dataset. You then use raster algebra in R (or any other tool of your choice) to convert the individual results into a change map.
-- Integrated multi-temporal change classification: You stack all features into a single file and collect training data for the change classes of interest. You obtain the change map directly from your classification.
-
-### 2) Screening of input data and training data collection
-
-a. Visualize the Landsat images in QGIS. Test a true color (RGB), as well as a nIR-swIR1-red false color combination.  
-Optional: Derive additional features from your data. Do you want to classify based on the spectral bands? What about vegetation indices, principal components, tasseled cap components?
-
-b. Consider that the way you collect your training data varies with the approach you choose in 1).
-
-c. Collecting training data is time consuming - try to be efficient. Make use of the QGIS Info-Tool to compare spectral profiles of the three images. You can also link QGIS and Google Earth through the GearthView plugin. For exact pixel locations, use the Landsat pixel grid we provided.
-
-### 3) Model training & classification
-
-a. Choose a classification algorithm: Feel free to use any classifier. In case you´re interested in differences between classifiers, test more than one!
-
-b. Parametrize the model. Depending on your choice of classification model, think about how to make an informed decision about the model parameters. Optimize parameters wherever possible, e.g. by using the out-of-bag error.
-
-### 4) Change map validation & area estimates
-
-a. We provided reference data for the study area as a shapefile. Use it to perform an accuracy assessment. Why is it challenging to perform an area-adjusted accuracy assessment in this case?
-
-b. Calculate map-based area estimates for your map and the Global Forest Change data using simple pixel counting. Compare the estimates. What are the major differences?
-
-We collect your main results in [this table](https://ethercalc.org/rlko1iq98pqi). Please fill in all required fields, i.e. your name and selected approach (e.g. post-classification comparison), overall accuracy and class accuracies in decimal values (e.g. 0.75), as well as class areas in hectares.
-
-------
-
-## Reading materials
-
-In the next session, we would like to discuss [Müller et al. (2015): Mining dense Landsat time series for separating cropland and pasture in a heterogeneous Brazilian savanna landscape](https://doi.org/10.1016/j.rse.2014.10.014). In this paper, the authors explored the concept of spectral-temporal metrics for separating spectrally similar land cover classes in the Brazilian Cerrado. Please read the paper and make sure you understand the underlying concept. Write down questions of understanding and issues to discuss during the next session. Also, try to answer the following questions: 
-
-- How do spectral-temporal metrics conceptually differ from pixel-based composites?
-- For which type of (classification) problems can spectral-temporal metrics be useful?
-
-------
-
-
-
+<!--  SESSION 07 -->
+</div>
+</div>
+</div>
+<div id="session-07-multi-temporal-change-detection" class="section level1">
+<h1>Session 07: Multi-temporal change detection</h1>
+<div id="learning-goals-8" class="section level2">
+<h2>Learning goals</h2>
+<ul>
+<li>Bundle your experiences to develop a supervised classification workflow</li>
+<li>Map forest dynamics in the Southern Brazilian Amazon</li>
+<li>Generate map-based estimates of forest loss and gain in the study region</li>
+</ul>
+</div>
+<div id="background-4" class="section level2">
+<h2>Background</h2>
+<p>Deforestation processes are widespread across the globe. Remote sensing technologies are often used to map these processes, their spatial patterns and temporal evolution over large areas. An impressive case of the use of operational forest monitoring schemes is Brazil´s Amazon forest. Here, large-area deforestation for cattle ranching and crop cultivation occurs.</p>
+<div class="figure">
+<img src="fig/s07_para.jpg" alt="Aerial photograph of deforestation in southern Pará, Brazil. Source: Patrick Hostert" style="width:80.0%" />
+<p class="caption">Aerial photograph of deforestation in southern Pará, Brazil. Source: Patrick Hostert</p>
+</div>
+<p>The <a href="http://www.dpi.inpe.br/prodesdigital/prodes.php?LANGUAGE=EN&amp;">PRODES</a> project, run by the National Institute for Space Research <a href="http://www.inpe.br/">INPE</a> provides information on spatially explicit information of forest loss using visual interpretation of Landsat and CBERS data. Often, visual interpretation is however not feasible and we desire an automated detection of change processes.</p>
+<p>How do we get to the change map? Similar to the production of a land cover map, we can produce maps of land cover or land use change. This inherently incorporates the integration of multiple observation dates. Broadly speaking, change detection can occur in two ways:</p>
+<ul>
+<li><p><strong>Post-classification change detection</strong>: This refers to the independent production of land use or land cover maps for each time point of interest. In a next stept, differencing techniques are applied to investigate the change between two (or more) maps. While training data collection is relatively straight-forward, error propagation is a core issue for post-classification comparisons. It is therefore advised to assess the map quality of the final change map independently.</p></li>
+<li><p><strong>Multi-temporal change classification</strong>: This refers to the direct classification of a stack of two (or more) images to assess the change classes of interest. Image stacks can be based on reflectance data, vegetation indices, or any other indicators that are comparable over time. Defining good change classes and collecting training data can be challenging. As an example: mapping change between 4 classes A, B, C and D, already requires training data for 16 change trajectories: A-A, A-B, A-C, A-D, B-A, B-B, …, D-C, D-D.</p></li>
+</ul>
+<div class="figure">
+<img src="fig/s07_change.png" alt="Schematic illustration of change detection methods." />
+<p class="caption">Schematic illustration of change detection methods.</p>
+</div>
+</div>
+<div id="exercise-8" class="section level2">
+<h2>Exercise</h2>
+<p>After completing the last exercises, you gained a lot of experience in using R &amp; QGIS for data handling and pre-processing, training data collection, classification, and accuracy assessment. In other terms: you´re well prepared for performing a change detection using Landsat data. The goal of this exercise is to map forest cover change in the Southern Brazilian Amazon.</p>
+<div class="figure">
+<img src="fig/s07_ls.png" alt="Landsat images of study area for 2000, 2005, and 2010." />
+<p class="caption">Landsat images of study area for 2000, 2005, and 2010.</p>
+</div>
+<p>We provided the following datasets in <a href="https://box.hu-berlin.de/f/bb4553666dff42c29cb9/?dl=1">our repository</a> and on drive O:</p>
+<p>…sr_data/: Three Landsat 5 surface reflectance stacks (*_crp.tif) at five-year intervals from 2000 to 2010.</p>
+<ul>
+<li>LT052260682000061001T1-SC20170927060330 (10 June 2000)<br />
+</li>
+<li>LT052260682005060801T1-SC20170927060440 (08 June 2005)<br />
+</li>
+<li>LT052260682010062201T1-SC20170927060241 (22 June 2010)</li>
+</ul>
+<p>…vector/: A shapefile and a *.kmz file for GoogleEarth, which will help you to accurately delineate the Landsat pixel locations and extents for training data collection.</p>
+<p>…validation/: A shapefile containing reference data for the accuracy assessment.</p>
+<p>…gfc/: A subset of the Global Forest Change dataset by Hansen et al. (2013). We reclassified the data to match the target classes of today´s exercises.</p>
+<p>Your task is to create a change map, which contains the following classes:</p>
+<table>
+<thead>
+<tr class="header">
+<th>classID</th>
+<th>Class</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Stable forest</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Deforestation 2001-2005</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Deforestation 2006-2010</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Forest gain</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Stable non-forest</td>
+</tr>
+</tbody>
+</table>
+<p>Different from the previous exercises, you can decide on how the workflow of your map production looks like in detail. Use the code and tools from the last sessions and earlier experiences with remote sensing and associated software packages, if applicable. Consider the following steps:</p>
+<div id="choosing-an-approach-for-change-detection" class="section level3">
+<h3>1) Choosing an approach for change detection</h3>
+<p>Several change detection approaches can be used to map forest cover changes. You can choose a methodological approach for your change detection. We suggest two approaches for supervised classification:</p>
+<ul>
+<li>Post-classification comparison: You perform a classification of land cover for each composite dataset. You then use raster algebra in R (or any other tool of your choice) to convert the individual results into a change map.</li>
+<li>Integrated multi-temporal change classification: You stack all features into a single file and collect training data for the change classes of interest. You obtain the change map directly from your classification.</li>
+</ul>
+</div>
+<div id="screening-of-input-data-and-training-data-collection" class="section level3">
+<h3>2) Screening of input data and training data collection</h3>
+<ol style="list-style-type: lower-alpha">
+<li><p>Visualize the Landsat images in QGIS. Test a true color (RGB), as well as a nIR-swIR1-red false color combination.<br />
+Optional: Derive additional features from your data. Do you want to classify based on the spectral bands? What about vegetation indices, principal components, tasseled cap components?</p></li>
+<li><p>Consider that the way you collect your training data varies with the approach you choose in 1).</p></li>
+<li><p>Collecting training data is time consuming - try to be efficient. Make use of the QGIS Info-Tool to compare spectral profiles of the three images. You can also link QGIS and Google Earth through the GearthView plugin. For exact pixel locations, use the Landsat pixel grid we provided.</p></li>
+</ol>
+</div>
+<div id="model-training-classification" class="section level3">
+<h3>3) Model training &amp; classification</h3>
+<ol style="list-style-type: lower-alpha">
+<li><p>Choose a classification algorithm: Feel free to use any classifier. In case you´re interested in differences between classifiers, test more than one!</p></li>
+<li><p>Parametrize the model. Depending on your choice of classification model, think about how to make an informed decision about the model parameters. Optimize parameters wherever possible, e.g. by using the out-of-bag error.</p></li>
+</ol>
+</div>
+<div id="change-map-validation-area-estimates" class="section level3">
+<h3>4) Change map validation &amp; area estimates</h3>
+<ol style="list-style-type: lower-alpha">
+<li><p>We provided reference data for the study area as a shapefile. Use it to perform an accuracy assessment. Why is it challenging to perform an area-adjusted accuracy assessment in this case?</p></li>
+<li><p>Calculate map-based area estimates for your map and the Global Forest Change data using simple pixel counting. Compare the estimates. What are the major differences?</p></li>
+</ol>
+<p>We collect your main results in <a href="https://ethercalc.org/27kqlizysn5u">this table</a>. Please fill in all required fields, i.e. your name and selected approach (e.g. post-classification comparison), overall accuracy and class accuracies in decimal values (e.g. 0.75), as well as class areas in hectares.</p>
+<hr />
+</div>
+</div>
+<div id="reading-materials-5" class="section level2">
+<h2>Reading materials</h2>
+<p>In the next session, we would like to discuss <a href="https://doi.org/10.1016/j.rse.2014.10.014">Müller et al. (2015): Mining dense Landsat time series for separating cropland and pasture in a heterogeneous Brazilian savanna landscape</a>. In this paper, the authors explored the concept of spectral-temporal metrics for separating spectrally similar land cover classes in the Brazilian Cerrado. Please read the paper and make sure you understand the underlying concept. Write down questions of understanding and issues to discuss during the next session. Also, try to answer the following questions:</p>
+<ul>
+<li>How do spectral-temporal metrics conceptually differ from pixel-based composites?</li>
+<li>For which type of (classification) problems can spectral-temporal metrics be useful?</li>
+</ul>
+<!-- 
 # Session 09: Spectral-temporal metrics
 
 ## Learning goals
@@ -2123,9 +1993,18 @@ a. Assess the accuracy of the map using the validation data we provided. Run an 
 
 b. Combine the resulting map with your forest change map from last week to get a better insight into the land change processes of the study area. Calculate the fractions of deforested land occupied by pasture or cropland for each of the two time periods. Was forest primarily replaced by pastures or by cropland? Did this process change over the periods 2001-2005 and 2006-2010? Please enter your main results in [this table](https://ethercalc.org/sputdinazkck).
 
+## Reading materials
+
+In this paper, [Hansen et al. (2013)](http://doi.org/10.1126/science.1244693) presented the first global Landsat-based map of forest cover change. Please make sure to read the paper and the supplementary materials.
+
+In order to make the discussion more vivid, we simulate a discussion on the applicability of the Global Forest Data as a baseline for REDD+ policy decisions. We therefore divide the classroom into two groups. Group A are "proponents" of the global product, whereas group B are its "opponents". Students placed in odd row numbers in the classroom (starting from the front) belong to group A (proponents), whereas students in even row numbers belong to group B (opponents). 
+
+Please prepare arguments for your group based on the core article and the supplementary material, as well as additional scientific literature if you wish (e.g. case studies). Arguments can target conceptual issues, methodological components, or other scientific evidence arguing for or against the suitability of the Global Forest Data in the context of REDD+. 
+
 ------
 
-# Session 10: Project phase I
+-->
+<!-- # Session 10: Project phase I
 
 ## Learning goals: 
 
@@ -2192,9 +2071,8 @@ e. Check any other source of data that you might know of.
 
 **Until next week:** Order and download the required data, so we can proceed with pre-processing.
 
-
-
-# Session 11: Project phase II
+-->
+<!-- # Session 11: Project phase II
 
 ## Learning goals:
 
@@ -2233,8 +2111,8 @@ You have already done this a couple of times by now. Here are some guidelines th
 
 **Until next week:** Have your input features and training data ready, so we can proceed with producing results. Decide for an algorithm to use in your classification / regression problem. Discuss the parametrization of these algorithms in your team, i.e., which are the required parameters and how to determine useful parameter settings.
 
-
-# Session 12: Project phase III
+-->
+<!-- # Session 12: Project phase III
 
 ## Learning goals:
 
@@ -2281,9 +2159,7 @@ The schedule is very tight and presenters are urged to strictly stay within pre-
 
 **Until next week:** Prepare your presentation in PowerPoint and PDF format and upload them as a *.zip file on moodle the latest on July 2.
 
------- 
 -->
-</div>
 </div>
 </div>
 <div id="terminology" class="section level1">
@@ -2355,6 +2231,174 @@ The schedule is very tight and presenters are urged to strictly stay within pre-
 <li>Annual</li>
 <li>Intra-annual</li>
 <li>Seasonal</li>
+</ul>
+<hr />
+<p>&lt;!– SESSION 07</p>
+</div>
+<div id="session-07-fraction-mapping" class="section level2">
+<h2>Session 07: Fraction mapping</h2>
+</div>
+<div id="learning-goals-9" class="section level2">
+<h2>Learning goals</h2>
+<ul>
+<li>Understand the basic concept of spectral mixture analysis</li>
+<li>Implement linear spectral mixture analysis for a single pixel</li>
+<li>Map fractions of deciduous and evergreen forest in the Carpathians</li>
+</ul>
+</div>
+<div id="background-5" class="section level2">
+<h2>Background</h2>
+<p>The spatial resolution of satellite imagery is determining the composition of surface materials within a measurement unit, i.e., a pixel. A coarse spatial resolution will lead to an increasing level of mixed surfaces within a pixel.</p>
+<p>Classification approaches assign discrete labels to a pixel and can thus be of limited use for estimating the true distribution of a surface material. In many cases (but very much depending on the training dataset), the dominant class label will be assigned by the classification model. We thereby underestimate the proportion(s) of the minority class(es), while overestimating the proportion of the dominant class.</p>
+<p>Fraction mapping is an alternative approach, which attempts to map the fraction of a variety of classes within a pixel. This can either be done by using spectral mixture analysis or regression approaches.</p>
+<div id="regressions" class="section level3">
+<h3>Regressions…</h3>
+</div>
+<div id="lsma" class="section level3">
+<h3>LSMA</h3>
+<p>Practical aspects… endmembers. selection?</p>
+<p>Subject to the following constraints: 0 &lt;= fi&lt;= 1 CONSTRAINT 1 f1+ f2+ …fn= 1 CONSTRAINT 2</p>
+<p>Researchers have noted that 2 is easy to implement, but 1 is not. As a result, most studies only implement the 2nd Constraint in the model and then apply the 1st constraint to the results.</p>
+<ul>
+<li><p>There is no substantial occurrence of multiple scattering between the different surface components, hence all surface component contribute similarly to the measured reflectance spectrum. We thus assume that the areal proportion of a surface determines its contribution to the spectral signal.</p></li>
+<li><p>Each surface component within the image has sufficient spectral contrast to allow their separation.</p></li>
+<li><p>Each surface component (endmember) in the study region is known and included in the model.</p></li>
+<li><p>We will not be able to have a mathematically perfect decomposition of the spectrum. Reasons are manifold and include, e.g., badly selected endmembers…</p></li>
+</ul>
+<p>use math to solve equation system… <span class="math display">\[
+\left(\begin{array}{cc} 
+beech_{blue} &amp; spruce_{blue} &amp; shade_{blue}\\
+beech_{green} &amp; spruce_{green} &amp; shade_{green}\\
+beech_{red} &amp; spruce_{red} &amp; shade_{red}\\
+beech_{nIR} &amp; spruce_{nIR} &amp; shade_{nIR}\\
+beech_{swIR1} &amp; spruce_{swIR1} &amp; shade_{swIR1}\\
+beech_{swIR2} &amp; spruce_{swIR2} &amp; shade_{swIR2}
+\end{array}\right)
+*
+\left(\begin{array}{cc} 
+fraction_{beech}\\
+fraction_{spruce}\\
+fraction_{shade}
+\end{array}\right)
+=
+\left(\begin{array}{cc} 
+pixel_{blue}\\ pixel_{green}\\ pixel_{red}\\ pixel_{nIR}\\ pixel_{swIR1}\\ pixel_{swIR2}
+\end{array}\right)
++
+\left(\begin{array}{cc} 
+\epsilon_{blue}\\ \epsilon_{green}\\ \epsilon_{red}\\ \epsilon_{nIR}\\ \epsilon_{swIR1}\\ \epsilon_{swIR2}
+\end{array}\right)
+\]</span></p>
+<p>Wenn es gelingt das Gleichungssystem in Richtung Flächenanteil zu lösen, ergeben sich für jedes Pixel zwei Werte, die jeweils als Ergebniskarten für den Anteil der jeweiligen Komponenten an den Oberflächen betrachtet werden kann. Dies bezeichnet man als Lineare spektrale Mischungsanalyse (LSMA; linear spectral mixture analysis) bzw. spektrale Entmischung (spectral unmixing</p>
+<p>Bildpixel kann i.d.R. nicht exakt modelliert werden Fehlende oder unpassende Endmember (Dachfenster, Pflanzenstress) Nicht-lineare Mischung, Rauschen Neben den einzelnen Residuen bzw. dem Residualspektrum dient der kann RMSE als Maß für die Güte der Mischungsanalyse:</p>
+</div>
+</div>
+<div id="exercise-9" class="section level2">
+<h2>Exercise</h2>
+<p>In today´s exercise, we will spent quite some time to deal with the concept of the linear spectral unmixing. The idea is to use LSMA to tackle the mixed forest problem we encountered in the forest type classification.</p>
+<p>Forest types in the peak growing season do likely not provide sufficient spectral contrast in order to produce useful unmixing results. However, we can produce a multi-temporal image stack that also features the contrasting reflectance signals we observed in the leaf-off phenological phase.</p>
+<p>Based on our pixel-based composites, we can define… <img src="index_files/figure-html/sma_1-1.png" width="576" /></p>
+<p>We consider these spectra as representative of the two target classes deciduous forest and evergreen forest and add a shade endmember to account for variation in brightness caused by (topograpic) shading.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Let´s now model a &quot;mixed pixel&quot;. </span>
+<span class="co"># We can simply do this be defining proportions of the different surface components.</span>
+fraction_beech &lt;-<span class="st"> </span><span class="fl">0.6</span>
+fraction_spruce &lt;-<span class="st"> </span><span class="fl">0.3</span>
+fraction_shade &lt;-<span class="st"> </span><span class="fl">0.1</span>
+
+<span class="co"># Do we violate the assumption that all surface components represent 100% of the surface area?</span>
+<span class="cf">if</span> ((fraction_beech <span class="op">+</span><span class="st"> </span>fraction_spruce <span class="op">+</span><span class="st"> </span>fraction_shade) <span class="op">!=</span><span class="st"> </span><span class="dv">1</span>) <span class="kw">print</span>(<span class="st">&#39;Fractions don´t sum to 1.&#39;</span>)</code></pre></div>
+<pre><code>[1] &quot;Fractions don´t sum to 1.&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create a linear mixture of the endmember spectra, based on the defined proportions.</span>
+model_spectrum &lt;-<span class="st"> </span>fraction_beech <span class="op">*</span><span class="st"> </span>endmembers<span class="op">$</span>beech_<span class="dv">074</span> <span class="op">+</span><span class="st"> </span>
+<span class="st">                  </span>fraction_spruce <span class="op">*</span><span class="st"> </span>endmembers<span class="op">$</span>spruce_<span class="dv">074</span> <span class="op">+</span><span class="st"> </span>
+<span class="st">                  </span>fraction_shade <span class="op">*</span><span class="st"> </span>endmembers<span class="op">$</span>shade
+
+<span class="co"># We could simulate imperfect measurements by adding random noise.</span>
+noise &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">6</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="fl">0.012</span>)
+
+<span class="co"># Append the modeled spectrum to the endmembers data.frame</span>
+endmembers<span class="op">$</span>model_spectrum &lt;-<span class="st"> </span>model_spectrum <span class="op">+</span><span class="st"> </span>noise
+
+<span class="co"># Visualize the modeled spectrum in comparison to the endmember spectra.</span>
+<span class="kw">ggplot</span>(endmembers) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x=</span>wavelength, <span class="dt">y=</span>model_spectrum, <span class="dt">color=</span><span class="st">&#39;firebrick4&#39;</span>), <span class="dt">linetype=</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x=</span>wavelength, <span class="dt">y=</span>beech_<span class="dv">074</span>, <span class="dt">color=</span><span class="st">&#39;darkgreen&#39;</span>), <span class="dt">lwd=</span><span class="dv">1</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x=</span>wavelength, <span class="dt">y=</span>spruce_<span class="dv">074</span>, <span class="dt">color=</span><span class="st">&#39;steelblue4&#39;</span>), <span class="dt">lwd=</span><span class="dv">1</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x=</span>wavelength, <span class="dt">y=</span>shade, <span class="dt">color=</span><span class="st">&#39;black&#39;</span>), <span class="dt">lwd=</span><span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
+
+<span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">name=</span><span class="st">&quot;BOA reflectance&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">name=</span><span class="st">&quot;Wavelength (nm)&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">scale_color_manual</span>(<span class="st">&#39;Spectrum&#39;</span>, 
+                       <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&#39;black&#39;</span>, <span class="st">&#39;darkgreen&#39;</span>, <span class="st">&#39;firebrick4&#39;</span>, <span class="st">&#39;steelblue4&#39;</span>), 
+                       <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&#39;Shade&#39;</span>, <span class="st">&#39;Beech&#39;</span>,  <span class="st">&#39;Mixed&#39;</span>, <span class="st">&#39;Spruce&#39;</span>), <span class="dt">guide=</span><span class="st">&#39;legend&#39;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="index_files/figure-html/sma_2-1.png" width="576" /></p>
+<p>find out fractions by iteratively testing combinations? we could keep the shade fraction stable.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create a matrix of the endmember spectra (3x6) and the modeled spectrum (1x6)</span>
+EM &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(endmembers[,<span class="kw">c</span>(<span class="st">&#39;beech_074&#39;</span>,<span class="st">&#39;spruce_074&#39;</span>,<span class="st">&#39;shade&#39;</span>)])
+MS &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(endmembers[,<span class="st">&#39;model_spectrum&#39;</span>])
+
+<span class="co"># Define a matrix composed of different fraction combinations (rows) across the endmembers (columns)</span>
+FM &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="kw">seq</span>(<span class="fl">0.1</span>, <span class="fl">0.8</span>, <span class="fl">0.05</span>), <span class="kw">seq</span>(<span class="fl">0.8</span>, <span class="fl">0.1</span>, <span class="op">-</span><span class="fl">0.05</span>), <span class="kw">rep</span>(<span class="fl">0.10</span>, <span class="dv">15</span>)), <span class="dt">ncol=</span><span class="dv">3</span>)
+<span class="kw">print</span>(FM)</code></pre></div>
+<pre><code>      [,1] [,2] [,3]
+ [1,] 0.10 0.80  0.1
+ [2,] 0.15 0.75  0.1
+ [3,] 0.20 0.70  0.1
+ [4,] 0.25 0.65  0.1
+ [5,] 0.30 0.60  0.1
+ [6,] 0.35 0.55  0.1
+ [7,] 0.40 0.50  0.1
+ [8,] 0.45 0.45  0.1
+ [9,] 0.50 0.40  0.1
+[10,] 0.55 0.35  0.1
+[11,] 0.60 0.30  0.1
+[12,] 0.65 0.25  0.1
+[13,] 0.70 0.20  0.1
+[14,] 0.75 0.15  0.1
+[15,] 0.80 0.10  0.1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create empty vector to store RMSE values</span>
+RMSE &lt;-<span class="st"> </span><span class="kw">matrix</span>()
+
+<span class="co"># Iterate over each fraction combination, </span>
+<span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(FM))){
+  
+  FR &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(FM[i,])
+  <span class="co"># model a new spectrum using matrix multiplication (%*%)</span>
+  mix &lt;-<span class="st"> </span>EM <span class="op">%*%</span><span class="st"> </span>FR
+  <span class="co"># difference the new and the original modeled spectra</span>
+  residuals &lt;-<span class="st"> </span>mix <span class="op">-</span><span class="st"> </span>MS
+  <span class="co"># calculate root-mean-squared error (RMSE)</span>
+  RMSE[i] &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">mean</span>(residuals<span class="op">^</span><span class="dv">2</span>))
+  
+}
+
+<span class="co"># Print RMSE vector</span>
+<span class="kw">print</span>(RMSE)</code></pre></div>
+<pre><code> [1] 0.055482983 0.050311555 0.045145280 0.039986157 0.034837364
+ [6] 0.029704272 0.024596714 0.019534727 0.014565902 0.009832503
+[11] 0.005928189 0.005249897 0.008598379 0.013200587 0.018125440</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Print fraction combination of lowest RMSE</span>
+FM[<span class="kw">which</span>(RMSE<span class="op">==</span><span class="kw">min</span>(RMSE)),]</code></pre></div>
+<pre><code>[1] 0.65 0.25 0.10</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">RMSE[<span class="kw">which</span>(RMSE<span class="op">==</span><span class="kw">min</span>(RMSE))]</code></pre></div>
+<pre><code>[1] 0.005249897</code></pre>
+<p>We can solve the problem mathematically using matrix inversion.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(MASS)
+<span class="co"># Invert matrix and multiply with modeled spectrum, yielding the fractions</span>
+FR &lt;-<span class="st"> </span><span class="kw">ginv</span>(EM) <span class="op">%*%</span><span class="st"> </span>MS
+<span class="kw">print</span>(FR)
+
+<span class="co"># Model mixed spectrum based on the result, again using matrix multiplication</span>
+mix &lt;-<span class="st"> </span>EM <span class="op">%*%</span><span class="st"> </span>FR
+
+<span class="co"># Difference new and original spectrum and compute RMSE</span>
+residuals &lt;-<span class="st"> </span>mix <span class="op">-</span><span class="st"> </span>MS
+RMSE &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">mean</span>(residuals<span class="op">^</span><span class="dv">2</span>))</code></pre></div>
+<ul>
+<li>forest mask</li>
+<li>endmember spectra</li>
+<li>code function to unmix in space? library(‘hsdar’)</li>
 </ul>
 </div>
 </div>
