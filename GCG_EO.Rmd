@@ -1574,7 +1574,7 @@ Deforestation processes are widespread across the globe. Remote sensing technolo
 
 ![Aerial photograph of deforestation in southern Pará, Brazil. Source: Patrick Hostert](fig/s07_para.jpg){width=80%}
 
-The [PRODES](http://www.dpi.inpe.br/prodesdigital/prodes.php?LANGUAGE=EN&) project, run by the National Institute for Space Research  [INPE](http://www.inpe.br/) provides information on spatially explicit information of forest loss using visual interpretation of Landsat and CBERS data. Often, visual interpretation is however not feasible and we desire an automated detection of change processes. 
+The [PRODES](http://terrabrasilis.dpi.inpe.br/app/map/deforestation?hl=pt-br) project, run by the National Institute for Space Research  [INPE](http://www.inpe.br/) provides information on spatially explicit information of forest loss using visual interpretation of Landsat and CBERS data. Often, visual interpretation is however not feasible and we desire an automated detection of change processes. 
 
 How do we get to the change map? Similar to the production of a land cover map, we can produce maps of land cover or land use change. This inherently incorporates the integration of multiple observation dates. Broadly speaking, change detection can occur in two ways: 
 
