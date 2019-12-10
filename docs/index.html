@@ -121,6 +121,7 @@ $(document).ready(function () {
         <li><a href="#session-05-machine-learning-for-image-classification">Session 05: Machine learning for image classification</a></li>
         <li><a href="#session-06-accuracy-assessment-and-area-estimation">Session 06: Accuracy assessment and area estimation</a></li>
         <li><a href="#session-07-multi-temporal-change-detection">Session 07: Multi-temporal change detection</a></li>
+        <li><a href="#session-08-spectral-temporal-metrics">Session 08: Spectral-temporal metrics</a></li>
         <li><a href="#terminology">Terminology</a></li>
         </ul>
         </div>
@@ -1704,8 +1705,7 @@ $year: the acquisition year.</p></li>
 </div>
 <div id="area-adjusted-accuracy-assessment" class="section level3">
 <h3>2) Area-adjusted accuracy assessment</h3>
-<p>Assess the class proportions of your map in R. To do so, use the <code>freq()</code> function to get pixel counts. Use these for calculating class propotions (0-1). Remember to exclude <code>NAs</code>, so the proportions of your 4 classes sum up to 1.</p>
-<p>Load the reference point shapefile in R and <code>extract()</code> the map values at the point locations. Create a confusion matrix from the resulting <code>data.frame</code> using <code>table()</code>.</p>
+<p>Assess the class proportions of your map in R. To do so, use the <code>freq()</code> function to get pixel counts. Use these for calculating class propotions (0-1). Remember to exclude <code>NAs</code>, so the proportions of your 4 classes sum up to 1. <!-- extract is not necessary --> Load the reference point shapefile in R and <code>extract()</code> the map values at the point locations. Create a confusion matrix from the resulting <code>data.frame</code> using <code>table()</code>.</p>
 <p>Copy &amp; paste the values from your confusion matrix as well as the class proportions into the Excel spreadsheet. Next, answer the following questions:</p>
 <ol style="list-style-type: lower-alpha">
 <li>Which class has the highest / lowest user´s accuracy?</li>
@@ -1759,7 +1759,7 @@ Please prepare arguments for your group based on the core article and the supple
 <img src="fig/s07_para.jpg" alt="Aerial photograph of deforestation in southern Pará, Brazil. Source: Patrick Hostert" style="width:80.0%" />
 <p class="caption">Aerial photograph of deforestation in southern Pará, Brazil. Source: Patrick Hostert</p>
 </div>
-<p>The <a href="http://www.dpi.inpe.br/prodesdigital/prodes.php?LANGUAGE=EN&amp;">PRODES</a> project, run by the National Institute for Space Research <a href="http://www.inpe.br/">INPE</a> provides information on spatially explicit information of forest loss using visual interpretation of Landsat and CBERS data. Often, visual interpretation is however not feasible and we desire an automated detection of change processes.</p>
+<p>The <a href="http://terrabrasilis.dpi.inpe.br/app/map/deforestation?hl=pt-br">PRODES</a> project, run by the National Institute for Space Research <a href="http://www.inpe.br/">INPE</a> provides information on spatially explicit information of forest loss using visual interpretation of Landsat and CBERS data. Often, visual interpretation is however not feasible and we desire an automated detection of change processes.</p>
 <p>How do we get to the change map? Similar to the production of a land cover map, we can produce maps of land cover or land use change. This inherently incorporates the integration of multiple observation dates. Broadly speaking, change detection can occur in two ways:</p>
 <ul>
 <li><p><strong>Post-classification change detection</strong>: This refers to the independent production of land use or land cover maps for each time point of interest. In a next stept, differencing techniques are applied to investigate the change between two (or more) maps. While training data collection is relatively straight-forward, error propagation is a core issue for post-classification comparisons. It is therefore advised to assess the map quality of the final change map independently.</p></li>
@@ -1862,137 +1862,142 @@ Optional: Derive additional features from your data. Do you want to classify bas
 <li>How do spectral-temporal metrics conceptually differ from pixel-based composites?</li>
 <li>For which type of (classification) problems can spectral-temporal metrics be useful?</li>
 </ul>
-<!-- 
-# Session 09: Spectral-temporal metrics
+<!-- SESSION 08 -->
+</div>
+</div>
+<div id="session-08-spectral-temporal-metrics" class="section level1">
+<h1>Session 08: Spectral-temporal metrics</h1>
+<div id="learning-goals-9" class="section level2">
+<h2>Learning goals</h2>
+<ul>
+<li>Exploring the spectral-temporal characteristics of pastures and croplands in the Brazilian Amazon.</li>
+<li>Generate spectral-temporal metrics from an intra-annual time series of Tasseled Cap components.</li>
+<li>Map post-deforestation land use in deforested areas.</li>
+</ul>
+</div>
+<div id="background-5" class="section level2">
+<h2>Background</h2>
+<p>Understanding post-deforestation land use is essential to disentangle the drivers of deforestation. In the study region of last session, intensive agriculture and cattle ranching are the dominant land uses on deforested lands.</p>
+<div class="figure">
+<img src="fig/s08_lu.png" alt="Post-deforestation land uses in the study region include intensive soy cultivation (left) and extensive cattle ranching (right). Images: Philippe Rufin" />
+<p class="caption">Post-deforestation land uses in the study region include intensive soy cultivation (left) and extensive cattle ranching (right). Images: Philippe Rufin</p>
+</div>
+<p>From a remote sensing perspective, separating cropland and grassland is challenging due to similar spectral signatures in most periods of the year. In selected periods however, differences in land surface phenology become apparent. We can investigate these differences by creating an intra-annual time series of Tasseled Cap Greenness (TCG).</p>
+<div class="figure">
+<img src="fig/s08_tcg_ts.gif" alt="Intra-annual time series of Tasseled Cap Greenness for 2010." style="width:80.0%" />
+<p class="caption">Intra-annual time series of Tasseled Cap Greenness for 2010.</p>
+</div>
+<p>Let´s investigate differences between pastures and croplands which appear over time. We collected 50 reference samples for pastures and 50 for cropland in the study region. We then extract the TCG value for all those locations in each of the time series bands. In a next step, we can create class-wise boxplots for each observation date. The boxplots reveal the land surface dynamics for each class.</p>
+<div class="figure">
+<img src="fig/s08_boxplots_ts.png" alt="Boxplots showing the distribution of TCG for pastures (n = 50 samples) and cropland (n = 50 samples) across all observations of the year 2010." />
+<p class="caption">Boxplots showing the distribution of TCG for pastures (n = 50 samples) and cropland (n = 50 samples) across all observations of the year 2010.</p>
+</div>
+<p>Can you identify differences between the classes? Looking at the above graph suggests that croplands have a somewhat higher variability throughout the year, but on average, pastures show a slightly higher of TCG. We can try to verify this by calculating descriptive statistics of all TCG observations in the year and then comparing those between the classes. Let´s take a look at the maximum, mean, minimum, and standard deviation of TCG throughout 2010.</p>
+<div class="figure">
+<img src="fig/s08_boxplots_stm.png" alt="Boxplots showing the distribution of maximum, mean, minimum and standard deviation of TCG for pastures (n = 50 samples) and cropland (n = 50 samples) in 2010." />
+<p class="caption">Boxplots showing the distribution of maximum, mean, minimum and standard deviation of TCG for pastures (n = 50 samples) and cropland (n = 50 samples) in 2010.</p>
+</div>
+<p>We can see that these “temporal statistics” can be useful to discriminate the two spectrally similar classes. Features combining the spectral appearance of a surface with its behaviour over time are increasingly popular in the remote sensing community. We refer to such features as spectral-temporal metrics (STM). STM are descriptive statistics of the spectral behaviour over time. They provide an efficient means to capture seasonal variations of land surface dynamics, while reducing the impact of clouds and cloud-shadows. STM can be calculated from indices such as the NDVI or TC components, but also directly from the spectral bands.</p>
+<div class="figure">
+<img src="fig/s08_stm.png" alt="Exemplary metrics calculated from intra-annual time series of Tasseled Cap Greenness." style="width:80.0%" />
+<p class="caption">Exemplary metrics calculated from intra-annual time series of Tasseled Cap Greenness.</p>
+</div>
+<p>Different metrics might be more or less useful depending on the application. Good process understanding is key in finding out which STM are relevant for the problem at hand. We should decide on the type of spectral information and a set of statistics (metrics) to compute. Providing such information to a classifier can enable the production of thematically detailed land cover maps over large areas, such as a <a href="https://www2.hu-berlin.de/geovis/eolab/europeanlandcover/euroLandCover.html">pan-European land cover map</a>.</p>
+<hr />
+</div>
+<div id="exercise-9" class="section level2">
+<h2>Exercise</h2>
+<p>In this exercise you will map pastures and croplands in deforested areas of the Brazilian Amazon. You will use and generate spectral-temporal metrics to separate these two land covers which are difficult to discriminate using single images. The resulting map enables you to determine which land use is primarily replacing forests in the region.</p>
+<p>We provide the following data in <a href="https://box.hu-berlin.de/f/cdc86f7993194946930f/?dl=1">our repository</a> and on drive O:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>…ts_stacks/: cloud-masked stacks of TC brightness (TCB), TC greenness (TCG), TC wetness (TCW) derived from 30 Landsat images acquired throughout 2010. Observation dates and sensors for each band in the stacks are listed in *.csv file.</p></li>
+<li><p>…spectemp/: eight spectral-temporal metrics for TCB, TCG and TCW: min, max, mean: minimum, maximum and mean value<br />
+p25, p50, p75: 25%, 50%, 75% percentile values<br />
+iqr: interquartile-range (25%-75%)<br />
+std: standard deviation.</p></li>
+<li><p>…vector/: a shapefile and *.kmz file with the study area and pixel extents</p></li>
+<li><p>….TerraClass2010/: the TerraClass 2010 map product and a corresponding QGIS layer style file which contains the class catalogue.</p></li>
+<li><p>…training/: a set of points to explore the spectral-temporal behaviour of your classes and to train your classification model.</p></li>
+<li><p>…validation/: a set of points to assess the accuracy of your final classification.</p></li>
+</ol>
+<div id="inspect-the-input-data" class="section level3">
+<h3>1) Inspect the input data</h3>
+<p>Open a new QGIS project and inspect the spectral-temporal metrics. Choose one indicator (e.g. Tasseled Cap Greenness) and load all layers. Make sure you understand what the metrics represent and discuss their meaning, robustness (e.g. against cloud contamination), and behaviour over different land cover types with your neighbor(s).</p>
+</div>
+<div id="assess-suitability-of-spectral-temporal-metrics" class="section level3">
+<h3>2) Assess suitability of spectral-temporal metrics</h3>
+<p>We provide a shapefile with training points for the following classes</p>
+<table>
+<thead>
+<tr class="header">
+<th>classID</th>
+<th>Class</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Pasture</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Cropland</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Others</td>
+</tr>
+</tbody>
+</table>
+<p><code>extract()</code> the values at your training locations from the temporal stacks (e.g., …/ts_stacks/TCG.tif). Compare the phenological behavior of the classes with boxplots or line plots. Use the following code to import the acquisition dates of the Landsat images:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data.path &lt;-<span class="st"> &#39;O:/WS1920_MSc-EO/S08/data/&#39;</span>
+sensor_date &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="kw">paste0</span>(data.path, <span class="st">&#39;ts_stacks/Landsat_2010_Sensor_Date.csv&#39;</span>, <span class="dt">sep=</span><span class="st">&quot;;&quot;</span>, <span class="dt">header=</span>T)</code></pre></div>
+<p>Summarize the main characteristics of the three classes over the growing season and identify major differences. Please add your insights in comments in your script. Select spectral-temporal metrics that capture the differences between croplands, pastures, and others well. Select at most six different metrics from the ones provided.</p>
+</div>
+<div id="compute-additional-spectral-temporal-metrics" class="section level3">
+<h3>3) Compute additional spectral-temporal metrics</h3>
+<p>Let´s generate two additional spectral-temporal metrics from the time series stacks. First, answer the following conceptual questions:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Which temporal subset of your time series highlights the seasonal differences between croplands and pastures best (e.g. ‘dry season’, ‘third quarter’ or ‘August’)?</p></li>
+<li><p>Which statistics provide a high information content? Your metrics can be for instance additional percentiles, information on the timing of specific events, such as the observation date of the minimum value, or differences between metrics. Be creative!</p></li>
+</ol>
+<p>Now the practical part. A number of summarizing functions can be applied directly to raster stacks (<code>mean()</code>, <code>max()</code>, <code>min()</code>, <code>range()</code>). If you want to calculate metrics other than those, you need to convert your raster stack into a matrix using <code>as.matrix()</code>. The below figure helps to understand how a three-dimensional raster stack is being transformed into a two-dimensional matrix.</p>
+<div class="figure">
+<img src="fig/s08_matrix.png" alt="Schematic illstration of converting a raster stack to a matrix using the as.matrix() function." />
+<p class="caption">Schematic illstration of converting a raster stack to a matrix using the as.matrix() function.</p>
+</div>
+<p>Based on the resulting matrix, you can perform basic calculations using, e.g., <code>apply()</code>. You can then write the results into a new raster, which you create using <code>raster()</code> and assign the results of your computation with the <code>vals</code> parameter.</p>
+<p>The following code template gives an example for computing the median Tasseled Cap Greenness. Computation might take several minutes - make use of the processing time by preparing the subsequent tasks.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Read TCG time series stack</span>
+tcg.stack &lt;-<span class="st"> </span><span class="kw">stack</span>(<span class="st">&#39;O:/WS1920_MSc-EO/S08/data/ts_stacks/TCG_stack.tif&#39;</span>)
 
-## Learning goals
+<span class="co"># Convert to matrix</span>
+tcg.matrix &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(tcg.stack)
 
-- Exploring the spectral-temporal characteristics of pastures and croplands in the Brazilian Amazon.
-- Generate spectral-temporal metrics from an intra-annual time series of Landsat-derived TC components.
-- Map pastures and cropland in the deforested areas.
+<span class="co"># Calculate median across rows in matrix</span>
+tcg.median &lt;-<span class="st"> </span><span class="kw">apply</span>(tcg.matrix, <span class="dv">1</span>, <span class="dt">FUN=</span>median, <span class="dt">na.rm=</span>T)
 
-## Background
+<span class="co"># Write results to empty raster</span>
+tcg.median.raster &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="dt">nrows=</span>tcg.stack<span class="op">@</span>nrows, 
+                            <span class="dt">ncols=</span>tcg.stack<span class="op">@</span>ncols, 
+                            <span class="dt">crs=</span>tcg.stack<span class="op">@</span>crs, 
+                            <span class="dt">vals=</span>tcg.median)
 
-Understanding post-deforestation land use is essential to disentangle the drivers of deforestation.
-
-![Post-deforestation land uses in the study region include intensive soy cultivation (left) and extensive cattle ranching (right). Images: Philippe Rufin](fig/s08_lu.png)
-
-From a remote sensing perspective, separating cropland and grassland is challenging due to similar spectral signatures in most periods of the year. In selected periods however, differences in land surface phenology become apparent. We can investigate these differences by creating an intra-annual time series of Tasseled Cap Greenness. 
-
-![Intra-annual time series of Tasseled Cap Greenness for 2010.](fig/s08_tcg_ts.gif){width=80%}
-
-Let´s investigate if we can see differences between pastures and croplands which play out over time. We collected 50 reference samples for pastures and 50 for cropland in the study region. We then extract the TCG value for all those locations in each of the time series bands. In a next step, we can create class-wise boxplots for each class and observation date, which shape a trajectory of land surface dynamics for each class.
-
-![Boxplots showing the distribution of TCG for pastures and cropland across all observations of the year 2010.](fig/s08_boxplots_ts.png)
-
-Can you identify differences between the classes? Looking at the above graph suggests that croplands have a somewhat higher variability throughout the year, but on average, pastures show a slightly elevated level of TCG. We can try to verify this by calculating descriptive statistics of all TCG observations in the year and then comparing those between the classes. Let´s take a look at the maximum, mean, minimum, and standard deviation of TCG throughout 2010.
-
-![Boxplots showing the distribution of maximum, mean, minimum and standard deviation of TCG for 50 samples of pastures and 50 samples of cropland in 2010.](fig/s08_boxplots_stm.png)
-
-We can see that these "temporal statistics" can be useful to discriminate the two spectrally similar classes. Features combining the spectral appearance of a surface with its behaviour over time are increasingly popular in the remote sensing community. We refer to such features as spectral-temporal metrics (STM). STM are descriptive statistics of the spectral behaviour over time. They provide an efficient means to capture seasonal variations of land surface dynamics, while reducing the impact of clouds and cloud-shadows. STM can be calculated directly from the spectral bands, but also indices such as the NDVI, or TC components. 
-
-![Exemplary metrics calculated from intra-annual time series of Tasseled Cap Greenness.](fig/s08_stm.png){width=80%}
-
-Different metrics might be more or less useful depending on the application. Good process understanding is key in finding out which STM are relevant for the problem at hand. We should decide on the type of spectral information and a set of statistics (metrics) to compute. Providing such information to a classifier can enable the production of thematically detailed land cover maps over large areas, such as a [pan-European land cover map](https://www2.hu-berlin.de/geomultisens/europeanLandCover/euroLandCover.html).
-
----
-
-## Exercise
-
-In this exercise you will map pastures and croplands in deforested areas of the Brazilian Amazon. You will use and generate spectral-temporal metrics to separate these two land covers which are difficult to discriminate using single images. you will thereby be able to investigate which land cover is primarily replacing forests in the region.
-
-We provide the following data in [our repository](https://box.hu-berlin.de/f/cdc86f7993194946930f/?dl=1) and on drive O:
-
-a. …ts_stacks/: cloud-masked stacks of TC brightness (TCB), TC greenness (TCG), TC wetness (TCW) derived from 30 Landsat images acquired throughout 2010. Observation dates and sensors for each band in the stacks are listed in *.csv file.
-
-b. …spectemp/: eight spectral temporal metrics for TCB, TCG and TCW:
-min, max, mean: minimum, maximum and mean value  
-p25, p50, p75: 25%, 50%, 75% percentile values  
-iqr: interquartile-range (25%-75%)  
-std: standard deviation.  
-
-c. …vector/: a shapefile and *.kmz file with the study area and pixel extents
-
-d. ….TerraClass2010/: the TerraClass 2010 map product and a corresponding QGIS layer style file which contains the class catalogue.
-
-e. …training/: a set of points to explore the spectral-temporal behaviour of your classes and to train your classification model.
-
-f. …validation/: a set of points to assess the accuracy of your final classification.
-
-
-### 1) Inspect the input data 
-
-Open a new QGIS project and inspect the spectral-temporal metrics. Choose one indicator (e.g. Tasseled Cap Greenness) and load all layers. Make sure you understand what the metrics represent and discuss their meaning, robustness (e.g. against cloud contamination), and behaviour over different land cover types with your neighbor(s).
-
-### 2) Assess suitability of spectral-temporal metrics
-
-We provide a shapefile with training points for the following classes  
-
-| classID | Class    |
-| ------- | -----    |
-| 1       | Pasture  |
-| 2       | Cropland |
-| 3       | Others   |
-
-```extract()``` the values at your training locations from the temporal stacks (e.g., …/ts_stacks/TCG.tif). Compare the phenological behavior of the classes with boxplots or line plots. Use the following code to import the acquisition dates of the Landsat images:
-
-
-```r
-data.path <- 'O:/WS1920_MSc-EO/S08/data/'
-sensor_date <- read.table(paste0(data.path, 'ts_stacks/Landsat_2010_Sensor_Date.csv', sep=";", header=T)
-```
-
-Summarize the main characteristics of the three classes over the growing season and identify major differences. Please add your insights in comments in your script. Select spectral-temporal metrics that capture the differences between croplands, pastures, and others well. Select at most six different metrics from the ones provided.
-
-### 3) Compute additional spectral-temporal metrics
-
-Let´s compute two additional spectral-temporal metrics from the time series stacks.
-
-a. First, think about creating a temporal subset of your time series for highlighting differences which are most pronounced during specific seasons (e.g. 'dry season', 'third quarter' or 'August').
-
-b. Second, decide on the statistic to calculate. Your metrics can be for instance additional percentiles, information on the timing of specific events, such as the observation date of the minimum value, or differences between metrics. Be creative!
-
-How to do that: A number of summarizing functions can be applied directly to raster stacks (```mean()```, ```max()```, ```min()```, ```range()```). If you want to calculate metrics other than those, you need to convert your raster stack into a matrix using ```as.matrix()```. The below figure helps to understand how a three-dimensional raster stack is being transformed into a two-dimensional matrix.
-
-![Schematic illstration of converting a raster stack to a matrix using the as.matrix() function.](fig/s08_matrix.png)
-
-Based on the resulting matrix, you can perform basic calculations using, e.g., ```apply()```. You can then write the results into a new raster, which you create using ```raster()``` and assign the results of your computation with the ```vals``` parameter.  
-
-The following code template gives an example for computing the median Tasseled Cap Greenness. Computation might take several minutes - make use of the processing time by preparing the subsequent tasks.
-
-
-```r
-# Read TCG time series stack
-tcg.stack <- stack('O:/WS1920_MSc-EO/S08/data/ts_stacks/TCG_stack.tif')
-
-# Convert to matrix
-tcg.matrix <- as.matrix(tcg.stack)
-
-# Calculate median across rows in matrix
-tcg.median <- apply(tcg.matrix, 1, FUN=median, na.rm=T)
-
-# Write results to empty raster
-tcg.median.raster <- raster(nrows=tcg.stack@nrows, 
-                            ncols=tcg.stack@ncols, 
-                            crs=tcg.stack@crs, 
-                            vals=tcg.median)
-
-# Plot result
-plot(tcg.median.raster)
-```
-
-### 4) Train and apply Random Forest Model
-
-a. Train a Random Forest model based on your selected and computed spectral-temporal metrics. As always, make an informed decision about the ```ntree``` and ```mtry``` parameters.
-
-b. Produce a map using your Random Forest model and ```mask()``` the result with last week´s forest map, so only non-forest areas in 2010 are left. Write the result to disk using the appropriate ```datatype```.
-
-### 5) Accuracy assessment and area estimates
-
-a. Assess the accuracy of the map using the validation data we provided. Run an additional iteration using different metrics in case you are not satisifed with your results.
-
-b. Combine the resulting map with your forest change map from last week to get a better insight into the land change processes of the study area. Calculate the fractions of deforested land occupied by pasture or cropland for each of the two time periods. Was forest primarily replaced by pastures or by cropland? Did this process change over the periods 2001-2005 and 2006-2010? Please enter your main results in [this table](https://ethercalc.org/sputdinazkck).
-
+<span class="co"># Plot result</span>
+<span class="kw">plot</span>(tcg.median.raster)</code></pre></div>
+</div>
+<div id="train-and-apply-random-forest-model" class="section level3">
+<h3>4) Train and apply Random Forest Model</h3>
+<ol style="list-style-type: lower-alpha">
+<li><p>Train a Random Forest model based on your selected and computed spectral-temporal metrics. As always, make an informed decision about the <code>ntree</code> and <code>mtry</code> parameters.</p></li>
+<li><p>Produce a map using your Random Forest model and <code>mask()</code> the result with last week´s forest map, so only non-forest areas in 2010 are left. Write the result to disk using the appropriate <code>datatype</code>.</p></li>
+</ol>
+</div>
+<div id="accuracy-assessment-and-area-estimates" class="section level3">
+<h3>5) Accuracy assessment and area estimates</h3>
+<ol style="list-style-type: lower-alpha">
+<li><p>Assess the accuracy of the map using the validation data we provided. Run an additional iteration using different metrics in case you are not satisifed with your results.</p></li>
+<li><p>Combine the resulting map with your forest change map from last week to get a better insight into the land change processes of the study area. Calculate the fractions of deforested land occupied by pasture or cropland for each of the two time periods. Was forest primarily replaced by pastures or by cropland? Did this process change over the periods 2001-2005 and 2006-2010? Please enter your main results in <a href="https://ethercalc.org/sputdinazkck">this table</a>. <!-- 
 ## Reading materials
 
 In this paper, [Hansen et al. (2013)](http://doi.org/10.1126/science.1244693) presented the first global Landsat-based map of forest cover change. Please make sure to read the paper and the supplementary materials.
@@ -2001,10 +2006,8 @@ In order to make the discussion more vivid, we simulate a discussion on the appl
 
 Please prepare arguments for your group based on the core article and the supplementary material, as well as additional scientific literature if you wish (e.g. case studies). Arguments can target conceptual issues, methodological components, or other scientific evidence arguing for or against the suitability of the Global Forest Data in the context of REDD+. 
 
-------
 
--->
-<!-- # Session 10: Project phase I
+# Session 10: Project phase I
 
 ## Learning goals: 
 
@@ -2071,7 +2074,8 @@ e. Check any other source of data that you might know of.
 
 **Until next week:** Order and download the required data, so we can proceed with pre-processing.
 
--->
+--></p></li>
+</ol>
 <!-- # Session 11: Project phase II
 
 ## Learning goals:
@@ -2162,6 +2166,7 @@ The schedule is very tight and presenters are urged to strictly stay within pre-
 -->
 </div>
 </div>
+</div>
 <div id="terminology" class="section level1">
 <h1>Terminology</h1>
 <p>This is a non-exhaustive list of common terms.</p>
@@ -2232,47 +2237,56 @@ The schedule is very tight and presenters are urged to strictly stay within pre-
 <li>Intra-annual</li>
 <li>Seasonal</li>
 </ul>
-<hr />
-<p>&lt;!– SESSION 07</p>
-</div>
-<div id="session-07-fraction-mapping" class="section level2">
-<h2>Session 07: Fraction mapping</h2>
-</div>
-<div id="learning-goals-9" class="section level2">
-<h2>Learning goals</h2>
-<ul>
-<li>Understand the basic concept of spectral mixture analysis</li>
-<li>Implement linear spectral mixture analysis for a single pixel</li>
-<li>Map fractions of deciduous and evergreen forest in the Carpathians</li>
-</ul>
-</div>
-<div id="background-5" class="section level2">
-<h2>Background</h2>
-<p>The spatial resolution of satellite imagery is determining the composition of surface materials within a measurement unit, i.e., a pixel. A coarse spatial resolution will lead to an increasing level of mixed surfaces within a pixel.</p>
-<p>Classification approaches assign discrete labels to a pixel and can thus be of limited use for estimating the true distribution of a surface material. In many cases (but very much depending on the training dataset), the dominant class label will be assigned by the classification model. We thereby underestimate the proportion(s) of the minority class(es), while overestimating the proportion of the dominant class.</p>
-<p>Fraction mapping is an alternative approach, which attempts to map the fraction of a variety of classes within a pixel. This can either be done by using spectral mixture analysis or regression approaches.</p>
-<div id="regressions" class="section level3">
-<h3>Regressions…</h3>
-</div>
-<div id="lsma" class="section level3">
-<h3>LSMA</h3>
-<p>Practical aspects… endmembers. selection?</p>
-<p>Subject to the following constraints: 0 &lt;= fi&lt;= 1 CONSTRAINT 1 f1+ f2+ …fn= 1 CONSTRAINT 2</p>
-<p>Researchers have noted that 2 is easy to implement, but 1 is not. As a result, most studies only implement the 2nd Constraint in the model and then apply the 1st constraint to the results.</p>
-<ul>
-<li><p>There is no substantial occurrence of multiple scattering between the different surface components, hence all surface component contribute similarly to the measured reflectance spectrum. We thus assume that the areal proportion of a surface determines its contribution to the spectral signal.</p></li>
-<li><p>Each surface component within the image has sufficient spectral contrast to allow their separation.</p></li>
-<li><p>Each surface component (endmember) in the study region is known and included in the model.</p></li>
-<li><p>We will not be able to have a mathematically perfect decomposition of the spectrum. Reasons are manifold and include, e.g., badly selected endmembers…</p></li>
-</ul>
-<p>use math to solve equation system… <span class="math display">\[
+<!--  SESSION 07 
+
+# Session 07: Fraction mapping
+
+## Learning goals
+
+- Understand the basic concept of spectral mixture analysis
+- Implement linear spectral mixture analysis for a single pixel
+- Map fractions of deciduous and evergreen forest in the Carpathians
+
+## Background
+
+The spatial resolution of satellite imagery is determining the composition of surface materials within a measurement unit, i.e., a pixel. A coarse spatial resolution will lead to an increasing level of mixed surfaces within a pixel. 
+
+Classification approaches assign discrete labels to a pixel and can thus be of limited use for estimating the true distribution of a surface material. In many cases (but very much depending on the training dataset), the dominant class label will be assigned by the classification model. We thereby underestimate the proportion(s) of the minority class(es), while overestimating the proportion of the dominant class.
+
+Fraction mapping is an alternative approach, which attempts to map the fraction of a variety of classes within a pixel. This can either be done by using spectral mixture analysis or regression approaches. 
+
+### Regressions...
+
+### LSMA
+
+Practical aspects...
+endmembers.
+selection?
+
+Subject to the following constraints: 
+0 <= fi<= 1 CONSTRAINT 1 
+f1+ f2+ ...fn= 1 CONSTRAINT 2
+
+Researchers have noted that 2 is easy to implement, but 1 is not. As a result, most studies only implement the 2nd Constraint in the model and then apply the 1st constraint to the results.
+
+- There  is  no  substantial  occurrence  of  multiple  scattering  between  the  different surface components, hence all surface component contribute similarly to the measured reflectance spectrum. We thus assume that the areal proportion of a surface determines its contribution to the spectral signal.
+
+- Each  surface  component  within  the  image  has  sufficient  spectral contrast  to allow their separation.
+
+- Each surface component (endmember) in the study region is known and included in the model.
+
+- We will not be able to have a mathematically perfect decomposition of the spectrum. Reasons are manifold and include, e.g., badly selected endmembers...
+
+
+use math to solve equation system...
+$$
 \left(\begin{array}{cc} 
-beech_{blue} &amp; spruce_{blue} &amp; shade_{blue}\\
-beech_{green} &amp; spruce_{green} &amp; shade_{green}\\
-beech_{red} &amp; spruce_{red} &amp; shade_{red}\\
-beech_{nIR} &amp; spruce_{nIR} &amp; shade_{nIR}\\
-beech_{swIR1} &amp; spruce_{swIR1} &amp; shade_{swIR1}\\
-beech_{swIR2} &amp; spruce_{swIR2} &amp; shade_{swIR2}
+beech_{blue} & spruce_{blue} & shade_{blue}\\
+beech_{green} & spruce_{green} & shade_{green}\\
+beech_{red} & spruce_{red} & shade_{red}\\
+beech_{nIR} & spruce_{nIR} & shade_{nIR}\\
+beech_{swIR1} & spruce_{swIR1} & shade_{swIR1}\\
+beech_{swIR2} & spruce_{swIR2} & shade_{swIR2}
 \end{array}\right)
 *
 \left(\begin{array}{cc} 
@@ -2288,60 +2302,111 @@ pixel_{blue}\\ pixel_{green}\\ pixel_{red}\\ pixel_{nIR}\\ pixel_{swIR1}\\ pixel
 \left(\begin{array}{cc} 
 \epsilon_{blue}\\ \epsilon_{green}\\ \epsilon_{red}\\ \epsilon_{nIR}\\ \epsilon_{swIR1}\\ \epsilon_{swIR2}
 \end{array}\right)
-\]</span></p>
-<p>Wenn es gelingt das Gleichungssystem in Richtung Flächenanteil zu lösen, ergeben sich für jedes Pixel zwei Werte, die jeweils als Ergebniskarten für den Anteil der jeweiligen Komponenten an den Oberflächen betrachtet werden kann. Dies bezeichnet man als Lineare spektrale Mischungsanalyse (LSMA; linear spectral mixture analysis) bzw. spektrale Entmischung (spectral unmixing</p>
-<p>Bildpixel kann i.d.R. nicht exakt modelliert werden Fehlende oder unpassende Endmember (Dachfenster, Pflanzenstress) Nicht-lineare Mischung, Rauschen Neben den einzelnen Residuen bzw. dem Residualspektrum dient der kann RMSE als Maß für die Güte der Mischungsanalyse:</p>
-</div>
-</div>
-<div id="exercise-9" class="section level2">
-<h2>Exercise</h2>
-<p>In today´s exercise, we will spent quite some time to deal with the concept of the linear spectral unmixing. The idea is to use LSMA to tackle the mixed forest problem we encountered in the forest type classification.</p>
-<p>Forest types in the peak growing season do likely not provide sufficient spectral contrast in order to produce useful unmixing results. However, we can produce a multi-temporal image stack that also features the contrasting reflectance signals we observed in the leaf-off phenological phase.</p>
-<p>Based on our pixel-based composites, we can define… <img src="index_files/figure-html/sma_1-1.png" width="576" /></p>
-<p>We consider these spectra as representative of the two target classes deciduous forest and evergreen forest and add a shade endmember to account for variation in brightness caused by (topograpic) shading.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Let´s now model a &quot;mixed pixel&quot;. </span>
-<span class="co"># We can simply do this be defining proportions of the different surface components.</span>
-fraction_beech &lt;-<span class="st"> </span><span class="fl">0.6</span>
-fraction_spruce &lt;-<span class="st"> </span><span class="fl">0.3</span>
-fraction_shade &lt;-<span class="st"> </span><span class="fl">0.1</span>
+$$ 
 
-<span class="co"># Do we violate the assumption that all surface components represent 100% of the surface area?</span>
-<span class="cf">if</span> ((fraction_beech <span class="op">+</span><span class="st"> </span>fraction_spruce <span class="op">+</span><span class="st"> </span>fraction_shade) <span class="op">!=</span><span class="st"> </span><span class="dv">1</span>) <span class="kw">print</span>(<span class="st">&#39;Fractions don´t sum to 1.&#39;</span>)</code></pre></div>
-<pre><code>[1] &quot;Fractions don´t sum to 1.&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create a linear mixture of the endmember spectra, based on the defined proportions.</span>
-model_spectrum &lt;-<span class="st"> </span>fraction_beech <span class="op">*</span><span class="st"> </span>endmembers<span class="op">$</span>beech_<span class="dv">074</span> <span class="op">+</span><span class="st"> </span>
-<span class="st">                  </span>fraction_spruce <span class="op">*</span><span class="st"> </span>endmembers<span class="op">$</span>spruce_<span class="dv">074</span> <span class="op">+</span><span class="st"> </span>
-<span class="st">                  </span>fraction_shade <span class="op">*</span><span class="st"> </span>endmembers<span class="op">$</span>shade
+Wenn es gelingt das Gleichungssystem in Richtung Flächenanteil zu lösen, ergeben sich für jedes Pixel zwei Werte, die jeweils als Ergebniskarten für den Anteil der jeweiligen Komponenten an den Oberflächen betrachtet werden kann. 
+Dies bezeichnet man als Lineare spektrale Mischungsanalyse (LSMA; linear spectral mixture analysis) bzw. spektrale Entmischung (spectral unmixing
 
-<span class="co"># We could simulate imperfect measurements by adding random noise.</span>
-noise &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">6</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="fl">0.012</span>)
+Bildpixel kann i.d.R. nicht exakt modelliert werden
+Fehlende oder unpassende Endmember (Dachfenster, Pflanzenstress)
+Nicht-lineare Mischung, Rauschen
+Neben den einzelnen Residuen bzw. dem Residualspektrum dient der RMSE als Maß für die Güte der Mischungsanalyse: 
 
-<span class="co"># Append the modeled spectrum to the endmembers data.frame</span>
-endmembers<span class="op">$</span>model_spectrum &lt;-<span class="st"> </span>model_spectrum <span class="op">+</span><span class="st"> </span>noise
 
-<span class="co"># Visualize the modeled spectrum in comparison to the endmember spectra.</span>
-<span class="kw">ggplot</span>(endmembers) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x=</span>wavelength, <span class="dt">y=</span>model_spectrum, <span class="dt">color=</span><span class="st">&#39;firebrick4&#39;</span>), <span class="dt">linetype=</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x=</span>wavelength, <span class="dt">y=</span>beech_<span class="dv">074</span>, <span class="dt">color=</span><span class="st">&#39;darkgreen&#39;</span>), <span class="dt">lwd=</span><span class="dv">1</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x=</span>wavelength, <span class="dt">y=</span>spruce_<span class="dv">074</span>, <span class="dt">color=</span><span class="st">&#39;steelblue4&#39;</span>), <span class="dt">lwd=</span><span class="dv">1</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x=</span>wavelength, <span class="dt">y=</span>shade, <span class="dt">color=</span><span class="st">&#39;black&#39;</span>), <span class="dt">lwd=</span><span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
+## Exercise
 
-<span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">name=</span><span class="st">&quot;BOA reflectance&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">name=</span><span class="st">&quot;Wavelength (nm)&quot;</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">scale_color_manual</span>(<span class="st">&#39;Spectrum&#39;</span>, 
-                       <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&#39;black&#39;</span>, <span class="st">&#39;darkgreen&#39;</span>, <span class="st">&#39;firebrick4&#39;</span>, <span class="st">&#39;steelblue4&#39;</span>), 
-                       <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&#39;Shade&#39;</span>, <span class="st">&#39;Beech&#39;</span>,  <span class="st">&#39;Mixed&#39;</span>, <span class="st">&#39;Spruce&#39;</span>), <span class="dt">guide=</span><span class="st">&#39;legend&#39;</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">theme_bw</span>()</code></pre></div>
-<p><img src="index_files/figure-html/sma_2-1.png" width="576" /></p>
-<p>find out fractions by iteratively testing combinations? we could keep the shade fraction stable.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create a matrix of the endmember spectra (3x6) and the modeled spectrum (1x6)</span>
-EM &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(endmembers[,<span class="kw">c</span>(<span class="st">&#39;beech_074&#39;</span>,<span class="st">&#39;spruce_074&#39;</span>,<span class="st">&#39;shade&#39;</span>)])
-MS &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(endmembers[,<span class="st">&#39;model_spectrum&#39;</span>])
+In today´s exercise, we will spent quite some time to deal with the concept of the linear spectral unmixing. The idea is to use LSMA to tackle the mixed forest problem we encountered in the forest type classification. 
 
-<span class="co"># Define a matrix composed of different fraction combinations (rows) across the endmembers (columns)</span>
-FM &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="kw">seq</span>(<span class="fl">0.1</span>, <span class="fl">0.8</span>, <span class="fl">0.05</span>), <span class="kw">seq</span>(<span class="fl">0.8</span>, <span class="fl">0.1</span>, <span class="op">-</span><span class="fl">0.05</span>), <span class="kw">rep</span>(<span class="fl">0.10</span>, <span class="dv">15</span>)), <span class="dt">ncol=</span><span class="dv">3</span>)
-<span class="kw">print</span>(FM)</code></pre></div>
-<pre><code>      [,1] [,2] [,3]
+Forest types in the peak growing season do likely not provide sufficient spectral contrast in order to produce useful unmixing results. However, we can produce a multi-temporal image stack that also features the contrasting reflectance signals we observed in the leaf-off phenological phase. 
+
+Based on our pixel-based composites, we can define...
+
+```r
+# We extracted endmember sprectra for beech and spruce stands
+# The reflectance was extracted from composite images at DOY 074 and 196
+endmembers <- data.frame('band'= c('blue', 'green', 'red', 'nIR', 'swIR1', 'swIR2'), 
+                         'wavelength'= c(515, 600, 680, 885, 1660, 2300), 
+                         'beech_074'= c(0.0236, 0.0445, 0.0709, 0.2151, 0.2377, 0.1527),
+                         'beech_196'= c(0.0205, 0.0415, 0.0232, 0.4590, 0.2023, 0.0825),
+                         'spruce_074' = c(0.0057, 0.0165, 0.0139, 0.1146, 0.0526, 0.0261), 
+                         'spruce_196' = c(0.0123, 0.0286, 0.0209, 0.1617, 0.0861, 0.0436),
+                         'shade'= c(0.0001,0.0001,0.0001,0.0001,0.0001,0.0001))
+
+# Let´s take a look at the endmember spectra of beech and spruce stands at DOY 074
+ggplot(endmembers) + 
+      geom_line(aes(x=wavelength, y=beech_074), color='darkgreen', lwd=1) +
+      geom_line(aes(x=wavelength, y=spruce_074), color='steelblue4', lwd=1) + 
+      geom_line(aes(x=wavelength, y=shade, color='black'), lwd=1) + 
+  
+      scale_y_continuous(name="BOA reflectance") + 
+      scale_x_continuous(name="Wavelength (nm)") + 
+      scale_color_manual('Spectrum', 
+                       values = c('black', 'darkgreen','steelblue4'), 
+                       labels=c('Shade', 'Beech', 'Spruce'), guide='legend') +
+      theme_bw()
+```
+
+<img src="index_files/figure-html/sma_1-1.png" width="576" />
+
+We consider these spectra as representative of the two target classes deciduous forest and evergreen forest and add a shade endmember to account for variation in brightness caused by (topograpic) shading. 
+
+
+```r
+# Let´s now model a "mixed pixel". 
+# We can simply do this be defining proportions of the different surface components.
+fraction_beech <- 0.45
+fraction_spruce <- 0.45
+fraction_shade <- 0.1
+
+# Do we violate the assumption that all surface components represent 100% of the surface area?
+if ((fraction_beech + fraction_spruce + fraction_shade) != 1) print('Fractions don´t sum to 1.')
+
+# Create a linear mixture of the endmember spectra, based on the defined proportions.
+model_spectrum <- fraction_beech * endmembers$beech_074 + 
+                  fraction_spruce * endmembers$spruce_074 + 
+                  fraction_shade * endmembers$shade
+
+# We could simulate imperfect measurements by adding random noise.
+noise <- rnorm(6, mean=0, sd=0.002)
+
+# Append the modeled spectrum to the endmembers data.frame
+endmembers$model_spectrum <- model_spectrum + noise
+
+# Visualize the modeled spectrum in comparison to the endmember spectra.
+ggplot(endmembers) + 
+    geom_line(aes(x=wavelength, y=model_spectrum, color='firebrick4'), linetype=2) + 
+    geom_line(aes(x=wavelength, y=beech_074, color='darkgreen'), lwd=1) +
+    geom_line(aes(x=wavelength, y=spruce_074, color='steelblue4'), lwd=1) +
+    geom_line(aes(x=wavelength, y=shade, color='black'), lwd=1) + 
+
+    scale_y_continuous(name="BOA reflectance") + 
+    scale_x_continuous(name="Wavelength (nm)") +
+    scale_color_manual('Spectrum', 
+                       values = c('black', 'darkgreen', 'firebrick4', 'steelblue4'), 
+                       labels=c('Shade', 'Beech',  'Mixed', 'Spruce'), guide='legend') +
+    theme_bw()
+```
+
+<img src="index_files/figure-html/sma_2-1.png" width="576" />
+
+exercise=TRUE
+
+find out fractions by iteratively testing combinations? 
+we could keep the shade fraction stable.
+
+
+```r
+# Create a matrix of the endmember spectra (3x6) and the modeled spectrum (1x6)
+EM <- as.matrix(endmembers[,c('beech_074','spruce_074','shade')])
+MS <- as.matrix(endmembers[,'model_spectrum'])
+
+# Define a matrix composed of different fraction combinations (rows) across the endmembers (columns)
+FM <- matrix(c(seq(0.1, 0.8, 0.05), seq(0.8, 0.1, -0.05), rep(0.10, 15)), ncol=3)
+print(FM)
+```
+
+```
+      [,1] [,2] [,3]
  [1,] 0.10 0.80  0.1
  [2,] 0.15 0.75  0.1
  [3,] 0.20 0.70  0.1
@@ -2356,50 +2421,84 @@ FM &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw"
 [12,] 0.65 0.25  0.1
 [13,] 0.70 0.20  0.1
 [14,] 0.75 0.15  0.1
-[15,] 0.80 0.10  0.1</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create empty vector to store RMSE values</span>
-RMSE &lt;-<span class="st"> </span><span class="kw">matrix</span>()
+[15,] 0.80 0.10  0.1
+```
 
-<span class="co"># Iterate over each fraction combination, </span>
-<span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(FM))){
+```r
+# Create empty vector to store RMSE values
+RMSE <- matrix()
+
+# Iterate over each fraction combination, 
+for (i in c(1:nrow(FM))){
   
-  FR &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(FM[i,])
-  <span class="co"># model a new spectrum using matrix multiplication (%*%)</span>
-  mix &lt;-<span class="st"> </span>EM <span class="op">%*%</span><span class="st"> </span>FR
-  <span class="co"># difference the new and the original modeled spectra</span>
-  residuals &lt;-<span class="st"> </span>mix <span class="op">-</span><span class="st"> </span>MS
-  <span class="co"># calculate root-mean-squared error (RMSE)</span>
-  RMSE[i] &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">mean</span>(residuals<span class="op">^</span><span class="dv">2</span>))
+  FR <- as.matrix(FM[i,])
+  # model a new spectrum using matrix multiplication (%*%)
+  mix <- EM %*% FR
+  # difference the new and the original modeled spectra
+  residuals <- mix - MS
+  # calculate root-mean-squared error (RMSE)
+  RMSE[i] <- sqrt(mean(residuals^2))
   
 }
 
-<span class="co"># Print RMSE vector</span>
-<span class="kw">print</span>(RMSE)</code></pre></div>
-<pre><code> [1] 0.055482983 0.050311555 0.045145280 0.039986157 0.034837364
- [6] 0.029704272 0.024596714 0.019534727 0.014565902 0.009832503
-[11] 0.005928189 0.005249897 0.008598379 0.013200587 0.018125440</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Print fraction combination of lowest RMSE</span>
-FM[<span class="kw">which</span>(RMSE<span class="op">==</span><span class="kw">min</span>(RMSE)),]</code></pre></div>
-<pre><code>[1] 0.65 0.25 0.10</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">RMSE[<span class="kw">which</span>(RMSE<span class="op">==</span><span class="kw">min</span>(RMSE))]</code></pre></div>
-<pre><code>[1] 0.005249897</code></pre>
-<p>We can solve the problem mathematically using matrix inversion.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(MASS)
-<span class="co"># Invert matrix and multiply with modeled spectrum, yielding the fractions</span>
-FR &lt;-<span class="st"> </span><span class="kw">ginv</span>(EM) <span class="op">%*%</span><span class="st"> </span>MS
-<span class="kw">print</span>(FR)
+# Print RMSE vector
+print(RMSE)
+```
 
-<span class="co"># Model mixed spectrum based on the result, again using matrix multiplication</span>
-mix &lt;-<span class="st"> </span>EM <span class="op">%*%</span><span class="st"> </span>FR
+```
+ [1] 0.08394269 0.07874940 0.07355620 0.06836310 0.06317013 0.05797732
+ [7] 0.05278472 0.04759240 0.04240046 0.03720906 0.03201847 0.02682915
+[13] 0.02164200 0.01645911 0.01128632
+```
 
-<span class="co"># Difference new and original spectrum and compute RMSE</span>
-residuals &lt;-<span class="st"> </span>mix <span class="op">-</span><span class="st"> </span>MS
-RMSE &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">mean</span>(residuals<span class="op">^</span><span class="dv">2</span>))</code></pre></div>
-<ul>
-<li>forest mask</li>
-<li>endmember spectra</li>
-<li>code function to unmix in space? library(‘hsdar’)</li>
-</ul>
+```r
+# RMSE[which(RMSE==min(RMSE))]
+
+# Print fraction combination of lowest RMSE
+FM[which(RMSE==min(RMSE)),]
+```
+
+```
+[1] 0.8 0.1 0.1
+```
+
+We can solve the problem mathematically using matrix inversion.
+
+
+```r
+library(MASS)
+
+# Invert matrix and multiply with modeled spectrum, yielding the fractions
+FR <- ginv(EM) %*% MS
+print(FR)
+```
+
+```
+             [,1]
+[1,]  0.904148901
+[2,]  0.006576591
+[3,] -0.447079849
+```
+
+```r
+# Model mixed spectrum based on the result, again using matrix multiplication
+mix <- EM %*% FR
+
+# Difference new and original spectrum and compute RMSE
+residuals <- mix - MS
+RMSE <- sqrt(mean(residuals^2))
+print(RMSE)
+```
+
+```
+[1] 0.00117462
+```
+
+
+- forest mask
+- endmember spectra
+- code function to unmix in space?
+library('hsdar') -->
 </div>
 </div>
 

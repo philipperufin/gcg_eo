@@ -1517,7 +1517,7 @@ Load the point shapefile in QGIS and add two fields of type Integer: ```classID`
 ### 2) Area-adjusted accuracy assessment
 
 Assess the class proportions of your map in R. To do so, use the ```freq()``` function to get pixel counts. Use these for calculating class propotions (0-1). Remember to exclude ```NAs```, so the proportions of your 4 classes sum up to 1.
- 
+<!-- extract is not necessary -->
 Load the reference point shapefile in R and ```extract()``` the map values at the point locations. Create a confusion matrix from the resulting ```data.frame``` using ```table()```.
 
 Copy & paste the values from your confusion matrix as well as the class proportions into the Excel spreadsheet. Next, answer the following questions: 
@@ -1654,50 +1654,51 @@ In the next session, we would like to discuss [Müller et al. (2015): Mining den
 - How do spectral-temporal metrics conceptually differ from pixel-based composites?
 - For which type of (classification) problems can spectral-temporal metrics be useful?
 
-<!-- 
-# Session 09: Spectral-temporal metrics
+<!-- SESSION 08 --> 
+
+# Session 08: Spectral-temporal metrics
 
 ## Learning goals
 
 - Exploring the spectral-temporal characteristics of pastures and croplands in the Brazilian Amazon.
-- Generate spectral-temporal metrics from an intra-annual time series of Landsat-derived TC components.
-- Map pastures and cropland in the deforested areas.
+- Generate spectral-temporal metrics from an intra-annual time series of Tasseled Cap components.
+- Map post-deforestation land use in deforested areas.
 
 ## Background
 
-Understanding post-deforestation land use is essential to disentangle the drivers of deforestation.
+Understanding post-deforestation land use is essential to disentangle the drivers of deforestation. In the study region of last session, intensive agriculture and cattle ranching are the dominant land uses on deforested lands.
 
 ![Post-deforestation land uses in the study region include intensive soy cultivation (left) and extensive cattle ranching (right). Images: Philippe Rufin](fig/s08_lu.png)
 
-From a remote sensing perspective, separating cropland and grassland is challenging due to similar spectral signatures in most periods of the year. In selected periods however, differences in land surface phenology become apparent. We can investigate these differences by creating an intra-annual time series of Tasseled Cap Greenness. 
+From a remote sensing perspective, separating cropland and grassland is challenging due to similar spectral signatures in most periods of the year. In selected periods however, differences in land surface phenology become apparent. We can investigate these differences by creating an intra-annual time series of Tasseled Cap Greenness (TCG). 
 
 ![Intra-annual time series of Tasseled Cap Greenness for 2010.](fig/s08_tcg_ts.gif){width=80%}
 
-Let´s investigate if we can see differences between pastures and croplands which play out over time. We collected 50 reference samples for pastures and 50 for cropland in the study region. We then extract the TCG value for all those locations in each of the time series bands. In a next step, we can create class-wise boxplots for each class and observation date, which shape a trajectory of land surface dynamics for each class.
+Let´s investigate differences between pastures and croplands which appear over time. We collected 50 reference samples for pastures and 50 for cropland in the study region. We then extract the TCG value for all those locations in each of the time series bands. In a next step, we can create class-wise boxplots for each observation date. The boxplots reveal the land surface dynamics for each class.
 
-![Boxplots showing the distribution of TCG for pastures and cropland across all observations of the year 2010.](fig/s08_boxplots_ts.png)
+![Boxplots showing the distribution of TCG for pastures (n = 50 samples) and cropland (n = 50 samples) across all observations of the year 2010.](fig/s08_boxplots_ts.png)
 
-Can you identify differences between the classes? Looking at the above graph suggests that croplands have a somewhat higher variability throughout the year, but on average, pastures show a slightly elevated level of TCG. We can try to verify this by calculating descriptive statistics of all TCG observations in the year and then comparing those between the classes. Let´s take a look at the maximum, mean, minimum, and standard deviation of TCG throughout 2010.
+Can you identify differences between the classes? Looking at the above graph suggests that croplands have a somewhat higher variability throughout the year, but on average, pastures show a slightly higher of TCG. We can try to verify this by calculating descriptive statistics of all TCG observations in the year and then comparing those between the classes. Let´s take a look at the maximum, mean, minimum, and standard deviation of TCG throughout 2010.
 
-![Boxplots showing the distribution of maximum, mean, minimum and standard deviation of TCG for 50 samples of pastures and 50 samples of cropland in 2010.](fig/s08_boxplots_stm.png)
+![Boxplots showing the distribution of maximum, mean, minimum and standard deviation of TCG for pastures (n = 50 samples) and cropland (n = 50 samples) in 2010.](fig/s08_boxplots_stm.png)
 
-We can see that these "temporal statistics" can be useful to discriminate the two spectrally similar classes. Features combining the spectral appearance of a surface with its behaviour over time are increasingly popular in the remote sensing community. We refer to such features as spectral-temporal metrics (STM). STM are descriptive statistics of the spectral behaviour over time. They provide an efficient means to capture seasonal variations of land surface dynamics, while reducing the impact of clouds and cloud-shadows. STM can be calculated directly from the spectral bands, but also indices such as the NDVI, or TC components. 
+We can see that these "temporal statistics" can be useful to discriminate the two spectrally similar classes. Features combining the spectral appearance of a surface with its behaviour over time are increasingly popular in the remote sensing community. We refer to such features as spectral-temporal metrics (STM). STM are descriptive statistics of the spectral behaviour over time. They provide an efficient means to capture seasonal variations of land surface dynamics, while reducing the impact of clouds and cloud-shadows. STM can be calculated from indices such as the NDVI or TC components, but also directly from the spectral bands. 
 
 ![Exemplary metrics calculated from intra-annual time series of Tasseled Cap Greenness.](fig/s08_stm.png){width=80%}
 
-Different metrics might be more or less useful depending on the application. Good process understanding is key in finding out which STM are relevant for the problem at hand. We should decide on the type of spectral information and a set of statistics (metrics) to compute. Providing such information to a classifier can enable the production of thematically detailed land cover maps over large areas, such as a [pan-European land cover map](https://www2.hu-berlin.de/geomultisens/europeanLandCover/euroLandCover.html).
+Different metrics might be more or less useful depending on the application. Good process understanding is key in finding out which STM are relevant for the problem at hand. We should decide on the type of spectral information and a set of statistics (metrics) to compute. Providing such information to a classifier can enable the production of thematically detailed land cover maps over large areas, such as a [pan-European land cover map](https://www2.hu-berlin.de/geovis/eolab/europeanlandcover/euroLandCover.html).
 
 ---
 
 ## Exercise
 
-In this exercise you will map pastures and croplands in deforested areas of the Brazilian Amazon. You will use and generate spectral-temporal metrics to separate these two land covers which are difficult to discriminate using single images. you will thereby be able to investigate which land cover is primarily replacing forests in the region.
+In this exercise you will map pastures and croplands in deforested areas of the Brazilian Amazon. You will use and generate spectral-temporal metrics to separate these two land covers which are difficult to discriminate using single images. The resulting map enables you to determine which land use is primarily replacing forests in the region.
 
 We provide the following data in [our repository](https://box.hu-berlin.de/f/cdc86f7993194946930f/?dl=1) and on drive O:
 
 a. …ts_stacks/: cloud-masked stacks of TC brightness (TCB), TC greenness (TCG), TC wetness (TCW) derived from 30 Landsat images acquired throughout 2010. Observation dates and sensors for each band in the stacks are listed in *.csv file.
 
-b. …spectemp/: eight spectral temporal metrics for TCB, TCG and TCW:
+b. …spectemp/: eight spectral-temporal metrics for TCB, TCG and TCW:
 min, max, mean: minimum, maximum and mean value  
 p25, p50, p75: 25%, 50%, 75% percentile values  
 iqr: interquartile-range (25%-75%)  
@@ -1737,13 +1738,13 @@ Summarize the main characteristics of the three classes over the growing season 
 
 ### 3) Compute additional spectral-temporal metrics
 
-Let´s compute two additional spectral-temporal metrics from the time series stacks.
+Let´s generate two additional spectral-temporal metrics from the time series stacks. First, answer the following conceptual questions:
 
-a. First, think about creating a temporal subset of your time series for highlighting differences which are most pronounced during specific seasons (e.g. 'dry season', 'third quarter' or 'August').
+a. Which temporal subset of your time series highlights the seasonal differences between croplands and pastures best (e.g. 'dry season', 'third quarter' or 'August')?
 
-b. Second, decide on the statistic to calculate. Your metrics can be for instance additional percentiles, information on the timing of specific events, such as the observation date of the minimum value, or differences between metrics. Be creative!
+b. Which statistics provide a high information content? Your metrics can be for instance additional percentiles, information on the timing of specific events, such as the observation date of the minimum value, or differences between metrics. Be creative!
 
-How to do that: A number of summarizing functions can be applied directly to raster stacks (```mean()```, ```max()```, ```min()```, ```range()```). If you want to calculate metrics other than those, you need to convert your raster stack into a matrix using ```as.matrix()```. The below figure helps to understand how a three-dimensional raster stack is being transformed into a two-dimensional matrix.
+Now the practical part. A number of summarizing functions can be applied directly to raster stacks (```mean()```, ```max()```, ```min()```, ```range()```). If you want to calculate metrics other than those, you need to convert your raster stack into a matrix using ```as.matrix()```. The below figure helps to understand how a three-dimensional raster stack is being transformed into a two-dimensional matrix.
 
 ![Schematic illstration of converting a raster stack to a matrix using the as.matrix() function.](fig/s08_matrix.png)
 
@@ -1782,7 +1783,7 @@ b. Produce a map using your Random Forest model and ```mask()``` the result with
 a. Assess the accuracy of the map using the validation data we provided. Run an additional iteration using different metrics in case you are not satisifed with your results.
 
 b. Combine the resulting map with your forest change map from last week to get a better insight into the land change processes of the study area. Calculate the fractions of deforested land occupied by pasture or cropland for each of the two time periods. Was forest primarily replaced by pastures or by cropland? Did this process change over the periods 2001-2005 and 2006-2010? Please enter your main results in [this table](https://ethercalc.org/sputdinazkck).
-
+<!-- 
 ## Reading materials
 
 In this paper, [Hansen et al. (2013)](http://doi.org/10.1126/science.1244693) presented the first global Landsat-based map of forest cover change. Please make sure to read the paper and the supplementary materials.
@@ -1791,12 +1792,8 @@ In order to make the discussion more vivid, we simulate a discussion on the appl
 
 Please prepare arguments for your group based on the core article and the supplementary material, as well as additional scientific literature if you wish (e.g. case studies). Arguments can target conceptual issues, methodological components, or other scientific evidence arguing for or against the suitability of the Global Forest Data in the context of REDD+. 
 
-------
 
---> 
-
-
-<!-- # Session 10: Project phase I
+# Session 10: Project phase I
 
 ## Learning goals: 
 
@@ -2020,11 +2017,9 @@ This is a non-exhaustive list of common terms.
 
 
 
----------
-
 <!--  SESSION 07 
 
-## Session 07: Fraction mapping
+# Session 07: Fraction mapping
 
 ## Learning goals
 
@@ -2095,7 +2090,7 @@ Dies bezeichnet man als Lineare spektrale Mischungsanalyse (LSMA; linear spectra
 Bildpixel kann i.d.R. nicht exakt modelliert werden
 Fehlende oder unpassende Endmember (Dachfenster, Pflanzenstress)
 Nicht-lineare Mischung, Rauschen
-Neben den einzelnen Residuen bzw. dem Residualspektrum dient der kann RMSE als Maß für die Güte der Mischungsanalyse: 
+Neben den einzelnen Residuen bzw. dem Residualspektrum dient der RMSE als Maß für die Güte der Mischungsanalyse: 
 
 
 ## Exercise
@@ -2105,7 +2100,7 @@ In today´s exercise, we will spent quite some time to deal with the concept of 
 Forest types in the peak growing season do likely not provide sufficient spectral contrast in order to produce useful unmixing results. However, we can produce a multi-temporal image stack that also features the contrasting reflectance signals we observed in the leaf-off phenological phase. 
 
 Based on our pixel-based composites, we can define...
-```{r sma_1, echo=FALSE, eval=TRUE}
+```{r sma_1, echo=TRUE, eval=TRUE}
 # We extracted endmember sprectra for beech and spruce stands
 # The reflectance was extracted from composite images at DOY 074 and 196
 endmembers <- data.frame('band'= c('blue', 'green', 'red', 'nIR', 'swIR1', 'swIR2'), 
@@ -2120,6 +2115,8 @@ endmembers <- data.frame('band'= c('blue', 'green', 'red', 'nIR', 'swIR1', 'swIR
 ggplot(endmembers) + 
       geom_line(aes(x=wavelength, y=beech_074), color='darkgreen', lwd=1) +
       geom_line(aes(x=wavelength, y=spruce_074), color='steelblue4', lwd=1) + 
+      geom_line(aes(x=wavelength, y=shade, color='black'), lwd=1) + 
+  
       scale_y_continuous(name="BOA reflectance") + 
       scale_x_continuous(name="Wavelength (nm)") + 
       scale_color_manual('Spectrum', 
@@ -2133,8 +2130,8 @@ We consider these spectra as representative of the two target classes deciduous 
 ```{r sma_2, echo=TRUE, eval=TRUE}
 # Let´s now model a "mixed pixel". 
 # We can simply do this be defining proportions of the different surface components.
-fraction_beech <- 0.6
-fraction_spruce <- 0.3
+fraction_beech <- 0.45
+fraction_spruce <- 0.45
 fraction_shade <- 0.1
 
 # Do we violate the assumption that all surface components represent 100% of the surface area?
@@ -2146,7 +2143,7 @@ model_spectrum <- fraction_beech * endmembers$beech_074 +
                   fraction_shade * endmembers$shade
 
 # We could simulate imperfect measurements by adding random noise.
-noise <- rnorm(6, mean=0, sd=0.012)
+noise <- rnorm(6, mean=0, sd=0.002)
 
 # Append the modeled spectrum to the endmembers data.frame
 endmembers$model_spectrum <- model_spectrum + noise
@@ -2166,6 +2163,8 @@ ggplot(endmembers) +
     theme_bw()
     
 ```
+
+exercise=TRUE
 
 find out fractions by iteratively testing combinations? 
 we could keep the shade fraction stable.
@@ -2197,17 +2196,19 @@ for (i in c(1:nrow(FM))){
 
 # Print RMSE vector
 print(RMSE)
+# RMSE[which(RMSE==min(RMSE))]
 
 # Print fraction combination of lowest RMSE
 FM[which(RMSE==min(RMSE)),]
-RMSE[which(RMSE==min(RMSE))]
+
 
 ```
 
 We can solve the problem mathematically using matrix inversion.
 
-```{r matrix_inversion, eval=F, echo=T}
+```{r matrix_inversion, eval=T, echo=T}
 library(MASS)
+
 # Invert matrix and multiply with modeled spectrum, yielding the fractions
 FR <- ginv(EM) %*% MS
 print(FR)
@@ -2218,6 +2219,7 @@ mix <- EM %*% FR
 # Difference new and original spectrum and compute RMSE
 residuals <- mix - MS
 RMSE <- sqrt(mean(residuals^2))
+print(RMSE)
 
 ```
 
@@ -2225,4 +2227,4 @@ RMSE <- sqrt(mean(residuals^2))
 - forest mask
 - endmember spectra
 - code function to unmix in space?
-library('hsdar')
+library('hsdar') -->
