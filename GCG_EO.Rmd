@@ -1766,7 +1766,8 @@ tcg.median <- apply(tcg.matrix, 1, FUN=median, na.rm=T)
 tcg.median.raster <- raster(nrows=tcg.stack@nrows, 
                             ncols=tcg.stack@ncols, 
                             crs=tcg.stack@crs, 
-                            vals=tcg.median)
+                            vals=tcg.median,
+                            ext=extent(tcg.stack))
 
 # Plot result
 plot(tcg.median.raster)

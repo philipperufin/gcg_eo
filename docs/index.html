@@ -1981,7 +1981,8 @@ tcg.median &lt;-<span class="st"> </span><span class="kw">apply</span>(tcg.matri
 tcg.median.raster &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="dt">nrows=</span>tcg.stack<span class="op">@</span>nrows, 
                             <span class="dt">ncols=</span>tcg.stack<span class="op">@</span>ncols, 
                             <span class="dt">crs=</span>tcg.stack<span class="op">@</span>crs, 
-                            <span class="dt">vals=</span>tcg.median)
+                            <span class="dt">vals=</span>tcg.median,
+                            <span class="dt">ext=</span><span class="kw">extent</span>(tcg.stack))
 
 <span class="co"># Plot result</span>
 <span class="kw">plot</span>(tcg.median.raster)</code></pre></div>
