@@ -1783,7 +1783,7 @@ b. Produce a map using your Random Forest model and ```mask()``` the result with
 
 a. Assess the accuracy of the map using the validation data we provided. Run an additional iteration using different metrics in case you are not satisifed with your results.
 
-b. Combine the resulting map with your forest change map from last week to get a better insight into the land change processes of the study area. Calculate the fractions of deforested land occupied by pasture or cropland for each of the two time periods. Was forest primarily replaced by pastures or by cropland? Did this process change over the periods 2001-2005 and 2006-2010? Please enter your main results in [this table](https://ethercalc.org/sputdinazkck).
+b. Combine the resulting map with your forest change map from last week to get a better insight into the land change processes of the study area. Calculate the fractions of deforested land occupied by pasture or cropland for each of the two time periods. Was forest primarily replaced by pastures or by cropland? Did this process change over the periods 2001-2005 and 2006-2010? Please enter your main results in [this table](https://ethercalc.org/tyywz3bm5err).
 <!-- 
 ## Reading materials
 
