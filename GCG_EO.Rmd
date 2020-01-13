@@ -1864,18 +1864,20 @@ e. Check any other source of data that you might know of.
 
 
 
-<!-- # Session 11: Project phase II
+<!-- S10 --> 
+
+# Session 10: Project phase II
 
 ## Learning goals:
 
-- Convert raw satellite data to analysis-ready level 3 datasets
+- Convert raw satellite data to analysis-ready datasets
 - Develop a protocol for training data collection
 
 ## Practical guidelines
 
 Until here, you successfully managed to develop a research idea and acquired remote sensing datasets for further analyses. The next steps will vary largely depending on the specific project workflow and the following guidelines might therefore not suit every project. Feel free to follow, modify, or ignore them as you like.
 
-### 1) Produce level 2 data
+### 1) Produce analysis-ready data
 
 In this step, you should perform the necessary pre-processing steps to prepare your downloaded data for the next steps. Often these data come as compressed archives with individual band and metadata files. To avoid unnecessary processing time in further steps, we need a cloud-masked stack covering the extent of our study region.
 
@@ -1886,7 +1888,7 @@ To get there, we need to do the following:
 - Crop the image(s) to the study region extent.
 - Mask clouds & cloud shadows in the image(s).
 
-### 2) Further processing to produce level 3 data
+### 2) Advanced pre-processing 
 
 Producing meaningful features for classification or regression algorithms is a critical step towards good reults. Make use of the methods and skillsets you acquired during the course. Depending on your research project, it might make sense to perform pixel-based compositing, or to calculate spectral-temporal metrics. Remember, many of these steps can be performed using spectral bands, band indices, or Tasseled Cap components. Take enough time to discuss these issues in your team before making a final choice. 
 
@@ -1903,7 +1905,6 @@ You have already done this a couple of times by now. Here are some guidelines th
 
 **Until next week:** Have your input features and training data ready, so we can proceed with producing results. Decide for an algorithm to use in your classification / regression problem. Discuss the parametrization of these algorithms in your team, i.e., which are the required parameters and how to determine useful parameter settings.
 
---> 
 
 <!-- # Session 12: Project phase III
 
