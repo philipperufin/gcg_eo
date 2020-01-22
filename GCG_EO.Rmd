@@ -1906,7 +1906,7 @@ You have already done this a couple of times by now. Here are some guidelines th
 **Until next week:** Have your input features and training data ready, so we can proceed with producing results. Decide for an algorithm to use in your classification / regression problem. Discuss the parametrization of these algorithms in your team, i.e., which are the required parameters and how to determine useful parameter settings.
 
 
-<!-- # Session 12: Project phase III
+# Session 11: Project phase III
 
 ## Learning goals:
 
@@ -1951,9 +1951,9 @@ During the final session of Earth Observation, we will organize a mini-symposium
 
 The schedule is very tight and presenters are urged to strictly stay within pre-defined time slots. For every group, an **oral presentation of at most 10 minutes** is scheduled. Presentations exceeding this time limit will be interrupted. The organizers further grant a maximum of 5 minutes for discussion. 
 
-**Until next week:** Prepare your presentation in PowerPoint and PDF format and upload them as a *.zip file on moodle the latest on July 2.
+**Until next week:** Prepare your presentation in PowerPoint and PDF format and upload them as a *.zip file on moodle.
 
--->
+
 
 # Terminology
 
