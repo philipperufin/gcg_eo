@@ -35,9 +35,23 @@ opts_knit$set(width=75)
 
 ![](fig/header.png)
 
-##  About Earth Observation
+##  About
 
-Earth Observation is an advanced course for students of the Master of Science ["Global Change Geography"](https://www.geographie.hu-berlin.de/en/studies/study-programs/master-degree-programs/master-of-science) of Humboldt-Universität zu Berlin. In this course, we cover multiple aspects of optical remote sensing by working with multi-sprectral Landsat and Sentinel 2 imagery. The course is fully based on open source software, including R and QGIS.
+Earth Observation is an advanced course for students of the Master of Science ["Global Change Geography"](hu.berlin/mscgeo) of Humboldt-Universität zu Berlin. In this course, we cover aspects of optical remote sensing by working with multi-sprectral Landsat and Sentinel 2 imagery. The course is fully based on open source software, including R and QGIS.
+
+------
+
+## Requirements 
+
+A good understanding of basic principles of remote sensing is required to follow this course. This includes:
+
+* knowledge about operational optical sensor systems 
+* common sensor properties such as spatial, temporal, spectral and radiometric resolution
+* the electromagnetic spectrum and relevant wavelengths in optical remote sensing
+* reflectance properties of different land surface types
+* good knowledge of at least one GIS and remote sensing software packages 
+
+Participants should furthermore have a basic understanding of R, including syntax, data types and knowledge on how to read, manipulate and write data. As you followed the curriculum of the MSc program, you most likely joined module "M1 - Quantitative Methods for Geographers", in which you learned using R for statistical problems. We here build on these basics. If you are not confident in using R, please follow one of the numerous tutorials listed in the chapter on "R Basics".
 
 ------
 
@@ -49,13 +63,6 @@ In the course you will learn about current state-of-the-art methods in image pro
 
 ------
 
-## Requirements 
-
-A good understanding of basic principles of remote sensing is needed to follow this course. Participants should furthermore have a basic understanding of R, including syntax, data types and knowledge on how to read, manipulate and write data. As you followed the curriculum of the MSc program, you most likely joined the module "Quantitative Methods for Geographers", in which you learned using R for statistical problems. Here, we built on your existing knowledge. If you are not enrolled in the MSc program, feel free to look at the [course materials](https://github.com/corneliussenf/quantitative_methods). 
-
-Alternatively, you may want to follow one of the numerous tutorials for R fundamentals (e.g., [RStudio](https://resources.rstudio.com/), [DataCamp](https://www.datacamp.com/courses/free-introduction-to-r), [UMC Utrecht](http://www.r-tutorial.nl/), [Advanced R by Hadley Wickham](http://adv-r.had.co.nz/), [R Graphics Cookbook](https://r-graphics.org/)), or one of those specifically for geodata processing (e.g., [Wageningen University](https://geoscripting-wur.github.io/), [University of Colorado](https://www.earthdatascience.org/)).
-
------------
 
 <!-- ################################## INTRO R ##############################################  -->
 
@@ -69,8 +76,437 @@ Learning R has tons of advantages. It is a great starting point for those eager 
 
 ![A rising tide for R (Tipman 2015; doi: 10.1038/517109a)](fig/fig00.png)
 
+# Course materials
 
+## Readings
+
+The first sessions of the course contain reading materials, such as are peer-reviewed papers and technical reports. You will find the reading materials for the next session at the end of each session. We highlight aspects to focus upon to streamline the reading process and facilitate the discussion. We are looking forward to lively discussions of the reading materials and critical questions from your end. 
+
+## Data
+
+All data used in the course is openly accessible. Mostly, we´ll be working with Landsat images, which you can access through the USGS Earth Explorer. We provide download links to the datasets for each session. It will be helpful if you organize your data in a course directory on your local machine (MSc students might want to use drive ```O:/Student_Data/your_name/EO/```). We will refer to this folder as ```course.dir``` throughout this course. Create subdirectories for each session, e.g. ```course.dir/S01/``` and separate data, code and course materials in additional sub-directories (e.g. ```/data```, ```/code```, ```/docs```).
+
+## Exercises
+
+The weekly exercises are defined in the respective session. Each session comprises several tasks that involve scipting in R. Course participants must submit completed exercises, documented as R scripts, in [moodle](http://moodle.hu-berlin.de/) to pass. Weekly submission deadlines are monday, 23:59. Please name the script of your work group as SXX_name1_name2.R. Please structure your script for every exercise as follows:
+
+```{r template, echo=TRUE, eval=FALSE}
+#############################################################################
+# MSc Earth Observation Exercise [Session number]
+# [Your Name]
+#############################################################################
+
+# Load packages, use install.packages('packagename') to install if needed
+library(raster)
+
+# In case you run into memory issues
+# change raster options to store large rasters in temp files on disk
+# rasterOptions(maxmemory = 1e12)
+
+# Define the folder that contains your data...
+data.dir <- 'course.dir/S01/data/'
+
+#############################################################################
+# 1)	
+#############################################################################
+
+# Comments for task 1
+
+
+#############################################################################
+# 2)	
+#############################################################################
+
+# ...
+
+```
 ------
+
+# Session 00: R Basics
+
+## Using R
+
+Here, we aim to provide a brief overview on the basics of R ^[The ```Using R``` tutorial was written by [Leon Nill](https://github.com/leonsnill/).], which is supposed to refresh your knowledge and help you to identify topics worth revisiting. At this stage, we will not cover advanced data wrangling using packages such as `tidyr` or `dplyr`, or look into advanced plotting with `ggplot2`. You are encouraged to refresh your knowledge from the M1 module "Quantitative methods" as well as learn from online resources we list at the bottom of this page. 
+
+### Operators
+
+R is an interpreted programing language which means users can execute commmands directly in the console without having to compile sourcecode. You can use R as a simple calculator using arithemtic operators and mathematical functions which are then evaluated directly. For example:
+
+```{r calc, echo=TRUE, eval=TRUE, fig.height = 3, fig.width = 3, fig.align = "center", results='hold'}
+2*(1+3)
+sqrt(pi)  # 'pi' is a predefined constant 
+abs(-2)  # absolute value
+```
+
+To list the defined operators used by R, simply type `?Syntax` into the console. This includes the arithemtic operators 
+
+* addition `+` and subtraction `-`
+* multiplication `*` and division `/` 
+* exponentiation `^` or `**`
+
+as well as logical operators
+
+* less than `<` / greater than `>`
+* less than or equal to `<=` / greater than equal to `>=`
+* equal to `==`
+* not equal to `!=`
+* or `|`
+* and `&`
+
+The concept of logical operators is to allow a program to make a decision based on (multiple) conditions. A condition can be evaluated to be either `TRUE` or `FALSE` (see `?Logic`). For example:
+
+```{r bool, echo=TRUE, eval=TRUE, fig.height = 3, fig.width = 3, fig.align = "center", results='hold'}
+2 > 5
+```
+
+They are often used in combination with control statements such as the conditional `if...else` statement which are mentioned below. But first back to basic functions: R also comes with a whole set of mathematical functions including
+
+* trigonometric functions `sin()`, `cos()` and `tan()`
+* exponential funcrtion `exp()`
+* statistical metrics like `min()`, `max()`, `median()`
+
+to name just a very few of them. Functions in R provide information on how to use them. If you need help with a function, type in `help(name_of_function)` or simply `?name_of_function` to display the correct usage and syntax of a function.
+
+
+### Objects
+
+Everything in R we assign to a variable is an object. We can assign objects in R with the `<-` operator (i.e. an arrow), e.g. `x <- 2`. Commonly, other languages use `=` which also works in R, however it is definitely good practice to use the `<-` operator in R.
+
+```{r assignment, echo=TRUE, eval=TRUE, fig.height = 3, fig.width = 3, fig.align = "center", results='hold'}
+# let´s assign a variable 'x' a value of 2
+x <- 2  # assigns the value, does not print the result to console
+# and another variable 'y' ...
+y <- 5
+z <- x*y  # multiply them together and store into a new variable 'z'
+
+print(z)
+```
+
+Assigned variables are stored in the *environment* or workspace of our session and can be listed by calling the `ls()` function. 
+------
+
+### Data Types and Data Structures
+
+The basic data types in R comprise:
+
+* **Character** (or String):  `sensor <- "Landsat-8"`
+* **Integer**:                `n_bands <- 11L` (the `L` tells R it is an integer, otherwise it is interpreted as numeric)
+* **Numeric** (or Float):     `lambda_red <- 0.662`
+* **Logical** (or Boolean):   `sun_synchronous <- TRUE` or `sun_synchronous <- T`
+* **Factors**:                `agency <- factor('NASA',levels=c('NASA','ESA','INPE'))`
+* (Complex:                   `x <- 4i`)
+
+Understanding data types is important for a variety of reasons. For instance, later in the course we will manipulate large rasters of remotely sensed reflectance data which may be stored as floating point numbers between `0` and `1`. However, storing raster matrices as floats on disk requires more memory than when using an integer format. It can therefore be handy to transform our data into integer prior to saving it to disk. 
+
+For now, let us just keep in mind that there are different data types and if we now want to store not just a single value/attribute into a variable but a whole set of data, we need to undertstand the different **data structures** available in R:
+
+![Data Structures in R (from Zimmermann & Steinmann 2006)](fig/s00_datatypes.png){ width=35% }
+
+As you can see in the figure above, there exists a variaty of data structures in R which either allow for storing different data types simultaneously (`data frames`, `lists`), or only one datatype (`scalars`, `vectors`, `matrices`). Note, that the colors representing the data types are only chosen for visualisation purposes: It does not mean that matrices or vectors can only store values of type logical or numeric, but only data of the same type.
+
+#### Vectors
+A vector in R can be created using a variety of functions. The most basic function is the `c()`-function, where 'c' stands for concatenate.
+
+```{r vector, echo=TRUE, eval=TRUE, fig.height = 3, fig.width = 3, fig.align = "center", results='hold'}
+a <- c(2, 4, 8, 16, 32)
+cat("vector a:", a)  # cat-function: Similar to print, outputs the objects, concatenating the representations
+```
+
+Let`s see what happens when we mix numeric values with strings and combine them into a vector.
+```{r vector mix, echo=TRUE, eval=TRUE, fig.height = 3, fig.width = 3, fig.align = "center", results='hold'}
+b <- c(2, 4, 8, 16, 32, "number")
+cat("vector a:", b)  # cat-function: Outputs the objects, concatenating the representations
+print("")
+print(typeof(b))
+```
+
+Our vector was automatically cast to `character`. This is because R will try and convert a smaller data type into a larger one to avoid data loss (here from `numeric` to `character`). The string 'number' in the vector `b` cannot be cast to numeric, however we can very well transform a numeric `2` into a string `"2"`. Be aware of this behaviour and use other data structures if needed.
+
+Back to vector creation. Instead of having to type in sequences or replicates manually by hand, R provides the functions `seq()` and `rep()`.
+
+```{r seq-req, echo=TRUE, eval=TRUE, fig.height = 3, fig.width = 3, fig.align = "center", results='hold'}
+s <- seq(from=1, to=365, by=1)  # or simply s <- seq(1, 365, 1)
+cat("Length of s:", length(s))
+
+# alternatively (always with by=1):
+s <- 1:365
+
+# we may want to repeat a specific value n times
+r <- rep(1, 100)
+
+# ...or repeat a sequence 
+r <- rep(seq(2, 12, 2), 5)
+
+# ...or repeat each entry in a sequence 
+r <- rep(seq(2, 12, 2), each=5)
+```
+
+#### Matrices and Arrays
+
+Creating matrices and arrays is just as easy as creating vectors. Matrices are just 2-dimensional arrays with a specified number of `rows` and `columns`:
+```{r matrix, echo=TRUE, eval=TRUE, fig.height = 3, fig.width = 3, fig.align = "center", results='hold'}
+m <- matrix(1:10, 5)
+print(m)
+
+m2 <- matrix(1:10, 5, byrow = T)
+print(m2)
+```
+
+```{r arrays, echo=TRUE, eval=TRUE, fig.height = 3, fig.width = 3, fig.align = "center", results='hold'}
+a <- array(1:25,c(5,5,2))
+print(a)
+```
+
+`Arrays` and especially `matrices` are important structures when working with remote sensing data, as this is how images are represented numerically. We will extensively make use of the `raster` package throughout the course where a lot of the handling is done for us, however sometimes we need to manipulate the data with more advanced techniques and it is therefore crucial to understand the underlying data structure.
+
+#### Data Frames and Lists
+
+Generally speaking, a `data.frame` is a list of vectors of equal length.
+
+```{r df, echo=TRUE, eval=TRUE, fig.height = 3, fig.width = 3, fig.align = "center", results='hold'}
+df <- data.frame(sensor = c("Landsat-5 TM", "Landsat-7 ETM+", "Landsat-8 OLI-TIRS"), 
+                 n_bands = c(7, 8, 11), 
+                 active = c(F, T, T), 
+                 launched = c(1984, 1999, 2013))
+print(df)
+```
+
+The top line of the `data.frame` is the header, describing the column names. Each entry is called a cell and may be indexed (accessed) individually. We will see how this works in a moment.
+
+Lastly, let us have a look at lists. Lists are objects that can contain elements of different types – vectors, string scalars, matrices, functions or yet another list. Hence, a list is a generic vector containing other objects. A list can be created using the `list()` function:
+
+```{r list, echo=TRUE, eval=TRUE, fig.height = 3, fig.width = 3, fig.align = "center", results='hold'}
+# let´s put our created matrix, array and vector in a list
+l <- list(m, a, df)
+print(l)
+```
+
+As the `print` results suggests, our three object are now stored at locations `[[1]]`, `[[2]]` and `[[3]]`. This brings us to the next topic - indexing.
+
+
+### Indexing
+
+So how do we access values in `vectors`, `data.frames` or the objects in the `list` we just created? Each element of an object type is assigned an index (i.e. a positive integer) which we can retrieve by addressing these indices. This is achieved using square brackets and a given index location(s). 
+
+```{r index, echo=TRUE, eval=TRUE, fig.height = 3, fig.width = 3, fig.align = "center", results='hold'}
+b <- c(2, 4, 8, 16, 32, 64, 128, 256)
+b[4]  # retrieve the 4th element of b
+b[1:3]  # element 1 to 3
+```
+
+Use a vector to select certain positions:
+
+```{r vector index, echo=TRUE, eval=TRUE, fig.height = 3, fig.width = 3, fig.align = "center", results='hold'}
+b[c(1, 3, 5, 7)] # retrieve the element 1, 3, 5, and 7 of b
+```
+
+Manipulate entries:
+
+```{r vector index 2, echo=TRUE, eval=TRUE, fig.height = 3, fig.width = 3, fig.align = "center", results='hold'}
+b[1] <- 0 # set the first entry in b to 0
+print(b)
+```
+
+For lists, one generally uses `[[` to select any single element, whereas `[` returns a list of the selected elements.
+
+```{r index list, echo=TRUE, eval=TRUE, fig.height = 3, fig.width = 3, fig.align = "center", results='hold'}
+subset_l <- l[[1]]
+print(subset_l)
+```
+
+If our objects in our list have specific names or we are indexing an entire column in a data frame, we may also use the `$` operator. For example:
+
+```{r $, echo=TRUE, eval=TRUE, fig.height = 3, fig.width = 3, fig.align = "center", results='hold'}
+names(l) <- c("matrix", "array", "df")
+print(l$df)
+
+print(df$n_bands)
+```
+
+#### Missing Values
+
+Often our data has missing entries. For illustration, think of a vector of temperature measurements where due to measurement error we miss an entry now and then. For completeness, those are not just excluded but may often be represented by a certain constant, e.g. -9999. In R those values can be set to the logical constant `NA` for 'Not Available'.
+
+Let us consider an arbitrary vector of hourly temperature measurements where -9999 in fact was used to represent erroneous measurements:
+
+```{r na, echo=TRUE, eval=TRUE, fig.height = 3, fig.width = 3, fig.align = "center", results='hold'}
+t_hourly <- c(10.1, 8.6, 8.2, 7.2, 6.8, -9999, 8.2, 9, 9.5, 10.5, -9999, 9.9, 9.7, 8, 7.7, 7.1, 6.8, 5.8, 5.2, 4.2, 4.0, 4.1, 4.2, 3.8)
+
+# calculate daily mean T
+mean(t_hourly)
+```
+
+These measurements exhibit two invalid temperature values of `-9999`. Accordingly, the calculated mean is not of value to us. We need to flag these entries as invalid or more generally not available `NA`:
+
+```{r na set, echo=TRUE, eval=TRUE, fig.height = 3, fig.width = 3, fig.align = "center", results='hold'}
+# use indexing with logical condition
+t_hourly[t_hourly == -9999] <- NA
+
+# ...ifelse to manipulate array: ifelse(condition, TRUE, FALSE)
+t_hourly <- ifelse(t_hourly == -9999, NA, t_hourly)
+
+t_hourly
+
+# mean() will yield NA as soon as one NA value appears unless...
+mean(t_hourly)
+
+# we specify na.rm = True to ignore missing values:
+mean(t_hourly, na.rm = T)
+```
+
+There are often various ways to achieve what we want, the best way largely depends on how we want to proceed with our data. Here are more examples on how we could achieved the same:
+
+```{r na example, echo=TRUE, eval=TRUE, fig.height = 3, fig.width = 3, fig.align = "center", results='hold'}
+
+t_hourly <- c(10.1, 8.6, 8.2, 7.2, 6.8, -9999, 8.2, 9, 9.5, 10.5, -9999, 9.9, 9.7, 8, 7.7, 7.1, 6.8, 5.8, 5.2, 4.2, 4.0, 4.1, 4.2, 3.8)
+
+# using only the entries that are not -9999
+mean(t_hourly[t_hourly != -9999])
+
+# or using entries that are not NA after we set it to NA
+t_hourly[t_hourly == -9999] <- NA
+mean(t_hourly[!is.na(t_hourly)])
+
+```
+
+### Flow Control
+
+Often we want code to be executed only when certain conditions are met (conditional statements) or repeat a certain chain of commands in order (repeating operations). For conditional statements, the most commonly used approach are `if` statements which are based on boolean logic. Accordingly, it is evaluated if a condition is `TRUE` or `FALSE` and the following code block will therefore be executed or not interpeted. The basic form of an `if` statement could be as follows:
+
+#### if-statements
+
+```{r if, echo=TRUE, eval=TRUE, fig.height = 3, fig.width = 3, fig.align = "center", results='hold'}
+# we want to reclassify an image based on a certain NDVI threshold, however first we want to make a sanity check to see if the value provided actually makes sense
+ndvi_threshold <- 0.8
+
+if (ndvi_threshold > 1 | ndvi_threshold < -1) {  # i.e. if NDVI larger 1 OR smaller -1
+  print("Invalid NDVI threshold provided. Must be in range -1 to 1.")
+  
+} else {
+  print("Valid NDVI threshold. Continue processing ...")
+  # code to be executed ....
+}
+```
+
+Above we already used the vectorized version `ifelse()` which for instance allowed us to manipulate out vector of temperature records:
+
+```{r if vectorized, echo=TRUE, eval=TRUE, fig.height = 3, fig.width = 3, fig.align = "center", results='hold'}
+t_hourly <- ifelse(t_hourly == -9999, NA, t_hourly)  # ifelse(condition, TRUE, FALSE)
+```
+
+
+#### Loops
+`For` loops can be used to iterate over items and repeatingly execute code blocks:
+
+```{r for, echo=TRUE, eval=TRUE, fig.height = 3, fig.width = 3, fig.align = "center", results='hold'}
+# generate sequence of integers from 1 to 10 with a step size of 1
+v <- seq(1, 10, 1)
+
+# iterate over each entry in v and print
+for (item in v){
+  print(item)
+}
+
+```
+
+A `while` repeatedly evaluates a condition and executes commands until the final condition is fulfilled.
+
+```{r while, echo=TRUE, eval=TRUE, fig.height = 3, fig.width = 3, fig.align = "center", results='hold'}
+# assign integer to v
+v <- -3
+
+# adds +1 to v and then prints until v > 2
+while (v <= 2) {
+  v <- v + 1
+  print(v)
+}
+
+```
+
+Note that loops should be avoided in higher-level languages such as R or Python where possible because thet tend to make the programs run slower than when using in-built vectorized functions. For example, calculating the sum over a vector may be calculated as follows:
+
+```{r for sum, echo=TRUE, eval=TRUE, fig.height = 3, fig.width = 3, fig.align = "center", results='hold'}
+s <- seq(1, 10, 0.5)
+
+s_sum <- 0
+for (i in s){
+  s_sum <- s_sum + i
+}
+print(s_sum)
+```
+
+Much more elegant and faster (think of manipulating large datasets) is to use
+
+```{r vec sum, echo=TRUE, eval=TRUE, fig.height = 3, fig.width = 3, fig.align = "center", results='hold'}
+s_sum <- sum(s)
+print(s_sum)
+```
+
+
+### Functions
+
+R allows for user-specified functions which comes in handy whenever a certain computation needs to be repeated or generalized. Generally, a function is a set of statements organized together to perform a specific task. Using functions greatly enhances code structure as it improves the clarity and readability of your script.
+
+Function arguments are provided in round `()` brackets. Between `{}` stands the function body which contains the collection of statements while `return()` is used to define the output of a function. A function may be as simple as a print statement without any arguments of objects to be returned.
+
+A function object is defined with the `function()` call:
+
+```{r basic functions, echo=TRUE, eval=TRUE, fig.height = 3, fig.width = 3, fig.align = "center", results='hold'}
+# most basic function
+printer <- function(){
+  print("Hello World!")
+}
+
+printer()
+```
+
+Another example where we want the function to calculate the NDVI for a given pair of reflectance values in the red and near-infrared region of the spectrum:
+
+```{r functions, echo=TRUE, eval=TRUE, fig.height = 3, fig.width = 3, fig.align = "center", results='hold'}
+# function to calculate the NDVI
+calc.ndvi <- function(red, nir, scale_factor=1){
+  ndvi <- (nir-red)/(nir+red)
+  return(ndvi*scale_factor)
+}
+
+p_red <- 0.2
+p_nir <- 0.8
+ndvi <- calc.ndvi(p_red, p_nir)
+print(ndvi)
+```
+
+Here, `red` and `nir` are obligatory arguments that the user has to specify while `scale_factor` is optional as such that it has a default value which may or may not be altered.
+
+
+## More Tutorials:
+
+Please visit one or several tutorials to learn more:
+
+Introductory tutorials:
+- [RStudio](https://resources.rstudio.com/)
+- [DataCamp](https://www.datacamp.com/courses/free-introduction-to-r)
+- [UMC Utrecht](http://www.r-tutorial.nl/)
+- [Advanced R by Hadley Wickham](http://adv-r.had.co.nz/)
+
+Visualization:
+- [R Graphics Cookbook](https://r-graphics.org/))
+- [Harvard Data Science Services](https://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html)
+
+Advanced users may be interested in following a tutorial specifically for geodata processing:
+- [Wageningen University](https://geoscripting-wur.github.io/)
+- [University of Colorado](https://www.earthdatascience.org/)).
+
+
+## Help!
+
+If you get stuck while programming, there are plenty of things you can do: 
+
+- Seek the function´s help page (i.e. highlight the function and hit F1)
+- Search your problem or error message
+- Ask your colleagues
+- Use the moodle course forum
+- Check forums (e.g., [StackOverflow](https://stackoverflow.com/))
+
 
 ## Coding style
 
@@ -121,62 +557,6 @@ cor(data$x, data$y)
 
 ------
 
-## Help!
-If you get stuck, there are plenty of things you can do: 
-
-- Seek the function´s help page (i.e. highlight the function and hit F1)
-- Search your problem or error message
-- Ask your colleagues
-- Use the moodle course forum
-- Check forums (e.g., [StackOverflow](https://stackoverflow.com/))
-
-
-------
-
-# Course materials
-
-## Readings
-
-The first sessions of the course contain reading materials, such as are peer-reviewed papers and technical reports. You will find the reading materials for the next session at the end of each session. We highlight aspects to focus upon to streamline the reading process and facilitate the discussion. We are looking forward to lively discussions of the reading materials and critical questions from your end. 
-
-## Data
-
-All data used in the course is openly accessible. Mostly, we´ll be working with Landsat images, which you can access through the USGS Earth Explorer. We provide download links to the datasets for each session. It will be helpful if you organize your data in a course directory on your local machine (MSc students might want to use drive ```O:/Student_Data/your_name/EO/```). We will refer to this folder as ```course.dir``` throughout this course. Create subdirectories for each session, e.g. ```course.dir/S01/``` and separate data, code and course materials in additional sub-directories (e.g. ```/data```, ```/code```, ```/docs```).
-
-## Exercises
-
-The weekly exercises are defined in the respective session. Each session comprises several tasks that involve scipting in R. Course participants must submit completed exercises, documented as R scripts, in [moodle](http://moodle.hu-berlin.de/) to pass. Weekly submission deadlines are every sunday, 23:59. Please name the script of your work group as SXX_name1_name2.R. Please structure your script for every exercise as follows:
-
-```{r template, echo=TRUE, eval=FALSE}
-#############################################################################
-# MSc Earth Observation Exercise [Session number]
-# [Your Name]
-#############################################################################
-
-# Load packages, use install.packages('packagename') to install if needed
-library(raster)
-
-# In case you run into memory issues
-# change raster options to store large rasters in temp files on disk
-# rasterOptions(maxmemory = 1e12)
-
-# Define the folder that contains your data...
-data.dir <- 'course.dir/S01/data/'
-
-#############################################################################
-# 1)	
-#############################################################################
-
-# Comments for task 1
-
-
-#############################################################################
-# 2)	
-#############################################################################
-
-# ...
-
-```
 
 <!-- ################################## SESSION 01 ############################################## -->
 

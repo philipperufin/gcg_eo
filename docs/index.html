@@ -17,8 +17,8 @@
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <script src="index_files/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="index_files/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet" />
-<script src="index_files/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+<link href="index_files/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+<script src="index_files/bootstrap-3.3.7/js/bootstrap.min.js"></script>
 <script src="index_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <script src="index_files/navigation-1.1/tabsets.js"></script>
 <script src="index_files/navigation-1.1/codefolding.js"></script>
@@ -34,44 +34,70 @@
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; background-color: #ffffff; color: #1f1c1b; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; background-color: #ffffff; color: #a0a0a0; border-right: 1px solid #a0a0a0; }
-td.sourceCode { padding-left: 5px; }
-pre, code { color: #1f1c1b; background-color: #ffffff; }
-code > span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
-code > span.dt { color: #0057ae; } /* DataType */
-code > span.dv { color: #b08000; } /* DecVal */
-code > span.bn { color: #b08000; } /* BaseN */
-code > span.fl { color: #b08000; } /* Float */
-code > span.cn { color: #aa5500; } /* Constant */
-code > span.ch { color: #924c9d; } /* Char */
-code > span.sc { color: #3daee9; } /* SpecialChar */
-code > span.st { color: #bf0303; } /* String */
-code > span.vs { color: #bf0303; } /* VerbatimString */
-code > span.ss { color: #ff5500; } /* SpecialString */
-code > span.im { color: #ff5500; } /* Import */
-code > span.co { color: #898887; } /* Comment */
-code > span.do { color: #607880; } /* Documentation */
-code > span.an { color: #ca60ca; } /* Annotation */
-code > span.cv { color: #0095ff; } /* CommentVar */
-code > span.ot { color: #006e28; } /* Other */
-code > span.fu { color: #644a9b; } /* Function */
-code > span.va { color: #0057ae; } /* Variable */
-code > span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #1f1c1b; } /* Operator */
-code > span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
-code > span.ex { color: #0095ff; font-weight: bold; } /* Extension */
-code > span.pp { color: #006e28; } /* Preprocessor */
-code > span.at { color: #0057ae; } /* Attribute */
-code > span.re { color: #0057ae; } /* RegionMarker */
-code > span.in { color: #b08000; } /* Information */
-code > span.wa { color: #bf0303; } /* Warning */
-code > span.al { color: #bf0303; font-weight: bold; } /* Alert */
-code > span.er { color: #bf0303; text-decoration: underline; } /* Error */
-code > span. { color: #1f1c1b; } /* Normal */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    background-color: #ffffff;
+    color: #a0a0a0;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
+div.sourceCode
+  { color: #1f1c1b; background-color: #ffffff; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span. { color: #1f1c1b; } /* Normal */
+code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+code span.an { color: #ca60ca; } /* Annotation */
+code span.at { color: #0057ae; } /* Attribute */
+code span.bn { color: #b08000; } /* BaseN */
+code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #924c9d; } /* Char */
+code span.cn { color: #aa5500; } /* Constant */
+code span.co { color: #898887; } /* Comment */
+code span.cv { color: #0095ff; } /* CommentVar */
+code span.do { color: #607880; } /* Documentation */
+code span.dt { color: #0057ae; } /* DataType */
+code span.dv { color: #b08000; } /* DecVal */
+code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+code span.fl { color: #b08000; } /* Float */
+code span.fu { color: #644a9b; } /* Function */
+code span.im { color: #ff5500; } /* Import */
+code span.in { color: #b08000; } /* Information */
+code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+code span.op { color: #1f1c1b; } /* Operator */
+code span.ot { color: #006e28; } /* Other */
+code span.pp { color: #006e28; } /* Preprocessor */
+code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+code span.sc { color: #3daee9; } /* SpecialChar */
+code span.ss { color: #ff5500; } /* SpecialString */
+code span.st { color: #bf0303; } /* String */
+code span.va { color: #0057ae; } /* Variable */
+code span.vs { color: #bf0303; } /* VerbatimString */
+code span.wa { color: #bf0303; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="material_adjust.css" type="text/css" />
@@ -79,7 +105,7 @@ code > span. { color: #1f1c1b; } /* Normal */
 <!-- tabsets -->
 <script>
 $(document).ready(function () {
-  window.buildTabsets("TOC");
+  window.buildTabsets("toc");
 });
 </script>
 
@@ -112,6 +138,7 @@ $(document).ready(function () {
         <li><a href="#hello">Hello!</a></li>
         <li><a href="#introducing-r">Introducing R</a></li>
         <li><a href="#course-materials">Course materials</a></li>
+        <li><a href="#session-00-r-basics">Session 00: R Basics</a></li>
         <li><a href="#session-01-handling-rasters-in-r">Session 01: Handling rasters in R</a></li>
         <li><a href="#session-02-from-dns-to-toa">Session 02: From DNs to TOA</a></li>
         <li><a href="#session-02-data-quality-cloud-masking">Session 02: Data quality &amp; cloud masking</a></li>
@@ -140,25 +167,29 @@ $(document).ready(function () {
 
 <div id="hello" class="section level1">
 <h1>Hello!</h1>
-<div class="figure">
-<img src="fig/header.png" />
-
+<p><img src="fig/header.png" /></p>
+<div id="about" class="section level2">
+<h2>About</h2>
+<p>Earth Observation is an advanced course for students of the Master of Science <a href="hu.berlin/mscgeo">“Global Change Geography”</a> of Humboldt-Universität zu Berlin. In this course, we cover aspects of optical remote sensing by working with multi-sprectral Landsat and Sentinel 2 imagery. The course is fully based on open source software, including R and QGIS.</p>
+<hr />
 </div>
-<div id="about-earth-observation" class="section level2">
-<h2>About Earth Observation</h2>
-<p>Earth Observation is an advanced course for students of the Master of Science <a href="https://www.geographie.hu-berlin.de/en/studies/study-programs/master-degree-programs/master-of-science">“Global Change Geography”</a> of Humboldt-Universität zu Berlin. In this course, we cover multiple aspects of optical remote sensing by working with multi-sprectral Landsat and Sentinel 2 imagery. The course is fully based on open source software, including R and QGIS.</p>
+<div id="requirements" class="section level2">
+<h2>Requirements</h2>
+<p>A good understanding of basic principles of remote sensing is required to follow this course. This includes:</p>
+<ul>
+<li>knowledge about operational optical sensor systems</li>
+<li>common sensor properties such as spatial, temporal, spectral and radiometric resolution</li>
+<li>the electromagnetic spectrum and relevant wavelengths in optical remote sensing</li>
+<li>reflectance properties of different land surface types</li>
+<li>good knowledge of at least one GIS and remote sensing software packages</li>
+</ul>
+<p>Participants should furthermore have a basic understanding of R, including syntax, data types and knowledge on how to read, manipulate and write data. As you followed the curriculum of the MSc program, you most likely joined module “M1 - Quantitative Methods for Geographers”, in which you learned using R for statistical problems. We here build on these basics. If you are not confident in using R, please follow one of the numerous tutorials listed in the chapter on “R Basics”.</p>
 <hr />
 </div>
 <div id="learning-goals-course-contents" class="section level2">
 <h2>Learning goals &amp; course contents</h2>
 <p>The main goal of this course is to provide you with the necessary knowledge and tools for using optical remote sensing datasets and methods in the geo-scientific context. We want you to enhance your ability of problem-solving, empowering you to perform research independently. To that end, we cover aspects of data acquisition, spatial data handling in R and QGIS, basics of image pre-processing, higher-level processing such as pixel-based compositing and time-series binning. The course contents are related to our lab´s research foci, both in terms of methods and study regions. You may want to check out our <a href="https://www.geographie.hu-berlin.de/en/professorships/geomatics/publications-en">publications</a>, <a href="https://www.geographie.hu-berlin.de/en/professorships/geomatics/projects">current projects</a>, or have a look at <a href="https://www2.hu-berlin.de/geovis/eolab/europeanlandcover/euroLandCover.html">this example</a>.</p>
 <p>In the course you will learn about current state-of-the-art methods in image processing and time series analyses of optical satellite imagery. The course covers methods related to data quality, cloud masking, vegetation indices, multi-temporal image analyses, machine learning classification algorithms, area adjusted accuracy assessment, time series analyses, and image compositing. We use these methods for mapping of forest types, forest cover changes, agricultural dynamics in the Carpathian ecoregion (Poland), and the Southern Brazilian Amazon.</p>
-<hr />
-</div>
-<div id="requirements" class="section level2">
-<h2>Requirements</h2>
-<p>A good understanding of basic principles of remote sensing is needed to follow this course. Participants should furthermore have a basic understanding of R, including syntax, data types and knowledge on how to read, manipulate and write data. As you followed the curriculum of the MSc program, you most likely joined the module “Quantitative Methods for Geographers”, in which you learned using R for statistical problems. Here, we built on your existing knowledge. If you are not enrolled in the MSc program, feel free to look at the <a href="https://github.com/corneliussenf/quantitative_methods">course materials</a>.</p>
-<p>Alternatively, you may want to follow one of the numerous tutorials for R fundamentals (e.g., <a href="https://resources.rstudio.com/">RStudio</a>, <a href="https://www.datacamp.com/courses/free-introduction-to-r">DataCamp</a>, <a href="http://www.r-tutorial.nl/">UMC Utrecht</a>, <a href="http://adv-r.had.co.nz/">Advanced R by Hadley Wickham</a>, <a href="https://r-graphics.org/">R Graphics Cookbook</a>), or one of those specifically for geodata processing (e.g., <a href="https://geoscripting-wur.github.io/">Wageningen University</a>, <a href="https://www.earthdatascience.org/">University of Colorado</a>).</p>
 <hr />
 <!-- ################################## INTRO R ##############################################  -->
 </div>
@@ -173,7 +204,436 @@ $(document).ready(function () {
 <img src="fig/fig00.png" alt="A rising tide for R (Tipman 2015; doi: 10.1038/517109a)" />
 <p class="caption">A rising tide for R (Tipman 2015; doi: 10.1038/517109a)</p>
 </div>
+</div>
+</div>
+<div id="course-materials" class="section level1">
+<h1>Course materials</h1>
+<div id="readings" class="section level2">
+<h2>Readings</h2>
+<p>The first sessions of the course contain reading materials, such as are peer-reviewed papers and technical reports. You will find the reading materials for the next session at the end of each session. We highlight aspects to focus upon to streamline the reading process and facilitate the discussion. We are looking forward to lively discussions of the reading materials and critical questions from your end.</p>
+</div>
+<div id="data" class="section level2">
+<h2>Data</h2>
+<p>All data used in the course is openly accessible. Mostly, we´ll be working with Landsat images, which you can access through the USGS Earth Explorer. We provide download links to the datasets for each session. It will be helpful if you organize your data in a course directory on your local machine (MSc students might want to use drive <code>O:/Student_Data/your_name/EO/</code>). We will refer to this folder as <code>course.dir</code> throughout this course. Create subdirectories for each session, e.g. <code>course.dir/S01/</code> and separate data, code and course materials in additional sub-directories (e.g. <code>/data</code>, <code>/code</code>, <code>/docs</code>).</p>
+</div>
+<div id="exercises" class="section level2">
+<h2>Exercises</h2>
+<p>The weekly exercises are defined in the respective session. Each session comprises several tasks that involve scipting in R. Course participants must submit completed exercises, documented as R scripts, in <a href="http://moodle.hu-berlin.de/">moodle</a> to pass. Weekly submission deadlines are monday, 23:59. Please name the script of your work group as SXX_name1_name2.R. Please structure your script for every exercise as follows:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co"># MSc Earth Observation Exercise [Session number]</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co"># [Your Name]</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co"># Load packages, use install.packages(&#39;packagename&#39;) to install if needed</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw">library</span>(raster)</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co"># In case you run into memory issues</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co"># change raster options to store large rasters in temp files on disk</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co"># rasterOptions(maxmemory = 1e12)</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co"># Define the folder that contains your data...</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">data.dir &lt;-<span class="st"> &#39;course.dir/S01/data/&#39;</span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="co"># 1)    </span></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb1-20" data-line-number="20"><span class="co"># Comments for task 1</span></a>
+<a class="sourceLine" id="cb1-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb1-22" data-line-number="22"></a>
+<a class="sourceLine" id="cb1-23" data-line-number="23"><span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb1-24" data-line-number="24"><span class="co"># 2)    </span></a>
+<a class="sourceLine" id="cb1-25" data-line-number="25"><span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb1-26" data-line-number="26"></a>
+<a class="sourceLine" id="cb1-27" data-line-number="27"><span class="co"># ...</span></a></code></pre></div>
 <hr />
+</div>
+</div>
+<div id="session-00-r-basics" class="section level1">
+<h1>Session 00: R Basics</h1>
+<div id="using-r" class="section level2">
+<h2>Using R</h2>
+<p>Here, we aim to provide a brief overview on the basics of R <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>, which is supposed to refresh your knowledge and help you to identify topics worth revisiting. At this stage, we will not cover advanced data wrangling using packages such as <code>tidyr</code> or <code>dplyr</code>, or look into advanced plotting with <code>ggplot2</code>. You are encouraged to refresh your knowledge from the M1 module “Quantitative methods” as well as learn from online resources we list at the bottom of this page.</p>
+<div id="operators" class="section level3">
+<h3>Operators</h3>
+<p>R is an interpreted programing language which means users can execute commmands directly in the console without having to compile sourcecode. You can use R as a simple calculator using arithemtic operators and mathematical functions which are then evaluated directly. For example:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="dv">2</span><span class="op">*</span>(<span class="dv">1</span><span class="op">+</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">sqrt</span>(pi)  <span class="co"># &#39;pi&#39; is a predefined constant </span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw">abs</span>(<span class="op">-</span><span class="dv">2</span>)  <span class="co"># absolute value</span></a></code></pre></div>
+<pre><code>[1] 8
+[1] 1.772454
+[1] 2</code></pre>
+<p>To list the defined operators used by R, simply type <code>?Syntax</code> into the console. This includes the arithemtic operators</p>
+<ul>
+<li>addition <code>+</code> and subtraction <code>-</code></li>
+<li>multiplication <code>*</code> and division <code>/</code></li>
+<li>exponentiation <code>^</code> or <code>**</code></li>
+</ul>
+<p>as well as logical operators</p>
+<ul>
+<li>less than <code>&lt;</code> / greater than <code>&gt;</code></li>
+<li>less than or equal to <code>&lt;=</code> / greater than equal to <code>&gt;=</code></li>
+<li>equal to <code>==</code></li>
+<li>not equal to <code>!=</code></li>
+<li>or <code>|</code></li>
+<li>and <code>&amp;</code></li>
+</ul>
+<p>The concept of logical operators is to allow a program to make a decision based on (multiple) conditions. A condition can be evaluated to be either <code>TRUE</code> or <code>FALSE</code> (see <code>?Logic</code>). For example:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="dv">2</span> <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span></a></code></pre></div>
+<pre><code>[1] FALSE</code></pre>
+<p>They are often used in combination with control statements such as the conditional <code>if...else</code> statement which are mentioned below. But first back to basic functions: R also comes with a whole set of mathematical functions including</p>
+<ul>
+<li>trigonometric functions <code>sin()</code>, <code>cos()</code> and <code>tan()</code></li>
+<li>exponential funcrtion <code>exp()</code></li>
+<li>statistical metrics like <code>min()</code>, <code>max()</code>, <code>median()</code></li>
+</ul>
+<p>to name just a very few of them. Functions in R provide information on how to use them. If you need help with a function, type in <code>help(name_of_function)</code> or simply <code>?name_of_function</code> to display the correct usage and syntax of a function.</p>
+</div>
+<div id="objects" class="section level3">
+<h3>Objects</h3>
+<p>Everything in R we assign to a variable is an object. We can assign objects in R with the <code>&lt;-</code> operator (i.e. an arrow), e.g. <code>x &lt;- 2</code>. Commonly, other languages use <code>=</code> which also works in R, however it is definitely good practice to use the <code>&lt;-</code> operator in R.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># let´s assign a variable &#39;x&#39; a value of 2</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">x &lt;-<span class="st"> </span><span class="dv">2</span>  <span class="co"># assigns the value, does not print the result to console</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co"># and another variable &#39;y&#39; ...</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">y &lt;-<span class="st"> </span><span class="dv">5</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">z &lt;-<span class="st"> </span>x<span class="op">*</span>y  <span class="co"># multiply them together and store into a new variable &#39;z&#39;</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="kw">print</span>(z)</a></code></pre></div>
+<pre><code>[1] 10</code></pre>
+</div>
+</div>
+<div id="assigned-variables-are-stored-in-the-environment-or-workspace-of-our-session-and-can-be-listed-by-calling-the-ls-function." class="section level2">
+<h2>Assigned variables are stored in the <em>environment</em> or workspace of our session and can be listed by calling the <code>ls()</code> function.</h2>
+<div id="data-types-and-data-structures" class="section level3">
+<h3>Data Types and Data Structures</h3>
+<p>The basic data types in R comprise:</p>
+<ul>
+<li><strong>Character</strong> (or String): <code>sensor &lt;- &quot;Landsat-8&quot;</code></li>
+<li><strong>Integer</strong>: <code>n_bands &lt;- 11L</code> (the <code>L</code> tells R it is an integer, otherwise it is interpreted as numeric)</li>
+<li><strong>Numeric</strong> (or Float): <code>lambda_red &lt;- 0.662</code></li>
+<li><strong>Logical</strong> (or Boolean): <code>sun_synchronous &lt;- TRUE</code> or <code>sun_synchronous &lt;- T</code></li>
+<li><strong>Factors</strong>: <code>agency &lt;- factor('NASA',levels=c('NASA','ESA','INPE'))</code></li>
+<li>(Complex: <code>x &lt;- 4i</code>)</li>
+</ul>
+<p>Understanding data types is important for a variety of reasons. For instance, later in the course we will manipulate large rasters of remotely sensed reflectance data which may be stored as floating point numbers between <code>0</code> and <code>1</code>. However, storing raster matrices as floats on disk requires more memory than when using an integer format. It can therefore be handy to transform our data into integer prior to saving it to disk.</p>
+<p>For now, let us just keep in mind that there are different data types and if we now want to store not just a single value/attribute into a variable but a whole set of data, we need to undertstand the different <strong>data structures</strong> available in R:</p>
+<div class="figure">
+<img src="fig/s00_datatypes.png" alt="Data Structures in R (from Zimmermann &amp; Steinmann 2006)" style="width:35.0%" />
+<p class="caption">Data Structures in R (from Zimmermann &amp; Steinmann 2006)</p>
+</div>
+<p>As you can see in the figure above, there exists a variaty of data structures in R which either allow for storing different data types simultaneously (<code>data frames</code>, <code>lists</code>), or only one datatype (<code>scalars</code>, <code>vectors</code>, <code>matrices</code>). Note, that the colors representing the data types are only chosen for visualisation purposes: It does not mean that matrices or vectors can only store values of type logical or numeric, but only data of the same type.</p>
+<div id="vectors" class="section level4">
+<h4>Vectors</h4>
+<p>A vector in R can be created using a variety of functions. The most basic function is the <code>c()</code>-function, where ‘c’ stands for concatenate.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">a &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">16</span>, <span class="dv">32</span>)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw">cat</span>(<span class="st">&quot;vector a:&quot;</span>, a)  <span class="co"># cat-function: Similar to print, outputs the objects, concatenating the representations</span></a></code></pre></div>
+<pre><code>vector a: 2 4 8 16 32</code></pre>
+<p>Let`s see what happens when we mix numeric values with strings and combine them into a vector.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">b &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">16</span>, <span class="dv">32</span>, <span class="st">&quot;number&quot;</span>)</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw">cat</span>(<span class="st">&quot;vector a:&quot;</span>, b)  <span class="co"># cat-function: Outputs the objects, concatenating the representations</span></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="kw">print</span>(<span class="st">&quot;&quot;</span>)</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="kw">print</span>(<span class="kw">typeof</span>(b))</a></code></pre></div>
+<pre><code>vector a: 2 4 8 16 32 number[1] &quot;&quot;
+[1] &quot;character&quot;</code></pre>
+<p>Our vector was automatically cast to <code>character</code>. This is because R will try and convert a smaller data type into a larger one to avoid data loss (here from <code>numeric</code> to <code>character</code>). The string ‘number’ in the vector <code>b</code> cannot be cast to numeric, however we can very well transform a numeric <code>2</code> into a string <code>&quot;2&quot;</code>. Be aware of this behaviour and use other data structures if needed.</p>
+<p>Back to vector creation. Instead of having to type in sequences or replicates manually by hand, R provides the functions <code>seq()</code> and <code>rep()</code>.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">s &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from=</span><span class="dv">1</span>, <span class="dt">to=</span><span class="dv">365</span>, <span class="dt">by=</span><span class="dv">1</span>)  <span class="co"># or simply s &lt;- seq(1, 365, 1)</span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="kw">cat</span>(<span class="st">&quot;Length of s:&quot;</span>, <span class="kw">length</span>(s))</a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co"># alternatively (always with by=1):</span></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5">s &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">365</span></a>
+<a class="sourceLine" id="cb12-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co"># we may want to repeat a specific value n times</span></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8">r &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb12-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb12-10" data-line-number="10"><span class="co"># ...or repeat a sequence </span></a>
+<a class="sourceLine" id="cb12-11" data-line-number="11">r &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">seq</span>(<span class="dv">2</span>, <span class="dv">12</span>, <span class="dv">2</span>), <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb12-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb12-13" data-line-number="13"><span class="co"># ...or repeat each entry in a sequence </span></a>
+<a class="sourceLine" id="cb12-14" data-line-number="14">r &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">seq</span>(<span class="dv">2</span>, <span class="dv">12</span>, <span class="dv">2</span>), <span class="dt">each=</span><span class="dv">5</span>)</a></code></pre></div>
+<pre><code>Length of s: 365</code></pre>
+</div>
+<div id="matrices-and-arrays" class="section level4">
+<h4>Matrices and Arrays</h4>
+<p>Creating matrices and arrays is just as easy as creating vectors. Matrices are just 2-dimensional arrays with a specified number of <code>rows</code> and <code>columns</code>:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">m &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="kw">print</span>(m)</a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb14-4" data-line-number="4">m2 &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">5</span>, <span class="dt">byrow =</span> T)</a>
+<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="kw">print</span>(m2)</a></code></pre></div>
+<pre><code>     [,1] [,2]
+[1,]    1    6
+[2,]    2    7
+[3,]    3    8
+[4,]    4    9
+[5,]    5   10
+     [,1] [,2]
+[1,]    1    2
+[2,]    3    4
+[3,]    5    6
+[4,]    7    8
+[5,]    9   10</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">a &lt;-<span class="st"> </span><span class="kw">array</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>,<span class="kw">c</span>(<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="kw">print</span>(a)</a></code></pre></div>
+<pre><code>, , 1
+
+     [,1] [,2] [,3] [,4] [,5]
+[1,]    1    6   11   16   21
+[2,]    2    7   12   17   22
+[3,]    3    8   13   18   23
+[4,]    4    9   14   19   24
+[5,]    5   10   15   20   25
+
+, , 2
+
+     [,1] [,2] [,3] [,4] [,5]
+[1,]    1    6   11   16   21
+[2,]    2    7   12   17   22
+[3,]    3    8   13   18   23
+[4,]    4    9   14   19   24
+[5,]    5   10   15   20   25</code></pre>
+<p><code>Arrays</code> and especially <code>matrices</code> are important structures when working with remote sensing data, as this is how images are represented numerically. We will extensively make use of the <code>raster</code> package throughout the course where a lot of the handling is done for us, however sometimes we need to manipulate the data with more advanced techniques and it is therefore crucial to understand the underlying data structure.</p>
+</div>
+<div id="data-frames-and-lists" class="section level4">
+<h4>Data Frames and Lists</h4>
+<p>Generally speaking, a <code>data.frame</code> is a list of vectors of equal length.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">sensor =</span> <span class="kw">c</span>(<span class="st">&quot;Landsat-5 TM&quot;</span>, <span class="st">&quot;Landsat-7 ETM+&quot;</span>, <span class="st">&quot;Landsat-8 OLI-TIRS&quot;</span>), </a>
+<a class="sourceLine" id="cb18-2" data-line-number="2">                 <span class="dt">n_bands =</span> <span class="kw">c</span>(<span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">11</span>), </a>
+<a class="sourceLine" id="cb18-3" data-line-number="3">                 <span class="dt">active =</span> <span class="kw">c</span>(F, T, T), </a>
+<a class="sourceLine" id="cb18-4" data-line-number="4">                 <span class="dt">launched =</span> <span class="kw">c</span>(<span class="dv">1984</span>, <span class="dv">1999</span>, <span class="dv">2013</span>))</a>
+<a class="sourceLine" id="cb18-5" data-line-number="5"><span class="kw">print</span>(df)</a></code></pre></div>
+<pre><code>              sensor n_bands active launched
+1       Landsat-5 TM       7  FALSE     1984
+2     Landsat-7 ETM+       8   TRUE     1999
+3 Landsat-8 OLI-TIRS      11   TRUE     2013</code></pre>
+<p>The top line of the <code>data.frame</code> is the header, describing the column names. Each entry is called a cell and may be indexed (accessed) individually. We will see how this works in a moment.</p>
+<p>Lastly, let us have a look at lists. Lists are objects that can contain elements of different types – vectors, string scalars, matrices, functions or yet another list. Hence, a list is a generic vector containing other objects. A list can be created using the <code>list()</code> function:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="co"># let´s put our created matrix, array and vector in a list</span></a>
+<a class="sourceLine" id="cb20-2" data-line-number="2">l &lt;-<span class="st"> </span><span class="kw">list</span>(m, a, df)</a>
+<a class="sourceLine" id="cb20-3" data-line-number="3"><span class="kw">print</span>(l)</a></code></pre></div>
+<pre><code>[[1]]
+     [,1] [,2]
+[1,]    1    6
+[2,]    2    7
+[3,]    3    8
+[4,]    4    9
+[5,]    5   10
+
+[[2]]
+, , 1
+
+     [,1] [,2] [,3] [,4] [,5]
+[1,]    1    6   11   16   21
+[2,]    2    7   12   17   22
+[3,]    3    8   13   18   23
+[4,]    4    9   14   19   24
+[5,]    5   10   15   20   25
+
+, , 2
+
+     [,1] [,2] [,3] [,4] [,5]
+[1,]    1    6   11   16   21
+[2,]    2    7   12   17   22
+[3,]    3    8   13   18   23
+[4,]    4    9   14   19   24
+[5,]    5   10   15   20   25
+
+
+[[3]]
+              sensor n_bands active launched
+1       Landsat-5 TM       7  FALSE     1984
+2     Landsat-7 ETM+       8   TRUE     1999
+3 Landsat-8 OLI-TIRS      11   TRUE     2013</code></pre>
+<p>As the <code>print</code> results suggests, our three object are now stored at locations <code>[[1]]</code>, <code>[[2]]</code> and <code>[[3]]</code>. This brings us to the next topic - indexing.</p>
+</div>
+</div>
+<div id="indexing" class="section level3">
+<h3>Indexing</h3>
+<p>So how do we access values in <code>vectors</code>, <code>data.frames</code> or the objects in the <code>list</code> we just created? Each element of an object type is assigned an index (i.e. a positive integer) which we can retrieve by addressing these indices. This is achieved using square brackets and a given index location(s).</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">b &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">16</span>, <span class="dv">32</span>, <span class="dv">64</span>, <span class="dv">128</span>, <span class="dv">256</span>)</a>
+<a class="sourceLine" id="cb22-2" data-line-number="2">b[<span class="dv">4</span>]  <span class="co"># retrieve the 4th element of b</span></a>
+<a class="sourceLine" id="cb22-3" data-line-number="3">b[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]  <span class="co"># element 1 to 3</span></a></code></pre></div>
+<pre><code>[1] 16
+[1] 2 4 8</code></pre>
+<p>Use a vector to select certain positions:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">b[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>)] <span class="co"># retrieve the element 1, 3, 5, and 7 of b</span></a></code></pre></div>
+<pre><code>[1]   2   8  32 128</code></pre>
+<p>Manipulate entries:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">b[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="dv">0</span> <span class="co"># set the first entry in b to 0</span></a>
+<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="kw">print</span>(b)</a></code></pre></div>
+<pre><code>[1]   0   4   8  16  32  64 128 256</code></pre>
+<p>For lists, one generally uses <code>[[</code> to select any single element, whereas <code>[</code> returns a list of the selected elements.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">subset_l &lt;-<span class="st"> </span>l[[<span class="dv">1</span>]]</a>
+<a class="sourceLine" id="cb28-2" data-line-number="2"><span class="kw">print</span>(subset_l)</a></code></pre></div>
+<pre><code>     [,1] [,2]
+[1,]    1    6
+[2,]    2    7
+[3,]    3    8
+[4,]    4    9
+[5,]    5   10</code></pre>
+<p>If our objects in our list have specific names or we are indexing an entire column in a data frame, we may also use the <code>$</code> operator. For example:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw">names</span>(l) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;matrix&quot;</span>, <span class="st">&quot;array&quot;</span>, <span class="st">&quot;df&quot;</span>)</a>
+<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="kw">print</span>(l<span class="op">$</span>df)</a>
+<a class="sourceLine" id="cb30-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb30-4" data-line-number="4"><span class="kw">print</span>(df<span class="op">$</span>n_bands)</a></code></pre></div>
+<pre><code>              sensor n_bands active launched
+1       Landsat-5 TM       7  FALSE     1984
+2     Landsat-7 ETM+       8   TRUE     1999
+3 Landsat-8 OLI-TIRS      11   TRUE     2013
+[1]  7  8 11</code></pre>
+<div id="missing-values" class="section level4">
+<h4>Missing Values</h4>
+<p>Often our data has missing entries. For illustration, think of a vector of temperature measurements where due to measurement error we miss an entry now and then. For completeness, those are not just excluded but may often be represented by a certain constant, e.g. -9999. In R those values can be set to the logical constant <code>NA</code> for ‘Not Available’.</p>
+<p>Let us consider an arbitrary vector of hourly temperature measurements where -9999 in fact was used to represent erroneous measurements:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1">t_hourly &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">10.1</span>, <span class="fl">8.6</span>, <span class="fl">8.2</span>, <span class="fl">7.2</span>, <span class="fl">6.8</span>, <span class="dv">-9999</span>, <span class="fl">8.2</span>, <span class="dv">9</span>, <span class="fl">9.5</span>, <span class="fl">10.5</span>, <span class="dv">-9999</span>, <span class="fl">9.9</span>, <span class="fl">9.7</span>, <span class="dv">8</span>, <span class="fl">7.7</span>, <span class="fl">7.1</span>, <span class="fl">6.8</span>, <span class="fl">5.8</span>, <span class="fl">5.2</span>, <span class="fl">4.2</span>, <span class="fl">4.0</span>, <span class="fl">4.1</span>, <span class="fl">4.2</span>, <span class="fl">3.8</span>)</a>
+<a class="sourceLine" id="cb32-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb32-3" data-line-number="3"><span class="co"># calculate daily mean T</span></a>
+<a class="sourceLine" id="cb32-4" data-line-number="4"><span class="kw">mean</span>(t_hourly)</a></code></pre></div>
+<pre><code>[1] -826.6417</code></pre>
+<p>These measurements exhibit two invalid temperature values of <code>-9999</code>. Accordingly, the calculated mean is not of value to us. We need to flag these entries as invalid or more generally not available <code>NA</code>:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="co"># use indexing with logical condition</span></a>
+<a class="sourceLine" id="cb34-2" data-line-number="2">t_hourly[t_hourly <span class="op">==</span><span class="st"> </span><span class="dv">-9999</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb34-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb34-4" data-line-number="4"><span class="co"># ...ifelse to manipulate array: ifelse(condition, TRUE, FALSE)</span></a>
+<a class="sourceLine" id="cb34-5" data-line-number="5">t_hourly &lt;-<span class="st"> </span><span class="kw">ifelse</span>(t_hourly <span class="op">==</span><span class="st"> </span><span class="dv">-9999</span>, <span class="ot">NA</span>, t_hourly)</a>
+<a class="sourceLine" id="cb34-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb34-7" data-line-number="7">t_hourly</a>
+<a class="sourceLine" id="cb34-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb34-9" data-line-number="9"><span class="co"># mean() will yield NA as soon as one NA value appears unless...</span></a>
+<a class="sourceLine" id="cb34-10" data-line-number="10"><span class="kw">mean</span>(t_hourly)</a>
+<a class="sourceLine" id="cb34-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb34-12" data-line-number="12"><span class="co"># we specify na.rm = True to ignore missing values:</span></a>
+<a class="sourceLine" id="cb34-13" data-line-number="13"><span class="kw">mean</span>(t_hourly, <span class="dt">na.rm =</span> T)</a></code></pre></div>
+<pre><code> [1] 10.1  8.6  8.2  7.2  6.8   NA  8.2  9.0  9.5 10.5   NA  9.9  9.7  8.0  7.7
+[16]  7.1  6.8  5.8  5.2  4.2  4.0  4.1  4.2  3.8
+[1] NA
+[1] 7.209091</code></pre>
+<p>There are often various ways to achieve what we want, the best way largely depends on how we want to proceed with our data. Here are more examples on how we could achieved the same:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1">t_hourly &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">10.1</span>, <span class="fl">8.6</span>, <span class="fl">8.2</span>, <span class="fl">7.2</span>, <span class="fl">6.8</span>, <span class="dv">-9999</span>, <span class="fl">8.2</span>, <span class="dv">9</span>, <span class="fl">9.5</span>, <span class="fl">10.5</span>, <span class="dv">-9999</span>, <span class="fl">9.9</span>, <span class="fl">9.7</span>, <span class="dv">8</span>, <span class="fl">7.7</span>, <span class="fl">7.1</span>, <span class="fl">6.8</span>, <span class="fl">5.8</span>, <span class="fl">5.2</span>, <span class="fl">4.2</span>, <span class="fl">4.0</span>, <span class="fl">4.1</span>, <span class="fl">4.2</span>, <span class="fl">3.8</span>)</a>
+<a class="sourceLine" id="cb36-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb36-3" data-line-number="3"><span class="co"># using only the entries that are not -9999</span></a>
+<a class="sourceLine" id="cb36-4" data-line-number="4"><span class="kw">mean</span>(t_hourly[t_hourly <span class="op">!=</span><span class="st"> </span><span class="dv">-9999</span>])</a>
+<a class="sourceLine" id="cb36-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb36-6" data-line-number="6"><span class="co"># or using entries that are not NA after we set it to NA</span></a>
+<a class="sourceLine" id="cb36-7" data-line-number="7">t_hourly[t_hourly <span class="op">==</span><span class="st"> </span><span class="dv">-9999</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb36-8" data-line-number="8"><span class="kw">mean</span>(t_hourly[<span class="op">!</span><span class="kw">is.na</span>(t_hourly)])</a></code></pre></div>
+<pre><code>[1] 7.209091
+[1] 7.209091</code></pre>
+</div>
+</div>
+<div id="flow-control" class="section level3">
+<h3>Flow Control</h3>
+<p>Often we want code to be executed only when certain conditions are met (conditional statements) or repeat a certain chain of commands in order (repeating operations). For conditional statements, the most commonly used approach are <code>if</code> statements which are based on boolean logic. Accordingly, it is evaluated if a condition is <code>TRUE</code> or <code>FALSE</code> and the following code block will therefore be executed or not interpeted. The basic form of an <code>if</code> statement could be as follows:</p>
+<div id="if-statements" class="section level4">
+<h4>if-statements</h4>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="co"># we want to reclassify an image based on a certain NDVI threshold, however first we want to make a sanity check to see if the value provided actually makes sense</span></a>
+<a class="sourceLine" id="cb38-2" data-line-number="2">ndvi_threshold &lt;-<span class="st"> </span><span class="fl">0.8</span></a>
+<a class="sourceLine" id="cb38-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb38-4" data-line-number="4"><span class="cf">if</span> (ndvi_threshold <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span> <span class="op">|</span><span class="st"> </span>ndvi_threshold <span class="op">&lt;</span><span class="st"> </span><span class="dv">-1</span>) {  <span class="co"># i.e. if NDVI larger 1 OR smaller -1</span></a>
+<a class="sourceLine" id="cb38-5" data-line-number="5">  <span class="kw">print</span>(<span class="st">&quot;Invalid NDVI threshold provided. Must be in range -1 to 1.&quot;</span>)</a>
+<a class="sourceLine" id="cb38-6" data-line-number="6">  </a>
+<a class="sourceLine" id="cb38-7" data-line-number="7">} <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb38-8" data-line-number="8">  <span class="kw">print</span>(<span class="st">&quot;Valid NDVI threshold. Continue processing ...&quot;</span>)</a>
+<a class="sourceLine" id="cb38-9" data-line-number="9">  <span class="co"># code to be executed ....</span></a>
+<a class="sourceLine" id="cb38-10" data-line-number="10">}</a></code></pre></div>
+<pre><code>[1] &quot;Valid NDVI threshold. Continue processing ...&quot;</code></pre>
+<p>Above we already used the vectorized version <code>ifelse()</code> which for instance allowed us to manipulate out vector of temperature records:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1">t_hourly &lt;-<span class="st"> </span><span class="kw">ifelse</span>(t_hourly <span class="op">==</span><span class="st"> </span><span class="dv">-9999</span>, <span class="ot">NA</span>, t_hourly)  <span class="co"># ifelse(condition, TRUE, FALSE)</span></a></code></pre></div>
+</div>
+<div id="loops" class="section level4">
+<h4>Loops</h4>
+<p><code>For</code> loops can be used to iterate over items and repeatingly execute code blocks:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="co"># generate sequence of integers from 1 to 10 with a step size of 1</span></a>
+<a class="sourceLine" id="cb41-2" data-line-number="2">v &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb41-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb41-4" data-line-number="4"><span class="co"># iterate over each entry in v and print</span></a>
+<a class="sourceLine" id="cb41-5" data-line-number="5"><span class="cf">for</span> (item <span class="cf">in</span> v){</a>
+<a class="sourceLine" id="cb41-6" data-line-number="6">  <span class="kw">print</span>(item)</a>
+<a class="sourceLine" id="cb41-7" data-line-number="7">}</a></code></pre></div>
+<pre><code>[1] 1
+[1] 2
+[1] 3
+[1] 4
+[1] 5
+[1] 6
+[1] 7
+[1] 8
+[1] 9
+[1] 10</code></pre>
+<p>A <code>while</code> repeatedly evaluates a condition and executes commands until the final condition is fulfilled.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="co"># assign integer to v</span></a>
+<a class="sourceLine" id="cb43-2" data-line-number="2">v &lt;-<span class="st"> </span><span class="dv">-3</span></a>
+<a class="sourceLine" id="cb43-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb43-4" data-line-number="4"><span class="co"># adds +1 to v and then prints until v &gt; 2</span></a>
+<a class="sourceLine" id="cb43-5" data-line-number="5"><span class="cf">while</span> (v <span class="op">&lt;=</span><span class="st"> </span><span class="dv">2</span>) {</a>
+<a class="sourceLine" id="cb43-6" data-line-number="6">  v &lt;-<span class="st"> </span>v <span class="op">+</span><span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb43-7" data-line-number="7">  <span class="kw">print</span>(v)</a>
+<a class="sourceLine" id="cb43-8" data-line-number="8">}</a></code></pre></div>
+<pre><code>[1] -2
+[1] -1
+[1] 0
+[1] 1
+[1] 2
+[1] 3</code></pre>
+<p>Note that loops should be avoided in higher-level languages such as R or Python where possible because thet tend to make the programs run slower than when using in-built vectorized functions. For example, calculating the sum over a vector may be calculated as follows:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1">s &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="fl">0.5</span>)</a>
+<a class="sourceLine" id="cb45-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb45-3" data-line-number="3">s_sum &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb45-4" data-line-number="4"><span class="cf">for</span> (i <span class="cf">in</span> s){</a>
+<a class="sourceLine" id="cb45-5" data-line-number="5">  s_sum &lt;-<span class="st"> </span>s_sum <span class="op">+</span><span class="st"> </span>i</a>
+<a class="sourceLine" id="cb45-6" data-line-number="6">}</a>
+<a class="sourceLine" id="cb45-7" data-line-number="7"><span class="kw">print</span>(s_sum)</a></code></pre></div>
+<pre><code>[1] 104.5</code></pre>
+<p>Much more elegant and faster (think of manipulating large datasets) is to use</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1">s_sum &lt;-<span class="st"> </span><span class="kw">sum</span>(s)</a>
+<a class="sourceLine" id="cb47-2" data-line-number="2"><span class="kw">print</span>(s_sum)</a></code></pre></div>
+<pre><code>[1] 104.5</code></pre>
+</div>
+</div>
+<div id="functions" class="section level3">
+<h3>Functions</h3>
+<p>R allows for user-specified functions which comes in handy whenever a certain computation needs to be repeated or generalized. Generally, a function is a set of statements organized together to perform a specific task. Using functions greatly enhances code structure as it improves the clarity and readability of your script.</p>
+<p>Function arguments are provided in round <code>()</code> brackets. Between <code>{}</code> stands the function body which contains the collection of statements while <code>return()</code> is used to define the output of a function. A function may be as simple as a print statement without any arguments of objects to be returned.</p>
+<p>A function object is defined with the <code>function()</code> call:</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1"><span class="co"># most basic function</span></a>
+<a class="sourceLine" id="cb49-2" data-line-number="2">printer &lt;-<span class="st"> </span><span class="cf">function</span>(){</a>
+<a class="sourceLine" id="cb49-3" data-line-number="3">  <span class="kw">print</span>(<span class="st">&quot;Hello World!&quot;</span>)</a>
+<a class="sourceLine" id="cb49-4" data-line-number="4">}</a>
+<a class="sourceLine" id="cb49-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb49-6" data-line-number="6"><span class="kw">printer</span>()</a></code></pre></div>
+<pre><code>[1] &quot;Hello World!&quot;</code></pre>
+<p>Another example where we want the function to calculate the NDVI for a given pair of reflectance values in the red and near-infrared region of the spectrum:</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="co"># function to calculate the NDVI</span></a>
+<a class="sourceLine" id="cb51-2" data-line-number="2">calc.ndvi &lt;-<span class="st"> </span><span class="cf">function</span>(red, nir, <span class="dt">scale_factor=</span><span class="dv">1</span>){</a>
+<a class="sourceLine" id="cb51-3" data-line-number="3">  ndvi &lt;-<span class="st"> </span>(nir<span class="op">-</span>red)<span class="op">/</span>(nir<span class="op">+</span>red)</a>
+<a class="sourceLine" id="cb51-4" data-line-number="4">  <span class="kw">return</span>(ndvi<span class="op">*</span>scale_factor)</a>
+<a class="sourceLine" id="cb51-5" data-line-number="5">}</a>
+<a class="sourceLine" id="cb51-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb51-7" data-line-number="7">p_red &lt;-<span class="st"> </span><span class="fl">0.2</span></a>
+<a class="sourceLine" id="cb51-8" data-line-number="8">p_nir &lt;-<span class="st"> </span><span class="fl">0.8</span></a>
+<a class="sourceLine" id="cb51-9" data-line-number="9">ndvi &lt;-<span class="st"> </span><span class="kw">calc.ndvi</span>(p_red, p_nir)</a>
+<a class="sourceLine" id="cb51-10" data-line-number="10"><span class="kw">print</span>(ndvi)</a></code></pre></div>
+<pre><code>[1] 0.6</code></pre>
+<p>Here, <code>red</code> and <code>nir</code> are obligatory arguments that the user has to specify while <code>scale_factor</code> is optional as such that it has a default value which may or may not be altered.</p>
+</div>
+</div>
+<div id="more-tutorials" class="section level2">
+<h2>More Tutorials:</h2>
+<p>Please visit one or several tutorials to learn more:</p>
+<p>Introductory tutorials: - <a href="https://resources.rstudio.com/">RStudio</a> - <a href="https://www.datacamp.com/courses/free-introduction-to-r">DataCamp</a> - <a href="http://www.r-tutorial.nl/">UMC Utrecht</a> - <a href="http://adv-r.had.co.nz/">Advanced R by Hadley Wickham</a></p>
+<p>Visualization: - <a href="https://r-graphics.org/">R Graphics Cookbook</a>) - <a href="https://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html">Harvard Data Science Services</a></p>
+<p>Advanced users may be interested in following a tutorial specifically for geodata processing: - <a href="https://geoscripting-wur.github.io/">Wageningen University</a> - <a href="https://www.earthdatascience.org/">University of Colorado</a>).</p>
+</div>
+<div id="help" class="section level2">
+<h2>Help!</h2>
+<p>If you get stuck while programming, there are plenty of things you can do:</p>
+<ul>
+<li>Seek the function´s help page (i.e. highlight the function and hit F1)</li>
+<li>Search your problem or error message</li>
+<li>Ask your colleagues</li>
+<li>Use the moodle course forum</li>
+<li>Check forums (e.g., <a href="https://stackoverflow.com/">StackOverflow</a>)</li>
+</ul>
 </div>
 <div id="coding-style" class="section level2">
 <h2>Coding style</h2>
@@ -189,87 +649,33 @@ $(document).ready(function () {
 <li><p>Use &lt;-, not =, for assignment.</p></li>
 </ul>
 <p>An example:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">######################################################
-<span class="co"># Creating random data and a correlated response </span>
-<span class="co"># Philippe Rufin, 2019</span>
-
-<span class="co"># Load all required packages</span>
-<span class="kw">library</span>(ggplot2)
-
-<span class="co"># Create random data</span>
-x &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">50</span>, <span class="dv">0</span>, <span class="dv">2</span>)
-
-<span class="co"># Build function to simulate response</span>
-create.response &lt;-<span class="st"> </span><span class="cf">function</span>(x){x <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">50</span>, <span class="dv">0</span>, <span class="fl">0.2</span>)}
-
-<span class="co"># Apply function to random data</span>
-y &lt;-<span class="st"> </span><span class="kw">create.response</span>(x)
-
-<span class="co"># Make a dataframe</span>
-data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">&#39;x&#39;</span> =<span class="st"> </span>x, <span class="st">&#39;y&#39;</span> =<span class="st"> </span>y)
-
-<span class="co"># Plot the simulated dataset</span>
-<span class="kw">ggplot</span>(data, <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>()</code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1"><span class="co">######################################################</span></a>
+<a class="sourceLine" id="cb53-2" data-line-number="2"><span class="co"># Creating random data and a correlated response </span></a>
+<a class="sourceLine" id="cb53-3" data-line-number="3"><span class="co"># Philippe Rufin, 2019</span></a>
+<a class="sourceLine" id="cb53-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb53-5" data-line-number="5"><span class="co"># Load all required packages</span></a>
+<a class="sourceLine" id="cb53-6" data-line-number="6"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb53-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb53-8" data-line-number="8"><span class="co"># Create random data</span></a>
+<a class="sourceLine" id="cb53-9" data-line-number="9">x &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">50</span>, <span class="dv">0</span>, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb53-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb53-11" data-line-number="11"><span class="co"># Build function to simulate response</span></a>
+<a class="sourceLine" id="cb53-12" data-line-number="12">create.response &lt;-<span class="st"> </span><span class="cf">function</span>(x){x <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">50</span>, <span class="dv">0</span>, <span class="fl">0.2</span>)}</a>
+<a class="sourceLine" id="cb53-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb53-14" data-line-number="14"><span class="co"># Apply function to random data</span></a>
+<a class="sourceLine" id="cb53-15" data-line-number="15">y &lt;-<span class="st"> </span><span class="kw">create.response</span>(x)</a>
+<a class="sourceLine" id="cb53-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb53-17" data-line-number="17"><span class="co"># Make a dataframe</span></a>
+<a class="sourceLine" id="cb53-18" data-line-number="18">data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">&#39;x&#39;</span> =<span class="st"> </span>x, <span class="st">&#39;y&#39;</span> =<span class="st"> </span>y)</a>
+<a class="sourceLine" id="cb53-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb53-20" data-line-number="20"><span class="co"># Plot the simulated dataset</span></a>
+<a class="sourceLine" id="cb53-21" data-line-number="21"><span class="kw">ggplot</span>(data, <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb53-22" data-line-number="22"><span class="st">  </span><span class="kw">geom_point</span>()</a></code></pre></div>
 <p><img src="index_files/figure-html/style-1.png" width="288" style="display: block; margin: auto;" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Investigate correlation in the data</span>
-<span class="kw">cor</span>(data<span class="op">$</span>x, data<span class="op">$</span>y)</code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1"><span class="co"># Investigate correlation in the data</span></a>
+<a class="sourceLine" id="cb54-2" data-line-number="2"><span class="kw">cor</span>(data<span class="op">$</span>x, data<span class="op">$</span>y)</a></code></pre></div>
 <pre><code>[1] 0.9444786</code></pre>
 <hr />
-</div>
-<div id="help" class="section level2">
-<h2>Help!</h2>
-<p>If you get stuck, there are plenty of things you can do:</p>
-<ul>
-<li>Seek the function´s help page (i.e. highlight the function and hit F1)</li>
-<li>Search your problem or error message</li>
-<li>Ask your colleagues</li>
-<li>Use the moodle course forum</li>
-<li>Check forums (e.g., <a href="https://stackoverflow.com/">StackOverflow</a>)</li>
-</ul>
-<hr />
-</div>
-</div>
-<div id="course-materials" class="section level1">
-<h1>Course materials</h1>
-<div id="readings" class="section level2">
-<h2>Readings</h2>
-<p>The first sessions of the course contain reading materials, such as are peer-reviewed papers and technical reports. You will find the reading materials for the next session at the end of each session. We highlight aspects to focus upon to streamline the reading process and facilitate the discussion. We are looking forward to lively discussions of the reading materials and critical questions from your end.</p>
-</div>
-<div id="data" class="section level2">
-<h2>Data</h2>
-<p>All data used in the course is openly accessible. Mostly, we´ll be working with Landsat images, which you can access through the USGS Earth Explorer. We provide download links to the datasets for each session. It will be helpful if you organize your data in a course directory on your local machine (MSc students might want to use drive <code>O:/Student_Data/your_name/EO/</code>). We will refer to this folder as <code>course.dir</code> throughout this course. Create subdirectories for each session, e.g. <code>course.dir/S01/</code> and separate data, code and course materials in additional sub-directories (e.g. <code>/data</code>, <code>/code</code>, <code>/docs</code>).</p>
-</div>
-<div id="exercises" class="section level2">
-<h2>Exercises</h2>
-<p>The weekly exercises are defined in the respective session. Each session comprises several tasks that involve scipting in R. Course participants must submit completed exercises, documented as R scripts, in <a href="http://moodle.hu-berlin.de/">moodle</a> to pass. Weekly submission deadlines are every sunday, 23:59. Please name the script of your work group as SXX_name1_name2.R. Please structure your script for every exercise as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">#############################################################################
-<span class="co"># MSc Earth Observation Exercise [Session number]</span>
-<span class="co"># [Your Name]</span>
-#############################################################################
-
-<span class="co"># Load packages, use install.packages(&#39;packagename&#39;) to install if needed</span>
-<span class="kw">library</span>(raster)
-
-<span class="co"># In case you run into memory issues</span>
-<span class="co"># change raster options to store large rasters in temp files on disk</span>
-<span class="co"># rasterOptions(maxmemory = 1e12)</span>
-
-<span class="co"># Define the folder that contains your data...</span>
-data.dir &lt;-<span class="st"> &#39;course.dir/S01/data/&#39;</span>
-
-#############################################################################
-<span class="co"># 1)    </span>
-#############################################################################
-
-<span class="co"># Comments for task 1</span>
-
-
-#############################################################################
-<span class="co"># 2)    </span>
-#############################################################################
-
-<span class="co"># ...</span></code></pre></div>
 <!-- ################################## SESSION 01 ############################################## -->
 </div>
 </div>
@@ -291,12 +697,12 @@ data.dir &lt;-<span class="st"> &#39;course.dir/S01/data/&#39;</span>
 <p>It´s great, as it facilitates raster data handling. It allows us to access file characteristics before loading data into memory, facilitates handling of coordinate reference systems and spatial extents. We can use it to perform raster algebra, to combine raster and vector datasets (e.g. ESRI shapefiles), or to convert raster files into matrices, which are compatible with the base functions to access image statistics, develop models, slice data dimensions etc.</p>
 <p>There are a couple of things that the raster package does not provide. For example, advanced visualization of spatial datasets and manual operations, such collecting training or validation data, are preferably done in a GIS environment (e.g. QGIS). Furthermore, processing large data volumes in R can be quite time-consuming (we often use Python instead, it´s syntax is quite similar to R).</p>
 <p>You install the raster package just like any other package in R. Dependencies will automatically be installed. On some machines, you might need to install <code>rgdal</code> manually.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Install the raster and rgdal packages</span>
-<span class="kw">install.packages</span>(<span class="st">&#39;raster&#39;</span>)
-<span class="kw">install.packages</span>(<span class="st">&#39;rgdal&#39;</span>)
-
-<span class="co"># Load the package</span>
-<span class="kw">library</span>(raster)</code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1"><span class="co"># Install the raster and rgdal packages</span></a>
+<a class="sourceLine" id="cb56-2" data-line-number="2"><span class="kw">install.packages</span>(<span class="st">&#39;raster&#39;</span>)</a>
+<a class="sourceLine" id="cb56-3" data-line-number="3"><span class="kw">install.packages</span>(<span class="st">&#39;rgdal&#39;</span>)</a>
+<a class="sourceLine" id="cb56-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb56-5" data-line-number="5"><span class="co"># Load the package</span></a>
+<a class="sourceLine" id="cb56-6" data-line-number="6"><span class="kw">library</span>(raster)</a></code></pre></div>
 <hr />
 </div>
 <div id="exercise" class="section level2">
@@ -331,8 +737,8 @@ data.dir &lt;-<span class="st"> &#39;course.dir/S01/data/&#39;</span>
 <h3>3) Manipulating data</h3>
 <p>Investigate the stack. In which projection is the data delivered?</p>
 <p>Compare the extent of the two images. You will notice that they vary. Trying to stack images of different extent will cause an error message claiming:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">image.stack &lt;-<span class="st"> </span><span class="kw">stack</span>(image.one, image.two)
-Error <span class="cf">in</span> <span class="kw">compareRaster</span>(x) <span class="op">:</span><span class="st"> </span>different extent</code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1">image.stack &lt;-<span class="st"> </span><span class="kw">stack</span>(image.one, image.two)</a>
+<a class="sourceLine" id="cb57-2" data-line-number="2">Error <span class="cf">in</span> <span class="kw">compareRaster</span>(x) <span class="op">:</span><span class="st"> </span>different extent</a></code></pre></div>
 <p>To stack both images, we need to crop (i.e. clip, or cut) the images to their common extent. Find an efficient way to identify the common extent of the images, defined as <code>common.extent &lt;- c(xmin, xmax, ymin, ymax)</code> (in projected coordinates).</p>
 <div class="figure">
 <img src="fig/fig01.png" alt="Identifying the common extent of several images" />
@@ -372,7 +778,7 @@ Error <span class="cf">in</span> <span class="kw">compareRaster</span>(x) <span 
 <h2>Reading materials</h2>
 <p>In the next session, we would like to discuss the following paper:</p>
 <p><a href="https://doi.org/10.1016/j.rse.2011.10.028">Zhu, Z., &amp; Woodcock, C.E. (2012). Object-based cloud and cloud shadow detection in Landsat imagery. Remote Sensing of Environment, 118, 83–94.</a></p>
-<p>This is a rather technical reading, which introduces the Fmask algorithm for automated cloud and cloud shadow detection. It has been widely used for cloud detection on Landsat TM and ETM+ data, and was enhanced for the use with Landsat OLI and Sentinel 2 data (documented in <a href="https://doi.org/10.1016/j.rse.2014.12.014">Zhu et al. 2015</a>).</p>
+<p>This is a rather technical reading, which introduces the Fmask algorithm for automated cloud and cloud shadow detection. It has been widely used for cloud detection on Landsat TM and ETM+ data, and was enhanced for the use with Landsat OLI and Sentinel 2 data (documented in <a href="https://doi.org/10.1016/j.rse.2014.12.014">Zhu et al. 2015</a>).</p>
 <p>While reading focus on the following broad questions:</p>
 <ul>
 <li>Why do we need automated cloud masking?</li>
@@ -408,20 +814,20 @@ Error <span class="cf">in</span> <span class="kw">compareRaster</span>(x) <span 
 <p>Our y-axis label was “DN”, or digital number. Now, what is that again? Earth observing sensors, such as the ones on board the Landsat satellites register radiance at the top of the atmosphere. Radiance is expressed in watt per <a href="https://en.wikipedia.org/wiki/Steradian">steradian</a> per square meter.</p>
 <p>Storing data in radiance units is difficult and therefore sensors translate measured radiance into DNs. Therefore, the range of energy measured by the sensor is broken into distinct units (digital numbers, or DNs). Sensor-specific calibration determines the minimum and maximum amount of radiance that can be measured. DNs express the amount of radiance in relation to these sensor-specific calibration coefficients. The total number of possible DNs is what we refer to as the radiometric resolution of the sensor.</p>
 <p>As an example, Landsat 4, 5, and 7 worked with a radiometric resolution of 8 bit. This allows for <code>2^8</code>, or 255 distinct DNs values. Landsat 8 works with 12 bit radiometric resolution, which is artificially quantized to 16 bit. The 16 bit resolution can represent much more different grey shades, exactly <code>2^16</code>, or 65,536 values. Let´s put this into code.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(raster)
-
-<span class="co"># Define the number of bits</span>
-bit &lt;-<span class="st"> </span><span class="dv">4</span>
-
-<span class="co"># How many grey tones can we represent given bit?</span>
-<span class="kw">print</span>(<span class="kw">paste0</span>(bit, <span class="st">&#39; bits produce &#39;</span>, <span class="dv">2</span><span class="op">^</span>bit, <span class="st">&#39; grey tones.&#39;</span>))</code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" data-line-number="1"><span class="kw">library</span>(raster)</a>
+<a class="sourceLine" id="cb58-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb58-3" data-line-number="3"><span class="co"># Define the number of bits</span></a>
+<a class="sourceLine" id="cb58-4" data-line-number="4">bit &lt;-<span class="st"> </span><span class="dv">4</span></a>
+<a class="sourceLine" id="cb58-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb58-6" data-line-number="6"><span class="co"># How many grey tones can we represent given bit?</span></a>
+<a class="sourceLine" id="cb58-7" data-line-number="7"><span class="kw">print</span>(<span class="kw">paste0</span>(bit, <span class="st">&#39; bits produce &#39;</span>, <span class="dv">2</span><span class="op">^</span>bit, <span class="st">&#39; grey tones.&#39;</span>))</a></code></pre></div>
 <pre><code>[1] &quot;4 bits produce 16 grey tones.&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create a raster with one line and 2^bit columns,</span>
-<span class="co"># whereas cell values are filled with a vector of numbers from 1 2^bit</span>
-r &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="dt">nrows =</span> <span class="dv">1</span>, <span class="dt">ncols =</span> <span class="dv">2</span><span class="op">^</span>bit, <span class="dt">vals =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span><span class="op">^</span>bit))
-
-<span class="co"># Plot the image and assign grey-scale values to the cells</span>
-<span class="kw">image</span>(r, <span class="dt">col =</span> <span class="kw">grey.colors</span>(<span class="dv">2</span><span class="op">^</span>bit, <span class="dt">start =</span> <span class="dv">0</span>, <span class="dt">end =</span> <span class="dv">1</span>), <span class="dt">main =</span> <span class="kw">paste0</span>(bit, <span class="st">&quot; bit raster&quot;</span>))</code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" data-line-number="1"><span class="co"># Create a raster with one line and 2^bit columns,</span></a>
+<a class="sourceLine" id="cb60-2" data-line-number="2"><span class="co"># whereas cell values are filled with a vector of numbers from 1 2^bit</span></a>
+<a class="sourceLine" id="cb60-3" data-line-number="3">r &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="dt">nrows =</span> <span class="dv">1</span>, <span class="dt">ncols =</span> <span class="dv">2</span><span class="op">^</span>bit, <span class="dt">vals =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span><span class="op">^</span>bit))</a>
+<a class="sourceLine" id="cb60-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb60-5" data-line-number="5"><span class="co"># Plot the image and assign grey-scale values to the cells</span></a>
+<a class="sourceLine" id="cb60-6" data-line-number="6"><span class="kw">image</span>(r, <span class="dt">col =</span> <span class="kw">grey.colors</span>(<span class="dv">2</span><span class="op">^</span>bit, <span class="dt">start =</span> <span class="dv">0</span>, <span class="dt">end =</span> <span class="dv">1</span>), <span class="dt">main =</span> <span class="kw">paste0</span>(bit, <span class="st">&quot; bit raster&quot;</span>))</a></code></pre></div>
 <p><img src="index_files/figure-html/greyscale-1.png" width="576" /></p>
 <hr />
 </div>
@@ -466,25 +872,25 @@ r &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="dt">
 <p>Familiarize yourself with the L1TP data. Visualize individual bands, have a look at the Level-1 metadata file (LC08_L1TP_ XXX_MTL.txt) and the information provided within. Again, we only use the six reflective bands of the OLI sensor in this exercise (3xVIS, nIR, 2xswIR)</p>
 <p>Read the Landsat metadata file in R using <code>read.delim()</code> and extract the necessary information for the top-of-atmosphere conversion: - <code>REFLECTANCE_MULT_BAND</code> - <code>REFLECTANCE_ADD_BAND</code> - <code>SUN_ELEVATION</code></p>
 <p>Use the pattern matching function <code>grep()</code> to find the corresponding entries in the metadata file and store them as numeric vectors. Do this as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define the folder that contains your data...</span>
-path &lt;-<span class="st"> &#39;course.dir/S02/data/DN&#39;</span>
-
-<span class="co"># Read MTL file</span>
-mtl &lt;-<span class="st"> </span><span class="kw">list.files</span>(data.path, <span class="dt">pattern=</span><span class="st">&quot;MTL.txt$&quot;</span>, <span class="dt">recursive=</span>T, <span class="dt">full.names=</span>T)
-mtl.txt &lt;-<span class="st"> </span><span class="kw">read.delim</span>(mtl, <span class="dt">sep =</span> <span class="st">&#39;=&#39;</span>, <span class="dt">stringsAsFactors =</span> F)
-
-<span class="co"># Extract numeric values</span>
-REFLECTANCE_MULT_BAND &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(mtl.txt[<span class="kw">grep</span>(<span class="st">&quot;REFLECTANCE_MULT_BAND&quot;</span>,mtl.txt<span class="op">$</span>GROUP),][<span class="dv">2</span><span class="op">:</span><span class="dv">7</span>,<span class="dv">2</span>])
-REFLECTANCE_ADD_BAND &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(mtl.txt[<span class="kw">grep</span>(<span class="st">&quot;REFLECTANCE_ADD_BAND&quot;</span>,mtl.txt<span class="op">$</span>GROUP),][<span class="dv">2</span><span class="op">:</span><span class="dv">7</span>,<span class="dv">2</span>])
-SUN_ELEVATION &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(mtl.txt[<span class="kw">grep</span>(<span class="st">&quot;SUN_ELEVATION&quot;</span>,mtl.txt<span class="op">$</span>GROUP),][<span class="dv">2</span>])</code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" data-line-number="1"><span class="co"># Define the folder that contains your data...</span></a>
+<a class="sourceLine" id="cb61-2" data-line-number="2">path &lt;-<span class="st"> &#39;course.dir/S02/data/DN&#39;</span></a>
+<a class="sourceLine" id="cb61-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb61-4" data-line-number="4"><span class="co"># Read MTL file</span></a>
+<a class="sourceLine" id="cb61-5" data-line-number="5">mtl &lt;-<span class="st"> </span><span class="kw">list.files</span>(data.path, <span class="dt">pattern=</span><span class="st">&quot;MTL.txt$&quot;</span>, <span class="dt">recursive=</span>T, <span class="dt">full.names=</span>T)</a>
+<a class="sourceLine" id="cb61-6" data-line-number="6">mtl.txt &lt;-<span class="st"> </span><span class="kw">read.delim</span>(mtl, <span class="dt">sep =</span> <span class="st">&#39;=&#39;</span>, <span class="dt">stringsAsFactors =</span> F)</a>
+<a class="sourceLine" id="cb61-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb61-8" data-line-number="8"><span class="co"># Extract numeric values</span></a>
+<a class="sourceLine" id="cb61-9" data-line-number="9">REFLECTANCE_MULT_BAND &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(mtl.txt[<span class="kw">grep</span>(<span class="st">&quot;REFLECTANCE_MULT_BAND&quot;</span>,mtl.txt<span class="op">$</span>GROUP),][<span class="dv">2</span><span class="op">:</span><span class="dv">7</span>,<span class="dv">2</span>])</a>
+<a class="sourceLine" id="cb61-10" data-line-number="10">REFLECTANCE_ADD_BAND &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(mtl.txt[<span class="kw">grep</span>(<span class="st">&quot;REFLECTANCE_ADD_BAND&quot;</span>,mtl.txt<span class="op">$</span>GROUP),][<span class="dv">2</span><span class="op">:</span><span class="dv">7</span>,<span class="dv">2</span>])</a>
+<a class="sourceLine" id="cb61-11" data-line-number="11">SUN_ELEVATION &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(mtl.txt[<span class="kw">grep</span>(<span class="st">&quot;SUN_ELEVATION&quot;</span>,mtl.txt<span class="op">$</span>GROUP),][<span class="dv">2</span>])</a></code></pre></div>
 <p>Convert the DN values to TOA following the “Conversion to TOA Reflectance” section in the <a href="https://www.usgs.gov/land-resources/nli/landsat/using-usgs-landsat-level-1-data-product">USGS guide for conversion to TOA Reflectance</a>. Important things to keep in mind:</p>
 <ul>
 <li>You can apply the conversion to all bands in a stack simultaneously. Simply apply the calculation the entire stack.</li>
 <li>The Landsat data is provided as integer values. When applying the equation, the data will be cast to float. You will have to re-convert to integer at some point. Use a reflectance scaling factor of 10,000 during the conversion.</li>
 <li>The sun elevation angle provided in the metadata file is reported in degrees. The <code>sin()</code> function expects that angles are provided in radians. For the conversion to work correctly, you need to convert <code>SUN_ELEVATION</code> into radians. Make use of this helper function:</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Helper-function to convert degrees to radians</span>
-deg2rad &lt;-<span class="st"> </span><span class="cf">function</span>(deg){ (deg <span class="op">*</span><span class="st"> </span>pi) <span class="op">/</span><span class="st"> </span>(<span class="dv">180</span>) }</code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" data-line-number="1"><span class="co"># Helper-function to convert degrees to radians</span></a>
+<a class="sourceLine" id="cb62-2" data-line-number="2">deg2rad &lt;-<span class="st"> </span><span class="cf">function</span>(deg){ (deg <span class="op">*</span><span class="st"> </span>pi) <span class="op">/</span><span class="st"> </span>(<span class="dv">180</span>) }</a></code></pre></div>
 <p>Write the result of your TOA conversion to disk in the <code>GTiff</code> format. Make sure to use an integer data type to save disk space.</p>
 </div>
 <div id="compare-toa-with-boa" class="section level3">
@@ -539,19 +945,19 @@ deg2rad &lt;-<span class="st"> </span><span class="cf">function</span>(deg){ (de
 </div>
 <p>In the example above, five bit positions are given. Each position is sequentially numbered, starting with 0, read from right to left. By calculating 2 to the power of the bit position, we receive the value of each bit. For all bits with the value 1, we sum the respective values. Different combinations of states and positions therefore enable us to represent integer numbers.</p>
 <p>The more positions or bits we have the higher numbers we can generate. With 5 bits, we can represent the numbers 0 – 31 (32 unique values), with 16 bits, we can represent the numbers 0 - 65,535 (65,536 unique values). Following the example with 5 bits, we can for instance represent these numbers:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 00001</span>
-<span class="dv">0</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">4</span> <span class="op">+</span><span class="st"> </span><span class="dv">0</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">0</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">0</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">0</span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" data-line-number="1"><span class="co"># 00001</span></a>
+<a class="sourceLine" id="cb63-2" data-line-number="2"><span class="dv">0</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">4</span> <span class="op">+</span><span class="st"> </span><span class="dv">0</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">0</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">0</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">0</span></a></code></pre></div>
 <pre><code>[1] 1</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 00111</span>
-<span class="dv">0</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">4</span> <span class="op">+</span><span class="st"> </span><span class="dv">0</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">0</span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" data-line-number="1"><span class="co"># 00111</span></a>
+<a class="sourceLine" id="cb65-2" data-line-number="2"><span class="dv">0</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">4</span> <span class="op">+</span><span class="st"> </span><span class="dv">0</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">0</span></a></code></pre></div>
 <pre><code>[1] 7</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 11111</span>
-<span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">4</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">0</span></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" data-line-number="1"><span class="co"># 11111</span></a>
+<a class="sourceLine" id="cb67-2" data-line-number="2"><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">4</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">^</span><span class="dv">0</span></a></code></pre></div>
 <pre><code>[1] 31</code></pre>
 </div>
 <div id="landsat-qa-band" class="section level3">
 <h3>Landsat QA band</h3>
-<p>The Landsat QA band is coded in 16 bit, which are arranged from right to left. Each bit has a specific meaning in terms of data quality e.g. bit 4 (or position 5 from the right) means „cloud“. If bit 4 has the state 1 (or”YES“, or”TRUE“), there was a cloud detected in that pixel. If bit 4 has the state 1, the resulting integer value will be 2^4 = 16. Following this logic, different combinations of true / false conditions result in different integer values.</p>
+<p>The Landsat QA band is coded in 16 bit, which are arranged from right to left. Each bit has a specific meaning in terms of data quality e.g. bit 4 (or position 5 from the right) means „cloud“. If bit 4 has the state 1 (or”YES“, or”TRUE&quot;), there was a cloud detected in that pixel. If bit 4 has the state 1, the resulting integer value will be 2^4 = 16. Following this logic, different combinations of true / false conditions result in different integer values.</p>
 <div class="figure">
 <img src="fig/s02_landsat_qa.png" alt="Landsat QA band bit designation" style="width:80.0%" />
 <p class="caption">Landsat QA band bit designation</p>
@@ -578,18 +984,18 @@ deg2rad &lt;-<span class="st"> </span><span class="cf">function</span>(deg){ (de
 <div id="de-coding-quality-band-values" class="section level2">
 <h2>De-coding quality band values</h2>
 <p>Let´s look at the integer value 2804 to illustrate how this works. R offers a good way of dealing with bit-packed information. The <code>intToBits()</code> function converts integer numbers into sequences of bits, whereas 32 double-digit bits are returned by default.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Convert integer to bit sequence</span>
-<span class="kw">intToBits</span>(<span class="dv">2804</span>)</code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" data-line-number="1"><span class="co"># Convert integer to bit sequence</span></a>
+<a class="sourceLine" id="cb69-2" data-line-number="2"><span class="kw">intToBits</span>(<span class="dv">2804</span>)</a></code></pre></div>
 <pre><code> [1] 00 00 01 00 01 01 01 01 00 01 00 01 00 00 00 00 00 00 00 00 00 00 00
 [24] 00 00 00 00 00 00 00 00 00</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Convert the double-digit into single-digit bits</span>
-<span class="kw">as.numeric</span>(<span class="kw">intToBits</span>(<span class="dv">2804</span>))</code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1"><span class="co"># Convert the double-digit into single-digit bits</span></a>
+<a class="sourceLine" id="cb71-2" data-line-number="2"><span class="kw">as.numeric</span>(<span class="kw">intToBits</span>(<span class="dv">2804</span>))</a></code></pre></div>
 <pre><code> [1] 0 0 1 0 1 1 1 1 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># We´re looking at 16 bit data, so let´s deprecate the unused bits</span>
-<span class="kw">as.numeric</span>(<span class="kw">intToBits</span>(<span class="dv">2804</span>)[<span class="dv">1</span><span class="op">:</span><span class="dv">16</span>])</code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1"><span class="co"># We´re looking at 16 bit data, so let´s deprecate the unused bits</span></a>
+<a class="sourceLine" id="cb73-2" data-line-number="2"><span class="kw">as.numeric</span>(<span class="kw">intToBits</span>(<span class="dv">2804</span>)[<span class="dv">1</span><span class="op">:</span><span class="dv">16</span>])</a></code></pre></div>
 <pre><code> [1] 0 0 1 0 1 1 1 1 0 1 0 1 0 0 0 0</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Bit sequences are read from right to left, so we need to reverse the order</span>
-<span class="kw">rev</span>(<span class="kw">as.numeric</span>(<span class="kw">intToBits</span>(<span class="dv">2804</span>)[<span class="dv">1</span><span class="op">:</span><span class="dv">16</span>]))</code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1"><span class="co"># Bit sequences are read from right to left, so we need to reverse the order</span></a>
+<a class="sourceLine" id="cb75-2" data-line-number="2"><span class="kw">rev</span>(<span class="kw">as.numeric</span>(<span class="kw">intToBits</span>(<span class="dv">2804</span>)[<span class="dv">1</span><span class="op">:</span><span class="dv">16</span>]))</a></code></pre></div>
 <pre><code> [1] 0 0 0 0 1 0 1 0 1 1 1 1 0 1 0 0</code></pre>
 <p>Now we can compare with the Landsat 8 Collection 1 Level 1 QA band bit designation. What´s the pixel quality information of the integer value 2804?</p>
 <div class="figure">
@@ -615,8 +1021,8 @@ deg2rad &lt;-<span class="st"> </span><span class="cf">function</span>(deg){ (de
 <div id="creating-a-cloud-mask" class="section level3">
 <h3>2) Creating a cloud mask</h3>
 <p>By converting integer values into binary bits, we can extract specific attributes from the BQA. Let´s to this in a systematic manner by defining a function, which yields TRUE for binary codes with bit 0 = 1:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define function to find fill values from Landsat BQA</span>
-fill_pixels &lt;-<span class="st"> </span><span class="cf">function</span>(x) {<span class="kw">intToBits</span>(x)[<span class="dv">1</span>] <span class="op">==</span><span class="st"> </span>T}</code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" data-line-number="1"><span class="co"># Define function to find fill values from Landsat BQA</span></a>
+<a class="sourceLine" id="cb78-2" data-line-number="2">fill_pixels &lt;-<span class="st"> </span><span class="cf">function</span>(x) {<span class="kw">intToBits</span>(x)[<span class="dv">1</span>] <span class="op">==</span><span class="st"> </span>T}</a></code></pre></div>
 <p>Next, use indexing and Boolean expressions to define functions which return TRUE for</p>
 <ol style="list-style-type: lower-alpha">
 <li>high confidence clouds or high confidence cloud shadows or fill values</li>
@@ -675,11 +1081,11 @@ fill_pixels &lt;-<span class="st"> </span><span class="cf">function</span>(x) {<
 <p>The NDVI relates the difference between the nIR and red reflectance to their sum.</p>
 <p><span class="math inline">\(NDVI = (nIR – red) / (nIR + red)\)</span></p>
 <p>For instance, a red reflectance of 10% and a nIR reflectance of 50% result in</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">red &lt;-<span class="st"> </span><span class="fl">0.1</span>
-nIR &lt;-<span class="st"> </span><span class="fl">0.5</span>
-
-ndvi &lt;-<span class="st"> </span>(nIR <span class="op">-</span><span class="st"> </span>red) <span class="op">/</span><span class="st"> </span>(nIR <span class="op">+</span><span class="st"> </span>red)
-<span class="kw">print</span>(ndvi)</code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" data-line-number="1">red &lt;-<span class="st"> </span><span class="fl">0.1</span></a>
+<a class="sourceLine" id="cb79-2" data-line-number="2">nIR &lt;-<span class="st"> </span><span class="fl">0.5</span></a>
+<a class="sourceLine" id="cb79-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb79-4" data-line-number="4">ndvi &lt;-<span class="st"> </span>(nIR <span class="op">-</span><span class="st"> </span>red) <span class="op">/</span><span class="st"> </span>(nIR <span class="op">+</span><span class="st"> </span>red)</a>
+<a class="sourceLine" id="cb79-5" data-line-number="5"><span class="kw">print</span>(ndvi)</a></code></pre></div>
 <pre><code>[1] 0.6666667</code></pre>
 <p>The NDVI is not a physical measure, but a proxy integrating different factors, such as land use / cover, incl. the amount of background signal visible in a pixel, photosynthetic activity, vitality and overall vegetation condition. It relates well to vegetation density and structure, e.g., represented by the leaf area index (LAI)</p>
 <hr />
@@ -743,13 +1149,13 @@ ndvi &lt;-<span class="st"> </span>(nIR <span class="op">-</span><span class="st
 <div id="perform-a-tasseled-cap-transformation" class="section level3">
 <h3>2) Perform a Tasseled Cap transformation</h3>
 <p>Perform the TC using the March surface reflectance stack. We use the coefficients derived by <a href="https://www.sciencedirect.com/science/article/pii/0034425785901026">Crist (1985)</a>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tcc &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>( <span class="fl">0.2043</span>,  <span class="fl">0.4158</span>,  <span class="fl">0.5524</span>, <span class="fl">0.5741</span>,  <span class="fl">0.3124</span>,  <span class="fl">0.2303</span>, 
-                <span class="op">-</span><span class="fl">0.1603</span>, <span class="op">-</span><span class="fl">0.2819</span>, <span class="op">-</span><span class="fl">0.4934</span>, <span class="fl">0.7940</span>, <span class="op">-</span><span class="fl">0.0002</span>, <span class="op">-</span><span class="fl">0.1446</span>,
-                 <span class="fl">0.0315</span>,  <span class="fl">0.2021</span>,  <span class="fl">0.3102</span>, <span class="fl">0.1594</span>, <span class="op">-</span><span class="fl">0.6806</span>, <span class="op">-</span><span class="fl">0.6109</span>), 
-                <span class="dt">dimnames =</span> <span class="kw">list</span>(<span class="kw">c</span>(<span class="st">&#39;blue&#39;</span>, <span class="st">&#39;green&#39;</span>, <span class="st">&#39;red&#39;</span>, <span class="st">&#39;nIR&#39;</span>, <span class="st">&#39;swIR1&#39;</span>, <span class="st">&#39;swIR2&#39;</span>), <span class="kw">c</span>(<span class="st">&#39;brightness&#39;</span>, <span class="st">&#39;greenness&#39;</span>, <span class="st">&#39;wetness&#39;</span>)),
-                <span class="dt">ncol =</span> <span class="dv">3</span>)
-
-<span class="kw">print</span>(tcc)</code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" data-line-number="1">tcc &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>( <span class="fl">0.2043</span>,  <span class="fl">0.4158</span>,  <span class="fl">0.5524</span>, <span class="fl">0.5741</span>,  <span class="fl">0.3124</span>,  <span class="fl">0.2303</span>, </a>
+<a class="sourceLine" id="cb81-2" data-line-number="2">                <span class="fl">-0.1603</span>, <span class="fl">-0.2819</span>, <span class="fl">-0.4934</span>, <span class="fl">0.7940</span>, <span class="fl">-0.0002</span>, <span class="fl">-0.1446</span>,</a>
+<a class="sourceLine" id="cb81-3" data-line-number="3">                 <span class="fl">0.0315</span>,  <span class="fl">0.2021</span>,  <span class="fl">0.3102</span>, <span class="fl">0.1594</span>, <span class="fl">-0.6806</span>, <span class="fl">-0.6109</span>), </a>
+<a class="sourceLine" id="cb81-4" data-line-number="4">                <span class="dt">dimnames =</span> <span class="kw">list</span>(<span class="kw">c</span>(<span class="st">&#39;blue&#39;</span>, <span class="st">&#39;green&#39;</span>, <span class="st">&#39;red&#39;</span>, <span class="st">&#39;nIR&#39;</span>, <span class="st">&#39;swIR1&#39;</span>, <span class="st">&#39;swIR2&#39;</span>), <span class="kw">c</span>(<span class="st">&#39;brightness&#39;</span>, <span class="st">&#39;greenness&#39;</span>, <span class="st">&#39;wetness&#39;</span>)),</a>
+<a class="sourceLine" id="cb81-5" data-line-number="5">                <span class="dt">ncol =</span> <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb81-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb81-7" data-line-number="7"><span class="kw">print</span>(tcc)</a></code></pre></div>
 <pre><code>      brightness greenness wetness
 blue      0.2043   -0.1603  0.0315
 green     0.4158   -0.2819  0.2021
@@ -758,12 +1164,12 @@ nIR       0.5741    0.7940  0.1594
 swIR1     0.3124   -0.0002 -0.6806
 swIR2     0.2303   -0.1446 -0.6109</code></pre>
 <p>The TC is a linear band transformation. We can simply multiply the individual bands in the march stack with the corresponding factor and sum up the result, e.g., for TC Brightness:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">brightness &lt;-<span class="st"> </span>march.stack[[<span class="dv">1</span>]] <span class="op">*</span><span class="st"> </span>tcc[<span class="dv">1</span>,<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>
-<span class="st">              </span>march.stack[[<span class="dv">2</span>]] <span class="op">*</span><span class="st"> </span>tcc[<span class="dv">2</span>,<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>
-<span class="st">              </span>march.stack[[<span class="dv">3</span>]] <span class="op">*</span><span class="st"> </span>tcc[<span class="dv">3</span>,<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>
-<span class="st">              </span>march.stack[[<span class="dv">4</span>]] <span class="op">*</span><span class="st"> </span>tcc[<span class="dv">4</span>,<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>
-<span class="st">              </span>march.stack[[<span class="dv">5</span>]] <span class="op">*</span><span class="st"> </span>tcc[<span class="dv">5</span>,<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>
-<span class="st">              </span>march.stack[[<span class="dv">6</span>]] <span class="op">*</span><span class="st"> </span>tcc[<span class="dv">6</span>,<span class="dv">1</span>]</code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" data-line-number="1">brightness &lt;-<span class="st"> </span>march.stack[[<span class="dv">1</span>]] <span class="op">*</span><span class="st"> </span>tcc[<span class="dv">1</span>,<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb83-2" data-line-number="2"><span class="st">              </span>march.stack[[<span class="dv">2</span>]] <span class="op">*</span><span class="st"> </span>tcc[<span class="dv">2</span>,<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb83-3" data-line-number="3"><span class="st">              </span>march.stack[[<span class="dv">3</span>]] <span class="op">*</span><span class="st"> </span>tcc[<span class="dv">3</span>,<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb83-4" data-line-number="4"><span class="st">              </span>march.stack[[<span class="dv">4</span>]] <span class="op">*</span><span class="st"> </span>tcc[<span class="dv">4</span>,<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb83-5" data-line-number="5"><span class="st">              </span>march.stack[[<span class="dv">5</span>]] <span class="op">*</span><span class="st"> </span>tcc[<span class="dv">5</span>,<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb83-6" data-line-number="6"><span class="st">              </span>march.stack[[<span class="dv">6</span>]] <span class="op">*</span><span class="st"> </span>tcc[<span class="dv">6</span>,<span class="dv">1</span>]</a></code></pre></div>
 <p>Make sure to create an individual layer for Brightness, Greenness, and Wetness. Create a stack from the three layers. While the computation is ongoing, proceed with task 1) of the block on training data collection.</p>
 <p>When the computation is completed, write the results to disk, using the <code>INT2S</code> data type. Add the NDVI, EVI, and the TC stack to the QGIS project you started in the next block. Visually explore the vegetation indices and TC components.</p>
 <hr />
@@ -903,16 +1309,16 @@ swIR2     0.2303   -0.1446 -0.6109</code></pre>
 <p>Load your shape in R using <code>readOGR()</code>. Extract the spectral values at your point locations from the March image in R using the <code>extract()</code> function. Specify <code>sp = TRUE</code> to append the spectral values to the point shapefile.</p>
 <p>Make sure the result of this task is an object of type <code>data.frame</code> named <code>sr.march</code>. Your sample points should be represented as rows and the measured variables as columns (i.e. point id, classID, confID, and 6 spectral bands).</p>
 <p>Create boxplots of your surface reflectance measurements for all spectral bands, grouped according to the class number.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load required packages</span>
-<span class="kw">library</span>(ggplot2)
-<span class="kw">library</span>(reshape2)
-
-<span class="co"># Melt dataframe containing point id, classID, confID, and 6 spectral bands</span>
-spectra.df &lt;-<span class="st"> </span><span class="kw">melt</span>(sr.march, <span class="dt">id.vars=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>), <span class="dt">measure.vars=</span><span class="kw">c</span>(<span class="dv">4</span><span class="op">:</span><span class="dv">9</span>))
-
-<span class="co"># Create boxplots of spectral bands per class</span>
-<span class="kw">ggplot</span>(spectra.df, <span class="kw">aes</span>(<span class="dt">x=</span>variable, <span class="dt">y=</span>value, <span class="dt">color=</span>classID)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_boxplot</span>() </code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" data-line-number="1"><span class="co"># Load required packages</span></a>
+<a class="sourceLine" id="cb84-2" data-line-number="2"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb84-3" data-line-number="3"><span class="kw">library</span>(reshape2)</a>
+<a class="sourceLine" id="cb84-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb84-5" data-line-number="5"><span class="co"># Melt dataframe containing point id, classID, confID, and 6 spectral bands</span></a>
+<a class="sourceLine" id="cb84-6" data-line-number="6">spectra.df &lt;-<span class="st"> </span><span class="kw">melt</span>(sr.march, <span class="dt">id.vars=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>), <span class="dt">measure.vars=</span><span class="kw">c</span>(<span class="dv">4</span><span class="op">:</span><span class="dv">9</span>))</a>
+<a class="sourceLine" id="cb84-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb84-8" data-line-number="8"><span class="co"># Create boxplots of spectral bands per class</span></a>
+<a class="sourceLine" id="cb84-9" data-line-number="9"><span class="kw">ggplot</span>(spectra.df, <span class="kw">aes</span>(<span class="dt">x=</span>variable, <span class="dt">y=</span>value, <span class="dt">color=</span>classID)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb84-10" data-line-number="10"><span class="st">  </span><span class="kw">geom_boxplot</span>() </a></code></pre></div>
 <p>Make sure you understand what the <code>melt()</code> function is doing. Feel free to adjust the plot layout.</p>
 <p>Similarly to the previous task, extract the values at your point locations from the Tasseled Cap stack. Create boxplots of the three Tasseled Cap components, grouped by the target class. Investigate the boxplots in order to investigate the differences between your target classes. Try to answer the following questions:</p>
 <ul>
@@ -951,8 +1357,8 @@ spectra.df &lt;-<span class="st"> </span><span class="kw">melt</span>(sr.march, 
 </div>
 <div id="background-1" class="section level2">
 <h2>Background:</h2>
-<p>The availability of Landsat images varies by region. Even in areas where obersvation density is high, such as North America, coverage can be reduced by clouds and quality of observations can be impacted by haze or sensor saturation. <img src="fig/s04_landsat_availability.jpg" alt="Global availability of Landsat images. Source: Wulder et al. 2016; https://doi.org/10.1016/j.rse.2015.11.032" /></p>
-<p>Using pixel-based-compositing, we can integrate multiple obervations (i.e., from multiple Landsat images) and combine them to one consistent image composite. One of the first global Landsat composites was produced using the WELD compositing approach (Roy et al. 2011, <a href="https://doi.org/10.1016/j.rse.2009.08.011" class="uri">https://doi.org/10.1016/j.rse.2009.08.011</a>). <img src="fig/s04_global_weld.jpg" alt="Monthly global WELD surface reflectance composite for June 2009. Source: https://worldview.earthdata.nasa.gov/" /></p>
+<p>The availability of Landsat images varies by region. Even in areas where obersvation density is high, such as North America, coverage can be reduced by clouds and quality of observations can be impacted by haze or sensor saturation. <img src="fig/s04_landsat_availability.jpg" alt="Global availability of Landsat images. Source: Wulder et al. 2016; https://doi.org/10.1016/j.rse.2015.11.032" /></p>
+<p>Using pixel-based-compositing, we can integrate multiple obervations (i.e., from multiple Landsat images) and combine them to one consistent image composite. One of the first global Landsat composites was produced using the WELD compositing approach (Roy et al. 2011, <a href="https://doi.org/10.1016/j.rse.2009.08.011" class="uri">https://doi.org/10.1016/j.rse.2009.08.011</a>). <img src="fig/s04_global_weld.jpg" alt="Monthly global WELD surface reflectance composite for June 2009. Source: https://worldview.earthdata.nasa.gov/" /></p>
 <p>Pixel-based compositing allows us to create cloud-free, radiometrically and phenologically consistent image composites that are contiguous over large areas. A set of parameters is used to determine the observations best suited for analysis. These parameters can, e.g., include the distance to clouds in the image, or the temporal proximity to a target day of the year. Defining scoring functions allows for a flexible parametrization according to user´s needs and study area characteristics. Different parameters can also be weighted according to their relevance for a given application.</p>
 <div class="figure">
 <img src="fig/s04_compositing.png" alt="Creating one pixel-based composite from three images." />
@@ -1018,184 +1424,186 @@ A second function determines the suitability score for the year of observation. 
 <li>fmask: the cloud masks used to mask the BOA images and to derive the cloud distance layers.</li>
 </ul>
 <p>Today we will be working with pre-defined scripts. We provide both a script containing the compositing function and a main script which sources and executes the compositing function. Outsourcing functions - especially extensive ones - improves the readability of scripts and allows for using functions in different scripts. Check the help for source() if you are not familiar with sourcing R code in your script. You find both codes below. Please copy them into an empty R script and save to disk.</p>
-<p><details> <summary>Click here to see code for the parametric compositing function</summary></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">#############################################################################
-<span class="co"># MSc Earth Observation Exercise 4</span>
-<span class="co"># Function for creating cloud-free composites of multiple Landsat images</span>
-<span class="co"># Requires an input data.frame (here img_list) and eight compositing </span>
-<span class="co"># parameters. Please see exercise sheet for further details.</span>
-#############################################################################
-
-#############################################################################
-<span class="co"># Loading required packages here...</span>
-<span class="kw">library</span>(raster)
-<span class="kw">library</span>(lubridate)
-
-#############################################################################
-<span class="co"># Function definition starts here</span>
-parametric_compositing &lt;-<span class="st"> </span><span class="cf">function</span>(img_list, target_date, 
-                                   W_DOY, W_year, W_cloud_dist, 
-                                   max_DOY_offset, max_year_offset, 
-                                   min_cloud_dist, max_cloud_dist) {
-  <span class="co">#...</span>
-  tic &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()
-  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;Start of compositing process: &#39;</span>, tic))
-  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;Target date: &#39;</span>, target_date))
-
-  <span class="co"># Extract target DOY and year from target_date</span>
-  target_DOY &lt;-<span class="st"> </span><span class="kw">yday</span>(target_date)
-  target_year &lt;-<span class="st"> </span><span class="kw">year</span>(target_date)
-  
-  <span class="co">#...</span>
-  <span class="cf">if</span>(<span class="kw">sum</span>(W_DOY, W_year, W_cloud_dist)<span class="op">!=</span><span class="dv">1</span>) { <span class="kw">stop</span>(<span class="st">&#39;Error: something wrong.&#39;</span>) }
-  
-  #############################################################################
-  <span class="co"># Calculate the scores for the DOY, year, and cloud distance criteria</span>
-  <span class="kw">print</span>(<span class="st">&#39;Calculating compositing scores&#39;</span>)
-  
-  <span class="co">#...</span>
-  obs_DOY &lt;-<span class="st"> </span>img_list<span class="op">$</span>DOY
-  DOY_score &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>(<span class="kw">abs</span>(target_DOY <span class="op">-</span><span class="st"> </span>img_list<span class="op">$</span>DOY) <span class="op">/</span><span class="st"> </span>max_DOY_offset)
-  DOY_score[DOY_score<span class="op">&lt;</span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="ot">NA</span>
-  
-  <span class="co">#...</span>
-  obs_year &lt;-<span class="st"> </span>img_list<span class="op">$</span>year
-  year_score &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">-</span>(<span class="kw">abs</span>(target_year <span class="op">-</span><span class="st"> </span>obs_year) <span class="op">/</span><span class="st"> </span>max_year_offset)
-  
-  <span class="cf">if</span> (max_year_offset <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) {year_score[obs_year<span class="op">==</span>target_year] &lt;-<span class="st"> </span><span class="dv">1</span>}
-  year_score[year_score<span class="op">&lt;</span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="ot">NA</span>
-  
-  <span class="co"># Get candidate images within max_DOY_offset and max_year_offset</span>
-  ix &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="op">!</span><span class="kw">is.na</span>(DOY_score) <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(year_score))
-  <span class="cf">if</span> (<span class="kw">length</span>(ix)<span class="op">&gt;</span><span class="dv">1</span>) { <span class="kw">print</span>(<span class="kw">paste</span>(<span class="kw">length</span>(ix),  <span class="st">&#39;candidate images selected, calculating scores.&#39;</span>)) }
-  <span class="cf">if</span> (<span class="kw">length</span>(ix)<span class="op">&lt;</span><span class="dv">2</span>) { <span class="kw">stop</span>(<span class="st">&#39;Another error because something is wrong.&#39;</span>) }
-  
-  <span class="co"># Stack cloud distance layers of candidate images and reclassify </span>
-  <span class="co"># values &lt; min_cloud_dist to NA, and values &gt; max_cloud_dist to max_cloud_dist</span>
-  cloud_dist &lt;-<span class="st"> </span><span class="kw">stack</span>(<span class="kw">as.character</span>(img_list<span class="op">$</span>cloud_dist_files[ix]))
-  cloud_dist &lt;-<span class="st"> </span><span class="kw">reclassify</span>(cloud_dist, <span class="dt">rcl=</span><span class="kw">c</span>(<span class="dv">0</span>, min_cloud_dist, <span class="ot">NA</span>), <span class="dt">right=</span><span class="ot">NA</span>, <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)
-  cloud_dist &lt;-<span class="st"> </span><span class="kw">reclassify</span>(cloud_dist, <span class="dt">rcl=</span><span class="kw">c</span>(max_cloud_dist, <span class="kw">sqrt</span>(<span class="kw">nrow</span>(cloud_dist)<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="kw">ncol</span>(cloud_dist)<span class="op">^</span><span class="dv">2</span>), max_cloud_dist), <span class="dt">right=</span><span class="ot">NA</span>, <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)
-  
-  <span class="co">#...</span>
-  cloud_score &lt;-<span class="st"> </span>(cloud_dist <span class="op">-</span><span class="st"> </span>min_cloud_dist) <span class="op">/</span><span class="st"> </span>(max_cloud_dist <span class="op">-</span><span class="st"> </span>min_cloud_dist)
-  
-  <span class="co">#...</span>
-  obs_score &lt;-<span class="st"> </span>DOY_score[ix] <span class="op">*</span><span class="st"> </span>W_DOY <span class="op">+</span><span class="st"> </span>year_score[ix] <span class="op">*</span><span class="st"> </span>W_year <span class="op">+</span><span class="st"> </span>cloud_score <span class="op">*</span><span class="st"> </span>W_cloud_dist
-  
-  <span class="co">#...</span>
-  select &lt;-<span class="st"> </span><span class="kw">which.max</span>(obs_score)
-  
-  <span class="co">#...</span>
-  candidates &lt;-<span class="st"> </span><span class="kw">unique</span>(select)
-  
-  #############################################################################
-  <span class="co"># Fill composite image with pixels from the candidate images</span>
-  <span class="cf">for</span> (i <span class="cf">in</span> candidates){
-    
-    <span class="co">#...</span>
-    fill_image &lt;-<span class="st"> </span><span class="kw">brick</span>(<span class="kw">as.character</span>(img_list<span class="op">$</span>image_files[ix[i]]), <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)
-    
-    <span class="co">#...</span>
-    <span class="cf">if</span> (i <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(candidates)) { 
-      composite &lt;-<span class="st"> </span><span class="kw">brick</span>(fill_image, <span class="dt">values=</span><span class="ot">FALSE</span>) 
-      <span class="kw">dataType</span>(composite) &lt;-<span class="st"> &#39;INT2S&#39;</span>
-      <span class="kw">values</span>(composite) &lt;-<span class="st"> </span><span class="dv">0</span>
-    }
-    
-    <span class="kw">print</span>(<span class="kw">paste0</span>(<span class="st">&#39;Filling raster with acquisition from date &#39;</span>, img_list<span class="op">$</span>date[ix[i]]))
-    fill_image.masked &lt;-<span class="st"> </span><span class="kw">mask</span>(fill_image, select, <span class="dt">maskvalue=</span>i, <span class="dt">inverse=</span>T, <span class="dt">updatevalue=</span><span class="dv">0</span>, <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)
-    fill_image.masked[<span class="kw">is.na</span>(fill_image.masked)] &lt;-<span class="st"> </span><span class="dv">0</span>
-    composite &lt;-<span class="st"> </span>composite <span class="op">+</span><span class="st"> </span>fill_image.masked
-    
-  }
-  
-  <span class="co">#...</span>
-  composite_na &lt;-<span class="st"> </span><span class="kw">mask</span>(composite, select, <span class="dt">maskvalue=</span><span class="ot">NA</span>, <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)
-  
-  #############################################################################
-  <span class="co">#...</span>
-  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;NAs: &#39;</span>, <span class="kw">round</span>(<span class="kw">freq</span>(composite_na[[<span class="dv">1</span>]], <span class="dt">value=</span><span class="ot">NA</span>)<span class="op">/</span><span class="kw">ncell</span>(composite_na[[<span class="dv">1</span>]])<span class="op">*</span><span class="dv">100</span>, <span class="dt">digits=</span><span class="dv">3</span>), <span class="st">&#39; %&#39;</span>))
-  
-  <span class="co">#...</span>
-  rcl_DOY &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">ncol=</span><span class="dv">2</span>, <span class="dt">data=</span><span class="kw">c</span>(candidates, obs_DOY[ix[candidates]]))
-  select_DOY &lt;-<span class="st"> </span><span class="kw">reclassify</span>(select, rcl_DOY, <span class="dt">datatype =</span> <span class="st">&#39;INT2S&#39;</span>)
-  
-  <span class="co">#...</span>
-  rcl_year &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">ncol=</span><span class="dv">2</span>, <span class="dt">data=</span><span class="kw">c</span>(candidates, obs_year[ix[candidates]]))
-  select_year &lt;-<span class="st"> </span><span class="kw">reclassify</span>(select, rcl_year)
-
-  <span class="co">#...</span>
-  output &lt;-<span class="st"> </span><span class="kw">stack</span>(composite_na, select_DOY, select_year)
-  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;End of compositing process: &#39;</span>, <span class="kw">Sys.time</span>()))
-  
-  <span class="co">#...</span>
-  <span class="kw">return</span>(output)
-  
-}</code></pre></div>
-<p></details></p>
-<p><details> <summary>Click here to see the code for the main script calling the compositing function</summary></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  #############################################################################
-<span class="co"># MSc Earth Observation Exercise 4</span>
-<span class="co"># [Your Name]</span>
-#############################################################################
-
-#############################################################################
-<span class="kw">library</span>(rgdal)
-<span class="kw">library</span>(raster)
-<span class="kw">library</span>(lubridate)
-<span class="kw">library</span>(ggplot2)
-<span class="kw">source</span>(<span class="st">&#39;&#39;</span>) <span class="co">#path to the parametric_compositing function including filename.R</span>
-
-<span class="co"># In case you run into memory issues</span>
-<span class="co"># change raster options to store large rasters in temp files on disk</span>
-<span class="co"># rasterOptions(maxmemory = 1e12)</span>
-
-######## Define the folder that contains your data...
-data.path &lt;-<span class="st"> &#39;O:/WS1920_MSc-EO/S04/data/&#39;</span>
-
-#############################################################################
-<span class="co"># 1)</span>
-#############################################################################
-
-sr &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="kw">paste0</span>(data.path, <span class="st">&#39;sr_data&#39;</span>), <span class="dt">pattern=</span><span class="st">&quot;.tif$&quot;</span>, <span class="dt">full.names=</span>T, <span class="dt">recursive=</span>F)
-fmask &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="kw">paste0</span>(data.path, <span class="st">&#39;fmask&#39;</span>), <span class="dt">pattern=</span><span class="st">&quot;.tif$&quot;</span>, <span class="dt">full.names=</span>T, <span class="dt">recursive=</span>F)
-cd &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="kw">paste0</span>(data.path, <span class="st">&#39;cloud_dist&#39;</span>), <span class="dt">pattern=</span><span class="st">&quot;.tif$&quot;</span>, <span class="dt">full.names=</span>T, <span class="dt">recursive=</span>F)
-
-sta &lt;-<span class="st"> </span><span class="kw">nchar</span>(<span class="kw">paste0</span>(data.path,<span class="st">&#39;sr_data/LT05228082&#39;</span>)) <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
-end &lt;-<span class="st"> </span>sta <span class="op">+</span><span class="st"> </span><span class="dv">6</span>
-
-dates &lt;-<span class="st"> </span><span class="kw">as.Date</span>(<span class="kw">substr</span>(sr, sta, end), <span class="dt">format=</span><span class="st">&#39;%Y%j&#39;</span>)
-
-sr.sorted &lt;-<span class="st"> </span>sr[<span class="kw">order</span>(dates)]
-cd.sorted &lt;-<span class="st"> </span>cd[<span class="kw">order</span>(dates)]
-
-img_list &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">&quot;image_files&quot;</span>=<span class="kw">as.character</span>(sr.sorted), 
-                       <span class="st">&quot;cloud_dist_files&quot;</span>=<span class="kw">as.character</span>(cd.sorted),
-                       <span class="st">&quot;date&quot;</span>=<span class="kw">sort</span>(dates), 
-                       <span class="st">&quot;DOY&quot;</span>=<span class="kw">yday</span>(<span class="kw">sort</span>(dates)), 
-                       <span class="st">&quot;year&quot;</span>=<span class="kw">year</span>(<span class="kw">sort</span>(dates)))
-
-#############################################################################
-<span class="co"># 2)</span>
-#############################################################################
-target_date_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">ymd</span>(<span class="st">&#39;YYYYMMDD&#39;</span>)
-target_date_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">ymd</span>(<span class="st">&#39;YYYYMMDD&#39;</span>)
-
-W_DOY &lt;-<span class="st"> </span><span class="fl">0.0</span>
-W_year &lt;-<span class="st"> </span><span class="fl">0.0</span>
-W_cloud_dist &lt;-<span class="st"> </span><span class="fl">0.0</span>
-  
-max_DOY_offset &lt;-<span class="st"> </span><span class="dv">0</span>
-max_year_offset &lt;-<span class="st"> </span><span class="dv">0</span>
-
-min_cloud_dist &lt;-<span class="st"> </span><span class="dv">0</span>
-max_cloud_dist &lt;-<span class="st"> </span><span class="dv">0</span>
-
-composite_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">parametric_compositing</span>(img_list, target_date_<span class="dv">1</span>, 
-                                       W_DOY, W_year, W_cloud_dist, 
-                                       max_DOY_offset, max_year_offset, 
-                                       min_cloud_dist, max_cloud_dist)</code></pre></div>
-<p></details></p>
+<details>
+<p><summary>Click here to see code for the parametric compositing function</summary></p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" data-line-number="1"><span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb85-2" data-line-number="2"><span class="co"># MSc Earth Observation Exercise 4</span></a>
+<a class="sourceLine" id="cb85-3" data-line-number="3"><span class="co"># Function for creating cloud-free composites of multiple Landsat images</span></a>
+<a class="sourceLine" id="cb85-4" data-line-number="4"><span class="co"># Requires an input data.frame (here img_list) and eight compositing </span></a>
+<a class="sourceLine" id="cb85-5" data-line-number="5"><span class="co"># parameters. Please see exercise sheet for further details.</span></a>
+<a class="sourceLine" id="cb85-6" data-line-number="6"><span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb85-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb85-8" data-line-number="8"><span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb85-9" data-line-number="9"><span class="co"># Loading required packages here...</span></a>
+<a class="sourceLine" id="cb85-10" data-line-number="10"><span class="kw">library</span>(raster)</a>
+<a class="sourceLine" id="cb85-11" data-line-number="11"><span class="kw">library</span>(lubridate)</a>
+<a class="sourceLine" id="cb85-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb85-13" data-line-number="13"><span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb85-14" data-line-number="14"><span class="co"># Function definition starts here</span></a>
+<a class="sourceLine" id="cb85-15" data-line-number="15">parametric_compositing &lt;-<span class="st"> </span><span class="cf">function</span>(img_list, target_date, </a>
+<a class="sourceLine" id="cb85-16" data-line-number="16">                                   W_DOY, W_year, W_cloud_dist, </a>
+<a class="sourceLine" id="cb85-17" data-line-number="17">                                   max_DOY_offset, max_year_offset, </a>
+<a class="sourceLine" id="cb85-18" data-line-number="18">                                   min_cloud_dist, max_cloud_dist) {</a>
+<a class="sourceLine" id="cb85-19" data-line-number="19">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb85-20" data-line-number="20">  tic &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()</a>
+<a class="sourceLine" id="cb85-21" data-line-number="21">  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;Start of compositing process: &#39;</span>, tic))</a>
+<a class="sourceLine" id="cb85-22" data-line-number="22">  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;Target date: &#39;</span>, target_date))</a>
+<a class="sourceLine" id="cb85-23" data-line-number="23"></a>
+<a class="sourceLine" id="cb85-24" data-line-number="24">  <span class="co"># Extract target DOY and year from target_date</span></a>
+<a class="sourceLine" id="cb85-25" data-line-number="25">  target_DOY &lt;-<span class="st"> </span><span class="kw">yday</span>(target_date)</a>
+<a class="sourceLine" id="cb85-26" data-line-number="26">  target_year &lt;-<span class="st"> </span><span class="kw">year</span>(target_date)</a>
+<a class="sourceLine" id="cb85-27" data-line-number="27">  </a>
+<a class="sourceLine" id="cb85-28" data-line-number="28">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb85-29" data-line-number="29">  <span class="cf">if</span>(<span class="kw">sum</span>(W_DOY, W_year, W_cloud_dist)<span class="op">!=</span><span class="dv">1</span>) { <span class="kw">stop</span>(<span class="st">&#39;Error: something wrong.&#39;</span>) }</a>
+<a class="sourceLine" id="cb85-30" data-line-number="30">  </a>
+<a class="sourceLine" id="cb85-31" data-line-number="31">  <span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb85-32" data-line-number="32">  <span class="co"># Calculate the scores for the DOY, year, and cloud distance criteria</span></a>
+<a class="sourceLine" id="cb85-33" data-line-number="33">  <span class="kw">print</span>(<span class="st">&#39;Calculating compositing scores&#39;</span>)</a>
+<a class="sourceLine" id="cb85-34" data-line-number="34">  </a>
+<a class="sourceLine" id="cb85-35" data-line-number="35">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb85-36" data-line-number="36">  obs_DOY &lt;-<span class="st"> </span>img_list<span class="op">$</span>DOY</a>
+<a class="sourceLine" id="cb85-37" data-line-number="37">  DOY_score &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>(<span class="kw">abs</span>(target_DOY <span class="op">-</span><span class="st"> </span>img_list<span class="op">$</span>DOY) <span class="op">/</span><span class="st"> </span>max_DOY_offset)</a>
+<a class="sourceLine" id="cb85-38" data-line-number="38">  DOY_score[DOY_score<span class="op">&lt;</span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb85-39" data-line-number="39">  </a>
+<a class="sourceLine" id="cb85-40" data-line-number="40">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb85-41" data-line-number="41">  obs_year &lt;-<span class="st"> </span>img_list<span class="op">$</span>year</a>
+<a class="sourceLine" id="cb85-42" data-line-number="42">  year_score &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">-</span>(<span class="kw">abs</span>(target_year <span class="op">-</span><span class="st"> </span>obs_year) <span class="op">/</span><span class="st"> </span>max_year_offset)</a>
+<a class="sourceLine" id="cb85-43" data-line-number="43">  </a>
+<a class="sourceLine" id="cb85-44" data-line-number="44">  <span class="cf">if</span> (max_year_offset <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) {year_score[obs_year<span class="op">==</span>target_year] &lt;-<span class="st"> </span><span class="dv">1</span>}</a>
+<a class="sourceLine" id="cb85-45" data-line-number="45">  year_score[year_score<span class="op">&lt;</span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb85-46" data-line-number="46">  </a>
+<a class="sourceLine" id="cb85-47" data-line-number="47">  <span class="co"># Get candidate images within max_DOY_offset and max_year_offset</span></a>
+<a class="sourceLine" id="cb85-48" data-line-number="48">  ix &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="op">!</span><span class="kw">is.na</span>(DOY_score) <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(year_score))</a>
+<a class="sourceLine" id="cb85-49" data-line-number="49">  <span class="cf">if</span> (<span class="kw">length</span>(ix)<span class="op">&gt;</span><span class="dv">1</span>) { <span class="kw">print</span>(<span class="kw">paste</span>(<span class="kw">length</span>(ix),  <span class="st">&#39;candidate images selected, calculating scores.&#39;</span>)) }</a>
+<a class="sourceLine" id="cb85-50" data-line-number="50">  <span class="cf">if</span> (<span class="kw">length</span>(ix)<span class="op">&lt;</span><span class="dv">2</span>) { <span class="kw">stop</span>(<span class="st">&#39;Another error because something is wrong.&#39;</span>) }</a>
+<a class="sourceLine" id="cb85-51" data-line-number="51">  </a>
+<a class="sourceLine" id="cb85-52" data-line-number="52">  <span class="co"># Stack cloud distance layers of candidate images and reclassify </span></a>
+<a class="sourceLine" id="cb85-53" data-line-number="53">  <span class="co"># values &lt; min_cloud_dist to NA, and values &gt; max_cloud_dist to max_cloud_dist</span></a>
+<a class="sourceLine" id="cb85-54" data-line-number="54">  cloud_dist &lt;-<span class="st"> </span><span class="kw">stack</span>(<span class="kw">as.character</span>(img_list<span class="op">$</span>cloud_dist_files[ix]))</a>
+<a class="sourceLine" id="cb85-55" data-line-number="55">  cloud_dist &lt;-<span class="st"> </span><span class="kw">reclassify</span>(cloud_dist, <span class="dt">rcl=</span><span class="kw">c</span>(<span class="dv">0</span>, min_cloud_dist, <span class="ot">NA</span>), <span class="dt">right=</span><span class="ot">NA</span>, <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)</a>
+<a class="sourceLine" id="cb85-56" data-line-number="56">  cloud_dist &lt;-<span class="st"> </span><span class="kw">reclassify</span>(cloud_dist, <span class="dt">rcl=</span><span class="kw">c</span>(max_cloud_dist, <span class="kw">sqrt</span>(<span class="kw">nrow</span>(cloud_dist)<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="kw">ncol</span>(cloud_dist)<span class="op">^</span><span class="dv">2</span>), max_cloud_dist), <span class="dt">right=</span><span class="ot">NA</span>, <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)</a>
+<a class="sourceLine" id="cb85-57" data-line-number="57">  </a>
+<a class="sourceLine" id="cb85-58" data-line-number="58">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb85-59" data-line-number="59">  cloud_score &lt;-<span class="st"> </span>(cloud_dist <span class="op">-</span><span class="st"> </span>min_cloud_dist) <span class="op">/</span><span class="st"> </span>(max_cloud_dist <span class="op">-</span><span class="st"> </span>min_cloud_dist)</a>
+<a class="sourceLine" id="cb85-60" data-line-number="60">  </a>
+<a class="sourceLine" id="cb85-61" data-line-number="61">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb85-62" data-line-number="62">  obs_score &lt;-<span class="st"> </span>DOY_score[ix] <span class="op">*</span><span class="st"> </span>W_DOY <span class="op">+</span><span class="st"> </span>year_score[ix] <span class="op">*</span><span class="st"> </span>W_year <span class="op">+</span><span class="st"> </span>cloud_score <span class="op">*</span><span class="st"> </span>W_cloud_dist</a>
+<a class="sourceLine" id="cb85-63" data-line-number="63">  </a>
+<a class="sourceLine" id="cb85-64" data-line-number="64">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb85-65" data-line-number="65">  select &lt;-<span class="st"> </span><span class="kw">which.max</span>(obs_score)</a>
+<a class="sourceLine" id="cb85-66" data-line-number="66">  </a>
+<a class="sourceLine" id="cb85-67" data-line-number="67">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb85-68" data-line-number="68">  candidates &lt;-<span class="st"> </span><span class="kw">unique</span>(select)</a>
+<a class="sourceLine" id="cb85-69" data-line-number="69">  </a>
+<a class="sourceLine" id="cb85-70" data-line-number="70">  <span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb85-71" data-line-number="71">  <span class="co"># Fill composite image with pixels from the candidate images</span></a>
+<a class="sourceLine" id="cb85-72" data-line-number="72">  <span class="cf">for</span> (i <span class="cf">in</span> candidates){</a>
+<a class="sourceLine" id="cb85-73" data-line-number="73">    </a>
+<a class="sourceLine" id="cb85-74" data-line-number="74">    <span class="co">#...</span></a>
+<a class="sourceLine" id="cb85-75" data-line-number="75">    fill_image &lt;-<span class="st"> </span><span class="kw">brick</span>(<span class="kw">as.character</span>(img_list<span class="op">$</span>image_files[ix[i]]), <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)</a>
+<a class="sourceLine" id="cb85-76" data-line-number="76">    </a>
+<a class="sourceLine" id="cb85-77" data-line-number="77">    <span class="co">#...</span></a>
+<a class="sourceLine" id="cb85-78" data-line-number="78">    <span class="cf">if</span> (i <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(candidates)) { </a>
+<a class="sourceLine" id="cb85-79" data-line-number="79">      composite &lt;-<span class="st"> </span><span class="kw">brick</span>(fill_image, <span class="dt">values=</span><span class="ot">FALSE</span>) </a>
+<a class="sourceLine" id="cb85-80" data-line-number="80">      <span class="kw">dataType</span>(composite) &lt;-<span class="st"> &#39;INT2S&#39;</span></a>
+<a class="sourceLine" id="cb85-81" data-line-number="81">      <span class="kw">values</span>(composite) &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb85-82" data-line-number="82">    }</a>
+<a class="sourceLine" id="cb85-83" data-line-number="83">    </a>
+<a class="sourceLine" id="cb85-84" data-line-number="84">    <span class="kw">print</span>(<span class="kw">paste0</span>(<span class="st">&#39;Filling raster with acquisition from date &#39;</span>, img_list<span class="op">$</span>date[ix[i]]))</a>
+<a class="sourceLine" id="cb85-85" data-line-number="85">    fill_image.masked &lt;-<span class="st"> </span><span class="kw">mask</span>(fill_image, select, <span class="dt">maskvalue=</span>i, <span class="dt">inverse=</span>T, <span class="dt">updatevalue=</span><span class="dv">0</span>, <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)</a>
+<a class="sourceLine" id="cb85-86" data-line-number="86">    fill_image.masked[<span class="kw">is.na</span>(fill_image.masked)] &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb85-87" data-line-number="87">    composite &lt;-<span class="st"> </span>composite <span class="op">+</span><span class="st"> </span>fill_image.masked</a>
+<a class="sourceLine" id="cb85-88" data-line-number="88">    </a>
+<a class="sourceLine" id="cb85-89" data-line-number="89">  }</a>
+<a class="sourceLine" id="cb85-90" data-line-number="90">  </a>
+<a class="sourceLine" id="cb85-91" data-line-number="91">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb85-92" data-line-number="92">  composite_na &lt;-<span class="st"> </span><span class="kw">mask</span>(composite, select, <span class="dt">maskvalue=</span><span class="ot">NA</span>, <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)</a>
+<a class="sourceLine" id="cb85-93" data-line-number="93">  </a>
+<a class="sourceLine" id="cb85-94" data-line-number="94">  <span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb85-95" data-line-number="95">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb85-96" data-line-number="96">  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;NAs: &#39;</span>, <span class="kw">round</span>(<span class="kw">freq</span>(composite_na[[<span class="dv">1</span>]], <span class="dt">value=</span><span class="ot">NA</span>)<span class="op">/</span><span class="kw">ncell</span>(composite_na[[<span class="dv">1</span>]])<span class="op">*</span><span class="dv">100</span>, <span class="dt">digits=</span><span class="dv">3</span>), <span class="st">&#39; %&#39;</span>))</a>
+<a class="sourceLine" id="cb85-97" data-line-number="97">  </a>
+<a class="sourceLine" id="cb85-98" data-line-number="98">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb85-99" data-line-number="99">  rcl_DOY &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">ncol=</span><span class="dv">2</span>, <span class="dt">data=</span><span class="kw">c</span>(candidates, obs_DOY[ix[candidates]]))</a>
+<a class="sourceLine" id="cb85-100" data-line-number="100">  select_DOY &lt;-<span class="st"> </span><span class="kw">reclassify</span>(select, rcl_DOY, <span class="dt">datatype =</span> <span class="st">&#39;INT2S&#39;</span>)</a>
+<a class="sourceLine" id="cb85-101" data-line-number="101">  </a>
+<a class="sourceLine" id="cb85-102" data-line-number="102">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb85-103" data-line-number="103">  rcl_year &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">ncol=</span><span class="dv">2</span>, <span class="dt">data=</span><span class="kw">c</span>(candidates, obs_year[ix[candidates]]))</a>
+<a class="sourceLine" id="cb85-104" data-line-number="104">  select_year &lt;-<span class="st"> </span><span class="kw">reclassify</span>(select, rcl_year)</a>
+<a class="sourceLine" id="cb85-105" data-line-number="105"></a>
+<a class="sourceLine" id="cb85-106" data-line-number="106">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb85-107" data-line-number="107">  output &lt;-<span class="st"> </span><span class="kw">stack</span>(composite_na, select_DOY, select_year)</a>
+<a class="sourceLine" id="cb85-108" data-line-number="108">  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;End of compositing process: &#39;</span>, <span class="kw">Sys.time</span>()))</a>
+<a class="sourceLine" id="cb85-109" data-line-number="109">  </a>
+<a class="sourceLine" id="cb85-110" data-line-number="110">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb85-111" data-line-number="111">  <span class="kw">return</span>(output)</a>
+<a class="sourceLine" id="cb85-112" data-line-number="112">  </a>
+<a class="sourceLine" id="cb85-113" data-line-number="113">}</a></code></pre></div>
+</details>
+<details>
+<p><summary>Click here to see the code for the main script calling the compositing function</summary></p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" data-line-number="1">  <span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb86-2" data-line-number="2"><span class="co"># MSc Earth Observation Exercise 4</span></a>
+<a class="sourceLine" id="cb86-3" data-line-number="3"><span class="co"># [Your Name]</span></a>
+<a class="sourceLine" id="cb86-4" data-line-number="4"><span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb86-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb86-6" data-line-number="6"><span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb86-7" data-line-number="7"><span class="kw">library</span>(rgdal)</a>
+<a class="sourceLine" id="cb86-8" data-line-number="8"><span class="kw">library</span>(raster)</a>
+<a class="sourceLine" id="cb86-9" data-line-number="9"><span class="kw">library</span>(lubridate)</a>
+<a class="sourceLine" id="cb86-10" data-line-number="10"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb86-11" data-line-number="11"><span class="kw">source</span>(<span class="st">&#39;&#39;</span>) <span class="co">#path to the parametric_compositing function including filename.R</span></a>
+<a class="sourceLine" id="cb86-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb86-13" data-line-number="13"><span class="co"># In case you run into memory issues</span></a>
+<a class="sourceLine" id="cb86-14" data-line-number="14"><span class="co"># change raster options to store large rasters in temp files on disk</span></a>
+<a class="sourceLine" id="cb86-15" data-line-number="15"><span class="co"># rasterOptions(maxmemory = 1e12)</span></a>
+<a class="sourceLine" id="cb86-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb86-17" data-line-number="17"><span class="co">######## Define the folder that contains your data...</span></a>
+<a class="sourceLine" id="cb86-18" data-line-number="18">data.path &lt;-<span class="st"> &#39;O:/WS1920_MSc-EO/S04/data/&#39;</span></a>
+<a class="sourceLine" id="cb86-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb86-20" data-line-number="20"><span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb86-21" data-line-number="21"><span class="co"># 1)</span></a>
+<a class="sourceLine" id="cb86-22" data-line-number="22"><span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb86-23" data-line-number="23"></a>
+<a class="sourceLine" id="cb86-24" data-line-number="24">sr &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="kw">paste0</span>(data.path, <span class="st">&#39;sr_data&#39;</span>), <span class="dt">pattern=</span><span class="st">&quot;.tif$&quot;</span>, <span class="dt">full.names=</span>T, <span class="dt">recursive=</span>F)</a>
+<a class="sourceLine" id="cb86-25" data-line-number="25">fmask &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="kw">paste0</span>(data.path, <span class="st">&#39;fmask&#39;</span>), <span class="dt">pattern=</span><span class="st">&quot;.tif$&quot;</span>, <span class="dt">full.names=</span>T, <span class="dt">recursive=</span>F)</a>
+<a class="sourceLine" id="cb86-26" data-line-number="26">cd &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="kw">paste0</span>(data.path, <span class="st">&#39;cloud_dist&#39;</span>), <span class="dt">pattern=</span><span class="st">&quot;.tif$&quot;</span>, <span class="dt">full.names=</span>T, <span class="dt">recursive=</span>F)</a>
+<a class="sourceLine" id="cb86-27" data-line-number="27"></a>
+<a class="sourceLine" id="cb86-28" data-line-number="28">sta &lt;-<span class="st"> </span><span class="kw">nchar</span>(<span class="kw">paste0</span>(data.path,<span class="st">&#39;sr_data/LT05228082&#39;</span>)) <span class="op">+</span><span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb86-29" data-line-number="29">end &lt;-<span class="st"> </span>sta <span class="op">+</span><span class="st"> </span><span class="dv">6</span></a>
+<a class="sourceLine" id="cb86-30" data-line-number="30"></a>
+<a class="sourceLine" id="cb86-31" data-line-number="31">dates &lt;-<span class="st"> </span><span class="kw">as.Date</span>(<span class="kw">substr</span>(sr, sta, end), <span class="dt">format=</span><span class="st">&#39;%Y%j&#39;</span>)</a>
+<a class="sourceLine" id="cb86-32" data-line-number="32"></a>
+<a class="sourceLine" id="cb86-33" data-line-number="33">sr.sorted &lt;-<span class="st"> </span>sr[<span class="kw">order</span>(dates)]</a>
+<a class="sourceLine" id="cb86-34" data-line-number="34">cd.sorted &lt;-<span class="st"> </span>cd[<span class="kw">order</span>(dates)]</a>
+<a class="sourceLine" id="cb86-35" data-line-number="35"></a>
+<a class="sourceLine" id="cb86-36" data-line-number="36">img_list &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">&quot;image_files&quot;</span>=<span class="kw">as.character</span>(sr.sorted), </a>
+<a class="sourceLine" id="cb86-37" data-line-number="37">                       <span class="st">&quot;cloud_dist_files&quot;</span>=<span class="kw">as.character</span>(cd.sorted),</a>
+<a class="sourceLine" id="cb86-38" data-line-number="38">                       <span class="st">&quot;date&quot;</span>=<span class="kw">sort</span>(dates), </a>
+<a class="sourceLine" id="cb86-39" data-line-number="39">                       <span class="st">&quot;DOY&quot;</span>=<span class="kw">yday</span>(<span class="kw">sort</span>(dates)), </a>
+<a class="sourceLine" id="cb86-40" data-line-number="40">                       <span class="st">&quot;year&quot;</span>=<span class="kw">year</span>(<span class="kw">sort</span>(dates)))</a>
+<a class="sourceLine" id="cb86-41" data-line-number="41"></a>
+<a class="sourceLine" id="cb86-42" data-line-number="42"><span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb86-43" data-line-number="43"><span class="co"># 2)</span></a>
+<a class="sourceLine" id="cb86-44" data-line-number="44"><span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb86-45" data-line-number="45">target_date_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">ymd</span>(<span class="st">&#39;YYYYMMDD&#39;</span>)</a>
+<a class="sourceLine" id="cb86-46" data-line-number="46">target_date_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">ymd</span>(<span class="st">&#39;YYYYMMDD&#39;</span>)</a>
+<a class="sourceLine" id="cb86-47" data-line-number="47"></a>
+<a class="sourceLine" id="cb86-48" data-line-number="48">W_DOY &lt;-<span class="st"> </span><span class="fl">0.0</span></a>
+<a class="sourceLine" id="cb86-49" data-line-number="49">W_year &lt;-<span class="st"> </span><span class="fl">0.0</span></a>
+<a class="sourceLine" id="cb86-50" data-line-number="50">W_cloud_dist &lt;-<span class="st"> </span><span class="fl">0.0</span></a>
+<a class="sourceLine" id="cb86-51" data-line-number="51">  </a>
+<a class="sourceLine" id="cb86-52" data-line-number="52">max_DOY_offset &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb86-53" data-line-number="53">max_year_offset &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb86-54" data-line-number="54"></a>
+<a class="sourceLine" id="cb86-55" data-line-number="55">min_cloud_dist &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb86-56" data-line-number="56">max_cloud_dist &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb86-57" data-line-number="57"></a>
+<a class="sourceLine" id="cb86-58" data-line-number="58">composite_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">parametric_compositing</span>(img_list, target_date_<span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb86-59" data-line-number="59">                                       W_DOY, W_year, W_cloud_dist, </a>
+<a class="sourceLine" id="cb86-60" data-line-number="60">                                       max_DOY_offset, max_year_offset, </a>
+<a class="sourceLine" id="cb86-61" data-line-number="61">                                       min_cloud_dist, max_cloud_dist)</a></code></pre></div>
+</details>
 <!-- second compositing step was made voluntary exercise in winter term 19/20
 #############################################################################
 # 4)
@@ -1511,13 +1919,13 @@ $year: the acquisition year.</p></li>
 <p><span class="math inline">\(n_i\)</span> = Total number of pixels of map class <span class="math inline">\(i\)</span></p>
 <p><span class="math inline">\(w_i\)</span> = Proportion of map class <span class="math inline">\(i\)</span></p>
 <p>In the resulting matrix, each cell value represents the probability of occurrence of map class <span class="math inline">\(i\)</span> and reference class <span class="math inline">\(j\)</span>.</p>
-<table style="width:97%;">
+<table>
 <colgroup>
-<col width="19%" />
-<col width="19%" />
-<col width="19%" />
-<col width="19%" />
-<col width="19%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -1953,8 +2361,8 @@ std: standard deviation.</p></li>
 </tbody>
 </table>
 <p><code>extract()</code> the values at your training locations from the temporal stacks (e.g., …/ts_stacks/TCG.tif). Compare the phenological behavior of the classes with boxplots or line plots. Use the following code to import the acquisition dates of the Landsat images:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data.path &lt;-<span class="st"> &#39;O:/WS1920_MSc-EO/S08/data/&#39;</span>
-sensor_date &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="kw">paste0</span>(data.path, <span class="st">&#39;ts_stacks/Landsat_2010_Sensor_Date.csv&#39;</span>, <span class="dt">sep=</span><span class="st">&quot;;&quot;</span>, <span class="dt">header=</span>T)</code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" data-line-number="1">data.path &lt;-<span class="st"> &#39;O:/WS1920_MSc-EO/S08/data/&#39;</span></a>
+<a class="sourceLine" id="cb87-2" data-line-number="2">sensor_date &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="kw">paste0</span>(data.path, <span class="st">&#39;ts_stacks/Landsat_2010_Sensor_Date.csv&#39;</span>, <span class="dt">sep=</span><span class="st">&quot;;&quot;</span>, <span class="dt">header=</span>T)</a></code></pre></div>
 <p>Summarize the main characteristics of the three classes over the growing season and identify major differences. Please add your insights in comments in your script. Select spectral-temporal metrics that capture the differences between croplands, pastures, and others well. Select at most six different metrics from the ones provided.</p>
 </div>
 <div id="compute-additional-spectral-temporal-metrics" class="section level3">
@@ -1971,24 +2379,24 @@ sensor_date &lt;-<span class="st"> </span><span class="kw">read.table</span>(<sp
 </div>
 <p>Based on the resulting matrix, you can perform basic calculations using, e.g., <code>apply()</code>. You can then write the results into a new raster, which you create using <code>raster()</code> and assign the results of your computation with the <code>vals</code> parameter.</p>
 <p>The following code template gives an example for computing the median Tasseled Cap Greenness. Computation might take several minutes - make use of the processing time by preparing the subsequent tasks.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Read TCG time series stack</span>
-tcg.stack &lt;-<span class="st"> </span><span class="kw">stack</span>(<span class="st">&#39;O:/WS1920_MSc-EO/S08/data/ts_stacks/TCG_stack.tif&#39;</span>)
-
-<span class="co"># Convert to matrix</span>
-tcg.matrix &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(tcg.stack)
-
-<span class="co"># Calculate median across rows in matrix</span>
-tcg.median &lt;-<span class="st"> </span><span class="kw">apply</span>(tcg.matrix, <span class="dv">1</span>, <span class="dt">FUN=</span>median, <span class="dt">na.rm=</span>T)
-
-<span class="co"># Write results to empty raster</span>
-tcg.median.raster &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="dt">nrows=</span>tcg.stack<span class="op">@</span>nrows, 
-                            <span class="dt">ncols=</span>tcg.stack<span class="op">@</span>ncols, 
-                            <span class="dt">crs=</span>tcg.stack<span class="op">@</span>crs, 
-                            <span class="dt">vals=</span>tcg.median,
-                            <span class="dt">ext=</span><span class="kw">extent</span>(tcg.stack))
-
-<span class="co"># Plot result</span>
-<span class="kw">plot</span>(tcg.median.raster)</code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" data-line-number="1"><span class="co"># Read TCG time series stack</span></a>
+<a class="sourceLine" id="cb88-2" data-line-number="2">tcg.stack &lt;-<span class="st"> </span><span class="kw">stack</span>(<span class="st">&#39;O:/WS1920_MSc-EO/S08/data/ts_stacks/TCG_stack.tif&#39;</span>)</a>
+<a class="sourceLine" id="cb88-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb88-4" data-line-number="4"><span class="co"># Convert to matrix</span></a>
+<a class="sourceLine" id="cb88-5" data-line-number="5">tcg.matrix &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(tcg.stack)</a>
+<a class="sourceLine" id="cb88-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb88-7" data-line-number="7"><span class="co"># Calculate median across rows in matrix</span></a>
+<a class="sourceLine" id="cb88-8" data-line-number="8">tcg.median &lt;-<span class="st"> </span><span class="kw">apply</span>(tcg.matrix, <span class="dv">1</span>, <span class="dt">FUN=</span>median, <span class="dt">na.rm=</span>T)</a>
+<a class="sourceLine" id="cb88-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb88-10" data-line-number="10"><span class="co"># Write results to empty raster</span></a>
+<a class="sourceLine" id="cb88-11" data-line-number="11">tcg.median.raster &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="dt">nrows=</span>tcg.stack<span class="op">@</span>nrows, </a>
+<a class="sourceLine" id="cb88-12" data-line-number="12">                            <span class="dt">ncols=</span>tcg.stack<span class="op">@</span>ncols, </a>
+<a class="sourceLine" id="cb88-13" data-line-number="13">                            <span class="dt">crs=</span>tcg.stack<span class="op">@</span>crs, </a>
+<a class="sourceLine" id="cb88-14" data-line-number="14">                            <span class="dt">vals=</span>tcg.median,</a>
+<a class="sourceLine" id="cb88-15" data-line-number="15">                            <span class="dt">ext=</span><span class="kw">extent</span>(tcg.stack))</a>
+<a class="sourceLine" id="cb88-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb88-17" data-line-number="17"><span class="co"># Plot result</span></a>
+<a class="sourceLine" id="cb88-18" data-line-number="18"><span class="kw">plot</span>(tcg.median.raster)</a></code></pre></div>
 </div>
 <div id="train-and-apply-random-forest-model" class="section level3">
 <h3>4) Train and apply Random Forest Model</h3>
@@ -2029,7 +2437,7 @@ Please prepare arguments for your group based on the core article and the supple
 <h2>General advice</h2>
 <p>We offer you three weeks of time for project work in teams of two. You should use this time to develop and execute a research objective in a guided setting. We iteratively give feedback. The overall goal is to strengthen your competence in problem-solving and thus to increase your confidence in working with remote sensing and other geospatial datasets. Developing a research idea is an iterative process. Running into problems and realizing things don´t work as expected is <a href="doi.org/10.1016/j.molcel.2009.09.013">part of research</a>. In case you notice that your project idea will not work out, try to identify alternative pathways out of “the cloud”.</p>
 <div class="figure">
-<img src="fig/s09_cloud.png" alt="The cloud (Alon 2009)" />
+<img src="fig/s09_cloud.png" alt="“The cloud” (Alon 2009)" />
 <p class="caption">“The cloud” (Alon 2009)</p>
 </div>
 <p>So how to find an interesting research strand? Existing literature can be a good source of inspiration. Think about papers you have read, which deserve further investigation or could be interesting to reproduce using different methods or datasets. Further, you may have stumbled upon interesting study sites in other classes. Did you ever consider mapping that peculiarity in your home region? The <a href="https://na.unep.net/atlas/google.php">UNEP Atlas of Environmental Change</a> can maybe get your thinking going.</p>
@@ -2496,6 +2904,12 @@ print(RMSE)
 library('hsdar') -->
 </div>
 </div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>The <code>Using R</code> tutorial was written by <a href="https://github.com/leonsnill/">Leon Nill</a>.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
 
     </div>
     <div class="col-xs-2">
@@ -2552,6 +2966,7 @@ $(document).ready(function () {
         return($(this).children("a").attr("href"));
     })
     $('body .section.level1').first().addClass("active");
+    $('body .section.level1').not('.active').hide();
     
     $('#toc a[href*="#"]').click(function() {
 
