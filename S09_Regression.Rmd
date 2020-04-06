@@ -1,0 +1,245 @@
+---
+title: "Earth Observation"
+date: "Winter term 2019/2020"
+author: MSc Global Change Geography
+output: 
+  rmdformats::material:
+    css: material_adjust.css
+    self_contained: false
+    highlight: kate
+knit: (function(input_file, encoding) {
+      out_dir <- 'docs';
+      rmarkdown::render(input_file, encoding=encoding, output_file=file.path(dirname(input_file), out_dir, 'index.html'))})
+---
+ 
+
+```{r knitr_init, echo=FALSE, cache=FALSE, message=FALSE, include=FALSE}
+library(knitr)
+library(rmdformats)
+library(shiny)
+
+## Global options
+options(max.print="75")
+opts_chunk$set(echo=FALSE,
+	             cache=TRUE,
+               prompt=FALSE,
+               tidy=FALSE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE, 
+               use_bookdown = TRUE)
+opts_knit$set(width=75)
+```
+
+
+<!--  SESSION 07 
+
+# Session 07: Fraction mapping
+
+## Learning goals
+
+- Understand the basic concept of spectral mixture analysis
+- Implement linear spectral mixture analysis for a single pixel
+- Map fractions of deciduous and evergreen forest in the Carpathians
+
+## Background
+
+The spatial resolution of satellite imagery is determining the composition of surface materials within a measurement unit, i.e., a pixel. A coarse spatial resolution will lead to an increasing level of mixed surfaces within a pixel. 
+
+Classification approaches assign discrete labels to a pixel and can thus be of limited use for estimating the true distribution of a surface material. In many cases (but very much depending on the training dataset), the dominant class label will be assigned by the classification model. We thereby underestimate the proportion(s) of the minority class(es), while overestimating the proportion of the dominant class.
+
+Fraction mapping is an alternative approach, which attempts to map the fraction of a variety of classes within a pixel. This can either be done by using spectral mixture analysis or regression approaches. 
+
+### Regressions...
+
+### LSMA
+
+Practical aspects...
+endmembers.
+selection?
+
+Subject to the following constraints: 
+0 <= fi<= 1 CONSTRAINT 1 
+f1+ f2+ ...fn= 1 CONSTRAINT 2
+
+Researchers have noted that 2 is easy to implement, but 1 is not. As a result, most studies only implement the 2nd Constraint in the model and then apply the 1st constraint to the results.
+
+- There  is  no  substantial  occurrence  of  multiple  scattering  between  the  different surface components, hence all surface component contribute similarly to the measured reflectance spectrum. We thus assume that the areal proportion of a surface determines its contribution to the spectral signal.
+
+- Each  surface  component  within  the  image  has  sufficient  spectral contrast  to allow their separation.
+
+- Each surface component (endmember) in the study region is known and included in the model.
+
+- We will not be able to have a mathematically perfect decomposition of the spectrum. Reasons are manifold and include, e.g., badly selected endmembers...
+
+
+use math to solve equation system...
+$$
+\left(\begin{array}{cc} 
+beech_{blue} & spruce_{blue} & shade_{blue}\\
+beech_{green} & spruce_{green} & shade_{green}\\
+beech_{red} & spruce_{red} & shade_{red}\\
+beech_{nIR} & spruce_{nIR} & shade_{nIR}\\
+beech_{swIR1} & spruce_{swIR1} & shade_{swIR1}\\
+beech_{swIR2} & spruce_{swIR2} & shade_{swIR2}
+\end{array}\right)
+*
+\left(\begin{array}{cc} 
+fraction_{beech}\\
+fraction_{spruce}\\
+fraction_{shade}
+\end{array}\right)
+=
+\left(\begin{array}{cc} 
+pixel_{blue}\\ pixel_{green}\\ pixel_{red}\\ pixel_{nIR}\\ pixel_{swIR1}\\ pixel_{swIR2}
+\end{array}\right)
++
+\left(\begin{array}{cc} 
+\epsilon_{blue}\\ \epsilon_{green}\\ \epsilon_{red}\\ \epsilon_{nIR}\\ \epsilon_{swIR1}\\ \epsilon_{swIR2}
+\end{array}\right)
+$$ 
+
+Wenn es gelingt das Gleichungssystem in Richtung Flächenanteil zu lösen, ergeben sich für jedes Pixel zwei Werte, die jeweils als Ergebniskarten für den Anteil der jeweiligen Komponenten an den Oberflächen betrachtet werden kann. 
+Dies bezeichnet man als Lineare spektrale Mischungsanalyse (LSMA; linear spectral mixture analysis) bzw. spektrale Entmischung (spectral unmixing
+
+Bildpixel kann i.d.R. nicht exakt modelliert werden
+Fehlende oder unpassende Endmember (Dachfenster, Pflanzenstress)
+Nicht-lineare Mischung, Rauschen
+Neben den einzelnen Residuen bzw. dem Residualspektrum dient der RMSE als Maß für die Güte der Mischungsanalyse: 
+
+
+## Exercise
+
+In today´s exercise, we will spent quite some time to deal with the concept of the linear spectral unmixing. The idea is to use LSMA to tackle the mixed forest problem we encountered in the forest type classification. 
+
+Forest types in the peak growing season do likely not provide sufficient spectral contrast in order to produce useful unmixing results. However, we can produce a multi-temporal image stack that also features the contrasting reflectance signals we observed in the leaf-off phenological phase. 
+
+Based on our pixel-based composites, we can define...
+```{r sma_1, echo=TRUE, eval=TRUE}
+# We extracted endmember sprectra for beech and spruce stands
+# The reflectance was extracted from composite images at DOY 074 and 196
+endmembers <- data.frame('band'= c('blue', 'green', 'red', 'nIR', 'swIR1', 'swIR2'), 
+                         'wavelength'= c(515, 600, 680, 885, 1660, 2300), 
+                         'beech_074'= c(0.0236, 0.0445, 0.0709, 0.2151, 0.2377, 0.1527),
+                         'beech_196'= c(0.0205, 0.0415, 0.0232, 0.4590, 0.2023, 0.0825),
+                         'spruce_074' = c(0.0057, 0.0165, 0.0139, 0.1146, 0.0526, 0.0261), 
+                         'spruce_196' = c(0.0123, 0.0286, 0.0209, 0.1617, 0.0861, 0.0436),
+                         'shade'= c(0.0001,0.0001,0.0001,0.0001,0.0001,0.0001))
+
+# Let´s take a look at the endmember spectra of beech and spruce stands at DOY 074
+ggplot(endmembers) + 
+      geom_line(aes(x=wavelength, y=beech_074), color='darkgreen', lwd=1) +
+      geom_line(aes(x=wavelength, y=spruce_074), color='steelblue4', lwd=1) + 
+      geom_line(aes(x=wavelength, y=shade, color='black'), lwd=1) + 
+  
+      scale_y_continuous(name="BOA reflectance") + 
+      scale_x_continuous(name="Wavelength (nm)") + 
+      scale_color_manual('Spectrum', 
+                       values = c('black', 'darkgreen','steelblue4'), 
+                       labels=c('Shade', 'Beech', 'Spruce'), guide='legend') +
+      theme_bw()
+```
+
+We consider these spectra as representative of the two target classes deciduous forest and evergreen forest and add a shade endmember to account for variation in brightness caused by (topograpic) shading. 
+
+```{r sma_2, echo=TRUE, eval=TRUE}
+# Let´s now model a "mixed pixel". 
+# We can simply do this be defining proportions of the different surface components.
+fraction_beech <- 0.45
+fraction_spruce <- 0.45
+fraction_shade <- 0.1
+
+# Do we violate the assumption that all surface components represent 100% of the surface area?
+if ((fraction_beech + fraction_spruce + fraction_shade) != 1) print('Fractions don´t sum to 1.')
+
+# Create a linear mixture of the endmember spectra, based on the defined proportions.
+model_spectrum <- fraction_beech * endmembers$beech_074 + 
+                  fraction_spruce * endmembers$spruce_074 + 
+                  fraction_shade * endmembers$shade
+
+# We could simulate imperfect measurements by adding random noise.
+noise <- rnorm(6, mean=0, sd=0.002)
+
+# Append the modeled spectrum to the endmembers data.frame
+endmembers$model_spectrum <- model_spectrum + noise
+
+# Visualize the modeled spectrum in comparison to the endmember spectra.
+ggplot(endmembers) + 
+    geom_line(aes(x=wavelength, y=model_spectrum, color='firebrick4'), linetype=2) + 
+    geom_line(aes(x=wavelength, y=beech_074, color='darkgreen'), lwd=1) +
+    geom_line(aes(x=wavelength, y=spruce_074, color='steelblue4'), lwd=1) +
+    geom_line(aes(x=wavelength, y=shade, color='black'), lwd=1) + 
+
+    scale_y_continuous(name="BOA reflectance") + 
+    scale_x_continuous(name="Wavelength (nm)") +
+    scale_color_manual('Spectrum', 
+                       values = c('black', 'darkgreen', 'firebrick4', 'steelblue4'), 
+                       labels=c('Shade', 'Beech',  'Mixed', 'Spruce'), guide='legend') +
+    theme_bw()
+    
+```
+
+exercise=TRUE
+
+find out fractions by iteratively testing combinations? 
+we could keep the shade fraction stable.
+
+```{r sma_3, eval=T, echo=T}
+# Create a matrix of the endmember spectra (3x6) and the modeled spectrum (1x6)
+EM <- as.matrix(endmembers[,c('beech_074','spruce_074','shade')])
+MS <- as.matrix(endmembers[,'model_spectrum'])
+
+# Define a matrix composed of different fraction combinations (rows) across the endmembers (columns)
+FM <- matrix(c(seq(0.1, 0.8, 0.05), seq(0.8, 0.1, -0.05), rep(0.10, 15)), ncol=3)
+print(FM)
+
+# Create empty vector to store RMSE values
+RMSE <- matrix()
+
+# Iterate over each fraction combination, 
+for (i in c(1:nrow(FM))){
+  
+  FR <- as.matrix(FM[i,])
+  # model a new spectrum using matrix multiplication (%*%)
+  mix <- EM %*% FR
+  # difference the new and the original modeled spectra
+  residuals <- mix - MS
+  # calculate root-mean-squared error (RMSE)
+  RMSE[i] <- sqrt(mean(residuals^2))
+  
+}
+
+# Print RMSE vector
+print(RMSE)
+# RMSE[which(RMSE==min(RMSE))]
+
+# Print fraction combination of lowest RMSE
+FM[which(RMSE==min(RMSE)),]
+
+
+```
+
+We can solve the problem mathematically using matrix inversion.
+
+```{r matrix_inversion, eval=T, echo=T}
+library(MASS)
+
+# Invert matrix and multiply with modeled spectrum, yielding the fractions
+FR <- ginv(EM) %*% MS
+print(FR)
+
+# Model mixed spectrum based on the result, again using matrix multiplication
+mix <- EM %*% FR
+
+# Difference new and original spectrum and compute RMSE
+residuals <- mix - MS
+RMSE <- sqrt(mean(residuals^2))
+print(RMSE)
+
+```
+
+
+- forest mask
+- endmember spectra
+- code function to unmix in space?
+library('hsdar') 
