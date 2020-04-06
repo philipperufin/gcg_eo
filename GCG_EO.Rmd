@@ -72,8 +72,6 @@ Learning R has tons of advantages. It is a great starting point for those eager 
 
 ------
 
-<!-- ################################## INTRO R ##############################################  -->
-
 # Course materials
 
 ## Software 
@@ -129,9 +127,8 @@ print(result)
 
 The first sessions of the course contain reading materials, such as are peer-reviewed papers and technical reports. You will find the reading materials for the next session at the end of each session. We highlight aspects to focus upon to streamline the reading process. 
 
-<!-- ...and facilitate the discussion. We are looking forward to lively discussions of the reading materials and critical questions from your end. -->
-
 ------
+
 
 # Session 00: R Basics
 
@@ -511,17 +508,6 @@ Geodata processing:
 - [RSpatial: Remote Sensing Image Analysis](https://rspatial.org/raster/rs/index.html)
 
 
-## Help!
-
-If you get stuck while programming, there are plenty of things you can do: 
-
-- Seek the function´s help page (i.e. highlight the function and hit F1)
-- Search your problem or error message
-- Ask your colleagues
-- Use the moodle course forum
-- Check forums (e.g., [StackOverflow](https://stackoverflow.com/))
-
-
 ## Coding style
 
 A few basic rules apply to coding in R. Here is a short summary of [Hadley Wickham´s style guide](http://adv-r.had.co.nz/Style.html):
@@ -569,10 +555,22 @@ cor(data$x, data$y)
 
 ``` 
 
-------
 
+## Help!
 
-<!-- ################################## SESSION 01 ############################################## 
+If you get stuck while programming, there are plenty of things you can do: 
+
+- Seek the function´s help page (i.e. highlight the function and hit F1)
+- Search your problem or error message
+- Ask your colleagues
+- Use the moodle course forum
+- Check forums (e.g., [StackOverflow](https://stackoverflow.com/))
+
+--------
+
+<!-- 
+
+################################## SESSION 01 ############################################## 
 
 # Session 01: Handling rasters in R
 
@@ -711,7 +709,11 @@ More specifically, think about the following:
 - How were the thresholds for spectral tests derived?
 - How will different error types impact further analyses?
 
-<!-- ################################## SESSION 02 ############################################## 
+------
+
+-->
+<!--
+
 # Session 02: From DNs to TOA
 
 ## Learning goals
@@ -861,6 +863,9 @@ a) What are the most evident differences between TOA and SR reflectance spectra?
 b) Briefly summarize the spectral appearance of the six land cover types, and the main difference between the TOA and SR.
 
 ------
+
+-->
+<!--
 
 # Session 02: Data quality & cloud masking
 
@@ -1023,7 +1028,8 @@ In this paper, a long time series of Landsat image composites at five year inter
 
 ------
 
-<!-- ################################## SESSION 03 ############################################## 
+-->
+<!--
 
 # Session 03: Vegetation indices and data transforms
 
@@ -1164,6 +1170,9 @@ When the computation is completed, write the results to disk, using the ```INT2S
 
 ------
 
+-->
+<!--
+
 # Session 03: Training data collection
 
 
@@ -1303,7 +1312,8 @@ This paper describes the methods used in the article you read last week. Here, a
 
 ------
 
-<!-- ################################## SESSION 04 ##############################################  
+-->
+<!--
 
 # Session 04: Pixel-based compositing
 
@@ -1574,7 +1584,7 @@ composite_1 <- parametric_compositing(img_list, target_date_1,
 ```
 </details>
 
-<!-- second compositing step was made voluntary exercise in winter term 19/20
+ second compositing step was made voluntary exercise in winter term 19/20
 #############################################################################
 # 4)
 #############################################################################
@@ -1650,7 +1660,8 @@ In this review, Maxwell and colleagues outline the use of several machine learni
 
 ------
 
-<!-- ################################## SESSION 05 ##############################################  
+-->
+<!--
 
 # Session 05: Machine learning for image classification
 
@@ -1765,7 +1776,8 @@ Please take a look at the Excel sheet provided [here](https://box.hu-berlin.de/f
 
 ------
 
-<!-- ################################## SESSION 06 ############################################## 
+-->
+<!--
 
 # Session 06: Accuracy assessment and area estimation
 
@@ -1913,7 +1925,7 @@ Load the point shapefile in QGIS and add two fields of type Integer: ```classID`
 
 Assess the class proportions of your map in R. To do so, use the ```freq()``` function to get pixel counts. Use these for calculating class propotions (0-1). Remember to exclude ```NAs```, so the proportions of your 4 classes sum up to 1.
 
-<!-- extract is not necessary 
+ extract is not necessary 
 
 Load the reference point shapefile in R and ```extract()``` the map values at the point locations. Create a confusion matrix from the resulting ```data.frame``` using ```table()```.
 
@@ -1955,7 +1967,10 @@ In order to make the discussion more vivid, we simulate a discussion on the appl
 
 Please prepare arguments for your group based on the core article and the supplementary material, as well as additional scientific literature if you wish (e.g. case studies). Arguments can target conceptual issues, methodological components, or other scientific evidence arguing for or against the suitability of the Global Forest Data in the context of REDD+. 
 
-<!--  SESSION 07 
+------
+
+-->
+<!--
 
 # Session 07: Multi-temporal change detection
 
@@ -2051,7 +2066,10 @@ In the next session, we would like to discuss [Müller et al. (2015): Mining den
 - How do spectral-temporal metrics conceptually differ from pixel-based composites?
 - For which type of (classification) problems can spectral-temporal metrics be useful?
 
-<!-- SESSION 08  
+------
+
+-->
+<!--
 
 # Session 08: Spectral-temporal metrics
 
@@ -2191,7 +2209,10 @@ In order to make the discussion more vivid, we simulate a discussion on the appl
 
 Please prepare arguments for your group based on the core article and the supplementary material, as well as additional scientific literature if you wish (e.g. case studies). Arguments can target conceptual issues, methodological components, or other scientific evidence arguing for or against the suitability of the Global Forest Data in the context of REDD+. 
 
-<!-- PROJECTS 
+------
+
+-->
+<!--
 
 # Session 09: Project phase I
 
@@ -2259,8 +2280,10 @@ e. Check any other source of data that you might know of.
 
 **Until next week:** Order and download the required data, so we can proceed with pre-processing.
 
+------
 
-
+-->
+<!--
 
 # Session 10: Project phase II
 
@@ -2300,6 +2323,11 @@ You have already done this a couple of times by now. Here are some guidelines th
 - Explore the spectral and / or temporal characteristics of your training locations. Do they behave as expected? Are there outliers? Are your image features good discriminators for your classes of interest?
 
 **Until next week:** Have your input features and training data ready, so we can proceed with producing results. Decide for an algorithm to use in your classification / regression problem. Discuss the parametrization of these algorithms in your team, i.e., which are the required parameters and how to determine useful parameter settings.
+
+------
+
+-->
+<!--
 
 
 # Session 11: Project phase III
@@ -2349,7 +2377,9 @@ The schedule is very tight and presenters are urged to strictly stay within pre-
 
 **Until next week:** Prepare your presentation in PowerPoint and PDF format and upload them as a *.zip file on moodle.
 
+------
 
+-->
 
 # Terminology
 
