@@ -214,8 +214,8 @@ $(document).ready(function () {
 <a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co"># Load packages, use install.packages(&#39;packagename&#39;) to install if needed</span></a>
 <a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw">library</span>(raster)</a>
 <a class="sourceLine" id="cb1-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co"># In case you run into memory issues</span></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co"># change raster options to store large rasters in temp files on disk</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co"># In case you run into memory issues, uncomment this setting of the raster </span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co"># options to store large computations in temp files on disk:</span></a>
 <a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co"># rasterOptions(maxmemory = 1e12)</span></a>
 <a class="sourceLine" id="cb1-12" data-line-number="12"></a>
 <a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co"># Define the folder that contains your data...</span></a>
@@ -246,16 +246,21 @@ $(document).ready(function () {
 <h1>R Basics</h1>
 <div id="using-r" class="section level2">
 <h2>Using R</h2>
-<p>Here, we aim to provide a brief overview on the basics of R, which is supposed to refresh your knowledge and help you to identify topics worth revisiting. At this stage, we will not cover advanced data wrangling using packages such as <code>tidyr</code> or <code>dplyr</code>, or look into advanced plotting with <code>ggplot2</code>. You are encouraged to refresh your knowledge from the M1 module “Quantitative methods” as well as learn from online resources we list at the bottom of this page.</p>
+<p>Here, we aim to provide a brief overview on the basics of R, which is supposed to refresh your knowledge and help you to identify topics worth revisiting. You are encouraged to refresh your knowledge from the M1 module “Quantitative methods” as well as learn from online resources we list at the bottom of this page.</p>
 <div id="operators" class="section level3">
 <h3>Operators</h3>
 <p>R is an interpreted programing language which means users can execute commmands directly in the console without having to compile sourcecode. You can use R as a simple calculator using arithemtic operators and mathematical functions which are then evaluated directly. For example:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="dv">2</span><span class="op">*</span>(<span class="dv">1</span><span class="op">+</span><span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">sqrt</span>(pi)  <span class="co"># &#39;pi&#39; is a predefined constant </span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw">abs</span>(<span class="op">-</span><span class="dv">2</span>)  <span class="co"># absolute value</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># A simple calculation</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="dv">2</span><span class="op">*</span>(<span class="dv">1</span><span class="op">+</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co"># abs() returns absolute values</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="kw">abs</span>(<span class="op">-</span><span class="dv">2</span>)  </a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co"># sqrt() returns the squareroot </span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="kw">sqrt</span>(pi)  <span class="co"># Note: &#39;pi&#39; is a predefined constant</span></a></code></pre></div>
 <pre><code>[1] 8
-[1] 1.772454
-[1] 2</code></pre>
+[1] 2
+[1] 1.772454</code></pre>
 <p>To list the defined operators used by R, simply type <code>?Syntax</code> into the console. This includes the arithemtic operators</p>
 <ul>
 <li>addition <code>+</code> and subtraction <code>-</code></li>
@@ -285,18 +290,22 @@ $(document).ready(function () {
 <div id="objects" class="section level3">
 <h3>Objects</h3>
 <p>Everything in R we assign to a variable is an object. We can assign objects in R with the <code>&lt;-</code> operator (i.e. an arrow), e.g. <code>x &lt;- 2</code>. Commonly, other languages use <code>=</code> which also works in R, however it is definitely good practice to use the <code>&lt;-</code> operator in R.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># let´s assign a variable &#39;x&#39; a value of 2</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">x &lt;-<span class="st"> </span><span class="dv">2</span>  <span class="co"># assigns the value, does not print the result to console</span></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co"># and another variable &#39;y&#39; ...</span></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4">y &lt;-<span class="st"> </span><span class="dv">5</span></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5">z &lt;-<span class="st"> </span>x<span class="op">*</span>y  <span class="co"># multiply them together and store into a new variable &#39;z&#39;</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="kw">print</span>(z)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># Assign object &#39;x&#39; a value of 2</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">x &lt;-<span class="st"> </span><span class="dv">2</span>  </a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co"># &lt;- assigns the value, but does not print the result to console</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co"># Assign  another variable &#39;y&#39; ...</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">y &lt;-<span class="st"> </span><span class="dv">5</span></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co"># Store the product of x and y in a new object &#39;z&#39;</span></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9">z &lt;-<span class="st"> </span>x<span class="op">*</span>y  </a>
+<a class="sourceLine" id="cb6-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co"># Print z</span></a>
+<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="kw">print</span>(z)</a></code></pre></div>
 <pre><code>[1] 10</code></pre>
+<p>Assigned variables are stored in the <em>environment</em> or workspace of our session and can be listed by calling the <code>ls()</code> function.</p>
+<hr />
 </div>
-</div>
-<div id="assigned-variables-are-stored-in-the-environment-or-workspace-of-our-session-and-can-be-listed-by-calling-the-ls-function." class="section level2">
-<h2>Assigned variables are stored in the <em>environment</em> or workspace of our session and can be listed by calling the <code>ls()</code> function.</h2>
 <div id="data-types-and-data-structures" class="section level3">
 <h3>Data Types and Data Structures</h3>
 <p>The basic data types in R comprise:</p>
@@ -306,55 +315,76 @@ $(document).ready(function () {
 <li><strong>Numeric</strong> (or Float): <code>lambda_red &lt;- 0.662</code></li>
 <li><strong>Logical</strong> (or Boolean): <code>sun_synchronous &lt;- TRUE</code> or <code>sun_synchronous &lt;- T</code></li>
 <li><strong>Factors</strong>: <code>agency &lt;- factor('NASA',levels=c('NASA','ESA','INPE'))</code></li>
-<li>(Complex: <code>x &lt;- 4i</code>)</li>
 </ul>
-<p>Understanding data types is important for a variety of reasons. For instance, later in the course we will manipulate large rasters of remotely sensed reflectance data which may be stored as floating point numbers between <code>0</code> and <code>1</code>. However, storing raster matrices as floats on disk requires more memory than when using an integer format. It can therefore be handy to transform our data into integer prior to saving it to disk.</p>
-<p>For now, let us just keep in mind that there are different data types and if we now want to store not just a single value/attribute into a variable but a whole set of data, we need to undertstand the different <strong>data structures</strong> available in R:</p>
+<p>Understanding data types is important for a variety of reasons. For instance, later in the course we will manipulate large rasters of remotely sensed reflectance data which may be stored as floating point numbers between <code>0</code> and <code>1</code>. However, storing raster matrices as floats on disk requires more memory as compared to using an integer format. It can therefore be handy to transform data into integer prior to saving it to disk.</p>
+<p>For now, let us just keep in mind that there are different data types and if we now want to store not just a single value into a variable but a whole set of data, we need to undertstand the different <strong>data structures</strong> available in R:</p>
 <div class="figure">
 <img src="fig/s00_datatypes.png" alt="Data Structures in R (from Zimmermann &amp; Steinmann 2006)" style="width:35.0%" />
 <p class="caption">Data Structures in R (from Zimmermann &amp; Steinmann 2006)</p>
 </div>
-<p>As you can see in the figure above, there exists a variaty of data structures in R which either allow for storing different data types simultaneously (<code>data frames</code>, <code>lists</code>), or only one datatype (<code>scalars</code>, <code>vectors</code>, <code>matrices</code>). Note, that the colors representing the data types are only chosen for visualisation purposes: It does not mean that matrices or vectors can only store values of type logical or numeric, but only data of the same type.</p>
+<p>As you can see in the figure above, a variety of data structures exist in R, which either allow for storing different data types simultaneously (<code>data frames</code>, <code>lists</code>), or only one datatype (<code>scalars</code>, <code>vectors</code>, <code>matrices</code>). Note, that the colors representing the data types are only chosen for vizualisation purposes: It does not mean that matrices or vectors can only store values of type logical or numeric, but only data of the same type.</p>
 <div id="vectors" class="section level4">
 <h4>Vectors</h4>
 <p>A vector in R can be created using a variety of functions. The most basic function is the <code>c()</code>-function, where ‘c’ stands for concatenate.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">a &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">16</span>, <span class="dv">32</span>)</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw">cat</span>(<span class="st">&quot;vector a:&quot;</span>, a)  <span class="co"># cat-function: Similar to print, outputs the objects, concatenating the representations</span></a></code></pre></div>
-<pre><code>vector a: 2 4 8 16 32</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># Create a vector of numbers</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">a &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">16</span>, <span class="dv">32</span>)</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co"># Print vector a in console</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="kw">print</span>(a) </a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co"># cat-function: Similar to print, outputs the objects, concatenating the representations</span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="kw">cat</span>(<span class="st">&quot;vector a:&quot;</span>, a)  </a></code></pre></div>
+<pre><code>[1]  2  4  8 16 32
+vector a: 2 4 8 16 32</code></pre>
 <p>Let`s see what happens when we mix numeric values with strings and combine them into a vector.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">b &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">16</span>, <span class="dv">32</span>, <span class="st">&quot;number&quot;</span>)</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw">cat</span>(<span class="st">&quot;vector a:&quot;</span>, b)  <span class="co"># cat-function: Outputs the objects, concatenating the representations</span></a>
-<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="kw">print</span>(<span class="st">&quot;&quot;</span>)</a>
-<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="kw">print</span>(<span class="kw">typeof</span>(b))</a></code></pre></div>
-<pre><code>vector a: 2 4 8 16 32 number[1] &quot;&quot;
-[1] &quot;character&quot;</code></pre>
-<p>Our vector was automatically cast to <code>character</code>. This is because R will try and convert a smaller data type into a larger one to avoid data loss (here from <code>numeric</code> to <code>character</code>). The string ‘number’ in the vector <code>b</code> cannot be cast to numeric, however we can very well transform a numeric <code>2</code> into a string <code>&quot;2&quot;</code>. Be aware of this behaviour and use other data structures if needed.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">b &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">16</span>, <span class="dv">32</span>, <span class="st">&quot;Landsat&quot;</span>, <span class="st">&quot;Sentinel-2&quot;</span>)</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw">print</span>(<span class="kw">typeof</span>(b))</a></code></pre></div>
+<pre><code>[1] &quot;character&quot;</code></pre>
+<p>Our vector was automatically cast to <code>character</code>. This is because R will try and convert a smaller data type into a larger one to avoid data loss (here from <code>numeric</code> to <code>character</code>). The strings (<code>Landsat</code> and <code>Sentinel-2</code>) in vector <code>b</code> cannot be cast to numeric, however we can very well transform a numeric <code>2</code> into a string <code>&quot;2&quot;</code>. Be aware of this behaviour and use other data structures if needed.</p>
 <p>Back to vector creation. Instead of having to type in sequences or replicates manually by hand, R provides the functions <code>seq()</code> and <code>rep()</code>.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">s &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from=</span><span class="dv">1</span>, <span class="dt">to=</span><span class="dv">365</span>, <span class="dt">by=</span><span class="dv">1</span>)  <span class="co"># or simply s &lt;- seq(1, 365, 1)</span></a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="kw">cat</span>(<span class="st">&quot;Length of s:&quot;</span>, <span class="kw">length</span>(s))</a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co"># alternatively (always with by=1):</span></a>
-<a class="sourceLine" id="cb12-5" data-line-number="5">s &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">365</span></a>
-<a class="sourceLine" id="cb12-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co"># we may want to repeat a specific value n times</span></a>
-<a class="sourceLine" id="cb12-8" data-line-number="8">r &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb12-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb12-10" data-line-number="10"><span class="co"># ...or repeat a sequence </span></a>
-<a class="sourceLine" id="cb12-11" data-line-number="11">r &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">seq</span>(<span class="dv">2</span>, <span class="dv">12</span>, <span class="dv">2</span>), <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb12-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb12-13" data-line-number="13"><span class="co"># ...or repeat each entry in a sequence </span></a>
-<a class="sourceLine" id="cb12-14" data-line-number="14">r &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">seq</span>(<span class="dv">2</span>, <span class="dv">12</span>, <span class="dv">2</span>), <span class="dt">each=</span><span class="dv">5</span>)</a></code></pre></div>
-<pre><code>Length of s: 365</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="co"># Create a numeric sequence and store in object s</span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2">s &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from=</span><span class="dv">1</span>, <span class="dt">to=</span><span class="dv">365</span>, <span class="dt">by=</span><span class="dv">1</span>)  <span class="co"># or simply s &lt;- seq(1, 365, 1)</span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="kw">cat</span>(<span class="st">&quot;Length of s:&quot;</span>, <span class="kw">length</span>(s))</a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co"># Alternatively use (always with by=1):</span></a>
+<a class="sourceLine" id="cb12-6" data-line-number="6">s &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">365</span>)</a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co"># We may want to repeat a value n times... </span></a>
+<a class="sourceLine" id="cb12-9" data-line-number="9">r &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb12-10" data-line-number="10"><span class="kw">print</span>(r)</a>
+<a class="sourceLine" id="cb12-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="co"># ...or repeat a sequence </span></a>
+<a class="sourceLine" id="cb12-13" data-line-number="13">r &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">seq</span>(<span class="dv">2</span>, <span class="dv">8</span>, <span class="dv">2</span>), <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb12-14" data-line-number="14"><span class="kw">print</span>(r)</a>
+<a class="sourceLine" id="cb12-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb12-16" data-line-number="16"><span class="co"># ...or repeat each entry in a sequence </span></a>
+<a class="sourceLine" id="cb12-17" data-line-number="17">r &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">seq</span>(<span class="dv">2</span>, <span class="dv">8</span>, <span class="dv">2</span>), <span class="dt">each=</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb12-18" data-line-number="18"><span class="kw">print</span>(r)</a></code></pre></div>
+<pre><code>Length of s: 365[1] 1 1 1 1 1
+ [1] 2 4 6 8 2 4 6 8 2 4 6 8
+ [1] 2 2 2 4 4 4 6 6 6 8 8 8</code></pre>
 </div>
 <div id="matrices-and-arrays" class="section level4">
 <h4>Matrices and Arrays</h4>
-<p>Creating matrices and arrays is just as easy as creating vectors. Matrices are just 2-dimensional arrays with a specified number of <code>rows</code> and <code>columns</code>:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">m &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="kw">print</span>(m)</a>
-<a class="sourceLine" id="cb14-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb14-4" data-line-number="4">m2 &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">5</span>, <span class="dt">byrow =</span> T)</a>
-<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="kw">print</span>(m2)</a></code></pre></div>
+<p>Creating matrices and arrays is just as easy as creating vectors. Matrices are just 2-dimensional arrays with a specified number of <code>rows</code> and <code>columns</code>. All columns in a matrix must have the same data type (e.g., numeric, character) and must be of equal length.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="co"># Creates empty matrix of size 5x2</span></a>
+<a class="sourceLine" id="cb14-2" data-line-number="2">m1 &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">data=</span><span class="ot">NA</span>, <span class="dt">nrow=</span><span class="dv">5</span>, <span class="dt">ncol=</span><span class="dv">2</span>) </a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="kw">print</span>(m1)</a>
+<a class="sourceLine" id="cb14-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="co"># Creates matrix of size 5x2 containing a numeric vector</span></a>
+<a class="sourceLine" id="cb14-6" data-line-number="6">m2&lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">data=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>), <span class="dt">nrow=</span><span class="dv">5</span>, <span class="dt">ncol=</span><span class="dv">2</span>) </a>
+<a class="sourceLine" id="cb14-7" data-line-number="7"><span class="kw">print</span>(m2)</a>
+<a class="sourceLine" id="cb14-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb14-9" data-line-number="9"><span class="co"># Can you describe what byrow=T does?</span></a>
+<a class="sourceLine" id="cb14-10" data-line-number="10">m3 &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">data=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>), <span class="dt">nrow=</span><span class="dv">5</span>, <span class="dt">ncol=</span><span class="dv">2</span>, <span class="dt">byrow =</span> T) </a>
+<a class="sourceLine" id="cb14-11" data-line-number="11"><span class="kw">print</span>(m3)</a></code></pre></div>
 <pre><code>     [,1] [,2]
+[1,]   NA   NA
+[2,]   NA   NA
+[3,]   NA   NA
+[4,]   NA   NA
+[5,]   NA   NA
+     [,1] [,2]
 [1,]    1    6
 [2,]    2    7
 [3,]    3    8
@@ -366,70 +396,69 @@ $(document).ready(function () {
 [3,]    5    6
 [4,]    7    8
 [5,]    9   10</code></pre>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">a &lt;-<span class="st"> </span><span class="kw">array</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>,<span class="kw">c</span>(<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="kw">print</span>(a)</a></code></pre></div>
+<p>Arrays are similar to matrices, but can have more than two dimensions, as specified in the <code>dim</code> argument.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="co"># Create array of two 4x3 matrices</span></a>
+<a class="sourceLine" id="cb16-2" data-line-number="2">a &lt;-<span class="st"> </span><span class="kw">array</span>(<span class="dt">data=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>), <span class="dt">dim=</span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>)) </a>
+<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="kw">print</span>(a)</a></code></pre></div>
 <pre><code>, , 1
 
-     [,1] [,2] [,3] [,4] [,5]
-[1,]    1    6   11   16   21
-[2,]    2    7   12   17   22
-[3,]    3    8   13   18   23
-[4,]    4    9   14   19   24
-[5,]    5   10   15   20   25
+     [,1] [,2] [,3]
+[1,]    1    5    9
+[2,]    2    6   10
+[3,]    3    7   11
+[4,]    4    8   12
 
 , , 2
 
-     [,1] [,2] [,3] [,4] [,5]
-[1,]    1    6   11   16   21
-[2,]    2    7   12   17   22
-[3,]    3    8   13   18   23
-[4,]    4    9   14   19   24
-[5,]    5   10   15   20   25</code></pre>
-<p><code>Arrays</code> and especially <code>matrices</code> are important structures when working with remote sensing data, as this is how images are represented numerically. We will extensively make use of the <code>raster</code> package throughout the course where a lot of the handling is done for us, however sometimes we need to manipulate the data with more advanced techniques and it is therefore crucial to understand the underlying data structure.</p>
+     [,1] [,2] [,3]
+[1,]    1    5    9
+[2,]    2    6   10
+[3,]    3    7   11
+[4,]    4    8   12</code></pre>
+<p>Matrices are very important structures when working with remote sensing data, as this is how images are represented numerically. We will extensively make use of the <code>raster</code> package throughout the course where a lot of the handling is done for us, however sometimes we need to manipulate image data with more advanced techniques and it is therefore crucial to understand the underlying data structure.</p>
 </div>
 <div id="data-frames-and-lists" class="section level4">
 <h4>Data Frames and Lists</h4>
-<p>Generally speaking, a <code>data.frame</code> is a list of vectors of equal length.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">sensor =</span> <span class="kw">c</span>(<span class="st">&quot;Landsat-5 TM&quot;</span>, <span class="st">&quot;Landsat-7 ETM+&quot;</span>, <span class="st">&quot;Landsat-8 OLI-TIRS&quot;</span>), </a>
-<a class="sourceLine" id="cb18-2" data-line-number="2">                 <span class="dt">n_bands =</span> <span class="kw">c</span>(<span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">11</span>), </a>
-<a class="sourceLine" id="cb18-3" data-line-number="3">                 <span class="dt">active =</span> <span class="kw">c</span>(F, T, T), </a>
-<a class="sourceLine" id="cb18-4" data-line-number="4">                 <span class="dt">launched =</span> <span class="kw">c</span>(<span class="dv">1984</span>, <span class="dv">1999</span>, <span class="dv">2013</span>))</a>
-<a class="sourceLine" id="cb18-5" data-line-number="5"><span class="kw">print</span>(df)</a></code></pre></div>
+<p>Generally speaking, a <code>data.frame</code> is a list of vectors of equal length, which can have varying data types.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="co"># Create data.frame with four columns of different data types</span></a>
+<a class="sourceLine" id="cb18-2" data-line-number="2">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">sensor =</span> <span class="kw">c</span>(<span class="st">&quot;Landsat-5 TM&quot;</span>, <span class="st">&quot;Landsat-7 ETM+&quot;</span>, <span class="st">&quot;Landsat-8 OLI-TIRS&quot;</span>), </a>
+<a class="sourceLine" id="cb18-3" data-line-number="3">                 <span class="dt">n_bands =</span> <span class="kw">c</span>(<span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">11</span>), </a>
+<a class="sourceLine" id="cb18-4" data-line-number="4">                 <span class="dt">active =</span> <span class="kw">c</span>(F, T, T), </a>
+<a class="sourceLine" id="cb18-5" data-line-number="5">                 <span class="dt">launched =</span> <span class="kw">c</span>(<span class="dv">1984</span>, <span class="dv">1999</span>, <span class="dv">2013</span>))</a>
+<a class="sourceLine" id="cb18-6" data-line-number="6"><span class="kw">print</span>(df)</a></code></pre></div>
 <pre><code>              sensor n_bands active launched
 1       Landsat-5 TM       7  FALSE     1984
 2     Landsat-7 ETM+       8   TRUE     1999
 3 Landsat-8 OLI-TIRS      11   TRUE     2013</code></pre>
 <p>The top line of the <code>data.frame</code> is the header, describing the column names. Each entry is called a cell and may be indexed (accessed) individually. We will see how this works in a moment.</p>
-<p>Lastly, let us have a look at lists. Lists are objects that can contain elements of different types – vectors, string scalars, matrices, functions or yet another list. Hence, a list is a generic vector containing other objects. A list can be created using the <code>list()</code> function:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="co"># let´s put our created matrix, array and vector in a list</span></a>
-<a class="sourceLine" id="cb20-2" data-line-number="2">l &lt;-<span class="st"> </span><span class="kw">list</span>(m, a, df)</a>
+<p>Lastly, let us have a look at lists. Lists are objects that can contain elements of different types – vectors, string scalars, matrices, functions or yet another list. Hence, a list is a generic vector containing other objects. The dimensions of the elements to be included must not be identical, which gives us additional flexibility to integrate heterogeneous datasets. A list can be created using the <code>list()</code> function:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="co"># Store the matrix, array and vector in a list</span></a>
+<a class="sourceLine" id="cb20-2" data-line-number="2">l &lt;-<span class="st"> </span><span class="kw">list</span>(m3, a, df)</a>
 <a class="sourceLine" id="cb20-3" data-line-number="3"><span class="kw">print</span>(l)</a></code></pre></div>
 <pre><code>[[1]]
      [,1] [,2]
-[1,]    1    6
-[2,]    2    7
-[3,]    3    8
-[4,]    4    9
-[5,]    5   10
+[1,]    1    2
+[2,]    3    4
+[3,]    5    6
+[4,]    7    8
+[5,]    9   10
 
 [[2]]
 , , 1
 
-     [,1] [,2] [,3] [,4] [,5]
-[1,]    1    6   11   16   21
-[2,]    2    7   12   17   22
-[3,]    3    8   13   18   23
-[4,]    4    9   14   19   24
-[5,]    5   10   15   20   25
+     [,1] [,2] [,3]
+[1,]    1    5    9
+[2,]    2    6   10
+[3,]    3    7   11
+[4,]    4    8   12
 
 , , 2
 
-     [,1] [,2] [,3] [,4] [,5]
-[1,]    1    6   11   16   21
-[2,]    2    7   12   17   22
-[3,]    3    8   13   18   23
-[4,]    4    9   14   19   24
-[5,]    5   10   15   20   25
+     [,1] [,2] [,3]
+[1,]    1    5    9
+[2,]    2    6   10
+[3,]    3    7   11
+[4,]    4    8   12
 
 
 [[3]]
@@ -437,77 +466,94 @@ $(document).ready(function () {
 1       Landsat-5 TM       7  FALSE     1984
 2     Landsat-7 ETM+       8   TRUE     1999
 3 Landsat-8 OLI-TIRS      11   TRUE     2013</code></pre>
-<p>As the <code>print</code> results suggests, our three object are now stored at locations <code>[[1]]</code>, <code>[[2]]</code> and <code>[[3]]</code>. This brings us to the next topic - indexing.</p>
+<p>As the <code>print</code> results suggests, our three objects are now stored at locations <code>[[1]]</code>, <code>[[2]]</code> and <code>[[3]]</code>. We may want to access these list elements and cells therein individually. This brings us to the next topic - indexing.</p>
 </div>
 </div>
 <div id="indexing" class="section level3">
 <h3>Indexing</h3>
-<p>So how do we access values in <code>vectors</code>, <code>data.frames</code> or the objects in the <code>list</code> we just created? Each element of an object type is assigned an index (i.e. a positive integer) which we can retrieve by addressing these indices. This is achieved using square brackets and a given index location(s).</p>
+<p>So how do we access values in <code>vectors</code>, <code>data.frames</code> or the elements in the <code>list</code> we just created? Each element is assigned an index (i.e. a positive integer) which we can retrieve by addressing these indices. This is achieved using square brackets and a given index location(s).</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">b &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">16</span>, <span class="dv">32</span>, <span class="dv">64</span>, <span class="dv">128</span>, <span class="dv">256</span>)</a>
-<a class="sourceLine" id="cb22-2" data-line-number="2">b[<span class="dv">4</span>]  <span class="co"># retrieve the 4th element of b</span></a>
-<a class="sourceLine" id="cb22-3" data-line-number="3">b[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]  <span class="co"># element 1 to 3</span></a></code></pre></div>
+<a class="sourceLine" id="cb22-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb22-3" data-line-number="3"><span class="co"># Retrieve the 4th value of b</span></a>
+<a class="sourceLine" id="cb22-4" data-line-number="4">b[<span class="dv">4</span>]  </a>
+<a class="sourceLine" id="cb22-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb22-6" data-line-number="6"><span class="co"># Retrieve value 1, 2, and 3</span></a>
+<a class="sourceLine" id="cb22-7" data-line-number="7">b[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]  </a></code></pre></div>
 <pre><code>[1] 16
 [1] 2 4 8</code></pre>
 <p>Use a vector to select certain positions:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">b[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>)] <span class="co"># retrieve the element 1, 3, 5, and 7 of b</span></a></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="co"># Retrieve value 1, 3, 5, and 7 of b</span></a>
+<a class="sourceLine" id="cb24-2" data-line-number="2">b[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>)] </a></code></pre></div>
 <pre><code>[1]   2   8  32 128</code></pre>
 <p>Manipulate entries:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">b[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="dv">0</span> <span class="co"># set the first entry in b to 0</span></a>
-<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="kw">print</span>(b)</a></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="co"># Set the first value in b to 0</span></a>
+<a class="sourceLine" id="cb26-2" data-line-number="2">b[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="dv">0</span> </a>
+<a class="sourceLine" id="cb26-3" data-line-number="3"><span class="kw">print</span>(b)</a></code></pre></div>
 <pre><code>[1]   0   4   8  16  32  64 128 256</code></pre>
 <p>For lists, one generally uses <code>[[</code> to select any single element, whereas <code>[</code> returns a list of the selected elements.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">subset_l &lt;-<span class="st"> </span>l[[<span class="dv">1</span>]]</a>
-<a class="sourceLine" id="cb28-2" data-line-number="2"><span class="kw">print</span>(subset_l)</a></code></pre></div>
-<pre><code>     [,1] [,2]
-[1,]    1    6
-[2,]    2    7
-[3,]    3    8
-[4,]    4    9
-[5,]    5   10</code></pre>
-<p>If our objects in our list have specific names or we are indexing an entire column in a data frame, we may also use the <code>$</code> operator. For example:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw">names</span>(l) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;matrix&quot;</span>, <span class="st">&quot;array&quot;</span>, <span class="st">&quot;df&quot;</span>)</a>
-<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="kw">print</span>(l<span class="op">$</span>df)</a>
-<a class="sourceLine" id="cb30-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb30-4" data-line-number="4"><span class="kw">print</span>(df<span class="op">$</span>n_bands)</a></code></pre></div>
-<pre><code>              sensor n_bands active launched
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="co"># [[]] returns element 1 in its original data type</span></a>
+<a class="sourceLine" id="cb28-2" data-line-number="2"><span class="kw">typeof</span>(l[[<span class="dv">1</span>]]) </a>
+<a class="sourceLine" id="cb28-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb28-4" data-line-number="4"><span class="co"># [] returns a list containing element 1</span></a>
+<a class="sourceLine" id="cb28-5" data-line-number="5"><span class="kw">typeof</span>(l[<span class="dv">1</span>]) </a>
+<a class="sourceLine" id="cb28-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb28-7" data-line-number="7"><span class="co"># Create a new object containing element 1</span></a>
+<a class="sourceLine" id="cb28-8" data-line-number="8">object_l &lt;-<span class="st"> </span>l[[<span class="dv">1</span>]] </a>
+<a class="sourceLine" id="cb28-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb28-10" data-line-number="10"><span class="co"># Create a new object containing cell [4,2] of element 1</span></a>
+<a class="sourceLine" id="cb28-11" data-line-number="11">cell_l &lt;-<span class="st"> </span>l[[<span class="dv">1</span>]][<span class="dv">4</span>,<span class="dv">2</span>] </a></code></pre></div>
+<pre><code>[1] &quot;integer&quot;
+[1] &quot;list&quot;</code></pre>
+<p>We may also use the <code>$</code> operator to access specific elements (in lists) or columns (in data frames), given that names were assigned. For example:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw">names</span>(l) <span class="co"># Currently, our list does not have names...</span></a>
+<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="kw">names</span>(l) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;matrix&quot;</span>, <span class="st">&quot;array&quot;</span>, <span class="st">&quot;df&quot;</span>) <span class="co">#... names() can be used to assign element names</span></a>
+<a class="sourceLine" id="cb30-3" data-line-number="3"><span class="kw">print</span>(l<span class="op">$</span>df)</a>
+<a class="sourceLine" id="cb30-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb30-5" data-line-number="5"><span class="kw">print</span>(df<span class="op">$</span>n_bands)</a></code></pre></div>
+<pre><code>NULL
+              sensor n_bands active launched
 1       Landsat-5 TM       7  FALSE     1984
 2     Landsat-7 ETM+       8   TRUE     1999
 3 Landsat-8 OLI-TIRS      11   TRUE     2013
 [1]  7  8 11</code></pre>
+<p>If you are uncertain about the characteristics of an object, you may use additional functions to investigate its attributes. Good examples are:</p>
+<ul>
+<li><code>str()</code>: structure of an object</li>
+<li><code>length()</code>: number of elements in one-dimensional objects or lists</li>
+<li><code>nrow()</code>, <code>ncol()</code>: number of rows or columns in 2-dimensional objects (df or matrix)</li>
+<li><code>class()</code>, <code>typeof()</code>: class or type of an object</li>
+<li><code>names()</code>: retrieve column names of df, or element names of list</li>
+</ul>
 <div id="missing-values" class="section level4">
 <h4>Missing Values</h4>
-<p>Often our data has missing entries. For illustration, think of a vector of temperature measurements where due to measurement error we miss an entry now and then. For completeness, those are not just excluded but may often be represented by a certain constant, e.g. -9999. In R those values can be set to the logical constant <code>NA</code> for ‘Not Available’.</p>
-<p>Let us consider an arbitrary vector of hourly temperature measurements where -9999 in fact was used to represent erroneous measurements:</p>
+<p>Often our data has missing entries. For illustration, think of a vector of temperature measurements where due to measurement error we miss an entry now and then. For completeness, those are not just excluded but may often be represented by a certain value, e.g. -9999. In R missing values can be set to the logical constant <code>NA</code> (Not Available).</p>
+<p>Let us consider an vector of hourly temperature measurements where -9999 in fact was used to represent erroneous measurements:</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1">t_hourly &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">10.1</span>, <span class="fl">8.6</span>, <span class="fl">8.2</span>, <span class="fl">7.2</span>, <span class="fl">6.8</span>, <span class="dv">-9999</span>, <span class="fl">8.2</span>, <span class="dv">9</span>, <span class="fl">9.5</span>, <span class="fl">10.5</span>, <span class="dv">-9999</span>, <span class="fl">9.9</span>, <span class="fl">9.7</span>, <span class="dv">8</span>, <span class="fl">7.7</span>, <span class="fl">7.1</span>, <span class="fl">6.8</span>, <span class="fl">5.8</span>, <span class="fl">5.2</span>, <span class="fl">4.2</span>, <span class="fl">4.0</span>, <span class="fl">4.1</span>, <span class="fl">4.2</span>, <span class="fl">3.8</span>)</a>
 <a class="sourceLine" id="cb32-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb32-3" data-line-number="3"><span class="co"># calculate daily mean T</span></a>
+<a class="sourceLine" id="cb32-3" data-line-number="3"><span class="co"># Calculate daily mean temperature</span></a>
 <a class="sourceLine" id="cb32-4" data-line-number="4"><span class="kw">mean</span>(t_hourly)</a></code></pre></div>
 <pre><code>[1] -826.6417</code></pre>
 <p>These measurements exhibit two invalid temperature values of <code>-9999</code>. Accordingly, the calculated mean is not of value to us. We need to flag these entries as invalid or more generally not available <code>NA</code>:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="co"># use indexing with logical condition</span></a>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="co"># Use indexing with logical condition</span></a>
 <a class="sourceLine" id="cb34-2" data-line-number="2">t_hourly[t_hourly <span class="op">==</span><span class="st"> </span><span class="dv">-9999</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
 <a class="sourceLine" id="cb34-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb34-4" data-line-number="4"><span class="co"># ...ifelse to manipulate array: ifelse(condition, TRUE, FALSE)</span></a>
 <a class="sourceLine" id="cb34-5" data-line-number="5">t_hourly &lt;-<span class="st"> </span><span class="kw">ifelse</span>(t_hourly <span class="op">==</span><span class="st"> </span><span class="dv">-9999</span>, <span class="ot">NA</span>, t_hourly)</a>
 <a class="sourceLine" id="cb34-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb34-7" data-line-number="7">t_hourly</a>
-<a class="sourceLine" id="cb34-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb34-9" data-line-number="9"><span class="co"># mean() will yield NA as soon as one NA value appears unless...</span></a>
-<a class="sourceLine" id="cb34-10" data-line-number="10"><span class="kw">mean</span>(t_hourly)</a>
-<a class="sourceLine" id="cb34-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb34-12" data-line-number="12"><span class="co"># we specify na.rm = True to ignore missing values:</span></a>
-<a class="sourceLine" id="cb34-13" data-line-number="13"><span class="kw">mean</span>(t_hourly, <span class="dt">na.rm =</span> T)</a></code></pre></div>
-<pre><code> [1] 10.1  8.6  8.2  7.2  6.8   NA  8.2  9.0  9.5 10.5   NA  9.9  9.7  8.0  7.7
-[16]  7.1  6.8  5.8  5.2  4.2  4.0  4.1  4.2  3.8
-[1] NA
+<a class="sourceLine" id="cb34-7" data-line-number="7"><span class="co"># mean() will yield NA as soon as one NA value appears unless...</span></a>
+<a class="sourceLine" id="cb34-8" data-line-number="8"><span class="kw">mean</span>(t_hourly)</a>
+<a class="sourceLine" id="cb34-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb34-10" data-line-number="10"><span class="co"># ... we specify na.rm = True to ignore missing values:</span></a>
+<a class="sourceLine" id="cb34-11" data-line-number="11"><span class="kw">mean</span>(t_hourly, <span class="dt">na.rm =</span> T)</a></code></pre></div>
+<pre><code>[1] NA
 [1] 7.209091</code></pre>
-<p>There are often various ways to achieve what we want, the best way largely depends on how we want to proceed with our data. Here are more examples on how we could achieved the same:</p>
+<p>There are often various ways to achieve what we want, the best way largely depends on how we want to proceed with our data. Here are more examples to do the same:</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1">t_hourly &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">10.1</span>, <span class="fl">8.6</span>, <span class="fl">8.2</span>, <span class="fl">7.2</span>, <span class="fl">6.8</span>, <span class="dv">-9999</span>, <span class="fl">8.2</span>, <span class="dv">9</span>, <span class="fl">9.5</span>, <span class="fl">10.5</span>, <span class="dv">-9999</span>, <span class="fl">9.9</span>, <span class="fl">9.7</span>, <span class="dv">8</span>, <span class="fl">7.7</span>, <span class="fl">7.1</span>, <span class="fl">6.8</span>, <span class="fl">5.8</span>, <span class="fl">5.2</span>, <span class="fl">4.2</span>, <span class="fl">4.0</span>, <span class="fl">4.1</span>, <span class="fl">4.2</span>, <span class="fl">3.8</span>)</a>
 <a class="sourceLine" id="cb36-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb36-3" data-line-number="3"><span class="co"># using only the entries that are not -9999</span></a>
+<a class="sourceLine" id="cb36-3" data-line-number="3"><span class="co"># Use only the entries that are not -9999...</span></a>
 <a class="sourceLine" id="cb36-4" data-line-number="4"><span class="kw">mean</span>(t_hourly[t_hourly <span class="op">!=</span><span class="st"> </span><span class="dv">-9999</span>])</a>
 <a class="sourceLine" id="cb36-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb36-6" data-line-number="6"><span class="co"># or using entries that are not NA after we set it to NA</span></a>
+<a class="sourceLine" id="cb36-6" data-line-number="6"><span class="co"># ...or use non-NAs after assigning NA to -9999</span></a>
 <a class="sourceLine" id="cb36-7" data-line-number="7">t_hourly[t_hourly <span class="op">==</span><span class="st"> </span><span class="dv">-9999</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
 <a class="sourceLine" id="cb36-8" data-line-number="8"><span class="kw">mean</span>(t_hourly[<span class="op">!</span><span class="kw">is.na</span>(t_hourly)])</a></code></pre></div>
 <pre><code>[1] 7.209091
@@ -516,10 +562,11 @@ $(document).ready(function () {
 </div>
 <div id="flow-control" class="section level3">
 <h3>Flow Control</h3>
-<p>Often we want code to be executed only when certain conditions are met (conditional statements) or repeat a certain chain of commands in order (repeating operations). For conditional statements, the most commonly used approach are <code>if</code> statements which are based on boolean logic. Accordingly, it is evaluated if a condition is <code>TRUE</code> or <code>FALSE</code> and the following code block will therefore be executed or not interpeted. The basic form of an <code>if</code> statement could be as follows:</p>
+<p>Often we want code to be executed only when certain conditions are met (conditional statements) or repeat a certain chain of commands in order (repeating operations). For conditional statements, the most commonly used approach are <code>if</code> statements which are based on boolean logic. Accordingly, it is evaluated if a condition is <code>TRUE</code> or <code>FALSE</code> and the following code block will therefore be executed (<code>TRUE</code>) or not (<code>FALSE</code>).</p>
 <div id="if-statements" class="section level4">
 <h4>if-statements</h4>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="co"># we want to reclassify an image based on a certain NDVI threshold, however first we want to make a sanity check to see if the value provided actually makes sense</span></a>
+<p>The basic form of an <code>if</code> statement could be as follows:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="co"># Reclassify an image based on a certain NDVI threshold, after a sanity check if the threshold is valid</span></a>
 <a class="sourceLine" id="cb38-2" data-line-number="2">ndvi_threshold &lt;-<span class="st"> </span><span class="fl">0.8</span></a>
 <a class="sourceLine" id="cb38-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb38-4" data-line-number="4"><span class="cf">if</span> (ndvi_threshold <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span> <span class="op">|</span><span class="st"> </span>ndvi_threshold <span class="op">&lt;</span><span class="st"> </span><span class="dv">-1</span>) {  <span class="co"># i.e. if NDVI larger 1 OR smaller -1</span></a>
@@ -527,7 +574,7 @@ $(document).ready(function () {
 <a class="sourceLine" id="cb38-6" data-line-number="6">  </a>
 <a class="sourceLine" id="cb38-7" data-line-number="7">} <span class="cf">else</span> {</a>
 <a class="sourceLine" id="cb38-8" data-line-number="8">  <span class="kw">print</span>(<span class="st">&quot;Valid NDVI threshold. Continue processing ...&quot;</span>)</a>
-<a class="sourceLine" id="cb38-9" data-line-number="9">  <span class="co"># code to be executed ....</span></a>
+<a class="sourceLine" id="cb38-9" data-line-number="9">  <span class="co"># Additional code to be executed follows here ....</span></a>
 <a class="sourceLine" id="cb38-10" data-line-number="10">}</a></code></pre></div>
 <pre><code>[1] &quot;Valid NDVI threshold. Continue processing ...&quot;</code></pre>
 <p>Above we already used the vectorized version <code>ifelse()</code> which for instance allowed us to manipulate out vector of temperature records:</p>
@@ -535,11 +582,11 @@ $(document).ready(function () {
 </div>
 <div id="loops" class="section level4">
 <h4>Loops</h4>
-<p><code>For</code> loops can be used to iterate over items and repeatingly execute code blocks:</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="co"># generate sequence of integers from 1 to 10 with a step size of 1</span></a>
+<p><code>for</code> loops can be used to iterate over items and repeatingly execute code blocks:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="co"># Generate sequence of integers from 1 to 10 with a step size of 1</span></a>
 <a class="sourceLine" id="cb41-2" data-line-number="2">v &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">1</span>)</a>
 <a class="sourceLine" id="cb41-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb41-4" data-line-number="4"><span class="co"># iterate over each entry in v and print</span></a>
+<a class="sourceLine" id="cb41-4" data-line-number="4"><span class="co"># Iterate over each entry in v and print</span></a>
 <a class="sourceLine" id="cb41-5" data-line-number="5"><span class="cf">for</span> (item <span class="cf">in</span> v){</a>
 <a class="sourceLine" id="cb41-6" data-line-number="6">  <span class="kw">print</span>(item)</a>
 <a class="sourceLine" id="cb41-7" data-line-number="7">}</a></code></pre></div>
@@ -553,11 +600,11 @@ $(document).ready(function () {
 [1] 8
 [1] 9
 [1] 10</code></pre>
-<p>A <code>while</code> repeatedly evaluates a condition and executes commands until the final condition is fulfilled.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="co"># assign integer to v</span></a>
+<p><code>while</code> repeatedly evaluates a condition and executes commands until the final condition is fulfilled.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="co"># Assign integer to v</span></a>
 <a class="sourceLine" id="cb43-2" data-line-number="2">v &lt;-<span class="st"> </span><span class="dv">-3</span></a>
 <a class="sourceLine" id="cb43-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb43-4" data-line-number="4"><span class="co"># adds +1 to v and then prints until v &gt; 2</span></a>
+<a class="sourceLine" id="cb43-4" data-line-number="4"><span class="co"># Adds +1 to v and then prints until v &gt; 2</span></a>
 <a class="sourceLine" id="cb43-5" data-line-number="5"><span class="cf">while</span> (v <span class="op">&lt;=</span><span class="st"> </span><span class="dv">2</span>) {</a>
 <a class="sourceLine" id="cb43-6" data-line-number="6">  v &lt;-<span class="st"> </span>v <span class="op">+</span><span class="st"> </span><span class="dv">1</span></a>
 <a class="sourceLine" id="cb43-7" data-line-number="7">  <span class="kw">print</span>(v)</a>
@@ -568,7 +615,7 @@ $(document).ready(function () {
 [1] 1
 [1] 2
 [1] 3</code></pre>
-<p>Note that loops should be avoided in higher-level languages such as R or Python where possible because thet tend to make the programs run slower than when using in-built vectorized functions. For example, calculating the sum over a vector may be calculated as follows:</p>
+<p>Note that loops should be avoided in higher-level languages such as R or Python where possible because they tend to make the programs run slower than when using in-built vectorized functions. For example, calculating the sum over a vector may be calculated as follows:</p>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1">s &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="fl">0.5</span>)</a>
 <a class="sourceLine" id="cb45-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb45-3" data-line-number="3">s_sum &lt;-<span class="st"> </span><span class="dv">0</span></a>
@@ -586,9 +633,9 @@ $(document).ready(function () {
 <div id="functions" class="section level3">
 <h3>Functions</h3>
 <p>R allows for user-specified functions which comes in handy whenever a certain computation needs to be repeated or generalized. Generally, a function is a set of statements organized together to perform a specific task. Using functions greatly enhances code structure as it improves the clarity and readability of your script.</p>
-<p>Function arguments are provided in round <code>()</code> brackets. Between <code>{}</code> stands the function body which contains the collection of statements while <code>return()</code> is used to define the output of a function. A function may be as simple as a print statement without any arguments of objects to be returned.</p>
+<p>Function arguments are provided in round <code>()</code> brackets. Between <code>{}</code> stands the function body which contains the collection of statements. <code>return()</code> is used to define the output of a function. A function may be as simple as a print statement without any objects to be returned.</p>
 <p>A function object is defined with the <code>function()</code> call:</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1"><span class="co"># most basic function</span></a>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1"><span class="co"># Basic function</span></a>
 <a class="sourceLine" id="cb49-2" data-line-number="2">printer &lt;-<span class="st"> </span><span class="cf">function</span>(){</a>
 <a class="sourceLine" id="cb49-3" data-line-number="3">  <span class="kw">print</span>(<span class="st">&quot;Hello World!&quot;</span>)</a>
 <a class="sourceLine" id="cb49-4" data-line-number="4">}</a>
@@ -596,7 +643,7 @@ $(document).ready(function () {
 <a class="sourceLine" id="cb49-6" data-line-number="6"><span class="kw">printer</span>()</a></code></pre></div>
 <pre><code>[1] &quot;Hello World!&quot;</code></pre>
 <p>Another example where we want the function to calculate the NDVI for a given pair of reflectance values in the red and near-infrared region of the spectrum:</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="co"># function to calculate the NDVI</span></a>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="co"># Function to calculate the NDVI</span></a>
 <a class="sourceLine" id="cb51-2" data-line-number="2">calc.ndvi &lt;-<span class="st"> </span><span class="cf">function</span>(red, nir, <span class="dt">scale_factor=</span><span class="dv">1</span>){</a>
 <a class="sourceLine" id="cb51-3" data-line-number="3">  ndvi &lt;-<span class="st"> </span>(nir<span class="op">-</span>red)<span class="op">/</span>(nir<span class="op">+</span>red)</a>
 <a class="sourceLine" id="cb51-4" data-line-number="4">  <span class="kw">return</span>(ndvi<span class="op">*</span>scale_factor)</a>
@@ -604,15 +651,16 @@ $(document).ready(function () {
 <a class="sourceLine" id="cb51-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb51-7" data-line-number="7">p_red &lt;-<span class="st"> </span><span class="fl">0.2</span></a>
 <a class="sourceLine" id="cb51-8" data-line-number="8">p_nir &lt;-<span class="st"> </span><span class="fl">0.8</span></a>
-<a class="sourceLine" id="cb51-9" data-line-number="9">ndvi &lt;-<span class="st"> </span><span class="kw">calc.ndvi</span>(p_red, p_nir)</a>
-<a class="sourceLine" id="cb51-10" data-line-number="10"><span class="kw">print</span>(ndvi)</a></code></pre></div>
+<a class="sourceLine" id="cb51-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb51-10" data-line-number="10">ndvi &lt;-<span class="st"> </span><span class="kw">calc.ndvi</span>(p_red, p_nir)</a>
+<a class="sourceLine" id="cb51-11" data-line-number="11"><span class="kw">print</span>(ndvi)</a></code></pre></div>
 <pre><code>[1] 0.6</code></pre>
 <p>Here, <code>red</code> and <code>nir</code> are obligatory arguments that the user has to specify while <code>scale_factor</code> is optional as such that it has a default value which may or may not be altered.</p>
 </div>
 </div>
-<div id="more-tutorials" class="section level2">
-<h2>More Tutorials:</h2>
-<p>Please visit one or several tutorials to learn more:</p>
+<div id="tutorials" class="section level2">
+<h2>Tutorials</h2>
+<p>We here covered only very basic aspects of R. At this stage, we did not cover advanced data wrangling using packages such as <code>tidyr</code> or <code>dplyr</code>, or look into advanced plotting with <code>ggplot2</code>. Please follow one or several tutorials to revisit and amend your knowledge:</p>
 <p>Introductory tutorials: - <a href="http://www.r-tutorial.nl/">UMC Utrecht</a> - <a href="https://www.datacamp.com/courses/free-introduction-to-r">DataCamp</a> - <a href="https://resources.rstudio.com/">RStudio</a> - <a href="http://adv-r.had.co.nz/">Advanced R by Hadley Wickham</a></p>
 <p>Graphics &amp; visualization: - <a href="https://r-graphics.org/">R Graphics Cookbook</a>) - <a href="https://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html">Harvard Data Science Services</a></p>
 <p>Geodata processing: - <a href="https://geoscripting-wur.github.io/">Wageningen University: Geoscripting</a> - <a href="https://www.earthdatascience.org/">University of Colorado: EarthDataScience</a>) - <a href="https://rspatial.org/raster/rs/index.html">RSpatial: Remote Sensing Image Analysis</a></p>
@@ -633,7 +681,7 @@ $(document).ready(function () {
 <p>An example:</p>
 <div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1"><span class="co">######################################################</span></a>
 <a class="sourceLine" id="cb53-2" data-line-number="2"><span class="co"># Creating random data and a correlated response </span></a>
-<a class="sourceLine" id="cb53-3" data-line-number="3"><span class="co"># Philippe Rufin, 2019</span></a>
+<a class="sourceLine" id="cb53-3" data-line-number="3"><span class="co"># Author, 2020</span></a>
 <a class="sourceLine" id="cb53-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb53-5" data-line-number="5"><span class="co"># Load all required packages</span></a>
 <a class="sourceLine" id="cb53-6" data-line-number="6"><span class="kw">library</span>(ggplot2)</a>
@@ -656,7 +704,7 @@ $(document).ready(function () {
 <p><img src="index_files/figure-html/style-1.png" width="288" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1"><span class="co"># Investigate correlation in the data</span></a>
 <a class="sourceLine" id="cb54-2" data-line-number="2"><span class="kw">cor</span>(data<span class="op">$</span>x, data<span class="op">$</span>y)</a></code></pre></div>
-<pre><code>[1] 0.9444786</code></pre>
+<pre><code>[1] 0.9536282</code></pre>
 </div>
 <div id="help" class="section level2">
 <h2>Help!</h2>
