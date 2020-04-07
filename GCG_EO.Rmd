@@ -125,12 +125,12 @@ print(result)
 
 ## Readings
 
-The first sessions of the course contain reading materials, such as are peer-reviewed papers and technical reports. You will find the reading materials for the next session at the end of each session. We highlight aspects to focus upon to streamline the reading process. 
+The first sessions of the course contain reading materials, such as are peer-reviewed papers and technical reports. You will find the reading materials for the next session at the end of each session. We highlight aspects to focus upon to streamline the reading process. As an introduction, please read [Wulder et al. (2019): Current status of Landsat program, science, and applications](https://doi.org/10.1016/j.rse.2019.02.015).
 
 ------
 
 
-# Session 00: R Basics
+# R Basics
 
 ## Using R
 
