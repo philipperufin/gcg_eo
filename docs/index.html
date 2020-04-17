@@ -135,10 +135,12 @@ $(document).ready(function () {
       <nav class="col-xs-3 menu">
         <div id="toc">
         <ul>
-        <li><a href="#hello">Hello!</a></li>
+        <li><a href="#section"></a></li>
         <li><a href="#course-materials">Course materials</a></li>
         <li><a href="#r-basics">R Basics</a></li>
-        <li><a href="#terminology">Terminology</a></li>
+        <li><a href="#session-01-eo-data-acquisition">Session 01: EO data acquisition</a></li>
+        <li><a href="#session-01-rasters-in-r">Session 01: Rasters in R</a></li>
+        <li><a href="#terms">Terms</a></li>
         </ul>
         </div>
         
@@ -151,12 +153,12 @@ $(document).ready(function () {
 
 
 
-<div id="hello" class="section level1">
-<h1>Hello!</h1>
-<p><img src="fig/header.png" /></p>
-<div id="about" class="section level2">
-<h2>About</h2>
-<p>Earth Observation is an advanced course for students of the Master of Science <a href="hu.berlin/mscgeo">“Global Change Geography”</a> of Humboldt-Universität zu Berlin. In this course, we cover aspects of optical remote sensing by working with multi-sprectral Landsat and Sentinel 2 imagery. The course is fully based on open source software, including R and QGIS.</p>
+<div id="section" class="section level1">
+<h1></h1>
+<p><img src="fig/EO_header.png" /></p>
+<div id="hello" class="section level2">
+<h2>Hello!</h2>
+<p>Earth Observation is an advanced remote sensing course for students of the Master of Science <a href="hu.berlin/mscgeo">“Global Change Geography”</a> of Humboldt-Universität zu Berlin. In this course, we cover aspects of optical remote sensing of land surfaces, using multi-sprectral Landsat and Sentinel 2 imagery. The course is based on open source software.</p>
 <hr />
 </div>
 <div id="requirements" class="section level2">
@@ -176,6 +178,7 @@ $(document).ready(function () {
 <h2>Learning goals &amp; course contents</h2>
 <p>The main goal of this course is to provide you with the necessary knowledge and tools for using optical remote sensing datasets and methods in the geo-scientific context. We want you to enhance your ability of problem-solving, empowering you to perform research independently. To that end, we cover aspects of data acquisition, spatial data handling in R and QGIS, basics of image pre-processing, higher-level processing such as pixel-based compositing and time-series binning. The course contents are related to our lab´s research foci, both in terms of methods and study regions. You may want to check out our <a href="https://www.geographie.hu-berlin.de/en/professorships/geomatics/publications-en">publications</a>, <a href="https://www.geographie.hu-berlin.de/en/professorships/geomatics/projects">current projects</a>, or have a look at <a href="https://www2.hu-berlin.de/geovis/eolab/europeanlandcover/euroLandCover.html">this example</a>.</p>
 <p>In the course you will learn about current state-of-the-art methods in image processing and time series analyses of optical satellite imagery. The course covers methods related to data quality, cloud masking, vegetation indices, multi-temporal image analyses, machine learning classification algorithms, area adjusted accuracy assessment, time series analyses, and image compositing. We use these methods for mapping of forest types, forest cover changes, agricultural dynamics in the Carpathian ecoregion (Poland), and the Southern Brazilian Amazon.</p>
+<hr />
 </div>
 <div id="why-r" class="section level2">
 <h2>Why R?</h2>
@@ -198,10 +201,12 @@ $(document).ready(function () {
 <li><a href="https://rstudio.com/products/rstudio/">R studio v1.2.X</a></li>
 <li><a href="https://www.qgis.org/">QGIS v3.1X.X</a></li>
 </ul>
+<hr />
 </div>
 <div id="data" class="section level2">
 <h2>Data</h2>
 <p>All data used in the course is openly accessible. Mostly, we´ll be working with Landsat images, which you can access through the USGS Earth Explorer. We provide download links to the datasets for each session. It will be helpful if you organize your data in a course directory on your local machine (MSc students might want to use drive <code>O:/Student_Data/your_name/EO/</code>). We will refer to this folder as <code>course.dir</code> throughout this course. Create subdirectories for each session, e.g. <code>course.dir/S01/</code> and separate data, code and course materials in additional sub-directories (e.g. <code>/data</code>, <code>/code</code>, <code>/docs</code>).</p>
+<hr />
 </div>
 <div id="exercises" class="section level2">
 <h2>Exercises</h2>
@@ -235,6 +240,7 @@ $(document).ready(function () {
 <a class="sourceLine" id="cb1-27" data-line-number="27"><span class="co">#############################################################################</span></a>
 <a class="sourceLine" id="cb1-28" data-line-number="28"></a>
 <a class="sourceLine" id="cb1-29" data-line-number="29"><span class="co"># ...</span></a></code></pre></div>
+<hr />
 </div>
 <div id="readings" class="section level2">
 <h2>Readings</h2>
@@ -244,11 +250,10 @@ $(document).ready(function () {
 </div>
 <div id="r-basics" class="section level1">
 <h1>R Basics</h1>
-<div id="using-r" class="section level2">
-<h2>Using R</h2>
-<p>Here, we aim to provide a brief overview on the basics of R, which is supposed to refresh your knowledge and help you to identify topics worth revisiting. You are encouraged to refresh your knowledge from the M1 module “Quantitative methods” as well as learn from online resources we list at the bottom of this page.</p>
-<div id="operators" class="section level3">
-<h3>Operators</h3>
+<p>Here, we aim to provide a brief overview on the basics of R, which is supposed to refresh your knowledge and help you to identify topics worth revisiting. You are encouraged to refresh your knowledge from the module “Quantitative Methods for Geographers” as well as learn from online resources we list at the bottom of this page.</p>
+<hr />
+<div id="operators" class="section level2">
+<h2>Operators</h2>
 <p>R is an interpreted programing language which means users can execute commmands directly in the console without having to compile sourcecode. You can use R as a simple calculator using arithemtic operators and mathematical functions which are then evaluated directly. For example:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># A simple calculation</span></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="dv">2</span><span class="op">*</span>(<span class="dv">1</span><span class="op">+</span><span class="dv">3</span>)</a>
@@ -286,9 +291,10 @@ $(document).ready(function () {
 <li>statistical metrics like <code>min()</code>, <code>max()</code>, <code>median()</code></li>
 </ul>
 <p>to name just a very few of them. Functions in R provide information on how to use them. If you need help with a function, type in <code>help(name_of_function)</code> or simply <code>?name_of_function</code> to display the correct usage and syntax of a function.</p>
+<hr />
 </div>
-<div id="objects" class="section level3">
-<h3>Objects</h3>
+<div id="objects" class="section level2">
+<h2>Objects</h2>
 <p>Everything in R we assign to a variable is an object. We can assign objects in R with the <code>&lt;-</code> operator (i.e. an arrow), e.g. <code>x &lt;- 2</code>. Commonly, other languages use <code>=</code> which also works in R, however it is definitely good practice to use the <code>&lt;-</code> operator in R.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># Assign object &#39;x&#39; a value of 2</span></a>
 <a class="sourceLine" id="cb6-2" data-line-number="2">x &lt;-<span class="st"> </span><span class="dv">2</span>  </a>
@@ -306,11 +312,11 @@ $(document).ready(function () {
 <p>Assigned variables are stored in the <em>environment</em> or workspace of our session and can be listed by calling the <code>ls()</code> function.</p>
 <hr />
 </div>
-<div id="data-types-and-data-structures" class="section level3">
-<h3>Data Types and Data Structures</h3>
+<div id="data-types-and-data-structures" class="section level2">
+<h2>Data Types and Data Structures</h2>
 <p>The basic data types in R comprise:</p>
 <ul>
-<li><strong>Character</strong> (or String): <code>sensor &lt;- &quot;Landsat-8&quot;</code></li>
+<li><strong>Character</strong> (or String): <code>sensor &lt;- 'Landsat-8'</code></li>
 <li><strong>Integer</strong>: <code>n_bands &lt;- 11L</code> (the <code>L</code> tells R it is an integer, otherwise it is interpreted as numeric)</li>
 <li><strong>Numeric</strong> (or Float): <code>lambda_red &lt;- 0.662</code></li>
 <li><strong>Logical</strong> (or Boolean): <code>sun_synchronous &lt;- TRUE</code> or <code>sun_synchronous &lt;- T</code></li>
@@ -323,8 +329,8 @@ $(document).ready(function () {
 <p class="caption">Data Structures in R (from Zimmermann &amp; Steinmann 2006)</p>
 </div>
 <p>As you can see in the figure above, a variety of data structures exist in R, which either allow for storing different data types simultaneously (<code>data frames</code>, <code>lists</code>), or only one datatype (<code>scalars</code>, <code>vectors</code>, <code>matrices</code>). Note, that the colors representing the data types are only chosen for vizualisation purposes: It does not mean that matrices or vectors can only store values of type logical or numeric, but only data of the same type.</p>
-<div id="vectors" class="section level4">
-<h4>Vectors</h4>
+<div id="vectors" class="section level3">
+<h3>Vectors</h3>
 <p>A vector in R can be created using a variety of functions. The most basic function is the <code>c()</code>-function, where ‘c’ stands for concatenate.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># Create a vector of numbers</span></a>
 <a class="sourceLine" id="cb8-2" data-line-number="2">a &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">16</span>, <span class="dv">32</span>)</a>
@@ -333,18 +339,18 @@ $(document).ready(function () {
 <a class="sourceLine" id="cb8-5" data-line-number="5"><span class="kw">print</span>(a) </a>
 <a class="sourceLine" id="cb8-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co"># cat-function: Similar to print, outputs the objects, concatenating the representations</span></a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="kw">cat</span>(<span class="st">&quot;vector a:&quot;</span>, a)  </a></code></pre></div>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="kw">cat</span>(<span class="st">&#39;vector a:&#39;</span>, a)  </a></code></pre></div>
 <pre><code>[1]  2  4  8 16 32
 vector a: 2 4 8 16 32</code></pre>
 <p>Let`s see what happens when we mix numeric values with strings and combine them into a vector.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">b &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">16</span>, <span class="dv">32</span>, <span class="st">&quot;Landsat&quot;</span>, <span class="st">&quot;Sentinel-2&quot;</span>)</a>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">b &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">16</span>, <span class="dv">32</span>, <span class="st">&#39;Landsat&#39;</span>, <span class="st">&#39;Sentinel-2&#39;</span>)</a>
 <a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw">print</span>(<span class="kw">typeof</span>(b))</a></code></pre></div>
 <pre><code>[1] &quot;character&quot;</code></pre>
-<p>Our vector was automatically cast to <code>character</code>. This is because R will try and convert a smaller data type into a larger one to avoid data loss (here from <code>numeric</code> to <code>character</code>). The strings (<code>Landsat</code> and <code>Sentinel-2</code>) in vector <code>b</code> cannot be cast to numeric, however we can very well transform a numeric <code>2</code> into a string <code>&quot;2&quot;</code>. Be aware of this behaviour and use other data structures if needed.</p>
+<p>Our vector was automatically cast to <code>character</code>. This is because R will try and convert a smaller data type into a larger one to avoid data loss (here from <code>numeric</code> to <code>character</code>). The strings (<code>Landsat</code> and <code>Sentinel-2</code>) in vector <code>b</code> cannot be cast to numeric, however we can very well transform a numeric <code>2</code> into a string <code>'2'</code>. Be aware of this behaviour and use other data structures if needed.</p>
 <p>Back to vector creation. Instead of having to type in sequences or replicates manually by hand, R provides the functions <code>seq()</code> and <code>rep()</code>.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="co"># Create a numeric sequence and store in object s</span></a>
 <a class="sourceLine" id="cb12-2" data-line-number="2">s &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from=</span><span class="dv">1</span>, <span class="dt">to=</span><span class="dv">365</span>, <span class="dt">by=</span><span class="dv">1</span>)  <span class="co"># or simply s &lt;- seq(1, 365, 1)</span></a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="kw">cat</span>(<span class="st">&quot;Length of s:&quot;</span>, <span class="kw">length</span>(s))</a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="kw">cat</span>(<span class="st">&#39;Length of s:&#39;</span>, <span class="kw">length</span>(s))</a>
 <a class="sourceLine" id="cb12-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co"># Alternatively use (always with by=1):</span></a>
 <a class="sourceLine" id="cb12-6" data-line-number="6">s &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">365</span>)</a>
@@ -364,8 +370,8 @@ vector a: 2 4 8 16 32</code></pre>
  [1] 2 4 6 8 2 4 6 8 2 4 6 8
  [1] 2 2 2 4 4 4 6 6 6 8 8 8</code></pre>
 </div>
-<div id="matrices-and-arrays" class="section level4">
-<h4>Matrices and Arrays</h4>
+<div id="matrices-and-arrays" class="section level3">
+<h3>Matrices and Arrays</h3>
 <p>Creating matrices and arrays is just as easy as creating vectors. Matrices are just 2-dimensional arrays with a specified number of <code>rows</code> and <code>columns</code>. All columns in a matrix must have the same data type (e.g., numeric, character) and must be of equal length.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="co"># Creates empty matrix of size 5x2</span></a>
 <a class="sourceLine" id="cb14-2" data-line-number="2">m1 &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">data=</span><span class="ot">NA</span>, <span class="dt">nrow=</span><span class="dv">5</span>, <span class="dt">ncol=</span><span class="dv">2</span>) </a>
@@ -417,11 +423,11 @@ vector a: 2 4 8 16 32</code></pre>
 [4,]    4    8   12</code></pre>
 <p>Matrices are very important structures when working with remote sensing data, as this is how images are represented numerically. We will extensively make use of the <code>raster</code> package throughout the course where a lot of the handling is done for us, however sometimes we need to manipulate image data with more advanced techniques and it is therefore crucial to understand the underlying data structure.</p>
 </div>
-<div id="data-frames-and-lists" class="section level4">
-<h4>Data Frames and Lists</h4>
+<div id="data-frames-and-lists" class="section level3">
+<h3>Data Frames and Lists</h3>
 <p>Generally speaking, a <code>data.frame</code> is a list of vectors of equal length, which can have varying data types.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="co"># Create data.frame with four columns of different data types</span></a>
-<a class="sourceLine" id="cb18-2" data-line-number="2">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">sensor =</span> <span class="kw">c</span>(<span class="st">&quot;Landsat-5 TM&quot;</span>, <span class="st">&quot;Landsat-7 ETM+&quot;</span>, <span class="st">&quot;Landsat-8 OLI-TIRS&quot;</span>), </a>
+<a class="sourceLine" id="cb18-2" data-line-number="2">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">sensor =</span> <span class="kw">c</span>(<span class="st">&#39;Landsat-5 TM&#39;</span>, <span class="st">&#39;Landsat-7 ETM+&#39;</span>, <span class="st">&#39;Landsat-8 OLI-TIRS&#39;</span>), </a>
 <a class="sourceLine" id="cb18-3" data-line-number="3">                 <span class="dt">n_bands =</span> <span class="kw">c</span>(<span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">11</span>), </a>
 <a class="sourceLine" id="cb18-4" data-line-number="4">                 <span class="dt">active =</span> <span class="kw">c</span>(F, T, T), </a>
 <a class="sourceLine" id="cb18-5" data-line-number="5">                 <span class="dt">launched =</span> <span class="kw">c</span>(<span class="dv">1984</span>, <span class="dv">1999</span>, <span class="dv">2013</span>))</a>
@@ -467,10 +473,11 @@ vector a: 2 4 8 16 32</code></pre>
 2     Landsat-7 ETM+       8   TRUE     1999
 3 Landsat-8 OLI-TIRS      11   TRUE     2013</code></pre>
 <p>As the <code>print</code> results suggests, our three objects are now stored at locations <code>[[1]]</code>, <code>[[2]]</code> and <code>[[3]]</code>. We may want to access these list elements and cells therein individually. This brings us to the next topic - indexing.</p>
+<hr />
 </div>
 </div>
-<div id="indexing" class="section level3">
-<h3>Indexing</h3>
+<div id="indexing" class="section level2">
+<h2>Indexing</h2>
 <p>So how do we access values in <code>vectors</code>, <code>data.frames</code> or the elements in the <code>list</code> we just created? Each element is assigned an index (i.e. a positive integer) which we can retrieve by addressing these indices. This is achieved using square brackets and a given index location(s).</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">b &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">16</span>, <span class="dv">32</span>, <span class="dv">64</span>, <span class="dv">128</span>, <span class="dv">256</span>)</a>
 <a class="sourceLine" id="cb22-2" data-line-number="2"></a>
@@ -506,7 +513,7 @@ vector a: 2 4 8 16 32</code></pre>
 [1] &quot;list&quot;</code></pre>
 <p>We may also use the <code>$</code> operator to access specific elements (in lists) or columns (in data frames), given that names were assigned. For example:</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw">names</span>(l) <span class="co"># Currently, our list does not have names...</span></a>
-<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="kw">names</span>(l) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;matrix&quot;</span>, <span class="st">&quot;array&quot;</span>, <span class="st">&quot;df&quot;</span>) <span class="co">#... names() can be used to assign element names</span></a>
+<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="kw">names</span>(l) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;matrix&#39;</span>, <span class="st">&#39;array&#39;</span>, <span class="st">&#39;df&#39;</span>) <span class="co">#... names() can be used to assign element names</span></a>
 <a class="sourceLine" id="cb30-3" data-line-number="3"><span class="kw">print</span>(l<span class="op">$</span>df)</a>
 <a class="sourceLine" id="cb30-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb30-5" data-line-number="5"><span class="kw">print</span>(df<span class="op">$</span>n_bands)</a></code></pre></div>
@@ -524,8 +531,8 @@ vector a: 2 4 8 16 32</code></pre>
 <li><code>class()</code>, <code>typeof()</code>: class or type of an object</li>
 <li><code>names()</code>: retrieve column names of df, or element names of list</li>
 </ul>
-<div id="missing-values" class="section level4">
-<h4>Missing Values</h4>
+<div id="missing-values" class="section level3">
+<h3>Missing Values</h3>
 <p>Often our data has missing entries. For illustration, think of a vector of temperature measurements where due to measurement error we miss an entry now and then. For completeness, those are not just excluded but may often be represented by a certain value, e.g. -9999. In R missing values can be set to the logical constant <code>NA</code> (Not Available).</p>
 <p>Let us consider an vector of hourly temperature measurements where -9999 in fact was used to represent erroneous measurements:</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1">t_hourly &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">10.1</span>, <span class="fl">8.6</span>, <span class="fl">8.2</span>, <span class="fl">7.2</span>, <span class="fl">6.8</span>, <span class="dv">-9999</span>, <span class="fl">8.2</span>, <span class="dv">9</span>, <span class="fl">9.5</span>, <span class="fl">10.5</span>, <span class="dv">-9999</span>, <span class="fl">9.9</span>, <span class="fl">9.7</span>, <span class="dv">8</span>, <span class="fl">7.7</span>, <span class="fl">7.1</span>, <span class="fl">6.8</span>, <span class="fl">5.8</span>, <span class="fl">5.2</span>, <span class="fl">4.2</span>, <span class="fl">4.0</span>, <span class="fl">4.1</span>, <span class="fl">4.2</span>, <span class="fl">3.8</span>)</a>
@@ -558,30 +565,31 @@ vector a: 2 4 8 16 32</code></pre>
 <a class="sourceLine" id="cb36-8" data-line-number="8"><span class="kw">mean</span>(t_hourly[<span class="op">!</span><span class="kw">is.na</span>(t_hourly)])</a></code></pre></div>
 <pre><code>[1] 7.209091
 [1] 7.209091</code></pre>
+<hr />
 </div>
 </div>
-<div id="flow-control" class="section level3">
-<h3>Flow Control</h3>
+<div id="flow-control" class="section level2">
+<h2>Flow Control</h2>
 <p>Often we want code to be executed only when certain conditions are met (conditional statements) or repeat a certain chain of commands in order (repeating operations). For conditional statements, the most commonly used approach are <code>if</code> statements which are based on boolean logic. Accordingly, it is evaluated if a condition is <code>TRUE</code> or <code>FALSE</code> and the following code block will therefore be executed (<code>TRUE</code>) or not (<code>FALSE</code>).</p>
-<div id="if-statements" class="section level4">
-<h4>if-statements</h4>
+<div id="if-statements" class="section level3">
+<h3>if-statements</h3>
 <p>The basic form of an <code>if</code> statement could be as follows:</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="co"># Reclassify an image based on a certain NDVI threshold, after a sanity check if the threshold is valid</span></a>
 <a class="sourceLine" id="cb38-2" data-line-number="2">ndvi_threshold &lt;-<span class="st"> </span><span class="fl">0.8</span></a>
 <a class="sourceLine" id="cb38-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb38-4" data-line-number="4"><span class="cf">if</span> (ndvi_threshold <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span> <span class="op">|</span><span class="st"> </span>ndvi_threshold <span class="op">&lt;</span><span class="st"> </span><span class="dv">-1</span>) {  <span class="co"># i.e. if NDVI larger 1 OR smaller -1</span></a>
-<a class="sourceLine" id="cb38-5" data-line-number="5">  <span class="kw">print</span>(<span class="st">&quot;Invalid NDVI threshold provided. Must be in range -1 to 1.&quot;</span>)</a>
+<a class="sourceLine" id="cb38-5" data-line-number="5">  <span class="kw">print</span>(<span class="st">&#39;Invalid NDVI threshold provided. Must be in range -1 to 1.&#39;</span>)</a>
 <a class="sourceLine" id="cb38-6" data-line-number="6">  </a>
 <a class="sourceLine" id="cb38-7" data-line-number="7">} <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb38-8" data-line-number="8">  <span class="kw">print</span>(<span class="st">&quot;Valid NDVI threshold. Continue processing ...&quot;</span>)</a>
+<a class="sourceLine" id="cb38-8" data-line-number="8">  <span class="kw">print</span>(<span class="st">&#39;Valid NDVI threshold. Continue processing ...&#39;</span>)</a>
 <a class="sourceLine" id="cb38-9" data-line-number="9">  <span class="co"># Additional code to be executed follows here ....</span></a>
 <a class="sourceLine" id="cb38-10" data-line-number="10">}</a></code></pre></div>
 <pre><code>[1] &quot;Valid NDVI threshold. Continue processing ...&quot;</code></pre>
 <p>Above we already used the vectorized version <code>ifelse()</code> which for instance allowed us to manipulate out vector of temperature records:</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1">t_hourly &lt;-<span class="st"> </span><span class="kw">ifelse</span>(t_hourly <span class="op">==</span><span class="st"> </span><span class="dv">-9999</span>, <span class="ot">NA</span>, t_hourly)  <span class="co"># ifelse(condition, TRUE, FALSE)</span></a></code></pre></div>
 </div>
-<div id="loops" class="section level4">
-<h4>Loops</h4>
+<div id="loops" class="section level3">
+<h3>Loops</h3>
 <p><code>for</code> loops can be used to iterate over items and repeatingly execute code blocks:</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="co"># Generate sequence of integers from 1 to 10 with a step size of 1</span></a>
 <a class="sourceLine" id="cb41-2" data-line-number="2">v &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">1</span>)</a>
@@ -628,16 +636,17 @@ vector a: 2 4 8 16 32</code></pre>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1">s_sum &lt;-<span class="st"> </span><span class="kw">sum</span>(s)</a>
 <a class="sourceLine" id="cb47-2" data-line-number="2"><span class="kw">print</span>(s_sum)</a></code></pre></div>
 <pre><code>[1] 104.5</code></pre>
+<hr />
 </div>
 </div>
-<div id="functions" class="section level3">
-<h3>Functions</h3>
+<div id="functions" class="section level2">
+<h2>Functions</h2>
 <p>R allows for user-specified functions which comes in handy whenever a certain computation needs to be repeated or generalized. Generally, a function is a set of statements organized together to perform a specific task. Using functions greatly enhances code structure as it improves the clarity and readability of your script.</p>
 <p>Function arguments are provided in round <code>()</code> brackets. Between <code>{}</code> stands the function body which contains the collection of statements. <code>return()</code> is used to define the output of a function. A function may be as simple as a print statement without any objects to be returned.</p>
 <p>A function object is defined with the <code>function()</code> call:</p>
 <div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1"><span class="co"># Basic function</span></a>
 <a class="sourceLine" id="cb49-2" data-line-number="2">printer &lt;-<span class="st"> </span><span class="cf">function</span>(){</a>
-<a class="sourceLine" id="cb49-3" data-line-number="3">  <span class="kw">print</span>(<span class="st">&quot;Hello World!&quot;</span>)</a>
+<a class="sourceLine" id="cb49-3" data-line-number="3">  <span class="kw">print</span>(<span class="st">&#39;Hello World!&#39;</span>)</a>
 <a class="sourceLine" id="cb49-4" data-line-number="4">}</a>
 <a class="sourceLine" id="cb49-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb49-6" data-line-number="6"><span class="kw">printer</span>()</a></code></pre></div>
@@ -656,7 +665,7 @@ vector a: 2 4 8 16 32</code></pre>
 <a class="sourceLine" id="cb51-11" data-line-number="11"><span class="kw">print</span>(ndvi)</a></code></pre></div>
 <pre><code>[1] 0.6</code></pre>
 <p>Here, <code>red</code> and <code>nir</code> are obligatory arguments that the user has to specify while <code>scale_factor</code> is optional as such that it has a default value which may or may not be altered.</p>
-</div>
+<hr />
 </div>
 <div id="tutorials" class="section level2">
 <h2>Tutorials</h2>
@@ -664,6 +673,7 @@ vector a: 2 4 8 16 32</code></pre>
 <p>Introductory tutorials: - <a href="http://www.r-tutorial.nl/">UMC Utrecht</a> - <a href="https://www.datacamp.com/courses/free-introduction-to-r">DataCamp</a> - <a href="https://resources.rstudio.com/">RStudio</a> - <a href="http://adv-r.had.co.nz/">Advanced R by Hadley Wickham</a></p>
 <p>Graphics &amp; visualization: - <a href="https://r-graphics.org/">R Graphics Cookbook</a>) - <a href="https://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html">Harvard Data Science Services</a></p>
 <p>Geodata processing: - <a href="https://geoscripting-wur.github.io/">Wageningen University: Geoscripting</a> - <a href="https://www.earthdatascience.org/">University of Colorado: EarthDataScience</a>) - <a href="https://rspatial.org/raster/rs/index.html">RSpatial: Remote Sensing Image Analysis</a></p>
+<hr />
 </div>
 <div id="coding-style" class="section level2">
 <h2>Coding style</h2>
@@ -705,6 +715,7 @@ vector a: 2 4 8 16 32</code></pre>
 <div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1"><span class="co"># Investigate correlation in the data</span></a>
 <a class="sourceLine" id="cb54-2" data-line-number="2"><span class="kw">cor</span>(data<span class="op">$</span>x, data<span class="op">$</span>y)</a></code></pre></div>
 <pre><code>[1] 0.9536282</code></pre>
+<hr />
 </div>
 <div id="help" class="section level2">
 <h2>Help!</h2>
@@ -717,152 +728,178 @@ vector a: 2 4 8 16 32</code></pre>
 <li>Check forums (e.g., <a href="https://stackoverflow.com/">StackOverflow</a>)</li>
 </ul>
 <hr />
-<!-- 
-
-################################## SESSION 01 ############################################## 
-
-# Session 01: Handling rasters in R
-
-## Learning goals
-
-In this session, you will
-
-- Acquire multi-spectral satellite data
-- Read & write raster data
-- Manipulate the spatial extent of rasters
-- Extract cell values & plot a spectral profile
-
-------
-
-## The ```raster``` package
-
-It´s great, as it facilitates raster data handling. It allows us to access file characteristics before loading data into memory, facilitates handling of coordinate reference systems and spatial extents. We can use it to perform raster algebra, to combine raster and vector datasets (e.g. ESRI shapefiles), or to convert raster files into matrices, which are compatible with the base functions to access image statistics, develop models, slice data dimensions etc.
-
-There are a couple of things that the raster package does not provide. For example, advanced visualization of spatial datasets and manual operations, such collecting training or validation data, are preferably done in a GIS environment (e.g. QGIS). Furthermore, processing large data volumes in R can be quite time-consuming (we often use Python instead, it´s syntax is quite similar to R).
-
-You install the raster package just like any other package in R. Dependencies will automatically be installed. You may need to install ```rgdal``` manually.
-
-
-```r
-# Install the raster and rgdal packages
-install.packages('raster')
-install.packages('rgdal')
-
-# Load the package
-library(raster)
-```
-
-------
-
-## Exercise
-
-### 1) Data acquisition
-
-Let´s get some Landsat data. Visit the [USGS Earth Explorer](http://earthexplorer.usgs.gov/) and use the Adress/Place field to navigate to Wisła, Poland    (lat,lon: 49.6473,18.8677). Switch to the 'Data Sets' tab and select Landsat -> Landsat Collection 1 Level-1. Tick the 'Landsat 8 OLI/TIRS C1 Level 1' box and click on 'Results >>'. 
-
-You´ll get several hundreds of results, so let´s narrow down the search. Under 'Search Criteria', define an acquisition date range between February 2014 and August 2014. Switch to the 'Additional Criteria' tab. Let´s choose a scene cloud cover of 'Less than 40%', and select the 'Tier 1' category. 
-
-Find the following images:
-
-- LC08_L1TP_189025_20140716_20170421_01_T1
-- LC08_L1TP_189025_20140310_20170425_01_T1
-
-Check [this website](https://www.usgs.gov/land-resources/nli/landsat/landsat-collection-1) to get an overview of the Landsat Collection 1 file naming convention (product identifiers) and further information such as processing levels.
-
-Visualize the images in the Earth Explorer interface by clicking on the small image icon. For downloading the data, you will need an EarthExplorer account. You may register and download the .tar.gz files. If you prefer not to register, you can [download the files from our repository](https://box.hu-berlin.de/f/5248da1584054eb6ba51/?dl=1). Unpack the files in your session directory. 
-
-
-------
-
-### 2) Reading data 
-
-Today, you will make use of R´s raster package classes and functions which are well described in the [package documentation](https://cran.r-project.org/web/packages/raster/raster.pdf). Get acquainted with the following classes and functions and find out what they are useful for: 
-* ```raster()```, ```stack()``` 
-* ```extent()```, ```CRS()```, ```projectRaster()```, ```crop()```
-* ```extract()```, ```plotRGB()```, ```writeRaster()```
-
-Visit the folder containing the unpacked Landsat image. Did you take a close look at the [Landsat file naming convention](https://www.usgs.gov/media/images/landsat-collection-1-product-identifier)? Practically, it provides some basic meta-information. For instance, ```LC08_L1TP_189025_20140310_20170425_01_T1``` is a sequence of information on the sensor, processing level, WRS path and row, acquisition date, processing date, collection, and collection tier, separated by '_'. 
-
-As you can see, the Landsat images are delivered as single-band files. The single bands should be stacked for further analyses. For stacking, all input files must have matching extents and the identical projection. Create a stack for each of the two Landsat 8 images. 
-
-Important: Please include only the following bands: blue, green, red, near infrared, shortwave infrared 1, shortwave infrared 2 (in this order). Check the list of [Landsat spectral bands](https://www.usgs.gov/faqs/what-are-band-designations-landsat-satellites?qt-news_science_products=0#qt-news_science_products) for a recap. Always keep the band designations in mind, as this can cause confusion, e.g. when combining Landsat 5 and Landsat 8 data. 
-
-![Band designations for Landsat satellites](fig/ls_bands.jpg){width=70%}
-
-Try to create the two stacks with a minimum amount of code as possible! Consider using helper functions such as ```paste0()```, ```dir()``` or ```list.files()```. 
-
-------
-
-### 3) Manipulating data
-
-Investigate the stack. In which projection is the data delivered? 
-
-Compare the extent of the two images. You will notice that they vary. Trying to stack images of different extent will cause an error message claiming:
-
-
-```r
-image.stack <- stack(image.one, image.two)
-Error in compareRaster(x) : different extent
-```
-
-To stack both images, we need to crop (i.e. clip, or cut) the images to their common extent. Find an efficient way to identify the common extent of the images, defined as ```common.extent <- c(xmin, xmax, ymin, ymax)``` (in projected coordinates).
-
-![Identifying the common extent of several images](fig/fig01.png)
-
-The common extent of the two images is pretty large. In order to reduce the amount of data for the next steps,  we should crop the images to our region of interest, a part of the Western Beskids, defined by ```roi.extent <- c(327945, 380325, 5472105, 5521095)```
-  
-------
-
-### 4) Writing data
-
-Write the cropped stacks to your folder using ```writeRaster()```. Use the ```GTiff``` format and the [appropriate datatype](https://www.rdocumentation.org/packages/raster/versions/2.5-8/topics/dataType). Why is this important?
-
-------
-
-### 5) Visualizing data
-
-Open the cropped images in QGIS. Seek the symbology to create a true-color (red, green, blue) and a false-color representation (e.g., RGB: swIR1, nIR, red) of each image. Make sure to properly consider the order of bands in your stack (blue, green, red, nIR, swIR 1, swIR 2) in relation to your computer screen´s color channels (RGB).
-
-Use the ```plotRGB()``` function in R to create another false-color visualization of the images in R.
-
-![False color visualization (RGB: nIR, red, green)](fig/s01_falsecolor_432.png)
-
-------
-
-### 6) Extracting spectral profiles
-
-Use the ```extract()``` function to get spectral profiles from both images. Use the following coordinate:
-
-```coordinate <- data.frame('x' = 355623, 'y' = 5486216)```. 
-
-Visualize the results in R. Can you create one plot that shows two spectral profiles (one for each image in the stack), while accounting for the band wavelength and acquisition date? Can you guess what type of surface we are looking at?
-
-![Spectral profiles for two observation dates](fig/s01_spectra.png){width=60%}
-
-------
-
-## Reading materials
-
-In the next session, we would like to discuss the following paper: 
-
-[Zhu, Z., & Woodcock, C.E. (2012). Object-based cloud and cloud shadow detection in Landsat imagery. Remote Sensing of Environment, 118, 83–94.](https://doi.org/10.1016/j.rse.2011.10.028)
-
-This is a rather technical reading, which introduces the Fmask algorithm for automated cloud and cloud shadow detection. It has been widely used for cloud detection on Landsat TM and ETM+ data, and was enhanced for the use with Landsat OLI and Sentinel 2 data (documented in [Zhu et al. 2015](https://doi.org/10.1016/j.rse.2014.12.014)).
-
-While reading focus on the following broad questions:
-
-- Why do we need automated cloud masking?
-- How does it work in principle?
-- Where are the limitations?
-
-More specifically, think about the following: 
-
-- How were the thresholds for spectral tests derived?
-- How will different error types impact further analyses?
-
-------
-
--->
+<!--################################## SESSION 01 ##############################################-->
+<hr />
+</div>
+</div>
+<div id="session-01-eo-data-acquisition" class="section level1">
+<h1>Session 01: EO data acquisition</h1>
+<div id="learning-goals" class="section level2">
+<h2>Learning goals</h2>
+<ul>
+<li>Visit the EarthExplorer platform</li>
+<li>Query the Landsat archive</li>
+<li>Download Landsat data</li>
+</ul>
+<hr />
+</div>
+<div id="acquisition-of-remotely-sensed-data" class="section level2">
+<h2>Acquisition of remotely sensed data</h2>
+<p>The Earth´s atmosphere, water, and land surface are being observed by a plethora of instruments constructed for varying purposes. The technical properties of these instruments vary broadly and as a result, also the data retrieved from such instruments contains diverse types of information in various data types and formats. These raw datasets often require additional processing using automated algorithms which make them useful for communities with different applications at hand. But how is the data made accessible to the users?</p>
+<p>Public institutions such as the United States Geological Survey (USGS) and the European Space Agency (ESA) play a key role in this regard, as they host the currently most relevant platforms for Earth Observation data distribution - the <a href="https://earthexplorer.usgs.gov/">USGS Earth Explorer</a> and <a href="https://scihub.copernicus.eu/">ESA´s Copernicus Open Access Hub</a>. Most (but not all) of the data provided on these platforms are currently available free of charge.</p>
+<hr />
+</div>
+<div id="exercise" class="section level2">
+<h2>Exercise</h2>
+<div id="initial-query" class="section level3">
+<h3>1) Initial query</h3>
+<p>Let´s get some Landsat data. Check <a href="https://www.usgs.gov/land-resources/nli/landsat/landsat-collection-1">this website</a> to get an overview of the Landsat Collection 1 products and processing levels.</p>
+<p>Visit the <a href="http://earthexplorer.usgs.gov/">USGS Earth Explorer</a> and use the Adress/Place field to navigate to Wisła, Poland (lat,lon: 49.6473,18.8677). Switch to the ‘Data Sets’ tab and select Landsat -&gt; Landsat Collection 1 Level-1. Tick the ‘Landsat 8 OLI/TIRS C1 Level 1’ box and click on ‘Results &gt;&gt;’.</p>
+</div>
+<div id="add-search-criteria" class="section level3">
+<h3>2) Add search criteria</h3>
+<p>You´ll get several hundreds of results, so let´s narrow down the search. Under ‘Search Criteria’, define an acquisition date range between 01 February 2014 and 01 August 2014. Switch to the ‘Additional Criteria’ tab. Let´s choose a scene cloud cover of ‘Less than 40%’, and select the ‘Tier 1’ category.</p>
+<p>Find the following images and visualize them in the Earth Explorer interface by clicking on the small image icon:</p>
+<ul>
+<li>LC08_L1TP_189025_20140716_20170421_01_T1</li>
+<li>LC08_L1TP_189025_20140310_20170425_01_T1</li>
+</ul>
+</div>
+<div id="order-download-data" class="section level3">
+<h3>3) Order / download data</h3>
+<p>For downloading the data, you need to create an EarthExplorer account. You may register and download the .tar.gz files to your local machine. If you prefer not to register or you experience any problems, please <a href="https://box.hu-berlin.de/f/5248da1584054eb6ba51/?dl=1">download the files from our repository</a>. Unpack the files in your session directory.</p>
+<hr />
+</div>
+</div>
+</div>
+<div id="session-01-rasters-in-r" class="section level1">
+<h1>Session 01: Rasters in R</h1>
+<div id="learning-goals-1" class="section level2">
+<h2>Learning goals</h2>
+<ul>
+<li>Read and write multispectral satellite images</li>
+<li>Manipulate the spatial extent of a raster</li>
+<li>Extract a cell value and visualize a spectral profile</li>
+</ul>
+<hr />
+</div>
+<div id="the-raster-package" class="section level2">
+<h2>The <code>raster</code> package</h2>
+<p>The <code>raster</code> package offers useful classes and functions which facilitate raster data handling in R. It allows us to access file characteristics before loading data into memory, manipulate coordinate reference systems and spatial extents. We can use it to perform raster algebra, to combine raster and vector datasets (e.g. ESRI shapefiles), or to convert raster files into matrices, which are compatible with the base functions to subset data, access image statistics, develop models, and much more.</p>
+<p>There are a couple of things that the raster package does not provide. For example, collecting training or validation data, are preferably done in a GIS environment (e.g. QGIS). Furthermore, processing large data volumes in R can be quite time-consuming (we often use Python instead, it´s syntax is quite similar to R). Advanced visualization of spatial datasets can be done in R using additional packages (e.g., <code>ggmap</code>, <code>tmap</code>, <code>mapview</code>) but is not (yet) covered in this course.</p>
+<hr />
+<div id="welcome-to-the-raster-world" class="section level3">
+<h3>1) Welcome to the <code>raster</code> world</h3>
+<p>Today, you will make use of R´s raster package classes and functions which are well described in the <a href="https://cran.r-project.org/web/packages/raster/raster.pdf">package documentation</a>. Install the raster package (like any other package) as shown below. All dependencies will automatically be installed, but you may need to install <code>rgdal</code> manually.</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1"><span class="co"># Install the raster and rgdal packages</span></a>
+<a class="sourceLine" id="cb56-2" data-line-number="2"><span class="kw">install.packages</span>(<span class="st">&#39;raster&#39;</span>)</a>
+<a class="sourceLine" id="cb56-3" data-line-number="3"><span class="kw">install.packages</span>(<span class="st">&#39;rgdal&#39;</span>)</a>
+<a class="sourceLine" id="cb56-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb56-5" data-line-number="5"><span class="co"># Load the package</span></a>
+<a class="sourceLine" id="cb56-6" data-line-number="6"><span class="kw">library</span>(raster)</a></code></pre></div>
+<p>Use the package documentatin to get acquainted with the following classes and functions and take notes on what they are useful for: - <code>raster()</code>, <code>stack()</code> - <code>extent()</code>, <code>CRS()</code>, <code>projectRaster()</code>, <code>crop()</code> - <code>extract()</code>, <code>plotRGB()</code>, <code>writeRaster()</code></p>
+</div>
+<div id="reading-data" class="section level3">
+<h3>2) Reading data</h3>
+<p>Navigate to the folder containing the unpacked Landsat image. Did you take a close look at the <a href="https://www.usgs.gov/media/images/landsat-collection-1-product-identifier">Landsat file naming convention</a>? Practically, it provides some basic meta-information. For instance, <code>LC08_L1TP_189025_20140310_20170425_01_T1</code> is a sequence of information on the sensor (LC08), processing level (L1TP), WRS path and row (189/025), acquisition date (20140310), processing date (20170425), collection (01), and collection tier (T1), separated by ’_’.</p>
+<p>As you can see, the Landsat images are delivered as single-band files. The single bands should be stacked for further analyses. For stacking, all input files must have matching extents and the identical projection. Create a <code>stack()</code> for each of the two Landsat 8 images.</p>
+<p>Important: Please include only the following bands: blue, green, red, near infrared, shortwave infrared 1, shortwave infrared 2 (in this order). Check the list of <a href="https://www.usgs.gov/faqs/what-are-band-designations-landsat-satellites?qt-news_science_products=0#qt-news_science_products">Landsat spectral bands</a> for a recap. Always keep the band designations in mind, as this can cause confusion, e.g. when combining Landsat 5 and Landsat 8 data.</p>
+<div class="figure">
+<img src="fig/ls_bands.jpg" alt="Band designations for Landsat satellites" style="width:70.0%" />
+<p class="caption">Band designations for Landsat satellites</p>
+</div>
+<p>Make extensive use of the functions <code>paste0()</code> and <code>list.files()</code> (seek help page to read about the <code>pattern</code>, <code>recursive</code>, and <code>full.names</code> arguments). Try to create the two stacks with a minimum amount of code. Who can make it under five lines?</p>
+<hr />
+</div>
+<div id="manipulating-data" class="section level3">
+<h3>3) Manipulating data</h3>
+<p>Investigate the stack. In which projection is the data delivered?</p>
+<p>Compare the extent of the two images. You will notice that they vary. Trying to stack images of different extent will cause an error message claiming:</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1">image.stack &lt;-<span class="st"> </span><span class="kw">stack</span>(image.one, image.two)</a>
+<a class="sourceLine" id="cb57-2" data-line-number="2">Error <span class="cf">in</span> <span class="kw">compareRaster</span>(x) <span class="op">:</span><span class="st"> </span>different extent</a></code></pre></div>
+<p>To stack both images, we need to crop (i.e. clip, or cut) the images to their common extent. Find an efficient way to identify the common extent of the images, defined as <code>common.extent &lt;- c(xmin, xmax, ymin, ymax)</code> (in projected coordinates).</p>
+<div class="figure">
+<img src="fig/fig01.png" alt="Identifying the common extent of several images" />
+<p class="caption">Identifying the common extent of several images</p>
+</div>
+<p>The common extent of the two images is relatively large. In order to reduce the amount of data for the next steps, please <code>crop()</code> the images to our region of interest, a part of the Western Beskids, defined by <code>roi.extent &lt;- c(327945, 380325, 5472105, 5521095)</code></p>
+<hr />
+</div>
+<div id="writing-data" class="section level3">
+<h3>4) Writing data</h3>
+<p>Write the cropped stacks to your folder using <code>writeRaster()</code>. Use the <code>GTiff</code> format and discuss the <a href="https://www.rdocumentation.org/packages/raster/versions/2.5-8/topics/dataType">appropriate datatype</a> in your group. Why is this important?</p>
+<hr />
+</div>
+<div id="plotting-image-data" class="section level3">
+<h3>5) Plotting image data</h3>
+<p>Open the cropped images in QGIS. Seek the symbology to create a true-color (red, green, blue) and a false-color representation (e.g., RGB: swIR1, nIR, red) of each image. Make sure to properly consider the order of bands in your stack (1 = blue, 2 = green, 3 = red, 4 = nIR, 5 = swIR 1, 6 = swIR 2) in relation to your computer screen´s color channels (1 = red, 2 = green, 3 = blue).</p>
+<p>Use the <code>plotRGB()</code> function in R to create a false-color visualization of the images in R.</p>
+<div class="figure">
+<img src="fig/s01_falsecolor_432.png" alt="False color visualization (RGB: nIR, red, green)" />
+<p class="caption">False color visualization (RGB: nIR, red, green)</p>
+</div>
+<hr />
+</div>
+<div id="extracting-spectral-profiles" class="section level3">
+<h3>6) Extracting spectral profiles</h3>
+<p>Use the <code>extract()</code> function to get spectral profiles from the stack containing both images.</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" data-line-number="1"><span class="co"># Define coordinate (units = m)</span></a>
+<a class="sourceLine" id="cb58-2" data-line-number="2">coordinate &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">&#39;x&#39;</span> =<span class="st"> </span><span class="dv">355623</span>, <span class="st">&#39;y&#39;</span> =<span class="st"> </span><span class="dv">5486216</span>) </a>
+<a class="sourceLine" id="cb58-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb58-4" data-line-number="4"><span class="co"># Extract cell values from image_stack</span></a>
+<a class="sourceLine" id="cb58-5" data-line-number="5">cellvals &lt;-<span class="st"> </span><span class="kw">extract</span>(image_stack, coordinate)</a></code></pre></div>
+</div>
+<div id="plotting-a-spectral-profile" class="section level3">
+<h3>7) Plotting a spectral profile</h3>
+<p>We can visualize the results in R. You may want to create a plot of the two spectral profiles (one for each image in the stack), while accounting for the wavelengths and acquisition dates. <code>ggplot2</code> offers a nice syntax for such tasks. Read and execute the code below.</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" data-line-number="1"><span class="co"># Load ggplot2 package (or install if needed)</span></a>
+<a class="sourceLine" id="cb59-2" data-line-number="2"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb59-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb59-4" data-line-number="4"><span class="co"># Create a data frame combining extracted values with </span></a>
+<a class="sourceLine" id="cb59-5" data-line-number="5"><span class="co"># band wavelengths and acquisition date </span></a>
+<a class="sourceLine" id="cb59-6" data-line-number="6">profile &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">&#39;wavelength&#39;</span>=<span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">515</span>, <span class="dv">600</span>, <span class="dv">680</span>, <span class="dv">885</span>, <span class="dv">1660</span>, <span class="dv">2300</span>),<span class="dv">2</span>), </a>
+<a class="sourceLine" id="cb59-7" data-line-number="7">                      <span class="st">&#39;date&#39;</span>=<span class="kw">as.factor</span>(<span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&#39;10 March&#39;</span>, <span class="dv">6</span>), <span class="kw">rep</span>(<span class="st">&#39;10 July&#39;</span>, <span class="dv">6</span>))),</a>
+<a class="sourceLine" id="cb59-8" data-line-number="8">                      <span class="st">&#39;values&#39;</span>=<span class="kw">as.numeric</span>(cellvals))</a>
+<a class="sourceLine" id="cb59-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb59-10" data-line-number="10"><span class="kw">print</span>(profile)</a></code></pre></div>
+<pre><code>   wavelength     date values
+1         515 10 March   7311
+2         600 10 March   6601
+3         680 10 March   6347
+4         885 10 March   8061
+5        1660 10 March   7897
+6        2300 10 March   6766
+7         515  10 July   8596
+8         600  10 July   7660
+9         680  10 July   6576
+10        885  10 July  16698
+11       1660  10 July   9971
+12       2300  10 July   6935</code></pre>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" data-line-number="1"><span class="co"># Plot spectral profiles as line plot, grouped by factor date</span></a>
+<a class="sourceLine" id="cb61-2" data-line-number="2"><span class="kw">ggplot</span>(profile, <span class="kw">aes</span>(<span class="dt">x=</span>wavelength, <span class="dt">y=</span>values, <span class="dt">group=</span>date)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb61-3" data-line-number="3"><span class="st">      </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">color=</span>date)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb61-4" data-line-number="4"><span class="st">      </span><span class="co"># Add axis &amp; legend names</span></a>
+<a class="sourceLine" id="cb61-5" data-line-number="5"><span class="st">      </span><span class="kw">scale_y_continuous</span>(<span class="dt">name=</span><span class="st">&#39;DN&#39;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb61-6" data-line-number="6"><span class="st">      </span><span class="kw">scale_x_continuous</span>(<span class="dt">name=</span><span class="st">&#39;Wavelength (nm)&#39;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb61-7" data-line-number="7"><span class="st">      </span><span class="kw">scale_colour_manual</span>(<span class="dt">name=</span><span class="st">&#39;Acquisition DOY&#39;</span>, <span class="dt">values=</span><span class="kw">c</span>(<span class="st">&#39;darkgreen&#39;</span>, <span class="st">&#39;brown&#39;</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb61-8" data-line-number="8"><span class="st">      </span><span class="kw">theme_bw</span>() <span class="co"># Chose black/white layout</span></a></code></pre></div>
+<p><img src="index_files/figure-html/profile_plot-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Can you guess what type of surface we are looking at?</p>
+<hr />
+</div>
+</div>
+<div id="reading-materials" class="section level2">
+<h2>Reading materials</h2>
+<p>In the next session, we would like to discuss the following paper:</p>
+<p><a href="https://doi.org/10.1016/j.rse.2011.10.028">Zhu, Z., &amp; Woodcock, C.E. (2012). Object-based cloud and cloud shadow detection in Landsat imagery. Remote Sensing of Environment, 118, 83–94.</a></p>
+<p>This is a rather technical reading, which introduces the Fmask algorithm for automated cloud and cloud shadow detection. It has been widely used for cloud detection on Landsat TM and ETM+ data, and was enhanced for the use with Landsat OLI and Sentinel 2 data (documented in <a href="https://doi.org/10.1016/j.rse.2014.12.014">Zhu et al. 2015</a> and <a href="https://doi.org/10.1016/j.rse.2019.05.024">Qiu et al. 2019</a>).</p>
+<p>While reading focus on the following questions:</p>
+<ul>
+<li>Why do we need automated cloud masking?</li>
+<li>Where are the limitations?</li>
+<li>How will different error types impact further analyses?</li>
+</ul>
+<hr />
 <!--
 
 # Session 02: From DNs to TOA
@@ -907,7 +944,7 @@ print(paste0(bit, ' bits produce ', 2^bit, ' grey tones.'))
 r <- raster(nrows = 1, ncols = 2^bit, vals = c(1:2^bit))
 
 # Plot the image and assign grey-scale values to the cells
-image(r, col = grey.colors(2^bit, start = 0, end = 1), main = paste0(bit, " bit raster"))
+image(r, col = grey.colors(2^bit, start = 0, end = 1), main = paste0(bit, ' bit raster'))
 ```
 
 <img src="index_files/figure-html/greyscale-1.png" width="576" />
@@ -983,13 +1020,13 @@ Use the pattern matching function ```grep()``` to find the corresponding entries
 path <- 'course.dir/S02/data/DN'
 
 # Read MTL file
-mtl <- list.files(data.path, pattern="MTL.txt$", recursive=T, full.names=T)
+mtl <- list.files(data.path, pattern='MTL.txt$', recursive=T, full.names=T)
 mtl.txt <- read.delim(mtl, sep = '=', stringsAsFactors = F)
 
 # Extract numeric values
-REFLECTANCE_MULT_BAND <- as.numeric(mtl.txt[grep("REFLECTANCE_MULT_BAND",mtl.txt$GROUP),][2:7,2])
-REFLECTANCE_ADD_BAND <- as.numeric(mtl.txt[grep("REFLECTANCE_ADD_BAND",mtl.txt$GROUP),][2:7,2])
-SUN_ELEVATION <- as.numeric(mtl.txt[grep("SUN_ELEVATION",mtl.txt$GROUP),][2])
+REFLECTANCE_MULT_BAND <- as.numeric(mtl.txt[grep('REFLECTANCE_MULT_BAND',mtl.txt$GROUP),][2:7,2])
+REFLECTANCE_ADD_BAND <- as.numeric(mtl.txt[grep('REFLECTANCE_ADD_BAND',mtl.txt$GROUP),][2:7,2])
+SUN_ELEVATION <- as.numeric(mtl.txt[grep('SUN_ELEVATION',mtl.txt$GROUP),][2])
 ```
 
 Convert the DN values to TOA following the “Conversion to TOA Reflectance” section in the [USGS guide for conversion to TOA Reflectance](https://www.usgs.gov/land-resources/nli/landsat/using-usgs-landsat-level-1-data-product). Important things to keep in mind:
@@ -1762,9 +1799,9 @@ data.path <- 'O:/WS1920_MSc-EO/S04/data/'
 # 1)
 #############################################################################
 
-sr <- list.files(paste0(data.path, 'sr_data'), pattern=".tif$", full.names=T, recursive=F)
-fmask <- list.files(paste0(data.path, 'fmask'), pattern=".tif$", full.names=T, recursive=F)
-cd <- list.files(paste0(data.path, 'cloud_dist'), pattern=".tif$", full.names=T, recursive=F)
+sr <- list.files(paste0(data.path, 'sr_data'), pattern='.tif$', full.names=T, recursive=F)
+fmask <- list.files(paste0(data.path, 'fmask'), pattern='.tif$', full.names=T, recursive=F)
+cd <- list.files(paste0(data.path, 'cloud_dist'), pattern='.tif$', full.names=T, recursive=F)
 
 sta <- nchar(paste0(data.path,'sr_data/LT05228082')) + 1
 end <- sta + 6
@@ -1774,11 +1811,11 @@ dates <- as.Date(substr(sr, sta, end), format='%Y%j')
 sr.sorted <- sr[order(dates)]
 cd.sorted <- cd[order(dates)]
 
-img_list <- data.frame("image_files"=as.character(sr.sorted), 
-                       "cloud_dist_files"=as.character(cd.sorted),
-                       "date"=sort(dates), 
-                       "DOY"=yday(sort(dates)), 
-                       "year"=year(sort(dates)))
+img_list <- data.frame('image_files'=as.character(sr.sorted), 
+                       'cloud_dist_files'=as.character(cd.sorted),
+                       'date'=sort(dates), 
+                       'DOY'=yday(sort(dates)), 
+                       'year'=year(sort(dates)))
 
 #############################################################################
 # 2)
@@ -1928,7 +1965,7 @@ The RF has a great feature: the out-of-bag (OOB) error. After growing each tree,
 
 ### Variable importances & partial dependence plots 
 
-Next, the RF allows us to investigate which features (e.g. spectral bands) were most useful for our classification problem. Variable importances measures for each individual feature can be expressed either as mean decrease in Gini (how much "better"" can we split the data based on this feature) or mean increase in accuracy (how much does the out-of-bag error increase when the feature is left out of the model). It is important to note that these variable importances should be interpreted cautiously, as they are always strongly dependent on the available input features and their collinearity structure, as well as the training data used. Still, the variable importance of a hypothetical model might reveal, for instance, that the swIR 1 reflectance at DOY 196 is quite important.
+Next, the RF allows us to investigate which features (e.g. spectral bands) were most useful for our classification problem. Variable importances measures for each individual feature can be expressed either as mean decrease in Gini (how much "better" can we split the data based on this feature) or mean increase in accuracy (how much does the out-of-bag error increase when the feature is left out of the model). It is important to note that these variable importances should be interpreted cautiously, as they are always strongly dependent on the available input features and their collinearity structure, as well as the training data used. Still, the variable importance of a hypothetical model might reveal, for instance, that the swIR 1 reflectance at DOY 196 is quite important.
 
 ![Mean decrease in accuracy (increase in OOB error) caused by the features included in the classification model.](fig/s05_varimp.png){width=60%}
 
@@ -2366,7 +2403,7 @@ We provide a shapefile with training points for the following classes
 
 ```r
 data.path <- 'O:/WS1920_MSc-EO/S08/data/'
-sensor_date <- read.table(paste0(data.path, 'ts_stacks/Landsat_2010_Sensor_Date.csv', sep=";", header=T)
+sensor_date <- read.table(paste0(data.path, 'ts_stacks/Landsat_2010_Sensor_Date.csv', sep=';', header=T)
 ```
 
 Summarize the main characteristics of the three classes over the growing season and identify major differences. Please add your insights in comments in your script. Select spectral-temporal metrics that capture the differences between croplands, pastures, and others well. Select at most six different metrics from the ones provided.
@@ -2603,8 +2640,8 @@ The schedule is very tight and presenters are urged to strictly stay within pre-
 -->
 </div>
 </div>
-<div id="terminology" class="section level1">
-<h1>Terminology</h1>
+<div id="terms" class="section level1">
+<h1>Terms</h1>
 <p>This is a non-exhaustive list of common terms.</p>
 <div id="observations" class="section level2">
 <h2>Observations</h2>
