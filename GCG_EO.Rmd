@@ -31,12 +31,11 @@ opts_chunk$set(echo=FALSE,
 opts_knit$set(width=75)
 ```
 
-#
-
+# Welcome!
 
 ![](fig/EO_header.PNG)
 
-## Hello!
+## About
 
 Earth Observation is an advanced remote sensing course for students of the Master of Science ["Global Change Geography"](hu.berlin/mscgeo) of Humboldt-Universität zu Berlin. In this course, we cover aspects of optical remote sensing of land surfaces, using multi-sprectral Landsat and Sentinel 2 imagery. The course is based on open source software.
 
