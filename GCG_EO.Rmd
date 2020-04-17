@@ -46,11 +46,11 @@ Earth Observation is an advanced remote sensing course for students of the Maste
 
 A good understanding of basic principles of remote sensing is required to follow this course. This includes:
 
-* knowledge about operational optical sensor systems 
-* common sensor properties such as spatial, temporal, spectral and radiometric resolution
-* the electromagnetic spectrum and relevant wavelengths in optical remote sensing
-* reflectance properties of different land surface types
-* good knowledge of at least one GIS and remote sensing software packages 
+- knowledge about operational optical sensor systems 
+- common sensor properties such as spatial, temporal, spectral and radiometric resolution
+- the electromagnetic spectrum and relevant wavelengths in optical remote sensing
+- reflectance properties of different land surface types
+- good knowledge of at least one GIS and remote sensing software packages 
 
 Participants should furthermore have a basic understanding of R, including syntax, data types and knowledge on how to read, manipulate and write data. As you followed the curriculum of the MSc program, you most likely joined module "M1 - Quantitative Methods for Geographers", in which you learned using R for statistical problems. We here build on these basics. If you are not confident in using R, please follow one of the numerous tutorials listed in the chapter on "R Basics".
 
@@ -151,7 +151,7 @@ R is an interpreted programing language which means users can execute commmands 
 
 ```{r calc, echo=TRUE, eval=TRUE, fig.height = 3, fig.width = 3, fig.align = "center", results='hold'}
 # A simple calculation
-2*(1+3)
+2*(1+4)
 
 # abs() returns absolute values
 abs(-2)  
