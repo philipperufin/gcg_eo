@@ -90,7 +90,6 @@ We use openly available and platform independent (Windows, Linux, Mac OS) softwa
 
 All data used in the course is openly accessible. Mostly, we´ll be working with Landsat images, which you can access through the USGS Earth Explorer. We provide download links to the datasets for each session. It will be helpful if you organize your data in a course directory on your local machine (MSc students might want to use drive ```O:/Student_Data/your_name/EO/```). We will refer to this folder as ```course.dir``` throughout this course. Create subdirectories for each session, e.g. ```course.dir/S01/``` and separate data, code and course materials in additional sub-directories (e.g. ```/data```, ```/code```, ```/docs```).
 
-
 ------
 
 ## Exercises
@@ -563,17 +562,20 @@ Here, `red` and `nir` are obligatory arguments that the user has to specify whil
 
 We here covered only very basic aspects of R. At this stage, we did not cover advanced data wrangling using packages such as `tidyr` or `dplyr`, or look into advanced plotting with `ggplot2`. Please follow one or several tutorials to revisit and amend your knowledge:
 
-Introductory tutorials:
+General tutorials:
+
 - [UMC Utrecht](http://www.r-tutorial.nl/)
 - [DataCamp](https://www.datacamp.com/courses/free-introduction-to-r)
 - [RStudio](https://resources.rstudio.com/)
 - [Advanced R by Hadley Wickham](http://adv-r.had.co.nz/)
 
 Graphics & visualization:
+
 - [R Graphics Cookbook](https://r-graphics.org/))
 - [Harvard Data Science Services](https://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html)
 
 Geodata processing:
+
 - [Wageningen University: Geoscripting](https://geoscripting-wur.github.io/)
 - [University of Colorado: EarthDataScience](https://www.earthdatascience.org/))
 - [RSpatial: Remote Sensing Image Analysis](https://rspatial.org/raster/rs/index.html)
@@ -727,7 +729,7 @@ Use the package documentatin to get acquainted with the following classes and fu
 
 ### 2) Reading data 
 
-Navigate to the folder containing the unpacked Landsat image. Did you take a close look at the [Landsat file naming convention](https://www.usgs.gov/media/images/landsat-collection-1-product-identifier)? Practically, it provides some basic meta-information. For instance, ```LC08_L1TP_189025_20140310_20170425_01_T1``` is a sequence of information on the sensor (LC08), processing level (L1TP), WRS path and row (189/025), acquisition date (20140310), processing date (20170425), collection (01), and collection tier (T1), separated by '_'. 
+Navigate to one of the folders containing an unpacked Landsat image. Did you take a close look at the [Landsat file naming convention](https://www.usgs.gov/media/images/landsat-collection-1-product-identifier)? Practically, it provides some basic meta-information. For instance, ```LC08_L1TP_189025_20140310_20170425_01_T1``` is a sequence of information on the sensor (LC08), processing level (L1TP), WRS path and row (189/025), acquisition date (20140310), processing date (20170425), collection (01), and collection tier (T1), separated by '_'. 
 
 As you can see, the Landsat images are delivered as single-band files. The single bands should be stacked for further analyses. For stacking, all input files must have matching extents and the identical projection. Create a `stack()` for each of the two Landsat 8 images. 
 
@@ -769,7 +771,7 @@ Write the cropped stacks to your folder using ```writeRaster()```. Use the ```GT
 
 Open the cropped images in QGIS. Seek the symbology to create a true-color (red, green, blue) and a false-color representation (e.g., RGB: swIR1, nIR, red) of each image. Make sure to properly consider the order of bands in your stack (1 = blue, 2 = green, 3 = red, 4 = nIR, 5 = swIR 1, 6 = swIR 2) in relation to your computer screen´s color channels (1 = red, 2 = green, 3 = blue).
 
-Use the ```plotRGB()``` function in R to create a false-color visualization of the images in R.
+Use the ```plotRGB()``` function in R to create a false-color visualization of the images in R. You may need to specify the `stretch` argument.
 
 ![False color visualization (RGB: nIR, red, green)](fig/s01_falsecolor_432.png)
 

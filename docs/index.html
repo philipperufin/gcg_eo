@@ -670,9 +670,24 @@ vector a: 2 4 8 16 32</code></pre>
 <div id="tutorials" class="section level2">
 <h2>Tutorials</h2>
 <p>We here covered only very basic aspects of R. At this stage, we did not cover advanced data wrangling using packages such as <code>tidyr</code> or <code>dplyr</code>, or look into advanced plotting with <code>ggplot2</code>. Please follow one or several tutorials to revisit and amend your knowledge:</p>
-<p>Introductory tutorials: - <a href="http://www.r-tutorial.nl/">UMC Utrecht</a> - <a href="https://www.datacamp.com/courses/free-introduction-to-r">DataCamp</a> - <a href="https://resources.rstudio.com/">RStudio</a> - <a href="http://adv-r.had.co.nz/">Advanced R by Hadley Wickham</a></p>
-<p>Graphics &amp; visualization: - <a href="https://r-graphics.org/">R Graphics Cookbook</a>) - <a href="https://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html">Harvard Data Science Services</a></p>
-<p>Geodata processing: - <a href="https://geoscripting-wur.github.io/">Wageningen University: Geoscripting</a> - <a href="https://www.earthdatascience.org/">University of Colorado: EarthDataScience</a>) - <a href="https://rspatial.org/raster/rs/index.html">RSpatial: Remote Sensing Image Analysis</a></p>
+<p>General tutorials:</p>
+<ul>
+<li><a href="http://www.r-tutorial.nl/">UMC Utrecht</a></li>
+<li><a href="https://www.datacamp.com/courses/free-introduction-to-r">DataCamp</a></li>
+<li><a href="https://resources.rstudio.com/">RStudio</a></li>
+<li><a href="http://adv-r.had.co.nz/">Advanced R by Hadley Wickham</a></li>
+</ul>
+<p>Graphics &amp; visualization:</p>
+<ul>
+<li><a href="https://r-graphics.org/">R Graphics Cookbook</a>)</li>
+<li><a href="https://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html">Harvard Data Science Services</a></li>
+</ul>
+<p>Geodata processing:</p>
+<ul>
+<li><a href="https://geoscripting-wur.github.io/">Wageningen University: Geoscripting</a></li>
+<li><a href="https://www.earthdatascience.org/">University of Colorado: EarthDataScience</a>)</li>
+<li><a href="https://rspatial.org/raster/rs/index.html">RSpatial: Remote Sensing Image Analysis</a></li>
+</ul>
 <hr />
 </div>
 <div id="coding-style" class="section level2">
@@ -801,7 +816,7 @@ vector a: 2 4 8 16 32</code></pre>
 </div>
 <div id="reading-data" class="section level3">
 <h3>2) Reading data</h3>
-<p>Navigate to the folder containing the unpacked Landsat image. Did you take a close look at the <a href="https://www.usgs.gov/media/images/landsat-collection-1-product-identifier">Landsat file naming convention</a>? Practically, it provides some basic meta-information. For instance, <code>LC08_L1TP_189025_20140310_20170425_01_T1</code> is a sequence of information on the sensor (LC08), processing level (L1TP), WRS path and row (189/025), acquisition date (20140310), processing date (20170425), collection (01), and collection tier (T1), separated by ’_’.</p>
+<p>Navigate to one of the folders containing an unpacked Landsat image. Did you take a close look at the <a href="https://www.usgs.gov/media/images/landsat-collection-1-product-identifier">Landsat file naming convention</a>? Practically, it provides some basic meta-information. For instance, <code>LC08_L1TP_189025_20140310_20170425_01_T1</code> is a sequence of information on the sensor (LC08), processing level (L1TP), WRS path and row (189/025), acquisition date (20140310), processing date (20170425), collection (01), and collection tier (T1), separated by ’_’.</p>
 <p>As you can see, the Landsat images are delivered as single-band files. The single bands should be stacked for further analyses. For stacking, all input files must have matching extents and the identical projection. Create a <code>stack()</code> for each of the two Landsat 8 images.</p>
 <p>Important: Please include only the following bands: blue, green, red, near infrared, shortwave infrared 1, shortwave infrared 2 (in this order). Check the list of <a href="https://www.usgs.gov/faqs/what-are-band-designations-landsat-satellites?qt-news_science_products=0#qt-news_science_products">Landsat spectral bands</a> for a recap. Always keep the band designations in mind, as this can cause confusion, e.g. when combining Landsat 5 and Landsat 8 data.</p>
 <div class="figure">
@@ -833,7 +848,7 @@ vector a: 2 4 8 16 32</code></pre>
 <div id="plotting-image-data" class="section level3">
 <h3>5) Plotting image data</h3>
 <p>Open the cropped images in QGIS. Seek the symbology to create a true-color (red, green, blue) and a false-color representation (e.g., RGB: swIR1, nIR, red) of each image. Make sure to properly consider the order of bands in your stack (1 = blue, 2 = green, 3 = red, 4 = nIR, 5 = swIR 1, 6 = swIR 2) in relation to your computer screen´s color channels (1 = red, 2 = green, 3 = blue).</p>
-<p>Use the <code>plotRGB()</code> function in R to create a false-color visualization of the images in R.</p>
+<p>Use the <code>plotRGB()</code> function in R to create a false-color visualization of the images in R. You may need to specify the <code>stretch</code> argument.</p>
 <div class="figure">
 <img src="fig/s01_falsecolor_432.png" alt="False color visualization (RGB: nIR, red, green)" />
 <p class="caption">False color visualization (RGB: nIR, red, green)</p>

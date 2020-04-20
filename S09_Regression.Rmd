@@ -243,3 +243,79 @@ print(RMSE)
 - endmember spectra
 - code function to unmix in space?
 library('hsdar') 
+
+
+
+###########################
+MESMA
+#load packages
+library(raster)
+library(rgdal)
+library(RStoolbox)
+
+#load an example dataset
+data(lsat)
+plotRGB(lsat, r=3, g=2, b=1, stretch='hist')
+
+#make up some endmember spectra: water and land
+em_names <- c(rep("water",3), rep("land",3))
+em_names <- c("water", "land")
+
+pts <- data.frame(class=em_names, cell = c(47916,5294))
+em <- lsat[pts$cell]
+rownames(em) <- em_names
+
+#unmix the image for water and land
+probs <- mesma(lsat, em, method = "NNLS")
+
+#take a look
+raster::hist(probs$land)
+raster::plot(probs$water)
+raster::plot(probs$land)
+raster::plot(probs$RMSE)
+
+
+### carpathian example
+comps <- list.files('O:/WS1920_MSc-EO/S05/data/composites/', pattern='.tif', full.names = T)
+feat <- stack(comps[2], comps[6], bands=c(1:6))
+#feat <- stack(comps, bands=c(1:6))
+
+point <- readOGR(dsn='O:/WS1920_MSc-EO/S05/data/training', layer='train_merge')
+
+evr <- point[point@data$classID==3,][20,]
+dec <- point[point@data$classID==1,][20,]
+
+feat_m <-  matrix(nrow=2, ncol=nlayers(feat))
+feat_m[1,] <- as.numeric(raster::extract(feat, evr))
+feat_m[2,] <- as.numeric(raster::extract(feat, dec))
+
+rownames(feat_m) <- c('evergreen', 'deciduous')
+probs <- mesma(feat, feat_m, method = "NNLS", iterate=500)
+
+plotRGB(probs, r=3, g=2, b=1, stretch='hist')
+raster::plot(probs$deciduous)
+raster::plot(probs$evergreen)
+raster::plot(probs$RMSE)
+
+probs[[1]] <- probs[[1]]*1000
+probs[[2]] <- probs[[2]]*1000
+
+probs[[1]][probs[[1]]>1000] <- 1000
+probs[[2]][probs[[2]]>1000] <- 1000
+
+writeRaster(probs, 'O:/WS1920_MSc-EO/intern/S00/probs_DOY105_DOY226_max1.tif', datatype='INT2S', overwrite=T)
+
+
+### mask composites before mesma
+map <- raster('O:/WS1920_MSc-EO/intern/S00/map_DOY074_DOY196.tif')
+feat_mask <- mask(feat, map, maskvalue=4)
+
+probs <- mesma(feat_mask, feat_m, method = "NNLS", iterate=500)
+
+probs[[1]] <- probs[[1]]*1000
+probs[[2]] <- probs[[2]]*1000
+
+probs[[1]][probs[[1]]>1000] <- 1000
+probs[[2]][probs[[2]]>1000] <- 1000
+
+writeRaster(probs, 'O:/WS1920_MSc-EO/intern/S00/probs_DOY105_DOY226_max1_masked.tif', datatype='INT2S', overwrite=T)
