@@ -794,11 +794,13 @@ cellvals <- c(7311, 6601, 6347, 8061, 7897, 6766, 8596, 7660, 6576, 16698, 9971,
 
 ```
 
+------
+
 ### 7) Plotting a spectral profile 
 
 We can visualize the results in R. You may want to create a plot of the two spectral profiles (one for each image in the stack), while accounting for the wavelengths and acquisition dates. `ggplot2` offers a nice syntax for such tasks. Read and execute the code below.
 
-```{r profile_plot, echo=TRUE, eval=TRUE, fig.height = 3, fig.width = 7, fig.align = "center"}
+```{r profile_plot, echo=TRUE, eval=TRUE, fig.height = 3, fig.width = 7, fig.align = "center", results='hold'}
 # Load ggplot2 package (or install if needed)
 library(ggplot2)
 
@@ -841,30 +843,38 @@ While reading focus on the following questions:
 
 ------
 
-<!--
 
-# Session 02: From DNs to TOA
+
+# Session 02: DN - TOA - BOA
 
 ## Learning goals
 
-- Convert digital number values to top-of-atmosphere reflectance
-- Compare top-of-atmosphere reflectance to surface reflectance
+- Convert digital number values (DN) to top-of-atmosphere reflectance (TOA)
+- Compare top-of-atmosphere reflectance to bottom-of-atmosphere reflectance (BOA)
 
 ------
 
 ## What is radiance / what are DNs?
 
-This session is the most technical of the entire course. Today we will be dealing with physical units, conversion, and data quality. Let´s kick it off with a short recap. Towards the end of the last exercise, you produced a plot of measurements in the different bands of a Landsat image, similar to this one: 
+Today we will be dealing with physical units, conversion, and data quality. Let´s kick it off with a short recap. Towards the end of the last exercise, you produced a plot of measurements in the different bands of a Landsat image, similar to this one: 
 
-![Spectral profiles extracted from a Landsat Level 1 image](fig/s01_spectra.png){width=60%}
+```{r profile_plot2, echo=FALSE, eval=TRUE, fig.height = 3, fig.width = 7, fig.align = "center"}
+library(ggplot2)
+ggplot(profile, aes(x=wavelength, y=values, group=date)) + 
+      geom_line(aes(color=date)) + 
+      scale_y_continuous(name='DN') + 
+      scale_x_continuous(name='Wavelength (nm)') + 
+      scale_colour_manual(name='Acquisition DOY', values=c('darkgreen', 'brown')) +
+      theme_bw() 
+```
 
 Our y-axis label was "DN", or digital number. Now, what is that again? Earth observing sensors, such as the ones on board the Landsat satellites register radiance at the top of the atmosphere. Radiance is expressed in watt per [steradian](https://en.wikipedia.org/wiki/Steradian) per square meter. 
 
 Storing data in radiance units is difficult and therefore sensors translate measured radiance into DNs. Therefore, the range of energy measured by the sensor is broken into distinct units (digital numbers, or DNs). Sensor-specific calibration determines the minimum and maximum amount of radiance that can be measured. DNs express the amount of radiance in relation to these sensor-specific calibration coefficients. The total number of possible DNs is what we refer to as the radiometric resolution of the sensor. 
 
-As an example, Landsat 4, 5, and 7 worked with a radiometric resolution of 8 bit. This allows for ```2^8```, or 255 distinct DNs values. Landsat 8 works with 12 bit radiometric resolution, which is artificially quantized to 16 bit. The 16 bit resolution can represent much more different grey shades, exactly ```2^16```, or 65,536 values. Let´s put this into code. 
+As an example, Landsat 4, 5, and 7 worked with a radiometric resolution of 8 bit. This allows for `2^8`, or 255 distinct DNs values. Landsat 8 works with 12 bit radiometric resolution, which is artificially quantized to 16 bit. The 16 bit resolution can represent much more different grey shades, exactly `2^16`, or 65,536 values. Let´s put this into code. 
 
-```{r greyscale, echo=TRUE, eval=TRUE, fig.height = 3}
+```{r greyscale4, echo=TRUE, eval=TRUE, fig.height = 2.5, fig.width=7}
 library(raster)
 
 # Define the number of bits
@@ -873,11 +883,31 @@ bit <- 4
 # How many grey tones can we represent given bit?
 print(paste0(bit, ' bits produce ', 2^bit, ' grey tones.'))
 
-# Create a raster with one line and 2^bit columns,
-# whereas cell values are filled with a vector of numbers from 1 2^bit
+# Create a new raster with one line and 2^bit columns,
+# whereas cell values are filled with a vector of numbers from 1 to 2^bit
 r <- raster(nrows = 1, ncols = 2^bit, vals = c(1:2^bit))
 
-# Plot the image and assign grey-scale values to the cells
+# Plot the raster and assign grey-scale values to the cells
+image(r, col = grey.colors(2^bit, start = 0, end = 1), main = paste0(bit, ' bit raster'))
+
+```
+
+Let´s do the same with `bit <- 16`.
+
+```{r greyscale16, echo=FALSE, eval=TRUE, fig.height = 2.5, fig.width=7}
+library(raster)
+
+# Define the number of bits
+bit <- 16
+
+# How many grey tones can we represent given bit?
+print(paste0(bit, ' bits produce ', 2^bit, ' grey tones.'))
+
+# Create a new raster with one line and 2^bit columns,
+# whereas cell values are filled with a vector of numbers from 1 to 2^bit
+r <- raster(nrows = 1, ncols = 2^bit, vals = c(1:2^bit))
+
+# Plot the raster and assign grey-scale values to the cells
 image(r, col = grey.colors(2^bit, start = 0, end = 1), main = paste0(bit, ' bit raster'))
 
 ```
@@ -886,15 +916,15 @@ image(r, col = grey.colors(2^bit, start = 0, end = 1), main = paste0(bit, ' bit 
 
 ## DNs to TOA
 
-As DNs are dependent on the sensor calibration, identical measurements yield differing DNs across sensors. DNs are physically not meaningful. Instead of DNs, often we are interested in reflectance. Reflectance expresses the fraction of reflected radiance relative to the total incoming energy (sun), and is scaled between 0 and 1.  Many applications require data converted to reflectance and/or corrected for the influence of the atmosphere. The following steps are necessary to convert DNs into (atmospherically corrected) bottom-of-atmosphere reflectance:
+As DNs are dependent on the sensor calibration, identical measurements yield differing DNs across sensors. DNs are physically not meaningful. Instead of DNs, often we are interested in reflectance. Reflectance expresses the fraction of reflected radiance relative to the total incoming energy (sun), and is scaled between 0 and 1.  Many applications require data converted to reflectance and/or corrected for the influence of the atmosphere. The following steps are necessary to convert DNs into (atmospherically corrected) bottom-of-atmosphere reflectance (BOA):
 
 - Sensor calibration (DN to radiance)
 - Conversion to top-of-atmosphere reflectance (radiance to TOA)
-- Atmospheric correction yielding bottom-of-atmosphere reflectance (TOA to BOA, or TOA to surface reflectance)
+- Atmospheric correction yielding bottom-of-atmosphere reflectance (TOA to BOA)
 
 A conversion of DNs into radiance can be easily undertaken. By accounting for sun-sensor geometries and solar irradiance, we can easily infer top-of-atmosphere reflectance (TOA) from radiance. This facilitates, e.g., a comparison of measurements from different sensors. 
 
-Practically, this involves a linear scaling of the DN values which uses two band-specific rescaling factors. One is multiplicative, one is additive. Formulas are explained in the [USGS guide for conversion to TOA Reflectance](https://www.usgs.gov/land-resources/nli/landsat/using-usgs-landsat-level-1-data-product). With Landsat 8 Collection 1 data, we can use a single set of coefficients to convert DNs directly to TOA reflectance. Note that this is not the case for all sensors.  
+Practically, this involves a linear scaling of the DN values which uses two band-specific rescaling factors. One is multiplicative, one is additive. Formulas are explained in the [USGS guide for conversion to TOA Reflectance](https://www.usgs.gov/land-resources/nli/landsat/using-usgs-landsat-level-1-data-product). With Landsat 8 Collection 1 data (this is not the case for all sensors!), we can use a single set of coefficients to convert DNs directly to TOA reflectance: 
 
 $ρλ' = M_ρ * Q_{cal} + A_ρ$
 
@@ -924,7 +954,7 @@ $θ_{SE}$	= Local sun elevation angle.
 
 ## TOA to BOA
 
-A final step towards comparable measurements of the Earth surface is the atmospheric correction. By doing atmospheric correction, we (theoretically) eliminate the influence of the atmosphere. We therefore call the product "surface reflectance" or "bottom-of-atmosphere reflectance" (BOA). Theoretically, the space-borne sensor´s measurements should be comparable to ground-based measurements. 
+Atmospheric correction is the final step towards comparable measurements of the Earth surface. By doing atmospheric correction, we (theoretically) eliminate the influence of the atmosphere. We therefore call the product "bottom-of-atmosphere reflectance" (BOA). Theoretically, the BOA measured by a space-borne sensor should be comparable to ground-based measurements. 
 
 ------
 
@@ -934,11 +964,13 @@ During this exercise you will learn how to convert Landsat-8 Collection 1 DNs to
 
 - DN/LC08_L1TP_189025_20141105_20170417_01_T1/ - the directory containing the “L1TP” Landsat product (i.e. terrain-corrected (“orthorectified”) data in DNs), including the metadata file (MTL.txt) and the Quality Band (BQA.tif) which contains information on radiometric saturation, clouds, cloud shadows and more.
 
-- SR/LC081890252014110501T1-SC20170927102137/ – the directory containing atmospherically corrected, or bottom-of-atmosphere data. This type of data is commonly referred to as Level-2 data.  
+- SR/LC081890252014110501T1-SC20170927102137/ – the directory containing atmospherically corrected BOA data. This type of data is commonly referred to as Level-2 data.  
+
+------
 
 ### 1) DN to TOA conversion
 
-Familiarize yourself with the L1TP data. Visualize individual bands, have a look at the Level-1 metadata file (LC08_L1TP_ XXX_MTL.txt) and the information provided within. Again, we only use the six reflective bands of the OLI sensor in this exercise (3xVIS, nIR, 2xswIR)
+Familiarize yourself with the L1TP data. Visualize individual bands, have a look at the Level-1 metadata file (LC08_L1TP_..._MTL.txt) and the information provided within. 
 
 Read the Landsat metadata file in R using ```read.delim()``` and extract the necessary information for the top-of-atmosphere conversion: 
 - ```REFLECTANCE_MULT_BAND```
@@ -949,7 +981,7 @@ Use the pattern matching function ```grep()``` to find the corresponding entries
 
 ```{r mtl_read, echo=TRUE, eval=FALSE}
 # Define the folder that contains your data...
-path <- 'course.dir/S02/data/DN'
+data.path <- 'course.dir/S02/data/DN'
 
 # Read MTL file
 mtl <- list.files(data.path, pattern='MTL.txt$', recursive=T, full.names=T)
@@ -963,6 +995,7 @@ SUN_ELEVATION <- as.numeric(mtl.txt[grep('SUN_ELEVATION',mtl.txt$GROUP),][2])
 
 Convert the DN values to TOA following the “Conversion to TOA Reflectance” section in the [USGS guide for conversion to TOA Reflectance](https://www.usgs.gov/land-resources/nli/landsat/using-usgs-landsat-level-1-data-product). Important things to keep in mind:
 
+- We consider only the six reflective bands of the OLI sensor (3xVIS, nIR, 2xswIR).
 - You can apply the conversion to all bands in a stack simultaneously. Simply apply the calculation the entire stack. 
 - The Landsat data is provided as integer values. When applying the equation, the data will be cast to float. You will have to re-convert to integer at some point. Use a reflectance scaling factor of 10,000 during the conversion.
 - The sun elevation angle provided in the metadata file is reported in degrees. The ```sin()``` function expects that angles are provided in radians. For the conversion to work correctly, you need to convert ```SUN_ELEVATION``` into radians. Make use of this helper function:
@@ -974,27 +1007,24 @@ deg2rad <- function(deg){ (deg * pi) / (180) }
 
 Write the result of your TOA conversion to disk in the ```GTiff``` format. Make sure to use an integer data type to save disk space. 
 
+------
+
 ### 2) Compare TOA with BOA
 
-Open the BOA and the TOA file in QGIS and visually assess the differences in the spectral signature between the SR and TOA files. Use the info tool´s graph view to investigate the spectral signatures of each of the following land cover types: 
+Open the BOA and the TOA file in QGIS and visually assess the differences in the spectral signature between the SR and TOA files. Use the info tool in graph view to plot the spectral signatures of each of the following land cover types: 
 
-- Deciduous forest
 - Coniferous forest
-- Grassland
 - Cropland
 - Impervious surfaces
 - Water
 
-In your R script, take notes on the following questions:
+In your R script, add comments to answer the following questions:
 
-a) What are the most evident differences between TOA and SR reflectance spectra? 
+a) Briefly summarize the spectral appearance of the six land cover types.
 
-b) Briefly summarize the spectral appearance of the six land cover types, and the main difference between the TOA and SR.
+b) What are the most evident differences between TOA and SR reflectance spectra? 
 
 ------
-
--->
-<!--
 
 # Session 02: Data quality & cloud masking
 
@@ -1008,7 +1038,7 @@ b) Briefly summarize the spectral appearance of the six land cover types, and th
 
 ## Landsat data quality 
 
-Think about the following question and exchange with your neighbor: 
+Think about the following question and exchange with your team members: 
 Which issues affect the data quality of optical satellite images?
 
 How to find out if a pixel is affected by any of these issues? Luckily, the USGS provides quality bands for the Landsat Collection 1 products. 
@@ -1019,11 +1049,13 @@ If we look up the [Landsat QA band website](https://www.usgs.gov/land-resources/
 
 *“Each pixel in the QA band contains unsigned integers that represent bit-packed combinations of surface, atmospheric, and sensor conditions that can affect the overall usefulness of a given pixel.”*
 
-In the following, you will learn to understand what that means. Please read this section carefully and exchange with your neighbor. 
+In the following, you will learn to understand what that means. Please read this section carefully and discuss with your team if necessary. 
+
+------
 
 ### The binary system
 
-Remember the binary numeral system (0 / FALSE or 1 / TRUE)?
+Do you know the binary numeral system (0 / FALSE or 1 / TRUE)?
 
 The binary system represents numbers through sequences of bits. Each bit has a position and a state. The positions are numbered from 0 to the total number of bits, read from right to left. The state of a bit can be either, 0, or 1. Consider the meaning of 0 as „FALSE“ or „NO“, 1 equals „TRUE“ or „YES“. 
 
@@ -1046,33 +1078,34 @@ The more positions or bits we have the higher numbers we can generate. With 5 bi
 
 ``` 
 
+------
+
 ### Landsat QA band
 
-The Landsat QA band is coded in 16 bit, which are arranged from right to left. Each bit has a specific meaning in terms of data quality
-e.g. bit 4 (or position 5 from the right) means „cloud“. If bit 4 has the state 1 (or "YES", or "TRUE"), there was a cloud detected in that pixel. If bit 4 has the state 1, the resulting integer value will be 2^4 = 16. Following this logic, different combinations of true / false conditions result in different integer values.
+The Landsat QA band is coded in 16 bit, which are arranged from right to left. Each bit has a specific meaning in terms of data quality, e.g., bit 4 (or the fifth 5 from the right) means „cloud“. If bit 4 has the state 1 (or "YES", or "TRUE"), there was a cloud detected in that pixel. If bit 4 has the state 1, the resulting integer value will be 2^4 = 16. Following this logic, different combinations of true / false conditions result in different integer values.
 
 ![Landsat QA band bit designation](fig/s02_landsat_qa.png){width=80%}
 
 In the Landsat QA band, there are furthermore single and double bits. Single bits inform about one condition in a binary manner:
 
-Single bits (0, 1, and 4):
-- 0 = "No" = This condition does not exist
-- 1 = "Yes" = This condition exists
+Single bits (bit 0, 1, and 4):
+- 0 = "No" = The condition does not exist.
+- 1 = "Yes" = The condition does exist.
 
-Double bits can represent conditions in more detail. Some double bits (5-6, 7-8, 9-10, 11-12, read from left to right) represent levels of confidence that a condition exists:
+Double bits can represent conditions in more detail. Some double bits (bits 5+6, 7+8, 9+10, 11+12, read from left to right) represent levels of confidence that a condition exists:
 
-- 00 = “Not Determined” / This condition does not exist
-- 01 = “Low” = Algorithm has low to no confidence that this condition exists (0-33 percent confidence)
-- 10 = “Medium” = Algorithm has medium confidence that this condition exists (34-66 percent confidence)
-- 11 = “High” = Algorithm has high confidence that this condition exists (67-100 percent confidence)
+- 00 = “Not Determined” = Algorithm did not test for the condition.
+- 01 = “Low” = Algorithm has low confidence that this condition exists (probability of 0-33%).
+- 10 = “Medium” = Algorithm has medium confidence that this condition exists (probability of 34-66%).
+- 11 = “High” = Algorithm has high confidence that this condition exists (probability of 67-100%).
 
 
 The radiometric saturation bits (2-3), read from left to right, represent how many bands contain radiometric saturation:
 
-- 00 - No bands contain saturation
-- 01 - 1-2 bands contain saturation
-- 10 - 3-4 bands contain saturation
-- 11 - 5 or more bands contain saturation
+- 00 - No bands contain saturation.
+- 01 - 1-2 bands contain saturation.
+- 10 - 3-4 bands contain saturation.
+- 11 - 5 or more bands contain saturation.
 
 ------
 
@@ -1096,9 +1129,9 @@ rev(as.numeric(intToBits(2804)[1:16]))
 
 Now we can compare with the Landsat 8 Collection 1 Level 1 QA band bit designation. What´s the pixel quality information of the integer value 2804?
 
-![Landsat QA band bit designation](fig/s02_landsat_qa_decode.PNG){width=70%}
+![Landsat QA band bit designation. Source: USGS](fig/s02_landsat_qa_decode.PNG){width=70%}
 
-We are looking at a cloudy pixel with radiometric saturation affecting 1-2 bands.
+Solution: We are looking at a cloud pixel with radiometric saturation affecting 1-2 bands.
 
 ------
 
@@ -1106,9 +1139,9 @@ We are looking at a cloudy pixel with radiometric saturation affecting 1-2 bands
 
 ### 1) Investigating the QA band
 
-Let´s have a look at the Landsat Collection 1 Quality Band (BQA). First, load the BQA band and find the three most frequent values using ```freq()```.
+Let´s have a look at the Landsat Collection 1 Quality Band (BQA). First, load the BQA band with `raster()` and find the three most frequent values using `freq()`.
 
-As you can see, the band contains integer values. By decoding the integer values into 16 bit binary strings, we can read the quality information for each pixel. Use the ```intToBits()``` function to decode the three most frequent BQA values and decipher their meaning using the Landsat quality band documentation. ```intToBits()``` returns 32 bits by default. Make sure you only look at bits 1 to 16. Also, keep in mind the right-to-left order when comparing the decoded bits with the table. You might want to use ```rev()``` to invert the order of the outputs by ```intToBits()```. Note your findings as a comment in the script: 
+As you can see, the band contains integer values. By decoding the integer values into 16 bit binary strings, we can read the quality information for each pixel. Use the `intToBits()` function to decode the three most frequent BQA values and decipher their meaning using the Landsat quality band documentation. As shown above, `intToBits()` returns 32 bits by default. Make sure you only look at bits 1 to 16. Also, keep in mind the right-to-left order when comparing the decoded bits with the table. You might want to use ```rev()``` to invert the order of the outputs by ```intToBits()```. Note your findings as a comment in the script: 
 
 ```
 # What do the most frequent values mean? Decode each integer value into bits and 
@@ -1119,6 +1152,8 @@ As you can see, the band contains integer values. By decoding the integer values
 # Third most frequent value: 
 ```
 
+------
+
 ### 2) Creating a cloud mask
 
 By converting integer values into binary bits, we can extract specific attributes from the BQA. Let´s to this in a systematic manner by defining a function, which yields TRUE for binary codes with bit 0 = 1:
@@ -1128,19 +1163,22 @@ By converting integer values into binary bits, we can extract specific attribute
 fill_pixels <- function(x) {intToBits(x)[1] == T}
 ```
 
-Next, use indexing and Boolean expressions to define functions which return TRUE for 
+Next, use indexing and Boolean expressions to define new functions which return TRUE for: 
 
 a)	high confidence clouds or high confidence cloud shadows or fill values
 b)	high and medium confidence clouds or high and medium confidence cloud shadows or fill values
 
-Create a mask using the above functions. You can use ```calc()```. Plot the mask and check if clouds, cloud shadows, and fill values are labeled as 1 and clear observations as 0. Write both masks to disk.
+Create a mask using the above functions in `calc()`. Plot the mask and check if clouds, cloud shadows, and fill values are labeled as 1 and clear observations as 0. Discuss and decide on the appropriate data type for binary masks and write them to disk. 
 
-Open both masks in QGIS, together with an RGB representation of the image. Which mask is more accurate? 
+Open both masks in QGIS, together with an RGB representation of the image. Which mask is more reliable in your opinion? 
+
+------
 
 ### 3) Masking images 
 
-Next, load the BOA data as a stack (VIS, nIR, swIR) and use the ```mask()``` function to mask clouds, cloud shadows and fill values from the image. Use the mask which you found to be more accurate. Make sure to specify the maskvalue argument accordingly. Write the masked BOA stack to disk in the ```GTiff``` format.
+Next, load the BOA data as a stack (VIS, nIR, swIR) and use the ```mask()``` function to mask clouds, cloud shadows and fill values from the image. Use the mask which you found to be more accurate. Make sure to specify the `maskvalue` argument accordingly. Write the masked BOA stack to disk in the ```GTiff``` format.
 
+------
 
 ## Reading materials
 
@@ -1151,13 +1189,11 @@ In the next session, we would like to discuss the following paper:
 In this paper, a long time series of Landsat image composites at five year intervals is used to study the dynamics of forest disturbance, recovery and changes in forest types across the Carpathian ecoregion. Please make sure to read the paper thoroughly and focus on the following broad questions:
 
 - What is the motivation for this article?
-- How was it done in principle?
-- What are the key findings?
-- Are there uncertainties related to the findings?
+- What is the key method used in the study?
+- What are the uncertainties related to the findings?
 
 ------
 
--->
 <!--
 
 # Session 03: Vegetation indices and data transforms
