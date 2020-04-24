@@ -806,7 +806,7 @@ library(ggplot2)
 
 # Create a data frame combining extracted values with 
 # band wavelengths and acquisition date 
-profile <- data.frame('wavelength'=rep(c(515, 600, 680, 885, 1660, 2300),2), 
+profile <- data.frame('wavelength'=rep(c(482, 561, 655, 865, 1609, 2201),2), 
                       'date'=as.factor(c(rep('10 March', 6), rep('10 July', 6))),
                       'values'=as.numeric(cellvals))
 
