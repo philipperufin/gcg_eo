@@ -989,10 +989,15 @@ vector a: 2 4 8 16 32</code></pre>
 </div>
 <div id="exercise-1" class="section level2">
 <h2>Exercise</h2>
-<p>During this exercise you will learn how to convert Landsat-8 Collection 1 DNs to TOA reflectance, and compare and characterize spectral appearance of different land cover types in TOA and BOA imagery. The data are provided in <a href="https://box.hu-berlin.de/f/97b7bd39ac6d48488f74/?dl=1">our repository</a>. After unpacking, you find the following folders:</p>
+<p>During this exercise you will learn how to convert Landsat-8 Collection 1 DNs to TOA reflectance, and compare and characterize spectral appearance of different land cover types in TOA and BOA imagery. The data are available for download in two versions:</p>
+<ul>
+<li><a href="https://box.hu-berlin.de/f/8c7a793b467d4046a60c/?dl=1">Reduced dataset</a>: a spatial subset of the required bands, recommended.</li>
+<li><a href="https://box.hu-berlin.de/f/97b7bd39ac6d48488f74/?dl=1">Original dataset</a>: the data as acquired via EarthExplorer, using this data will lead to longer processing times.</li>
+</ul>
+<p>After unpacking, you find the following folders:</p>
 <ul>
 <li><p>DN/LC08_L1TP_189025_20141105_20170417_01_T1/ - the directory containing the “L1TP” Landsat product (i.e. terrain-corrected (“orthorectified”) data in DNs), including the metadata file (MTL.txt) and the Quality Band (BQA.tif) which contains information on radiometric saturation, clouds, cloud shadows and more.</p></li>
-<li><p>SR/LC081890252014110501T1-SC20170927102137/ – the directory containing atmospherically corrected BOA data. This type of data is commonly referred to as Level-2 data.</p></li>
+<li><p>SR/LC081890252014110501T1-SC20170927102137/ – the directory containing BOA (atmospherically corrected) data.</p></li>
 </ul>
 <hr />
 <div id="dn-to-toa-conversion" class="section level3">
@@ -1014,7 +1019,7 @@ vector a: 2 4 8 16 32</code></pre>
 <p>Convert the DN values to TOA following the “Conversion to TOA Reflectance” section in the <a href="https://www.usgs.gov/land-resources/nli/landsat/using-usgs-landsat-level-1-data-product">USGS guide for conversion to TOA Reflectance</a>. Important things to keep in mind:</p>
 <ul>
 <li>We consider only the six reflective bands of the OLI sensor (3xVIS, nIR, 2xswIR).</li>
-<li>You can apply the conversion to all bands in a stack simultaneously. Simply apply the calculation the entire stack.</li>
+<li>You can apply the conversion to all bands in a stack simultaneously by applying the calculation the a <code>stack</code> object.</li>
 <li>The Landsat data is provided as integer values. When applying the equation, the data will be cast to float. You will have to re-convert to integer at some point. Use a reflectance scaling factor of 10,000 during the conversion.</li>
 <li>The sun elevation angle provided in the metadata file is reported in degrees. The <code>sin()</code> function expects that angles are provided in radians. For the conversion to work correctly, you need to convert <code>SUN_ELEVATION</code> into radians. Make use of this helper function:</li>
 </ul>
@@ -1027,9 +1032,8 @@ vector a: 2 4 8 16 32</code></pre>
 <h3>2) Compare TOA with BOA</h3>
 <p>Open the BOA and the TOA file in QGIS and visually assess the differences in the spectral signature between the SR and TOA files. Use the info tool in graph view to plot the spectral signatures of each of the following land cover types:</p>
 <ul>
-<li>Coniferous forest</li>
-<li>Cropland</li>
-<li>Impervious surfaces</li>
+<li>Forest</li>
+<li>Open soil</li>
 <li>Water</li>
 </ul>
 <p>In your R script, add comments to answer the following questions:</p>
@@ -1046,7 +1050,7 @@ vector a: 2 4 8 16 32</code></pre>
 <div id="learning-goals-3" class="section level2">
 <h2>Learning goals</h2>
 <ul>
-<li>Understand how to use the Landsat Collection 1 quality bands</li>
+<li>Interpret the Landsat Collection 1 quality bands</li>
 <li>Produce cloud / cloud shadow masks of differing confidence levels</li>
 <li>Mask Landsat images</li>
 </ul>
@@ -1186,7 +1190,8 @@ vector a: 2 4 8 16 32</code></pre>
 
 ## Learning goals 
 
-- Learn how to calculate NDVI, EVI and Tasseled Cap components
+- Calculate vegetation indices (NDVI, EVI) 
+- Understand and perform a Tasseled Cap transformation
 
 ## Spectral behavior of vegetation
 
@@ -1257,8 +1262,8 @@ We can observe these trajectories by producing near infrared ~ red scatterplots 
 
 The concept was further developed for the use with other sensors, including Landsat TM, ETM+ and OLI. It is still widely used for different applications in the context of urban, agricultural, or forest-related remote-sensing studies. Resulting from the TC, we mostly analyze three components called Brightness, Greenness, and Wetness:
 
-- *Brightness*: an axis along the line of soils, indicating soil brightness.
-- *Greenness*: axis is perpendicular to the soil line, emphasizes near infrared and hence vegetation.
+- *Brightness*: the axis along the line of soils, indicating soil brightness.
+- *Greenness*: the axis perpendicular to the soil line, emphasizes near infrared and hence vegetation.
 - *Wetness*: emphasizes shortwave infrared and is thereby related to water content.
 
 ------
@@ -1289,9 +1294,9 @@ Read the March surface reflectance stack in R and calculate NDVI as well as EVI.
 
 Always be aware that the reflectance values in our datasets is scaled by 10,000. This will not make a difference when computing the NDVI, as we are only looking at relative differences. However, for the EVI, $L$ must be scaled by 10,000. Also, keep in mind that we commonly want to store datasets in ```INT2S``` data type, and therefore we need to scale our results by 10,000. Consequently, we compute the EVI from Landsat data as follows: 
 
-```evi <- 2.5 * ((nIR – red) / (nIR + 6 * red – 7.5 * blue + 10000))```
+`evi <- 2.5 * ((nIR – red) / (nIR + 6 * red – 7.5 * blue + 10000))`
 
-While the computation is ongoing, proceed with preparing the code for the next task. When the computation is done, write the results to disk, using the ```INT2S``` data type.
+While the computation is ongoing, proceed with preparing the code for the next task. When the computation is done, write the results to disk, using the `INT2S` data type.
 
 ### 2) Perform a Tasseled Cap transformation
 
