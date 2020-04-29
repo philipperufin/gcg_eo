@@ -92,13 +92,13 @@ All data used in the course is openly accessible. Mostly, we´ll be working with
 
 ------
 
-## Exercises
+## Assignments
 
-The weekly exercises are defined in the respective session. Each session comprises several tasks that involve scipting in R. Course participants must submit completed exercises, documented as R scripts, in [moodle](http://moodle.hu-berlin.de/) to pass. Weekly submission deadlines are monday, 23:59. Please name the script of your work group as SXX_name1_name2.R. Please structure your script for every exercise as follows:
+The weekly assignments are defined in the respective session. Each session comprises several tasks that involve scipting in R. Course participants must submit completed assignments, documented as R scripts, in [moodle](http://moodle.hu-berlin.de/) to pass. Weekly submission deadlines are monday, 23:59. Please name the script of your work group as SXX_name1_name2.R. Please structure your script for every assignment as follows:
 
 ```{r template, echo=TRUE, eval=FALSE}
 #############################################################################
-# MSc Earth Observation Exercise [Session number]
+# MSc Earth Observation Assignment [Session number]
 # [Your Name]
 #############################################################################
 
@@ -665,7 +665,7 @@ Public institutions such as the United States Geological Survey (USGS) and the E
 
 ------
 
-## Exercise
+## Assignment
 
 ### 1) Initial query
 
@@ -856,7 +856,7 @@ While reading focus on the following questions:
 
 ## What is radiance / what are DNs?
 
-Today we will be dealing with physical units, conversion, and data quality. Let´s kick it off with a short recap. Towards the end of the last exercise, you produced a plot of measurements in the different bands of a Landsat image, similar to this one: 
+Today we will be dealing with physical units, conversion, and data quality. Let´s kick it off with a short recap. Towards the end of the last assignment, you produced a plot of measurements in the different bands of a Landsat image, similar to this one: 
 
 ```{r profile_plot2, echo=FALSE, eval=TRUE, fig.height = 3, fig.width = 7, fig.align = "center"}
 library(ggplot2)
@@ -958,9 +958,9 @@ Atmospheric correction is the final step towards comparable measurements of the 
 
 ------
 
-## Exercise
+## Assignment
 
-During this exercise you will learn how to convert Landsat-8 Collection 1 DNs to TOA reflectance, and compare and characterize spectral appearance of different land cover types in TOA and BOA imagery. The data are available for download in two versions: 
+During this assignment you will learn how to convert Landsat-8 Collection 1 DNs to TOA reflectance, and compare and characterize spectral appearance of different land cover types in TOA and BOA imagery. The data are available for download in two versions: 
 
 - [Reduced dataset](https://box.hu-berlin.de/f/8c7a793b467d4046a60c/?dl=1): a spatial subset of the required bands, recommended.
 - [Original dataset](https://box.hu-berlin.de/f/97b7bd39ac6d48488f74/?dl=1): the data as acquired via EarthExplorer, using this data will lead to longer processing times.
@@ -1089,7 +1089,7 @@ The more positions or bits we have the higher numbers we can generate. With 5 bi
 
 The Landsat QA band is coded in 16 bit, which are arranged from right to left. Each bit has a specific meaning in terms of data quality, e.g., bit 4 (or the fifth 5 from the right) means „cloud“. If bit 4 has the state 1 (or "YES", or "TRUE"), there was a cloud detected in that pixel. If bit 4 has the state 1, the resulting integer value will be 2^4 = 16. Following this logic, different combinations of true / false conditions result in different integer values.
 
-![Landsat QA band bit designation](fig/s02_landsat_qa.png){width=80%}
+![Landsat Collection 1 Level-1 QA band bit designation](fig/s02_landsat_qa.png){width=80%}
 
 In the Landsat QA band, there are furthermore single and double bits. Single bits inform about one condition in a binary manner:
 
@@ -1111,6 +1111,8 @@ The radiometric saturation bits (2-3), read from left to right, represent how ma
 - 01 - 1-2 bands contain saturation.
 - 10 - 3-4 bands contain saturation.
 - 11 - 5 or more bands contain saturation.
+
+Please note that bit designations vary between sensors and data products. See for instance table 6.2 in the [Collection 1 Level-2 product guide](https://prd-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/atoms/files/LSDS-1368_L8_SurfaceReflectanceCode-LASRC_ProductGuide-v2.pdf). 
 
 ------
 
@@ -1140,7 +1142,7 @@ Solution: We are looking at a cloud pixel with radiometric saturation affecting 
 
 ------
 
-## Exercise
+## Assignment
 
 ### 1) Investigating the QA band
 
@@ -1199,8 +1201,6 @@ In this paper, a long time series of Landsat image composites at five year inter
 
 ------
 
-<!--
-
 # Session 03: Vegetation indices and data transforms
 
 ## Learning goals 
@@ -1212,9 +1212,9 @@ In this paper, a long time series of Landsat image composites at five year inter
 
 Vegetation produces a distinct spectral reflectance pattern due to its leaf and cell structure, its physiognomy, and complex stand structure. Photosynthetically inactive plant parts differ considerably from active ones across different wavelength regions. The reflectance of photosynthetically active vegetation is characterized by different factors in the VIS, nIR and SWIR:
 
-- VIS – leaf pigments - In the visible bands the reflectance is relatively low as the majority of light is absorbed by the leaf pigments. Chlorophyll strongly absorbs energy in the blue and red wavelengths and reflects more in the green parts of the spectrum. This is why healthy vegetation appears green to the human eye.
+- VIS – leaf pigments - In the visible bands the reflectance is relatively low as the majority of light is absorbed by the leaf pigments. Chlorophyll strongly absorbs energy in the blue and red wavelengths and reflects (a little) more in the green parts of the spectrum. This is why healthy vegetation appears green to the human eye.
 
-- nIR – cell structure - For healthy vegetation, the reflectance is much higher in the near infrared (NIR) region than in the visible region due to the cellular structure of the leaves, specifically the spongy mesophyll. Therefore healthy vegetation can be easily identified by the high NIR reflectance and generally low visible reflectance. 
+- nIR – cell structure - For healthy vegetation, the reflectance is much higher in the near infrared (nIR) region than in the visible region due to the cellular structure of the leaves, specifically the spongy mesophyll. Therefore healthy vegetation can be easily identified by the high NIR reflectance and generally low visible reflectance. 
 
 - SWIR – water content - The reflectance in the shortwave infrared wavelengths is related to the water content of the vegetation and its structure. Water has strong absorption around 1.45, 1.95 and 2.50 µm . Outside these absorption bands in the SWIR region, reflectance of leaves generally increases when water content in the leaf decreases. 
 
@@ -1244,7 +1244,7 @@ print(ndvi)
 
 ```
 
-The NDVI is not a physical measure, but a proxy integrating different factors, such as land use / cover, incl. the amount of background signal visible in a pixel, photosynthetic activity, vitality and overall vegetation condition. It relates well to vegetation density and structure, e.g., represented by the leaf area index (LAI)
+The NDVI is not a physical measure, but a proxy integrating different factors, such as land use / cover, including the background signal visible in a pixel, photosynthetic activity, vitality and overall vegetation condition. It relates well to vegetation density and structure, e.g., represented by the leaf area index (LAI).
 
 -----
 
@@ -1272,7 +1272,7 @@ We can observe these trajectories by producing near infrared ~ red scatterplots 
 
 ![Animated scatterplot of 10,000 locations of an agricultural system in southeastern Turkey in near infrared ~ red featurespace, observed within the course of one year (2015).](fig/s03_sct_cln.gif){width=50%}
 
-The concept was further developed for the use with other sensors, including Landsat TM, ETM+ and OLI. It is still widely used for different applications in the context of urban, agricultural, or forest-related remote-sensing studies. Resulting from the TC, we mostly analyze three components called Brightness, Greenness, and Wetness:
+The concept was further developed for the use with other sensors, including Landsat TM, ETM+ and OLI. It is still widely used for different remote sensing applications in the context of agriculture or forests. Resulting from the TC, we mostly analyze three components called Brightness, Greenness, and Wetness:
 
 - *Brightness*: the axis along the line of soils, indicating soil brightness.
 - *Greenness*: the axis perpendicular to the soil line, emphasizes near infrared and hence vegetation.
@@ -1280,7 +1280,7 @@ The concept was further developed for the use with other sensors, including Land
 
 ------
 
-## Exercise
+## Assignment
 
 We provide the following datasets in [our repository](https://box.hu-berlin.de/f/7bb994e5cb414bf49940/?dl=1): 
 
@@ -1304,7 +1304,7 @@ Read the March surface reflectance stack in R and calculate NDVI as well as EVI.
 
 - $L = 1$.
 
-Always be aware that the reflectance values in our datasets is scaled by 10,000. This will not make a difference when computing the NDVI, as we are only looking at relative differences. However, for the EVI, $L$ must be scaled by 10,000. Also, keep in mind that we commonly want to store datasets in ```INT2S``` data type, and therefore we need to scale our results by 10,000. Consequently, we compute the EVI from Landsat data as follows: 
+Always be aware that the reflectance values in our datasets are scaled by 10,000. This will not make a difference when computing the NDVI, as we are only looking at relative differences. However, for the EVI, $L$ must be scaled by 10,000. Also, keep in mind that we commonly want to store datasets in `INT2S` data type, and therefore again we need to scale our results by 10,000. Consequently, we compute the EVI from Landsat data as follows: 
 
 `evi <- 2.5 * ((nIR – red) / (nIR + 6 * red – 7.5 * blue + 10000))`
 
@@ -1337,20 +1337,17 @@ brightness <- march.stack[[1]] * tcc[1,1] +
 
 Make sure to create an individual layer for Brightness, Greenness, and Wetness. Create a stack from the three layers. While the computation is ongoing, proceed with task 1) of the block on training data collection. 
 
-When the computation is completed, write the results to disk, using the ```INT2S``` data type. Add the NDVI, EVI, and the TC stack to the QGIS project you started in the next block. Visually explore the vegetation indices and TC components. 
+When the computation is completed, write the results to disk, using the `INT2S` data type. Add the NDVI, EVI, and the TC stack to the QGIS project you started in the next block. Visually explore the vegetation indices and TC components. 
 
 ------
-
--->
-<!--
 
 # Session 03: Training data collection
 
 
 ## Learning goals
 
-- Gather training data for a broad forest type classification 
 - Understand how forest types differ spectrally
+- Gather training data for a forest type classification 
 
 ------
 
@@ -1362,15 +1359,15 @@ Collecting training is an essential step on your way to a classified map. The tr
 
 Collecting training data is time consuming, regardless if you are collecting in the field or digitally. Small conceptual mistakes may require a revision of your training dataset. As a consequence, training data collection should be well prepared. Consider the following points.
 
-- A precise and robust definition of your target classes based on the study region characteristics is key. Targeting a high thematic detail is beneficial, but spectral(-temporal) similarities between classes might pose limitations to a robust distinction of classes, such as tree species or crop types. In such cases, it is advised to think about a hierarchical structure to aggregate similar classes into higher level classes, such as forest types, or annual / perennial croplands. 
+- A precise and robust definition of your target classes based on the study region characteristics is key. Targeting a high thematic detail is beneficial, but spectral(-temporal) similarities between classes might pose limitations to a robust distinction of classes, such as tree species or crop types. In such cases, it is advised to think about a hierarchical structure to aggregate similar classes into more general classes, such as tree species into forest types, or crop types into annual / perennial croplands. 
 
-- Gathering as much reference information as possible. Can we find additional datasets that guide our interpretation? Is any very high resolution (VHR) imagery available? GoogleEarth is a valuable source of  VHR imagery, but it is critical to account for the exact acquisition date.
+- Gather as much reference information as possible. Can we find additional datasets that guide our interpretation? Is any very high resolution (VHR) imagery available? GoogleEarth is a valuable source of VHR imagery, but it is critical to account for the exact acquisition date, which you can identify with the "historic image" tool.
 
-- Good knowledge of the target classes, and their spectral (temporal) characteristics in the study region is beneficial. We should consider spectrally similar classes and identify potential ways to prevent confusion, e.g., by aggregating those classes or identifying spectral features  which help to separate them better. 
+- Good knowledge of the target classes, and their spectral (temporal) characteristics in the study region is beneficial. We should consider spectrally similar classes and identify potential ways to prevent confusion, e.g., by aggregating classes or identifying spectral features  which help to separate them better. 
 
-- A purely random point sampling is not neccessarily the best option (different from collecting independent validation data), as we might want to train small classes that are hardly captured by a random sample. Manual selection of training points is advised to circumvent this problem. 
+- Random point sampling is unlikely the best option for training data collection (different from collecting independent validation data), as we might want to train small classes that are hardly captured by a random sample. Manual selection of training points is advised to circumvent this problem. 
 
-- The image below shows the spatial distribution of six training datasets collected during an earlier iteration of the course. Some training points cluster in a subset of the study region. Ideally, however, training data should be well distributed across the study region to cover regional biophysical variability, such as different soil types, weather patterns, or topography. 
+- Cover your study area well. The image below shows the spatial distribution of six training datasets collected during an earlier iteration of the course. Some training points cluster in a subset of the study region. Ideally, however, training data should be well distributed across the study region to cover regional biophysical variability, such as different soil types, weather patterns, or topography. 
 
 ![Spatial distribution of six training datasets](fig/s03_train_dist.PNG)
 
@@ -1380,9 +1377,9 @@ Collecting training data is time consuming, regardless if you are collecting in 
 
 -----
 
-## Exercise
+## Assignment
 
-This exercise has two larger aims. First, you will learn to collect training data for a broad forest type classification. We provide forestry data to find representative sample pixels in QGIS. We will use the data you generate in this exercise for classification in the next session. Second, you will learn how the broad forest types appear spectrally in images acquired in different parts of the growing season.
+This assignment has two larger aims. First, you will learn to collect training data for a broad forest type classification. We provide forestry data to find representative sample pixels in QGIS. We will use the data you generate in this assignment for classification in the next session. Second, you will learn how the broad forest types appear spectrally in images acquired in different parts of the growing season.
 
 We provide the following datasets in [our repository](https://box.hu-berlin.de/f/7bb994e5cb414bf49940/?dl=1): 
 
@@ -1395,9 +1392,8 @@ We provide the following datasets in [our repository](https://box.hu-berlin.de/f
 
 …vector/: A shapefile and a *.kmz file for GoogleEarth, which will help you to accurately delineate the Landsat pixel locations and extents for training data collection. 
 
-…BDL/: Forestry data collected in 2015 which is publicly available [here](https://www.bdl.lasy.gov.pl/portal/wniosek-en). We prepared a shapefile for the use in this session.
+…BDL/: Forestry data collected in 2015 which is publicly available [here](https://www.bdl.lasy.gov.pl/portal/wniosek-en). We prepared a shapefile for the use in this session, which contains the following attributes: 
 
-It contains the following attributes: 
 
 | Attribute field | Definition                            | Class                   |
 | -------------   |-------------                          | -----                   |
@@ -1405,12 +1401,13 @@ It contains the following attributes:
 |part_cd          |Share of this genus within the stand   |0 – 100 (in %)           |
 |spec_age         |Average age of the trees in this stand |Age in years             |
 
+------
 
 ### 1) Prepare the training data collection
 
-Visualize and arrange all abovementioned datasets in QGIS. Ask us for help if you´re not familiar with QGIS. Consider the following steps:
+Visualize and arrange all abovementioned datasets in QGIS. Consider the following steps:
 
-a)	Find a good [false-color representation](https://www.harrisgeospatial.com/Learn/Blogs/Blog-Details/ArtMID/10198/ArticleID/15691/The-Many-Band-Combinations-of-Landsat-8) of the Landsat 8 bands to highlight vegetation. 
+a)	Find a good [false-color representation](https://www.harrisgeospatial.com/Learn/Blogs/Blog-Details/ArtMID/10198/ArticleID/15691/The-Many-Band-Combinations-of-Landsat-8) of the Landsat 8 bands to highlight differences in vegetation. 
 
 b)	Visualize the forestry data by choosing distinct colors for the different tree genera (species_en). 
 
@@ -1418,11 +1415,13 @@ Which genera are dominant in the study area?
 
 Generate a new point shapefile for storing the training data you will collect in the next task. It should contain the attribute fields ‘classID’ and ‘confID’ (both of type integer). 
 
-Watch out - make sure the shapefile has the same spatial reference system as the Landsat data.
+Make sure the shapefile has the same spatial reference system as the Landsat data.
+
+------
 
 ### 2) Collect training data 
 
-Switch into the editing mode to locate training points and assign the corresponding class and confidence number. Please collect at least 15 pixels per class and assign them the class numbers and confidence numbers given below. 
+Switch into the editing mode to locate training points and assign the corresponding class and confidence number. Please collect at least 20 pixels per class and assign them the class numbers and confidence numbers given below. 
  
 |Class name	      | classID	    | Confidence level | confID       |
 |-------------    |-------------|-------------     |------------- |
@@ -1433,15 +1432,17 @@ Switch into the editing mode to locate training points and assign the correspond
 
 Use the multi-temporal Landsat imagery, the forestry polygons and very high resolution imagery in GoogleEarth to identify training points. The historic imagery tool in Google Earth can be extremely useful to guide your interpretation between deciduous and evergreen trees, as it contains imagery from the leaf-off phenological phase. The Landsat grid shapefile and .kmz will help you to identify and label the precise training locations for the four classes. 
 
-Regularly save the collected points and store the final shapefile with 60+ points in your course folder.
+Regularly save the collected points and store the final shapefile with 80+ points in your course folder.
+
+------
 
 ### 3)	Explore your training data 
 
-Load your shape in R using ```readOGR()```. Extract the spectral values at your point locations from the March image in R using the ```extract()``` function. Specify ```sp = TRUE``` to append the spectral values to the point shapefile. 
+Load your shape in R using `readOGR()`. Extract the spectral values at your point locations from the March image in R using the `extract()` function. Specify `sp = TRUE` to append the spectral values to the point shapefile. 
 
-Make sure the result of this task is an object of type ```data.frame``` named ```sr.march```. Your sample points should be represented as rows and the measured variables as columns (i.e. point id, classID, confID, and 6 spectral bands).
+Make sure the result of this task is an object of type `data.frame` (named `sr.march` in the code below). Your sample points should be represented as rows and the measured variables as columns (i.e. point id, classID, confID, and 6 spectral bands).
 
-Create boxplots of your surface reflectance measurements for all spectral bands, grouped according to the class number. 
+Create boxplots of your surface reflectance measurements for all spectral bands, grouped according to the class number following this example: 
 
 ```{r eval=F, echo=T}
 # Load required packages
@@ -1458,12 +1459,12 @@ ggplot(spectra.df, aes(x=variable, y=value, color=classID)) +
 
 Make sure you understand what the ```melt()``` function is doing. Feel free to adjust the plot layout.
 
-Similarly to the previous task, extract the values at your point locations from the Tasseled Cap stack. Create boxplots of the three Tasseled Cap components, grouped by the target class. Investigate the boxplots in order to investigate the differences between your target classes. Try to answer the following questions: 
+Similarly to the previous task, extract the values at your point locations from the Tasseled Cap stack. Create boxplots of the three Tasseled Cap components, grouped by classID. Investigate the boxplots in order to investigate the differences between your target classes. Try to answer the following questions: 
 
 - Do the Tasseled Cap components allow for discriminating your target classes? 
 - Which classes are likely difficult to separate?
 
-*Voluntary exercise*: If you´re keen on exploring spectral changes over time, repeat the above procedures for the remaining images (July, August, November). 
+*Voluntary assignment*: If you´re keen on exploring spectral changes over time, repeat the above procedures for the remaining images (July, August, November). 
 
 ------
 
@@ -1473,17 +1474,14 @@ In the next session, we would like to discuss the following paper:
 
 [Griffiths et al. (2013): Pixel-Based Landsat Compositing for Large Area Land Cover Mapping. IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing, 6(5), 2088-2101.](https://www.researchgate.net/publication/259486369_A_Pixel-Based_Landsat_Compositing_Algorithm_for_Large_Area_Land_Cover_Mapping)
  
-This paper describes the methods used in the article you read last week. Here, a novel algorithm for large-area pixel-based compositing from Landsat data was developed. Please read the paper thoroughly, make sure you understand the underlying concept and write down any question for the discussion in our next session. Also, answer the following broad questions: 
+This paper describes the methods used in the article you read last week. Here, a novel algorithm for large-area pixel-based compositing from Landsat data was developed. Please read the paper thoroughly, make sure you understand the underlying concept and note questions of understanding or for discussion. Also, answer the following broad questions: 
 
 - What is the motivation for this article?
-- How does the algorithm work in principle?
 - Which key parameters were used for the parametric scoring?
 - What is the difference between annual and seasonal consistency?
 
-
 ------
 
--->
 <!--
 
 # Session 04: Pixel-based compositing
@@ -1558,9 +1556,9 @@ $$score = 0.58$$
 ------
 
 
-## Exercise
+## Assignment
 
-The goal of this week's exercise is to combine several images into best-pixel composites using a parametric compositing function. We provide the data for this exercise in [our repository](https://box.hu-berlin.de/f/17f0d06cdc164564a019/?dl=1). After unpacking, you will find the following folders:
+The goal of this week's assignment is to combine several images into best-pixel composites using a parametric compositing function. We provide the data for this assignment in [our repository](https://box.hu-berlin.de/f/17f0d06cdc164564a019/?dl=1). After unpacking, you will find the following folders:
 
 - sr_data: a total of 43 cloud-masked bottom of atmosphere image chips for our study region, acquired in various seasons, years, and with different degrees of cloud cover.
 - cloud_dist: data on the distance (in pixels) to the closest cloud for each of the BOA images.
@@ -1572,10 +1570,10 @@ Today we will be working with pre-defined scripts. We provide both a script cont
   <summary>Click here to see code for the parametric compositing function</summary>
 ```{r compositing_script, echo=T, evaluate=F}
 #############################################################################
-# MSc Earth Observation Exercise 4
+# MSc Earth Observation Assignment 4
 # Function for creating cloud-free composites of multiple Landsat images
 # Requires an input data.frame (here img_list) and eight compositing 
-# parameters. Please see exercise sheet for further details.
+# parameters. Please see assignment sheet for further details.
 #############################################################################
 
 #############################################################################
@@ -1691,7 +1689,7 @@ parametric_compositing <- function(img_list, target_date,
   <summary>Click here to see the code for the main script calling the compositing function</summary>
 ```{r main_script, echo=T, eval=F}
   #############################################################################
-# MSc Earth Observation Exercise 4
+# MSc Earth Observation Assignment 4
 # [Your Name]
 #############################################################################
 
@@ -1755,7 +1753,7 @@ composite_1 <- parametric_compositing(img_list, target_date_1,
 ```
 </details>
 
- second compositing step was made voluntary exercise in winter term 19/20
+ second compositing step was made voluntary assignment in winter term 19/20
 #############################################################################
 # 4)
 #############################################################################
@@ -1794,7 +1792,7 @@ Relying on last week´s insights during training data collection, define two tar
 
 a. First, let´s try to understand how the function operates. Open the parametric_compositing.R script and take time to read through it in groups. Define the necessary parameters and objects (see above) and run the script line by line. Investigate the outcomes of each line and discuss questions in your group. Seek the help pages of functions you don´t know.  
 
-b. Next, run the parametric_compositing() function with your parameters and write the result to disk. Include the target DOY in the filename. While the function executes, proceed with the next exercise.
+b. Next, run the parametric_compositing() function with your parameters and write the result to disk. Include the target DOY in the filename. While the function executes, proceed with the next assignment.
 
 c. The developer did not spend sufficient time on the documentation. Make the script a bit more user-friendly by adding missing comments (#...). Make sure your comments explain what happens in each step of the function, and why. Are there bugs or sections which you would code differently?
 
@@ -1802,11 +1800,11 @@ c. The developer did not spend sufficient time on the documentation. Make the sc
 
 Visually inspect the quality of your compositing results in QGIS. Look at the bands containing the DOY and year flags (band 7 and 8). What worked out well, what did not? How could the quality of the composites be improved? Re-iterate with different parameters if you wish.
 
-### *5) Voluntary exercise*: Second run for target date 2
+### *5) Voluntary assignment*: Second run for target date 2
 
 Repeat the compositing for the second target DOY you specified in 2) and write the results to disk.
 
-### *6) Voluntary exercise*: Improving the user-friendliness of the script
+### *6) Voluntary assignment*: Improving the user-friendliness of the script
 
 Make the compositing function more user friendly. Insert a couple of plot and print commands to enable the users to follow the progress of the compositing while the function is running.  
 
@@ -1892,9 +1890,9 @@ Summing it up, there are a some key advantages of the RF algorithm, which make i
 
 ----- 
 
-## Exercise
+## Assignment
 
-In this exercise, we will deal with image classification using the Random Forest algorithm, as implemented in the ```randomForest``` package. Specifically, we will use your training data and your pixel-based composites from the last exercises to map forest types in the Western Beskids. We will assess the performance of multiple classification models through the out-of-bag error and investigate variable importances. In case you missed the last sessions, we provide exemplary composites and training data [here](https://box.hu-berlin.de/f/85a35c373cdd490180fe/?dl=1).
+In this assignment, we will deal with image classification using the Random Forest algorithm, as implemented in the ```randomForest``` package. Specifically, we will use your training data and your pixel-based composites from the last assignments to map forest types in the Western Beskids. We will assess the performance of multiple classification models through the out-of-bag error and investigate variable importances. In case you missed the last sessions, we provide exemplary composites and training data [here](https://box.hu-berlin.de/f/85a35c373cdd490180fe/?dl=1).
 
 ### 1) Training a Random Forest model
 
@@ -2074,9 +2072,9 @@ Wrapping it up, area adjustment can make quite a substantial difference for over
 
 All procedures which were only briefly described here and are explained in more detail in [Olofsson et al. (2014)](https://doi.org/10.1016/j.rse.2014.02.015). We recommend this read, as it is documenting the current state-of-the-art in regards to accuracy assessment in high detail. Another source of background information is the [technical documentation of the AREA² tools for accuracy assessment](https://area2.readthedocs.io/en/latest/background.html).
 
-## Exercise
+## Assignment
 
-In this exercise, you will perform an area-adjusted accuracy assessment of your forest type map and estimate error-adjusted area for each forest type class. In a first step, the accuracy scores will be investigated in an [Excel spreadsheet](https://box.hu-berlin.de/f/269470b96af54ba687ef/?dl=1). In case you do not yet have a forest type map, please use the one provided [here](https://box.hu-berlin.de/f/00fd4fdd12b34560b836/?dl=1).
+In this assignment, you will perform an area-adjusted accuracy assessment of your forest type map and estimate error-adjusted area for each forest type class. In a first step, the accuracy scores will be investigated in an [Excel spreadsheet](https://box.hu-berlin.de/f/269470b96af54ba687ef/?dl=1). In case you do not yet have a forest type map, please use the one provided [here](https://box.hu-berlin.de/f/00fd4fdd12b34560b836/?dl=1).
 
 ### 1) Producing reference data
 
@@ -2167,9 +2165,9 @@ How do we get to the change map? Similar to the production of a land cover map, 
 
 ![Schematic illustration of change detection methods.](fig/s07_change.png)
 
-## Exercise
+## Assignment
 
-After completing the last exercises, you gained a lot of experience in using R & QGIS for data handling and pre-processing, training data collection, classification, and accuracy assessment. In other terms: you´re well prepared for performing a change detection using Landsat data. The goal of this exercise is to map forest cover change in the Southern Brazilian Amazon.  
+After completing the last assignments, you gained a lot of experience in using R & QGIS for data handling and pre-processing, training data collection, classification, and accuracy assessment. In other terms: you´re well prepared for performing a change detection using Landsat data. The goal of this assignment is to map forest cover change in the Southern Brazilian Amazon.  
 
 ![Landsat images of study area for 2000, 2005, and 2010.](fig/s07_ls.png)
 
@@ -2185,7 +2183,7 @@ We provided the following datasets in [our repository](https://box.hu-berlin.de/
 
 …validation/: A shapefile containing reference data for the accuracy assessment.  
 
-…gfc/: A subset of the Global Forest Change dataset by Hansen et al. (2013). We reclassified the data to match the target classes of today´s exercises.
+…gfc/: A subset of the Global Forest Change dataset by Hansen et al. (2013). We reclassified the data to match the target classes of today´s assignments.
 
 Your task is to create a change map, which contains the following classes:
 
@@ -2197,7 +2195,7 @@ Your task is to create a change map, which contains the following classes:
 | 4       | Forest gain             |
 | 5       | Stable non-forest       |
 
-Different from the previous exercises, you can decide on how the workflow of your map production looks like in detail. Use the code and tools from the last sessions and earlier experiences with remote sensing and associated software packages, if applicable. Consider the following steps:
+Different from the previous assignments, you can decide on how the workflow of your map production looks like in detail. Use the code and tools from the last sessions and earlier experiences with remote sensing and associated software packages, if applicable. Consider the following steps:
 
 ### 1) Choosing an approach for change detection
 Several change detection approaches can be used to map forest cover changes. You can choose a methodological approach for your change detection. We suggest two approaches for supervised classification:
@@ -2276,9 +2274,9 @@ Different metrics might be more or less useful depending on the application. Goo
 
 ---
 
-## Exercise
+## Assignment
 
-In this exercise you will map pastures and croplands in deforested areas of the Brazilian Amazon. You will use and generate spectral-temporal metrics to separate these two land covers which are difficult to discriminate using single images. The resulting map enables you to determine which land use is primarily replacing forests in the region.
+In this assignment you will map pastures and croplands in deforested areas of the Brazilian Amazon. You will use and generate spectral-temporal metrics to separate these two land covers which are difficult to discriminate using single images. The resulting map enables you to determine which land use is primarily replacing forests in the region.
 
 We provide the following data in [our repository](https://box.hu-berlin.de/f/cdc86f7993194946930f/?dl=1) and on drive O:
 
