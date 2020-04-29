@@ -1025,7 +1025,7 @@ Open the BOA and the TOA file in QGIS and visually assess the differences in the
 
 In your R script, add comments to answer the following questions:
 
-a) Briefly summarize the spectral appearance of the six land cover types.
+a) Briefly summarize the spectral appearance of the different land cover types.
 
 b) What are the most evident differences between TOA and SR reflectance spectra? 
 
@@ -1201,7 +1201,7 @@ In this paper, a long time series of Landsat image composites at five year inter
 
 ------
 
-# Session 03: Vegetation indices and data transforms
+# Session 03: Vegetation indices & data transforms
 
 ## Learning goals 
 
