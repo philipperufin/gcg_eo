@@ -57,7 +57,7 @@ Participants should furthermore have a basic understanding of R, including synta
 
 ## Learning goals & course contents
 
-The main goal of this course is to provide you with the necessary knowledge and tools for using optical remote sensing datasets and methods in the geo-scientific context. We want you to enhance your ability of problem-solving, empowering you to perform research independently. To that end, we cover aspects of data acquisition, spatial data handling in R and QGIS, basics of image pre-processing, higher-level processing such as pixel-based compositing and time-series binning. The course contents are related to our lab´s research foci, both in terms of methods and study regions. You may want to check out our [publications](https://www.geographie.hu-berlin.de/en/professorships/geomatics/publications-en), [current projects](https://www.geographie.hu-berlin.de/en/professorships/geomatics/projects), or have a look at [this example](https://www2.hu-berlin.de/geovis/eolab/europeanlandcover/euroLandCover.html). 
+The main goal of this course is to provide you with the necessary knowledge and tools for using optical remote sensing datasets and methods in the geo-scientific context. We want you to enhance your ability of problem-solving, empowering you to perform research independently. To that end, we cover aspects of data acquisition, spatial data handling in R and QGIS, basics of image pre-processing, higher-level processing such as best-pixel compositing and time-series binning. The course contents are related to our lab´s research foci, both in terms of methods and study regions. You may want to check out our [publications](https://www.geographie.hu-berlin.de/en/professorships/geomatics/publications-en), [current projects](https://www.geographie.hu-berlin.de/en/professorships/geomatics/projects), or have a look at [this example](https://www2.hu-berlin.de/geovis/eolab/europeanlandcover/euroLandCover.html). 
 
 In the course you will learn about current state-of-the-art methods in image processing and time series analyses of optical satellite imagery. The course covers methods related to data quality, cloud masking, vegetation indices, multi-temporal image analyses, machine learning classification algorithms, area adjusted accuracy assessment, time series analyses, and image compositing. We use these methods for mapping of forest types, forest cover changes, agricultural dynamics in the Carpathian ecoregion (Poland), and the  Southern Brazilian Amazon.
 
@@ -88,7 +88,7 @@ We use openly available and platform independent (Windows, Linux, Mac OS) softwa
 
 ## Data
 
-All data used in the course is openly accessible. Mostly, we´ll be working with Landsat images, which you can access through the USGS Earth Explorer. We provide download links to the datasets for each session. It will be helpful if you organize your data in a course directory on your local machine (MSc students might want to use drive ```O:/Student_Data/your_name/EO/```). We will refer to this folder as ```course.dir``` throughout this course. Create subdirectories for each session, e.g. ```course.dir/S01/``` and separate data, code and course materials in additional sub-directories (e.g. ```/data```, ```/code```, ```/docs```).
+All data used in the course is openly accessible. Mostly, we´ll be working with Landsat images, which you can access through the USGS Earth Explorer. We provide download links to the datasets for each session. It will be helpful if you organize your data in a course directory on your local machine (MSc students might want to use drive `O:/Student_Data/your_name/EO/`). We will refer to this folder as `course.dir` throughout this course. Create subdirectories for each session, e.g. `course.dir/S01/` and separate data, code and course materials in additional sub-directories (e.g. `/data`, `/code`, `/docs`).
 
 ------
 
@@ -1474,7 +1474,7 @@ In the next session, we would like to discuss the following paper:
 
 [Griffiths et al. (2013): Pixel-Based Landsat Compositing for Large Area Land Cover Mapping. IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing, 6(5), 2088-2101.](https://www.researchgate.net/publication/259486369_A_Pixel-Based_Landsat_Compositing_Algorithm_for_Large_Area_Land_Cover_Mapping)
  
-This paper describes the methods used in the article you read last week. Here, a novel algorithm for large-area pixel-based compositing from Landsat data was developed. Please read the paper thoroughly, make sure you understand the underlying concept and note questions of understanding or for discussion. Also, answer the following broad questions: 
+This paper describes the methods used in the article you read last week. Here, a novel algorithm for large-area best-pixel compositing from Landsat data was developed. Please read the paper thoroughly, make sure you understand the underlying concept and note questions of understanding or for discussion. Also, answer the following broad questions: 
 
 - What is the motivation for this article?
 - Which key parameters were used for the parametric scoring?
@@ -1482,15 +1482,13 @@ This paper describes the methods used in the article you read last week. Here, a
 
 ------
 
-<!--
-
-# Session 04: Pixel-based compositing
+# Session 04: Best-pixel compositing
 
 ------
 
 ## Learning goals
 
-- Understand the fundamentals of pixel-based image compositing
+- Understand the fundamentals of best-pixel image compositing
 - Parameterize a compositing function and create your own composite from multiple Landsat images
 
 ------
@@ -1500,16 +1498,16 @@ This paper describes the methods used in the article you read last week. Here, a
 The availability of Landsat images varies by region. Even in areas where obersvation density is high, such as North America, coverage can be reduced by clouds and quality of observations can be impacted by haze or sensor saturation. 
 ![Global availability of Landsat images. Source: Wulder et al. 2016;  https://doi.org/10.1016/j.rse.2015.11.032](fig/s04_landsat_availability.jpg) 
 
-Using pixel-based-compositing, we can integrate multiple obervations (i.e., from multiple Landsat images) and combine them to one consistent image composite. One of the first global Landsat composites was produced using the WELD compositing approach (Roy et al. 2011, https://doi.org/10.1016/j.rse.2009.08.011). 
+Using best-pixel compositing, we can integrate multiple obervations (i.e., from multiple Landsat images) and combine them to one consistent image composite. One of the first global Landsat composites was produced using the WELD compositing approach (Roy et al. 2011, https://doi.org/10.1016/j.rse.2009.08.011). 
 ![Monthly global WELD surface reflectance composite for June 2009. Source: https://worldview.earthdata.nasa.gov/](fig/s04_global_weld.jpg)
 
 Pixel-based compositing allows us to create cloud-free, radiometrically and phenologically consistent image composites that are contiguous over large areas. A set of parameters is used to determine the observations best suited for analysis. These parameters can, e.g., include the distance to clouds in the image, or the temporal proximity to a target day of the year. Defining scoring functions allows for a flexible parametrization according to user´s needs and study area characteristics. Different parameters can also be weighted according to their relevance for a given application. 
 
-![Creating one pixel-based composite from three images.](fig/s04_compositing.png)
+![Creating one best-pixel composite from three images.](fig/s04_compositing.png)
 
 ------
 
-## Best-pixel-based compositing in seven steps
+## Best-pixel compositing in seven steps
 
 1) Determine compositing parameters, e.g. Target DOY: June 15 +/- 30 days and target year: 2015 +/- 1 year
 
@@ -1555,7 +1553,6 @@ $$score = 0.58$$
 
 ------
 
-
 ## Assignment
 
 The goal of this week's assignment is to combine several images into best-pixel composites using a parametric compositing function. We provide the data for this assignment in [our repository](https://box.hu-berlin.de/f/17f0d06cdc164564a019/?dl=1). After unpacking, you will find the following folders:
@@ -1564,7 +1561,7 @@ The goal of this week's assignment is to combine several images into best-pixel 
 - cloud_dist: data on the distance (in pixels) to the closest cloud for each of the BOA images.
 - fmask: the cloud masks used to mask the BOA images and to derive the cloud distance layers.
 
-Today we will be working with pre-defined scripts. We provide both a script containing the compositing function and a main script which sources and executes the compositing function. Outsourcing functions - especially extensive ones - improves the readability of scripts and allows for using functions in different scripts. Check the help for source() if you are not familiar with sourcing R code in your script. You find both codes below. Please copy them into an empty R script and save to disk.
+Today we will be working with pre-defined scripts. We provide both a script containing the compositing function and a main script which sources and executes the compositing function. Outsourcing functions - especially extensive ones - improves the readability of scripts and allows for using functions in different scripts. Check the help for `source()` if you are not familiar with sourcing R code in your script. You find both scripts below. Please copy them into an empty R script and save to disk.
 
 <details>
   <summary>Click here to see code for the parametric compositing function</summary>
@@ -1705,7 +1702,7 @@ source('') #path to the parametric_compositing function including filename.R
 # rasterOptions(maxmemory = 1e12)
 
 ######## Define the folder that contains your data...
-data.path <- 'O:/WS1920_MSc-EO/S04/data/'
+data.path <- 'course.dir/S04/data/'
 
 #############################################################################
 # 1)
@@ -1753,7 +1750,7 @@ composite_1 <- parametric_compositing(img_list, target_date_1,
 ```
 </details>
 
- second compositing step was made voluntary assignment in winter term 19/20
+<!-- second compositing step was made voluntary assignment in winter term 19/20 
 #############################################################################
 # 4)
 #############################################################################
@@ -1762,7 +1759,7 @@ composite_2 <- parametric_compositing(img_list, target_date_2,
                                       W_DOY, W_year, W_cloud_dist, 
                                       max_DOY_offset, max_year_offset, 
                                       min_cloud_dist, max_cloud_dist)
-
+-->
 
 ### 1)	Parameterization
 
@@ -1784,9 +1781,13 @@ d.	*max_DOY_offset*, *max_year_offset*: Thresholds for the maximum allowed diffe
 
 e.	*min_cloud_dist*, *max_cloud_dist*:  The minimum and maximum distance to clouds. min_cloud_dist = 10 will exclude all observations which are less than 10 pixels away from a cloud. The cloud scores are linearly scaled between the minimum (score = 0) and maximum cloud distance (score = 1). Pixels with distances above max_cloud_dist will receive a score of 1. 
 
+------
+
 ### 2) Defining target dates and parameters
 
 Relying on last week´s insights during training data collection, define two target days of the year (DOY) to capture contrasting phenological stages of the different forest types. These will be used as target_date parameters later on. Next, make a decision concerning the compositing parameters explained in 1c, 1d and 1e.  
+
+------
 
 ### 3) Exploring the script and adding documentation
 
@@ -1796,15 +1797,15 @@ b. Next, run the parametric_compositing() function with your parameters and writ
 
 c. The developer did not spend sufficient time on the documentation. Make the script a bit more user-friendly by adding missing comments (#...). Make sure your comments explain what happens in each step of the function, and why. Are there bugs or sections which you would code differently?
 
+------
+
 ### 4) Visual inspection and evaluation of results
 
 Visually inspect the quality of your compositing results in QGIS. Look at the bands containing the DOY and year flags (band 7 and 8). What worked out well, what did not? How could the quality of the composites be improved? Re-iterate with different parameters if you wish.
 
-### *5) Voluntary assignment*: Second run for target date 2
+------
 
-Repeat the compositing for the second target DOY you specified in 2) and write the results to disk.
-
-### *6) Voluntary assignment*: Improving the user-friendliness of the script
+### *5) Voluntary assignment*: Improving the user-friendliness of the script
 
 Make the compositing function more user friendly. Insert a couple of plot and print commands to enable the users to follow the progress of the compositing while the function is running.  
 
@@ -1814,22 +1815,26 @@ Don´t forget to save the script and run the source() command in your R script t
 
 ------
 
+### *6) Voluntary assignment*: Second run for target date 2
+
+Repeat the compositing for the second target DOY you specified in 2) and write the results to disk.
+
+------
+
 ## Reading materials
 
 In the next session, we would like to discuss the following paper: 
 
 [Maxwell et al. (2018): Implementation of machine-learning classification in remote sensing: an applied review.  International Journal of Remote Sensing 39(9), 2784-2817](https://doi.org/10.1080/01431161.2018.1433343)
  
-In this review, Maxwell and colleagues outline the use of several machine learning classification algorithms for application in remote sensing. Please read the article and note questions and points to discuss. Feel free to omit the details of ANNs and boosted DTs. Please read the paper thoroughly, make sure you understand the underlying concept and write down question for the discussion in our next session. Also, answer the following broad questions: 
+In this review, Maxwell and colleagues outline the use of several machine learning classification algorithms for application in remote sensing. Please read the article and note questions and points to discuss. Feel free to omit the details of ANNs and boosted DTs. Please read the paper thoroughly, make sure you understand the underlying concept and write down question for the discussion in our next session. Try answer the following questions: 
 
 - What is the motivation for this article?
-- What are the key differences between classification algorithms from a user perspective?
-- Which classifiers do you reckon to be most suitable for typical EO applications?
+- What are the key differences between the presented classification algorithms from a user perspective?
 - What do the following terms refer to: "overfitting", "imbalanced data", "ensemble classifiers", "parameter optimization"?
 
 ------
 
--->
 <!--
 
 # Session 05: Machine learning for image classification
@@ -2171,7 +2176,7 @@ After completing the last assignments, you gained a lot of experience in using R
 
 ![Landsat images of study area for 2000, 2005, and 2010.](fig/s07_ls.png)
 
-We provided the following datasets in [our repository](https://box.hu-berlin.de/f/bb4553666dff42c29cb9/?dl=1) and on drive O:  
+We provided the following datasets in [our repository](https://box.hu-berlin.de/f/bb4553666dff42c29cb9/?dl=1):  
 
 …sr_data/: Three Landsat 5 surface reflectance stacks (*_crp.tif) at five-year intervals from 2000 to 2010.
 
@@ -2278,7 +2283,7 @@ Different metrics might be more or less useful depending on the application. Goo
 
 In this assignment you will map pastures and croplands in deforested areas of the Brazilian Amazon. You will use and generate spectral-temporal metrics to separate these two land covers which are difficult to discriminate using single images. The resulting map enables you to determine which land use is primarily replacing forests in the region.
 
-We provide the following data in [our repository](https://box.hu-berlin.de/f/cdc86f7993194946930f/?dl=1) and on drive O:
+We provide the following data in [our repository](https://box.hu-berlin.de/f/cdc86f7993194946930f/?dl=1):
 
 a. …ts_stacks/: cloud-masked stacks of TC brightness (TCB), TC greenness (TCG), TC wetness (TCW) derived from 30 Landsat images acquired throughout 2010. Observation dates and sensors for each band in the stacks are listed in *.csv file.
 
@@ -2314,7 +2319,7 @@ We provide a shapefile with training points for the following classes
 ```extract()``` the values at your training locations from the temporal stacks (e.g., …/ts_stacks/TCG.tif). Compare the phenological behavior of the classes with boxplots or line plots. Use the following code to import the acquisition dates of the Landsat images:
 
 ```{r import_dates, echo=T, eval=F}
-data.path <- 'O:/WS1920_MSc-EO/S08/data/'
+data.path <- 'course.dir/S08/data/'
 sensor_date <- read.table(paste0(data.path, 'ts_stacks/Landsat_2010_Sensor_Date.csv', sep=';', header=T)
 ```
 
@@ -2338,7 +2343,7 @@ The following code template gives an example for computing the median Tasseled C
 
 ```{r compute_median, echo=T, eval=F}
 # Read TCG time series stack
-tcg.stack <- stack('O:/WS1920_MSc-EO/S08/data/ts_stacks/TCG_stack.tif')
+tcg.stack <- stack('course.dir/S08/data/ts_stacks/TCG_stack.tif')
 
 # Convert to matrix
 tcg.matrix <- as.matrix(tcg.stack)
@@ -2598,7 +2603,7 @@ This is a non-exhaustive list of common terms.
 ## Higher-level products
 
 - Composite / Mosaic
-- Pixel-based composites (Best observation composite)
+- Pixel-based composites (Best-pixel composite)
 - Phenology-adaptive composites
 - Spectral-temporal metrics
 - Rank-band composite / metric
