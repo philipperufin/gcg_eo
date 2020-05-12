@@ -1304,7 +1304,7 @@ Read the March surface reflectance stack in R and calculate NDVI as well as EVI.
 
 - $L = 1$.
 
-Always be aware that the reflectance values in our datasets are scaled by 10,000. This will not make a difference when computing the NDVI, as we are only looking at relative differences. However, for the EVI, $L$ must be scaled by 10,000. Also, keep in mind that we commonly want to store datasets in `INT2S` data type, and therefore again we need to scale our results by 10,000. Consequently, we compute the EVI from Landsat data as follows: 
+Always be aware that the reflectance values in our datasets are scaled by 10,000. This will not make a difference when computing the NDVI. However, for the EVI, the additive coefficient $L$ must be scaled by 10,000. Also, keep in mind that we commonly want to store datasets in `INT2S` data type, and therefore again we need to scale our results by 10,000. Consequently, we compute the EVI from Landsat data as follows: 
 
 `evi <- 2.5 * ((nIR – red) / (nIR + 6 * red – 7.5 * blue + 10000))`
 
@@ -1564,7 +1564,7 @@ The goal of this week's assignment is to combine several images into best-pixel 
 Today we will be working with pre-defined scripts. We provide both a script containing the compositing function and a main script which sources and executes the compositing function. Outsourcing functions - especially extensive ones - improves the readability of scripts and allows for using functions in different scripts. Check the help for `source()` if you are not familiar with sourcing R code in your script. You find both scripts below. Please copy them into an empty R script and save to disk.
 
 <details>
-  <summary>Click here to see code for the parametric compositing function</summary>
+  <summary>Click here to see the parametric compositing function</summary>
 ```{r compositing_script, echo=T, evaluate=F}
 #############################################################################
 # MSc Earth Observation Assignment 4
@@ -1682,8 +1682,9 @@ parametric_compositing <- function(img_list, target_date,
 ```
 </details>
 
+
 <details>
-  <summary>Click here to see the code for the main script calling the compositing function</summary>
+  <summary>Click here to see the script calling the compositing function</summary>
 ```{r main_script, echo=T, eval=F}
   #############################################################################
 # MSc Earth Observation Assignment 4
@@ -1763,9 +1764,9 @@ composite_2 <- parametric_compositing(img_list, target_date_2,
 
 ### 1)	Parameterization
 
-The function above allows you to produce cloud-free best-pixel composites for a pre-defined target DOY. This function requires one input data.frame (see code template on how to create it) and eight input parameters: 
+The function above allows you to produce cloud-free best-pixel composites for a pre-defined target DOY. This function requires one input `data.frame` (see code template on how to create it) and eight input parameters: 
 
-a. *img_list*: a data frame containing five variables for each of the Landsat images:  
+- *img_list*: a data frame containing five variables for each of the Landsat images:  
   
   	$image_files: the full paths to the files in …sr_data.  
   	$cloud_dist_files: the full paths to the files in …cloud_dist.  
@@ -1773,19 +1774,19 @@ a. *img_list*: a data frame containing five variables for each of the Landsat im
   	$DOY: the acquisition day of the year.  
   	$year: the acquisition year.  
 
-b.	*target_date*: the target date for your composite in Date format (YYYY-MM-DD)
+- *target_date*: the target date for your composite in Date format (YYYY-MM-DD)
 
-c.	*W_DOY*, *W_year*, *W_cloud_dist*: weights for the three available parameters DOY, year and distance to clouds. Must be scaled between 0 and 1 and sum up to 1, the higher the weight, the higher the importance of the criterion. 
+- *W_DOY*, *W_year*, *W_cloud_dist*: weights for the three available parameters DOY, year and distance to clouds. Must be scaled between 0 and 1 and sum up to 1, the higher the weight, the higher the importance of the criterion. 
 
-d.	*max_DOY_offset*, *max_year_offset*: Thresholds for the maximum allowed differences between target DOY and acquisition DOY, as well target year and acquisition year. Images exceeding these thresholds (further away in time) will be fully ignored. For instance, max_year_offset = 0 will not allow observations from a year other than the target year. By choosing these parameters, you will determine whether you prefer seasonal consistency (close to target DOY but from different years) over annual consistency (observations from same year but potentially distant DOYs). Discuss the parametrization in your group. 
+- *max_DOY_offset*, *max_year_offset*: Thresholds for the maximum allowed differences between target DOY and acquisition DOY, as well target year and acquisition year. Images exceeding these thresholds (further away in time) will be fully ignored. For instance, max_year_offset = 0 will not allow observations from a year other than the target year. By choosing these parameters, you will determine whether you prefer seasonal consistency (close to target DOY but from different years) over annual consistency (observations from same year but potentially distant DOYs). Discuss the parametrization in your group. 
 
-e.	*min_cloud_dist*, *max_cloud_dist*:  The minimum and maximum distance to clouds. min_cloud_dist = 10 will exclude all observations which are less than 10 pixels away from a cloud. The cloud scores are linearly scaled between the minimum (score = 0) and maximum cloud distance (score = 1). Pixels with distances above max_cloud_dist will receive a score of 1. 
+- *min_cloud_dist*, *max_cloud_dist*:  The minimum and maximum distance to clouds. min_cloud_dist = 10 will exclude all observations which are less than 10 pixels away from a cloud. The cloud scores are linearly scaled between the minimum (score = 0) and maximum cloud distance (score = 1). Pixels with distances above max_cloud_dist will receive a score of 1. 
 
 ------
 
 ### 2) Defining target dates and parameters
 
-Relying on last week´s insights during training data collection, define two target days of the year (DOY) to capture contrasting phenological stages of the different forest types. These will be used as target_date parameters later on. Next, make a decision concerning the compositing parameters explained in 1c, 1d and 1e.  
+Relying on last week´s insights during training data collection, define two target days of the year (DOY) to capture contrasting phenological stages of the different forest types. These will be used as `target_date` parameters later on. Next, make a decision concerning the compositing parameters explained in 1c, 1d and 1e.  
 
 ------
 
@@ -1793,15 +1794,15 @@ Relying on last week´s insights during training data collection, define two tar
 
 a. First, let´s try to understand how the function operates. Open the parametric_compositing.R script and take time to read through it in groups. Define the necessary parameters and objects (see above) and run the script line by line. Investigate the outcomes of each line and discuss questions in your group. Seek the help pages of functions you don´t know.  
 
-b. Next, run the parametric_compositing() function with your parameters and write the result to disk. Include the target DOY in the filename. While the function executes, proceed with the next assignment.
+b. Next, run the `parametric_compositing()` function with your parameters and write the result to disk. Include the target DOY in the filename. While the function executes, proceed with the next assignment.
 
-c. The developer did not spend sufficient time on the documentation. Make the script a bit more user-friendly by adding missing comments (#...). Make sure your comments explain what happens in each step of the function, and why. Are there bugs or sections which you would code differently?
+c. The developer did not spend sufficient time on the documentation. Make the script a bit more user-friendly by adding missing comments (`#...`). Make sure your comments explain what happens in each step of the function, and why. Are there bugs or sections which you think can be improved?
 
 ------
 
 ### 4) Visual inspection and evaluation of results
 
-Visually inspect the quality of your compositing results in QGIS. Look at the bands containing the DOY and year flags (band 7 and 8). What worked out well, what did not? How could the quality of the composites be improved? Re-iterate with different parameters if you wish.
+Visually inspect the quality of your compositing results in QGIS. Look at the bands containing the DOY and year flags (bands 7 and 8). What worked out well, what did not? How could the quality of the composites be improved? Re-iterate with different parameters if you wish.
 
 ------
 
@@ -1811,7 +1812,7 @@ Make the compositing function more user friendly. Insert a couple of plot and pr
 
 For instance, print() how many images were used for the final composite, their acquisition dates, etc. Also, you might want to plot() the composited image after each iteration. You could add further status messages telling the user how much time single steps took.  
 
-Don´t forget to save the script and run the source() command in your R script to update the function after you made these changes. 
+Don´t forget to save the script and re-run the `source()` command in your R script to update the function after you made these changes. 
 
 ------
 
@@ -1823,7 +1824,7 @@ Repeat the compositing for the second target DOY you specified in 2) and write t
 
 ## Reading materials
 
-In the next session, we would like to discuss the following paper: 
+For the next session, please read the following paper: 
 
 [Maxwell et al. (2018): Implementation of machine-learning classification in remote sensing: an applied review.  International Journal of Remote Sensing 39(9), 2784-2817](https://doi.org/10.1080/01431161.2018.1433343)
  

@@ -1282,7 +1282,7 @@ vector a: 2 4 8 16 32</code></pre>
 <li><p><span class="math inline">\(C2 = 7.5\)</span>, and</p></li>
 <li><p><span class="math inline">\(L = 1\)</span>.</p></li>
 </ul>
-<p>Always be aware that the reflectance values in our datasets are scaled by 10,000. This will not make a difference when computing the NDVI, as we are only looking at relative differences. However, for the EVI, <span class="math inline">\(L\)</span> must be scaled by 10,000. Also, keep in mind that we commonly want to store datasets in <code>INT2S</code> data type, and therefore again we need to scale our results by 10,000. Consequently, we compute the EVI from Landsat data as follows:</p>
+<p>Always be aware that the reflectance values in our datasets are scaled by 10,000. This will not make a difference when computing the NDVI. However, for the EVI, the additive coefficient <span class="math inline">\(L\)</span> must be scaled by 10,000. Also, keep in mind that we commonly want to store datasets in <code>INT2S</code> data type, and therefore again we need to scale our results by 10,000. Consequently, we compute the EVI from Landsat data as follows:</p>
 <p><code>evi &lt;- 2.5 * ((nIR – red) / (nIR + 6 * red – 7.5 * blue + 10000))</code></p>
 <p>While the computation is ongoing, proceed with preparing the code for the next task. When the computation is done, write the results to disk, using the <code>INT2S</code> data type.</p>
 </div>
@@ -1565,7 +1565,7 @@ A second function determines the suitability score for the year of observation. 
 </ul>
 <p>Today we will be working with pre-defined scripts. We provide both a script containing the compositing function and a main script which sources and executes the compositing function. Outsourcing functions - especially extensive ones - improves the readability of scripts and allows for using functions in different scripts. Check the help for <code>source()</code> if you are not familiar with sourcing R code in your script. You find both scripts below. Please copy them into an empty R script and save to disk.</p>
 <details>
-<p><summary>Click here to see code for the parametric compositing function</summary></p>
+<p><summary>Click here to see the parametric compositing function</summary></p>
 <div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" data-line-number="1"><span class="co">#############################################################################</span></a>
 <a class="sourceLine" id="cb89-2" data-line-number="2"><span class="co"># MSc Earth Observation Assignment 4</span></a>
 <a class="sourceLine" id="cb89-3" data-line-number="3"><span class="co"># Function for creating cloud-free composites of multiple Landsat images</span></a>
@@ -1681,7 +1681,7 @@ A second function determines the suitability score for the year of observation. 
 <a class="sourceLine" id="cb89-113" data-line-number="113">}</a></code></pre></div>
 </details>
 <details>
-<p><summary>Click here to see the code for the main script calling the compositing function</summary></p>
+<p><summary>Click here to see the script calling the compositing function</summary></p>
 <div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" data-line-number="1">  <span class="co">#############################################################################</span></a>
 <a class="sourceLine" id="cb90-2" data-line-number="2"><span class="co"># MSc Earth Observation Assignment 4</span></a>
 <a class="sourceLine" id="cb90-3" data-line-number="3"><span class="co"># [Your Name]</span></a>
@@ -1756,8 +1756,8 @@ composite_2 <- parametric_compositing(img_list, target_date_2,
 -->
 <div id="parameterization" class="section level3">
 <h3>1) Parameterization</h3>
-<p>The function above allows you to produce cloud-free best-pixel composites for a pre-defined target DOY. This function requires one input data.frame (see code template on how to create it) and eight input parameters:</p>
-<ol style="list-style-type: lower-alpha">
+<p>The function above allows you to produce cloud-free best-pixel composites for a pre-defined target DOY. This function requires one input <code>data.frame</code> (see code template on how to create it) and eight input parameters:</p>
+<ul>
 <li><p><em>img_list</em>: a data frame containing five variables for each of the Landsat images:</p>
 <p>$image_files: the full paths to the files in …sr_data.<br />
 $cloud_dist_files: the full paths to the files in …cloud_dist.<br />
@@ -1768,33 +1768,33 @@ $year: the acquisition year.</p></li>
 <li><p><em>W_DOY</em>, <em>W_year</em>, <em>W_cloud_dist</em>: weights for the three available parameters DOY, year and distance to clouds. Must be scaled between 0 and 1 and sum up to 1, the higher the weight, the higher the importance of the criterion.</p></li>
 <li><p><em>max_DOY_offset</em>, <em>max_year_offset</em>: Thresholds for the maximum allowed differences between target DOY and acquisition DOY, as well target year and acquisition year. Images exceeding these thresholds (further away in time) will be fully ignored. For instance, max_year_offset = 0 will not allow observations from a year other than the target year. By choosing these parameters, you will determine whether you prefer seasonal consistency (close to target DOY but from different years) over annual consistency (observations from same year but potentially distant DOYs). Discuss the parametrization in your group.</p></li>
 <li><p><em>min_cloud_dist</em>, <em>max_cloud_dist</em>: The minimum and maximum distance to clouds. min_cloud_dist = 10 will exclude all observations which are less than 10 pixels away from a cloud. The cloud scores are linearly scaled between the minimum (score = 0) and maximum cloud distance (score = 1). Pixels with distances above max_cloud_dist will receive a score of 1.</p></li>
-</ol>
+</ul>
 <hr />
 </div>
 <div id="defining-target-dates-and-parameters" class="section level3">
 <h3>2) Defining target dates and parameters</h3>
-<p>Relying on last week´s insights during training data collection, define two target days of the year (DOY) to capture contrasting phenological stages of the different forest types. These will be used as target_date parameters later on. Next, make a decision concerning the compositing parameters explained in 1c, 1d and 1e.</p>
+<p>Relying on last week´s insights during training data collection, define two target days of the year (DOY) to capture contrasting phenological stages of the different forest types. These will be used as <code>target_date</code> parameters later on. Next, make a decision concerning the compositing parameters explained in 1c, 1d and 1e.</p>
 <hr />
 </div>
 <div id="exploring-the-script-and-adding-documentation" class="section level3">
 <h3>3) Exploring the script and adding documentation</h3>
 <ol style="list-style-type: lower-alpha">
 <li><p>First, let´s try to understand how the function operates. Open the parametric_compositing.R script and take time to read through it in groups. Define the necessary parameters and objects (see above) and run the script line by line. Investigate the outcomes of each line and discuss questions in your group. Seek the help pages of functions you don´t know.</p></li>
-<li><p>Next, run the parametric_compositing() function with your parameters and write the result to disk. Include the target DOY in the filename. While the function executes, proceed with the next assignment.</p></li>
-<li><p>The developer did not spend sufficient time on the documentation. Make the script a bit more user-friendly by adding missing comments (#…). Make sure your comments explain what happens in each step of the function, and why. Are there bugs or sections which you would code differently?</p></li>
+<li><p>Next, run the <code>parametric_compositing()</code> function with your parameters and write the result to disk. Include the target DOY in the filename. While the function executes, proceed with the next assignment.</p></li>
+<li><p>The developer did not spend sufficient time on the documentation. Make the script a bit more user-friendly by adding missing comments (<code>#...</code>). Make sure your comments explain what happens in each step of the function, and why. Are there bugs or sections which you think can be improved?</p></li>
 </ol>
 <hr />
 </div>
 <div id="visual-inspection-and-evaluation-of-results" class="section level3">
 <h3>4) Visual inspection and evaluation of results</h3>
-<p>Visually inspect the quality of your compositing results in QGIS. Look at the bands containing the DOY and year flags (band 7 and 8). What worked out well, what did not? How could the quality of the composites be improved? Re-iterate with different parameters if you wish.</p>
+<p>Visually inspect the quality of your compositing results in QGIS. Look at the bands containing the DOY and year flags (bands 7 and 8). What worked out well, what did not? How could the quality of the composites be improved? Re-iterate with different parameters if you wish.</p>
 <hr />
 </div>
 <div id="voluntary-assignment-improving-the-user-friendliness-of-the-script" class="section level3">
 <h3><em>5) Voluntary assignment</em>: Improving the user-friendliness of the script</h3>
 <p>Make the compositing function more user friendly. Insert a couple of plot and print commands to enable the users to follow the progress of the compositing while the function is running.</p>
 <p>For instance, print() how many images were used for the final composite, their acquisition dates, etc. Also, you might want to plot() the composited image after each iteration. You could add further status messages telling the user how much time single steps took.</p>
-<p>Don´t forget to save the script and run the source() command in your R script to update the function after you made these changes.</p>
+<p>Don´t forget to save the script and re-run the <code>source()</code> command in your R script to update the function after you made these changes.</p>
 <hr />
 </div>
 <div id="voluntary-assignment-second-run-for-target-date-2" class="section level3">
@@ -1805,7 +1805,7 @@ $year: the acquisition year.</p></li>
 </div>
 <div id="reading-materials-3" class="section level2">
 <h2>Reading materials</h2>
-<p>In the next session, we would like to discuss the following paper:</p>
+<p>For the next session, please read the following paper:</p>
 <p><a href="https://doi.org/10.1080/01431161.2018.1433343">Maxwell et al. (2018): Implementation of machine-learning classification in remote sensing: an applied review. International Journal of Remote Sensing 39(9), 2784-2817</a></p>
 <p>In this review, Maxwell and colleagues outline the use of several machine learning classification algorithms for application in remote sensing. Please read the article and note questions and points to discuss. Feel free to omit the details of ANNs and boosted DTs. Please read the paper thoroughly, make sure you understand the underlying concept and write down question for the discussion in our next session. Try answer the following questions:</p>
 <ul>
