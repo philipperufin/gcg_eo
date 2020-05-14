@@ -1952,6 +1952,59 @@ Inspect your result in QGIS and visually identify well classified regions and cl
 
 ------
 
+### *5) Voluntary assignment:* Automated parameter optimization
+
+The `e1071` package offers automated parameter optimization for several classification algorithms. Use the `tune.randomForest()` function to find the best combination of `mtry`and `ntree` for your classification problem. The decision is made on an accuracy score derived via 10-fold cross-validation.
+<!--
+```{r training_df, echo=F, eval=T, results='hold'}
+library(randomForest)
+load(url('https://github.com/philipperufin/gcg_eo/raw/master/data/training_data_df.RData'))
+train.df <- train_data_df
+``` 
+-->
+```{r rf_tune, echo=T, eval=F}
+library(e1071)
+
+# Use tune.randomForest to assess the optimal combination of ntree and mtry
+rf.tune <- tune.randomForest(classID~., data = train.df, ntree=seq(100, 500, 50), mtry=c(2:10))
+
+# Store the best model in a new object for further use
+rf.best <- rf.tune$best.model
+
+# Is the parametrization and/or different from your previous model?
+print(rf.best)
+
+```
+
+------
+
+### *6) Voluntary assignment:* Create a classification using a Support-Vector Machine (SVM)
+
+If you are curious how the SVM approach would deal with the same classification problem, feel free to run a test. SVMs are sensitive to parametrization, however the parametrization is not as intuitive as it is for the RF classifier. Luckily we can also  optimize parameter settings based on a grid search using `tune.svm()`. Read the [SVM vignette](https://cran.r-project.org/web/packages/e1071/vignettes/svmdoc.pdf) for further information.
+
+Several kernels are available in the `e1071` SVM implementation (Radial Basis Function (RBF), Sigmoid, Polynomial, Linear). Let´s stick to the RBF kernel (default setting), as it has been showing good performance in a variety of settings. Feel free to read the [scikit-learn tutorial](https://scikit-learn.org/stable/auto_examples/svm/plot_rbf_parameters.html) on the role of the parameters $C$ and $\gamma$ in the RBF SVM. 
+
+The RBF kernel has the advantage of requiring the specification of only one parameter $\gamma$ (`gamma`). Next, we have to define the parameter $C$ (`cost`), which defines the tradeoff between training error and model complexity. The authors of the SVM implementation suggest to try a range between small and large values for C. Below, you find a code example following the suggestions in the scikit-learn tutorial.
+
+
+```{r svm, echo=T, eval=F}
+library(e1071)
+
+# Use tune.svm() for a grid search of the gamma and cost parameters
+svm.tune <- tune.svm(classID~., data = train.df, kernel = 'radial', gamma = 10^(-3:3), cost = 10^(-3:3))
+
+# Store the best model in a new object
+svm.best <- svm.tune$best.model
+
+# Which parameters performed best?
+print(svm.best$gamma)
+print(svm.best$cost)
+
+```
+Now use the `predict()` function to classify a map as above, using `svm.best` as the model object. Write the result to disk and compare the RF and the SVM classification in QGIS. 
+
+------
+
 ## Reading materials
 
 <!--

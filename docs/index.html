@@ -1916,6 +1916,42 @@ $year: the acquisition year.</p></li>
 <p>Inspect your result in QGIS and visually identify well classified regions and classes, as well as misclassifications.</p>
 <hr />
 </div>
+<div id="voluntary-assignment-automated-parameter-optimization" class="section level3">
+<h3><em>5) Voluntary assignment:</em> Automated parameter optimization</h3>
+<p>The <code>e1071</code> package offers automated parameter optimization for several classification algorithms. Use the <code>tune.randomForest()</code> function to find the best combination of <code>mtry</code>and <code>ntree</code> for your classification problem. The decision is made on an accuracy score derived via 10-fold cross-validation. <!--
+
+--></p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" data-line-number="1"><span class="kw">library</span>(e1071)</a>
+<a class="sourceLine" id="cb91-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb91-3" data-line-number="3"><span class="co"># Use tune.randomForest to assess the optimal combination of ntree and mtry</span></a>
+<a class="sourceLine" id="cb91-4" data-line-number="4">rf.tune &lt;-<span class="st"> </span><span class="kw">tune.randomForest</span>(classID<span class="op">~</span>., <span class="dt">data =</span> train.df, <span class="dt">ntree=</span><span class="kw">seq</span>(<span class="dv">100</span>, <span class="dv">500</span>, <span class="dv">50</span>), <span class="dt">mtry=</span><span class="kw">c</span>(<span class="dv">2</span><span class="op">:</span><span class="dv">10</span>))</a>
+<a class="sourceLine" id="cb91-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb91-6" data-line-number="6"><span class="co"># Store the best model in a new object for further use</span></a>
+<a class="sourceLine" id="cb91-7" data-line-number="7">rf.best &lt;-<span class="st"> </span>rf.tune<span class="op">$</span>best.model</a>
+<a class="sourceLine" id="cb91-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb91-9" data-line-number="9"><span class="co"># Is the parametrization and/or different from your previous model?</span></a>
+<a class="sourceLine" id="cb91-10" data-line-number="10"><span class="kw">print</span>(rf.best)</a></code></pre></div>
+<hr />
+</div>
+<div id="voluntary-assignment-create-a-classification-using-a-support-vector-machine-svm" class="section level3">
+<h3><em>6) Voluntary assignment:</em> Create a classification using a Support-Vector Machine (SVM)</h3>
+<p>If you are curious how the SVM approach would deal with the same classification problem, feel free to run a test. SVMs are sensitive to parametrization, however the parametrization is not as intuitive as it is for the RF classifier. Luckily we can also optimize parameter settings based on a grid search using <code>tune.svm()</code>. Read the <a href="https://cran.r-project.org/web/packages/e1071/vignettes/svmdoc.pdf">SVM vignette</a> for further information.</p>
+<p>Several kernels are available in the <code>e1071</code> SVM implementation (Radial Basis Function (RBF), Sigmoid, Polynomial, Linear). Let´s stick to the RBF kernel (default setting), as it has been showing good performance in a variety of settings. Feel free to read the <a href="https://scikit-learn.org/stable/auto_examples/svm/plot_rbf_parameters.html">scikit-learn tutorial</a> on the role of the parameters <span class="math inline">\(C\)</span> and <span class="math inline">\(\gamma\)</span> in the RBF SVM.</p>
+<p>The RBF kernel has the advantage of requiring the specification of only one parameter <span class="math inline">\(\gamma\)</span> (<code>gamma</code>). Next, we have to define the parameter <span class="math inline">\(C\)</span> (<code>cost</code>), which defines the tradeoff between training error and model complexity. The authors of the SVM implementation suggest to try a range between small and large values for C. Below, you find a code example following the suggestions in the scikit-learn tutorial.</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" data-line-number="1"><span class="kw">library</span>(e1071)</a>
+<a class="sourceLine" id="cb92-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb92-3" data-line-number="3"><span class="co"># Use tune.svm() for a grid search of the gamma and cost parameters</span></a>
+<a class="sourceLine" id="cb92-4" data-line-number="4">svm.tune &lt;-<span class="st"> </span><span class="kw">tune.svm</span>(classID<span class="op">~</span>., <span class="dt">data =</span> train.df, <span class="dt">kernel =</span> <span class="st">&#39;radial&#39;</span>, <span class="dt">gamma =</span> <span class="dv">10</span><span class="op">^</span>(<span class="op">-</span><span class="dv">3</span><span class="op">:</span><span class="dv">3</span>), <span class="dt">cost =</span> <span class="dv">10</span><span class="op">^</span>(<span class="op">-</span><span class="dv">3</span><span class="op">:</span><span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb92-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb92-6" data-line-number="6"><span class="co"># Store the best model in a new object</span></a>
+<a class="sourceLine" id="cb92-7" data-line-number="7">svm.best &lt;-<span class="st"> </span>svm.tune<span class="op">$</span>best.model</a>
+<a class="sourceLine" id="cb92-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb92-9" data-line-number="9"><span class="co"># Which parameters performed best?</span></a>
+<a class="sourceLine" id="cb92-10" data-line-number="10"><span class="kw">print</span>(svm.best<span class="op">$</span>gamma)</a>
+<a class="sourceLine" id="cb92-11" data-line-number="11"><span class="kw">print</span>(svm.best<span class="op">$</span>cost)</a></code></pre></div>
+<p>Now use the <code>predict()</code> function to classify a map as above, using <code>svm.best</code> as the model object. Write the result to disk and compare the RF and the SVM classification in QGIS.</p>
+<hr />
+</div>
 </div>
 <div id="reading-materials-4" class="section level2">
 <h2>Reading materials</h2>
