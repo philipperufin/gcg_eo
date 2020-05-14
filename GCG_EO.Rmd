@@ -1509,24 +1509,27 @@ Pixel-based compositing allows us to create cloud-free, radiometrically and phen
 
 ## Best-pixel compositing in seven steps
 
-1) Determine compositing parameters, e.g. Target DOY: June 15 +/- 30 days and target year: 2015 +/- 1 year
+1) Determine compositing parameters, e.g. Target DOY: June 15 +/- 50 days and target year: 2015 +/- 1 year
 
-2) Calculate DOY and year suitability (0-1) according to parameters  
+2) Calculate DOY and year suitability (0-1) for each image (DOY and year) to the defined parameters  
 
 ![Five images to be used for best-pixel compositing and their DOY and year offsets](fig/s04_suitability_offsets.png) 
 
-We use linear functions to determine the suitability of an observation. In the plot for the DOY function below, we're chosing a parameterization that favors observations closest to the target DOY and assign a suitability score of 0 for observations that are 50 or more days from the target date. Being 30 days from the target DOY, the May 16 2015 observation receives a suitability score of 0.4.  
-A second function determines the suitability score for the year of observation. Again, observations close to the target year are assigned high values, while observations acquired five or more years from the target year are considered unsuitable. The resulting suitability score for the May 15 2015 observation is 1.  
 
-![Linear functions for the DOY and year suitability score ](fig/s04_suitabilityplot_doy_year.png){width=90%}
+We use Gaussian or linear functions to determine the suitability of an observation. In the plot for the DOY function below, we're chosing a parameterization that favors observations closest to the target DOY and assign a suitability score of 0 for observations that are 50 days from the target date. Being 30 days from the target DOY, the May 16 2015 observation receives a suitability score of 0.19.  
 
-3) Calculate pixel-level suitability (0-1), e.g. through min. distance to clouds.
+A linear function determines the suitability score for the year of observation. Again, observations close to the target year are assigned high values, while observations acquired five or more years from the target year are considered unsuitable. The resulting suitability score for the May 15 2015 observation is 1.  
+
+![Scoring functions for the DOY and year suitability score](fig/s04_score_gauss.png){width=90%}
+
+
+3) Calculate pixel-level suitability (0-1), e.g. by considering the distance to clouds.
 
 ![Distance to next cloud in pixels](fig/s04_suitability_clouds.png)
 
-To minimize the likelihood of pixels being affected by clouds, we favor observations further away from clouds. The cloud distance scoring function below assigns a suitability score of 1 as soon as the distance to the next cloud is equal or greater than 100 pixels. An observation that has a distance of 60 pixels (=1800m) to the next cloud receives a cloud distance suitability score of 0.6. 
+To minimize the likelihood of pixels being affected by clouds, we favor observations further away from clouds. The linear cloud distance scoring function below assigns a suitability score of 1 as soon as the distance to the next cloud is equal or greater than 100 pixels. An observation that has a distance of 60 pixels (=1800m) to the next cloud receives a cloud distance suitability score of 0.56. 
 
-![Linear function for the cloud suitability score](fig/s04_suitabilityplot_clouds.png){width=40%}
+![Linear function for the cloud suitability score](fig/s04_score_cloud.png){width=45%}
 
 4) Define which criteria are most important for you (W = weights):
 
@@ -1541,9 +1544,8 @@ $$W_{CloudDist} = 0.3$$
 $$score = S_{DOY} * W_{DOY} + S_{Year} * W_{Year} + S_{CloudDist} * W_{CloudDist}$$  
 
 Using the values from the example above yields:  
-$$score = 0.4 * 0.5 + 1 * 0.2 + 0.6 * 0.3$$
-$$score = 0.58$$
-
+$$score = 0.19 * 0.50 + 1.00 * 0.20 + 0.56 * 0.30$$
+$$score = 0.46$$
 ![Resulting suitability scores for each image](fig/s04_suitability_score_weighted.png)
 
 6) Use the best observation (= highest score) for each pixel to create the final composite.
@@ -1567,16 +1569,28 @@ Today we will be working with pre-defined scripts. We provide both a script cont
   <summary>Click here to see the parametric compositing function</summary>
 ```{r compositing_script, echo=T, evaluate=F}
 #############################################################################
-# MSc Earth Observation Assignment 4
+# MSc Earth Observation Exercise 4
 # Function for creating cloud-free composites of multiple Landsat images
 # Requires an input data.frame (here img_list) and eight compositing 
-# parameters. Please see assignment sheet for further details.
+# parameters. Please see exercise sheet for further details.
 #############################################################################
 
 #############################################################################
 # Loading required packages here...
 library(raster)
 library(lubridate)
+library(ggplot2)
+
+# Change raster options to store large rasters in temp files on disk
+# rasterOptions(maxmemory = 1e12)
+
+#############################################################################
+# Helper function for Gaussian DOY scoring
+gauss_score <- function(param, target, max_offset){
+  
+  return(score)
+}
+
 
 #############################################################################
 # Function definition starts here
@@ -1588,7 +1602,7 @@ parametric_compositing <- function(img_list, target_date,
   tic <- Sys.time()
   print(paste('Start of compositing process: ', tic))
   print(paste('Target date: ', target_date))
-
+  
   # Extract target DOY and year from target_date
   target_DOY <- yday(target_date)
   target_year <- year(target_date)
@@ -1600,25 +1614,46 @@ parametric_compositing <- function(img_list, target_date,
   # Calculate the scores for the DOY, year, and cloud distance criteria
   print('Calculating compositing scores')
   
-  #...
-  obs_DOY <- img_list$DOY
-  DOY_score <- 1 - (abs(target_DOY - img_list$DOY) / max_DOY_offset)
-  DOY_score[DOY_score<0] <- NA
+  ### DOY score
+  # ...
+  score <- data.frame('DOY' = c(1:365),
+                      'DOY_offset' = abs(target_DOY - c(1:365)),
+                      'DOY_score' = dnorm(c(1:365), mean=target_DOY, sd=max_DOY_offset/2))
   
-  #...
-  obs_year <- img_list$year
-  year_score <- 1-(abs(target_year - obs_year) / max_year_offset)
+  # Remove DOYs outside valid range
+  score$DOY_score[score$DOY_offset > max_DOY_offset] <- NA
   
-  if (max_year_offset == 0) {year_score[obs_year==target_year] <- 1}
-  year_score[year_score<0] <- NA
+  # Standardize scores
+  score$DOY_score <- (score$DOY_score - min(score$DOY_score, na.rm=T))/diff(range(score$DOY_score, na.rm=T), na.rm=T)
+  
+  # Append scores to img_list
+  img_list <- merge(img_list, score, by='DOY')
+  
+  
+  ### Year score
+  img_list$year_score <- 1-(abs(target_year - img_list$year) / max_year_offset)
+  
+  if (max_year_offset == 0) {img_list$year_score[img_list$year==target_year] <- 1}
+  img_list$year_score[img_list$year_score < 0] <- NA
+  
+  # Visualize DOY scoring function and available images
+  p <- ggplot(score, aes(x=DOY, y=DOY_score)) +
+          geom_line() +
+          geom_point(data=img_list, aes(x=DOY, y=DOY_score, color=as.factor(year))) +
+          scale_y_continuous('Score') +
+          scale_x_continuous('DOY') +
+          scale_color_discrete('Acquisition years') +
+          theme_bw()
+  print(p)  
   
   # Get candidate images within max_DOY_offset and max_year_offset
-  ix <- which(!is.na(DOY_score) & !is.na(year_score))
+  ix <- which(!is.na(img_list$DOY_score) & !is.na(img_list$year_score))
   if (length(ix)>1) { print(paste(length(ix),  'candidate images selected, calculating scores.')) }
   if (length(ix)<2) { stop('Another error because something is wrong.') }
   
   # Stack cloud distance layers of candidate images and reclassify 
   # values < min_cloud_dist to NA, and values > max_cloud_dist to max_cloud_dist
+  print('Reclassifying cloud distances')
   cloud_dist <- stack(as.character(img_list$cloud_dist_files[ix]))
   cloud_dist <- reclassify(cloud_dist, rcl=c(0, min_cloud_dist, NA), right=NA, datatype='INT2S')
   cloud_dist <- reclassify(cloud_dist, rcl=c(max_cloud_dist, sqrt(nrow(cloud_dist)^2 + ncol(cloud_dist)^2), max_cloud_dist), right=NA, datatype='INT2S')
@@ -1627,7 +1662,7 @@ parametric_compositing <- function(img_list, target_date,
   cloud_score <- (cloud_dist - min_cloud_dist) / (max_cloud_dist - min_cloud_dist)
   
   #...
-  obs_score <- DOY_score[ix] * W_DOY + year_score[ix] * W_year + cloud_score * W_cloud_dist
+  obs_score <- img_list$DOY_score[ix] * W_DOY + img_list$year_score[ix] * W_year + cloud_score * W_cloud_dist
   
   #...
   select <- which.max(obs_score)
@@ -1664,13 +1699,13 @@ parametric_compositing <- function(img_list, target_date,
   print(paste('NAs: ', round(freq(composite_na[[1]], value=NA)/ncell(composite_na[[1]])*100, digits=3), ' %'))
   
   #...
-  rcl_DOY <- matrix(ncol=2, data=c(candidates, obs_DOY[ix[candidates]]))
+  rcl_DOY <- matrix(ncol=2, data=c(candidates, img_list$DOY[ix[candidates]]))
   select_DOY <- reclassify(select, rcl_DOY, datatype = 'INT2S')
   
   #...
-  rcl_year <- matrix(ncol=2, data=c(candidates, obs_year[ix[candidates]]))
+  rcl_year <- matrix(ncol=2, data=c(candidates, img_list$year[ix[candidates]]))
   select_year <- reclassify(select, rcl_year)
-
+  
   #...
   output <- stack(composite_na, select_DOY, select_year)
   print(paste('End of compositing process: ', Sys.time()))
