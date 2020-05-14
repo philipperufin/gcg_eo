@@ -1577,138 +1577,131 @@ swIR2     0.2303   -0.1446 -0.6109</code></pre>
 <a class="sourceLine" id="cb89-12" data-line-number="12"><span class="kw">library</span>(ggplot2)</a>
 <a class="sourceLine" id="cb89-13" data-line-number="13"></a>
 <a class="sourceLine" id="cb89-14" data-line-number="14"><span class="co"># Change raster options to store large rasters in temp files on disk</span></a>
-<a class="sourceLine" id="cb89-15" data-line-number="15"><span class="co"># rasterOptions(maxmemory = 1e12)</span></a>
-<a class="sourceLine" id="cb89-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb89-17" data-line-number="17"><span class="co">#############################################################################</span></a>
-<a class="sourceLine" id="cb89-18" data-line-number="18"><span class="co"># Helper function for Gaussian DOY scoring</span></a>
-<a class="sourceLine" id="cb89-19" data-line-number="19">gauss_score &lt;-<span class="st"> </span><span class="cf">function</span>(param, target, max_offset){</a>
-<a class="sourceLine" id="cb89-20" data-line-number="20">  </a>
-<a class="sourceLine" id="cb89-21" data-line-number="21">  <span class="kw">return</span>(score)</a>
-<a class="sourceLine" id="cb89-22" data-line-number="22">}</a>
-<a class="sourceLine" id="cb89-23" data-line-number="23"></a>
-<a class="sourceLine" id="cb89-24" data-line-number="24"></a>
-<a class="sourceLine" id="cb89-25" data-line-number="25"><span class="co">#############################################################################</span></a>
-<a class="sourceLine" id="cb89-26" data-line-number="26"><span class="co"># Function definition starts here</span></a>
-<a class="sourceLine" id="cb89-27" data-line-number="27">parametric_compositing &lt;-<span class="st"> </span><span class="cf">function</span>(img_list, target_date, </a>
-<a class="sourceLine" id="cb89-28" data-line-number="28">                                   W_DOY, W_year, W_cloud_dist, </a>
-<a class="sourceLine" id="cb89-29" data-line-number="29">                                   max_DOY_offset, max_year_offset, </a>
-<a class="sourceLine" id="cb89-30" data-line-number="30">                                   min_cloud_dist, max_cloud_dist) {</a>
-<a class="sourceLine" id="cb89-31" data-line-number="31">  <span class="co">#...</span></a>
-<a class="sourceLine" id="cb89-32" data-line-number="32">  tic &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()</a>
-<a class="sourceLine" id="cb89-33" data-line-number="33">  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;Start of compositing process: &#39;</span>, tic))</a>
-<a class="sourceLine" id="cb89-34" data-line-number="34">  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;Target date: &#39;</span>, target_date))</a>
+<a class="sourceLine" id="cb89-15" data-line-number="15"><span class="co"># Only use if function fails due to memory issues!</span></a>
+<a class="sourceLine" id="cb89-16" data-line-number="16"><span class="co"># rasterOptions(maxmemory = 1e12)</span></a>
+<a class="sourceLine" id="cb89-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb89-18" data-line-number="18"><span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb89-19" data-line-number="19"><span class="co"># Function definition starts here</span></a>
+<a class="sourceLine" id="cb89-20" data-line-number="20">parametric_compositing &lt;-<span class="st"> </span><span class="cf">function</span>(img_list, target_date, </a>
+<a class="sourceLine" id="cb89-21" data-line-number="21">                                   W_DOY, W_year, W_cloud_dist, </a>
+<a class="sourceLine" id="cb89-22" data-line-number="22">                                   max_DOY_offset, max_year_offset, </a>
+<a class="sourceLine" id="cb89-23" data-line-number="23">                                   min_cloud_dist, max_cloud_dist) {</a>
+<a class="sourceLine" id="cb89-24" data-line-number="24">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb89-25" data-line-number="25">  tic &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()</a>
+<a class="sourceLine" id="cb89-26" data-line-number="26">  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;Start of compositing process: &#39;</span>, tic))</a>
+<a class="sourceLine" id="cb89-27" data-line-number="27">  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;Target date: &#39;</span>, target_date))</a>
+<a class="sourceLine" id="cb89-28" data-line-number="28">  </a>
+<a class="sourceLine" id="cb89-29" data-line-number="29">  <span class="co"># Extract target DOY and year from target_date</span></a>
+<a class="sourceLine" id="cb89-30" data-line-number="30">  target_DOY &lt;-<span class="st"> </span><span class="kw">yday</span>(target_date)</a>
+<a class="sourceLine" id="cb89-31" data-line-number="31">  target_year &lt;-<span class="st"> </span><span class="kw">year</span>(target_date)</a>
+<a class="sourceLine" id="cb89-32" data-line-number="32">  </a>
+<a class="sourceLine" id="cb89-33" data-line-number="33">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb89-34" data-line-number="34">  <span class="cf">if</span>(<span class="kw">sum</span>(W_DOY, W_year, W_cloud_dist)<span class="op">!=</span><span class="dv">1</span>) { <span class="kw">stop</span>(<span class="st">&#39;Error: something wrong.&#39;</span>) }</a>
 <a class="sourceLine" id="cb89-35" data-line-number="35">  </a>
-<a class="sourceLine" id="cb89-36" data-line-number="36">  <span class="co"># Extract target DOY and year from target_date</span></a>
-<a class="sourceLine" id="cb89-37" data-line-number="37">  target_DOY &lt;-<span class="st"> </span><span class="kw">yday</span>(target_date)</a>
-<a class="sourceLine" id="cb89-38" data-line-number="38">  target_year &lt;-<span class="st"> </span><span class="kw">year</span>(target_date)</a>
+<a class="sourceLine" id="cb89-36" data-line-number="36">  <span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb89-37" data-line-number="37">  <span class="co"># Calculate the scores for the DOY, year, and cloud distance criteria</span></a>
+<a class="sourceLine" id="cb89-38" data-line-number="38">  <span class="kw">print</span>(<span class="st">&#39;Calculating compositing scores&#39;</span>)</a>
 <a class="sourceLine" id="cb89-39" data-line-number="39">  </a>
-<a class="sourceLine" id="cb89-40" data-line-number="40">  <span class="co">#...</span></a>
-<a class="sourceLine" id="cb89-41" data-line-number="41">  <span class="cf">if</span>(<span class="kw">sum</span>(W_DOY, W_year, W_cloud_dist)<span class="op">!=</span><span class="dv">1</span>) { <span class="kw">stop</span>(<span class="st">&#39;Error: something wrong.&#39;</span>) }</a>
-<a class="sourceLine" id="cb89-42" data-line-number="42">  </a>
-<a class="sourceLine" id="cb89-43" data-line-number="43">  <span class="co">#############################################################################</span></a>
-<a class="sourceLine" id="cb89-44" data-line-number="44">  <span class="co"># Calculate the scores for the DOY, year, and cloud distance criteria</span></a>
-<a class="sourceLine" id="cb89-45" data-line-number="45">  <span class="kw">print</span>(<span class="st">&#39;Calculating compositing scores&#39;</span>)</a>
-<a class="sourceLine" id="cb89-46" data-line-number="46">  </a>
-<a class="sourceLine" id="cb89-47" data-line-number="47">  <span class="co">### DOY score</span></a>
-<a class="sourceLine" id="cb89-48" data-line-number="48">  <span class="co"># ...</span></a>
-<a class="sourceLine" id="cb89-49" data-line-number="49">  score &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">&#39;DOY&#39;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">365</span>),</a>
-<a class="sourceLine" id="cb89-50" data-line-number="50">                      <span class="st">&#39;DOY_offset&#39;</span> =<span class="st"> </span><span class="kw">abs</span>(target_DOY <span class="op">-</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">365</span>)),</a>
-<a class="sourceLine" id="cb89-51" data-line-number="51">                      <span class="st">&#39;DOY_score&#39;</span> =<span class="st"> </span><span class="kw">dnorm</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">365</span>), <span class="dt">mean=</span>target_DOY, <span class="dt">sd=</span>max_DOY_offset<span class="op">/</span><span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb89-52" data-line-number="52">  </a>
-<a class="sourceLine" id="cb89-53" data-line-number="53">  <span class="co"># Remove DOYs outside valid range</span></a>
-<a class="sourceLine" id="cb89-54" data-line-number="54">  score<span class="op">$</span>DOY_score[score<span class="op">$</span>DOY_offset <span class="op">&gt;</span><span class="st"> </span>max_DOY_offset] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb89-40" data-line-number="40">  <span class="co">### DOY score</span></a>
+<a class="sourceLine" id="cb89-41" data-line-number="41">  <span class="co"># ...</span></a>
+<a class="sourceLine" id="cb89-42" data-line-number="42">  score &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">&#39;DOY&#39;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">365</span>),</a>
+<a class="sourceLine" id="cb89-43" data-line-number="43">                      <span class="st">&#39;DOY_offset&#39;</span> =<span class="st"> </span><span class="kw">abs</span>(target_DOY <span class="op">-</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">365</span>)),</a>
+<a class="sourceLine" id="cb89-44" data-line-number="44">                      <span class="st">&#39;DOY_score&#39;</span> =<span class="st"> </span><span class="kw">dnorm</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">365</span>), <span class="dt">mean=</span>target_DOY, <span class="dt">sd=</span>max_DOY_offset<span class="op">/</span><span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb89-45" data-line-number="45">  </a>
+<a class="sourceLine" id="cb89-46" data-line-number="46">  <span class="co"># Remove DOYs outside valid range</span></a>
+<a class="sourceLine" id="cb89-47" data-line-number="47">  score<span class="op">$</span>DOY_score[score<span class="op">$</span>DOY_offset <span class="op">&gt;</span><span class="st"> </span>max_DOY_offset] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb89-48" data-line-number="48">  </a>
+<a class="sourceLine" id="cb89-49" data-line-number="49">  <span class="co"># Standardize scores</span></a>
+<a class="sourceLine" id="cb89-50" data-line-number="50">  score<span class="op">$</span>DOY_score &lt;-<span class="st"> </span>(score<span class="op">$</span>DOY_score <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(score<span class="op">$</span>DOY_score, <span class="dt">na.rm=</span>T))<span class="op">/</span><span class="kw">diff</span>(<span class="kw">range</span>(score<span class="op">$</span>DOY_score, <span class="dt">na.rm=</span>T), <span class="dt">na.rm=</span>T)</a>
+<a class="sourceLine" id="cb89-51" data-line-number="51">  </a>
+<a class="sourceLine" id="cb89-52" data-line-number="52">  <span class="co"># Append scores to img_list</span></a>
+<a class="sourceLine" id="cb89-53" data-line-number="53">  img_list &lt;-<span class="st"> </span><span class="kw">merge</span>(img_list, score, <span class="dt">by=</span><span class="st">&#39;DOY&#39;</span>)</a>
+<a class="sourceLine" id="cb89-54" data-line-number="54">  </a>
 <a class="sourceLine" id="cb89-55" data-line-number="55">  </a>
-<a class="sourceLine" id="cb89-56" data-line-number="56">  <span class="co"># Standardize scores</span></a>
-<a class="sourceLine" id="cb89-57" data-line-number="57">  score<span class="op">$</span>DOY_score &lt;-<span class="st"> </span>(score<span class="op">$</span>DOY_score <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(score<span class="op">$</span>DOY_score, <span class="dt">na.rm=</span>T))<span class="op">/</span><span class="kw">diff</span>(<span class="kw">range</span>(score<span class="op">$</span>DOY_score, <span class="dt">na.rm=</span>T), <span class="dt">na.rm=</span>T)</a>
+<a class="sourceLine" id="cb89-56" data-line-number="56">  <span class="co">### Year score</span></a>
+<a class="sourceLine" id="cb89-57" data-line-number="57">  img_list<span class="op">$</span>year_score &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">-</span>(<span class="kw">abs</span>(target_year <span class="op">-</span><span class="st"> </span>img_list<span class="op">$</span>year) <span class="op">/</span><span class="st"> </span>max_year_offset)</a>
 <a class="sourceLine" id="cb89-58" data-line-number="58">  </a>
-<a class="sourceLine" id="cb89-59" data-line-number="59">  <span class="co"># Append scores to img_list</span></a>
-<a class="sourceLine" id="cb89-60" data-line-number="60">  img_list &lt;-<span class="st"> </span><span class="kw">merge</span>(img_list, score, <span class="dt">by=</span><span class="st">&#39;DOY&#39;</span>)</a>
+<a class="sourceLine" id="cb89-59" data-line-number="59">  <span class="cf">if</span> (max_year_offset <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) {img_list<span class="op">$</span>year_score[img_list<span class="op">$</span>year<span class="op">==</span>target_year] &lt;-<span class="st"> </span><span class="dv">1</span>}</a>
+<a class="sourceLine" id="cb89-60" data-line-number="60">  img_list<span class="op">$</span>year_score[img_list<span class="op">$</span>year_score <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
 <a class="sourceLine" id="cb89-61" data-line-number="61">  </a>
-<a class="sourceLine" id="cb89-62" data-line-number="62">  </a>
-<a class="sourceLine" id="cb89-63" data-line-number="63">  <span class="co">### Year score</span></a>
-<a class="sourceLine" id="cb89-64" data-line-number="64">  img_list<span class="op">$</span>year_score &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">-</span>(<span class="kw">abs</span>(target_year <span class="op">-</span><span class="st"> </span>img_list<span class="op">$</span>year) <span class="op">/</span><span class="st"> </span>max_year_offset)</a>
-<a class="sourceLine" id="cb89-65" data-line-number="65">  </a>
-<a class="sourceLine" id="cb89-66" data-line-number="66">  <span class="cf">if</span> (max_year_offset <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) {img_list<span class="op">$</span>year_score[img_list<span class="op">$</span>year<span class="op">==</span>target_year] &lt;-<span class="st"> </span><span class="dv">1</span>}</a>
-<a class="sourceLine" id="cb89-67" data-line-number="67">  img_list<span class="op">$</span>year_score[img_list<span class="op">$</span>year_score <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
-<a class="sourceLine" id="cb89-68" data-line-number="68">  </a>
-<a class="sourceLine" id="cb89-69" data-line-number="69">  <span class="co"># Visualize DOY scoring function and available images</span></a>
-<a class="sourceLine" id="cb89-70" data-line-number="70">  p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(score, <span class="kw">aes</span>(<span class="dt">x=</span>DOY, <span class="dt">y=</span>DOY_score)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb89-71" data-line-number="71"><span class="st">          </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb89-72" data-line-number="72"><span class="st">          </span><span class="kw">geom_point</span>(<span class="dt">data=</span>img_list, <span class="kw">aes</span>(<span class="dt">x=</span>DOY, <span class="dt">y=</span>DOY_score, <span class="dt">color=</span><span class="kw">as.factor</span>(year))) <span class="op">+</span></a>
-<a class="sourceLine" id="cb89-73" data-line-number="73"><span class="st">          </span><span class="kw">scale_y_continuous</span>(<span class="st">&#39;Score&#39;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb89-74" data-line-number="74"><span class="st">          </span><span class="kw">scale_x_continuous</span>(<span class="st">&#39;DOY&#39;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb89-75" data-line-number="75"><span class="st">          </span><span class="kw">scale_color_discrete</span>(<span class="st">&#39;Acquisition years&#39;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb89-76" data-line-number="76"><span class="st">          </span><span class="kw">theme_bw</span>()</a>
-<a class="sourceLine" id="cb89-77" data-line-number="77">  <span class="kw">print</span>(p)  </a>
-<a class="sourceLine" id="cb89-78" data-line-number="78">  </a>
-<a class="sourceLine" id="cb89-79" data-line-number="79">  <span class="co"># Get candidate images within max_DOY_offset and max_year_offset</span></a>
-<a class="sourceLine" id="cb89-80" data-line-number="80">  ix &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="op">!</span><span class="kw">is.na</span>(img_list<span class="op">$</span>DOY_score) <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(img_list<span class="op">$</span>year_score))</a>
-<a class="sourceLine" id="cb89-81" data-line-number="81">  <span class="cf">if</span> (<span class="kw">length</span>(ix)<span class="op">&gt;</span><span class="dv">1</span>) { <span class="kw">print</span>(<span class="kw">paste</span>(<span class="kw">length</span>(ix),  <span class="st">&#39;candidate images selected, calculating scores.&#39;</span>)) }</a>
-<a class="sourceLine" id="cb89-82" data-line-number="82">  <span class="cf">if</span> (<span class="kw">length</span>(ix)<span class="op">&lt;</span><span class="dv">2</span>) { <span class="kw">stop</span>(<span class="st">&#39;Another error because something is wrong.&#39;</span>) }</a>
+<a class="sourceLine" id="cb89-62" data-line-number="62">  <span class="co"># Visualize DOY scoring function and available images</span></a>
+<a class="sourceLine" id="cb89-63" data-line-number="63">  p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(score, <span class="kw">aes</span>(<span class="dt">x=</span>DOY, <span class="dt">y=</span>DOY_score)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb89-64" data-line-number="64"><span class="st">          </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb89-65" data-line-number="65"><span class="st">          </span><span class="kw">geom_point</span>(<span class="dt">data=</span>img_list, <span class="kw">aes</span>(<span class="dt">x=</span>DOY, <span class="dt">y=</span>DOY_score, <span class="dt">color=</span><span class="kw">as.factor</span>(year))) <span class="op">+</span></a>
+<a class="sourceLine" id="cb89-66" data-line-number="66"><span class="st">          </span><span class="kw">scale_y_continuous</span>(<span class="st">&#39;Score&#39;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb89-67" data-line-number="67"><span class="st">          </span><span class="kw">scale_x_continuous</span>(<span class="st">&#39;DOY&#39;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb89-68" data-line-number="68"><span class="st">          </span><span class="kw">scale_color_discrete</span>(<span class="st">&#39;Acquisition years&#39;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb89-69" data-line-number="69"><span class="st">          </span><span class="kw">theme_bw</span>()</a>
+<a class="sourceLine" id="cb89-70" data-line-number="70">  <span class="kw">print</span>(p)  </a>
+<a class="sourceLine" id="cb89-71" data-line-number="71">  </a>
+<a class="sourceLine" id="cb89-72" data-line-number="72">  <span class="co"># Get candidate images within max_DOY_offset and max_year_offset</span></a>
+<a class="sourceLine" id="cb89-73" data-line-number="73">  ix &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="op">!</span><span class="kw">is.na</span>(img_list<span class="op">$</span>DOY_score) <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(img_list<span class="op">$</span>year_score))</a>
+<a class="sourceLine" id="cb89-74" data-line-number="74">  <span class="cf">if</span> (<span class="kw">length</span>(ix)<span class="op">&gt;</span><span class="dv">1</span>) { <span class="kw">print</span>(<span class="kw">paste</span>(<span class="kw">length</span>(ix),  <span class="st">&#39;candidate images selected, calculating scores.&#39;</span>)) }</a>
+<a class="sourceLine" id="cb89-75" data-line-number="75">  <span class="cf">if</span> (<span class="kw">length</span>(ix)<span class="op">&lt;</span><span class="dv">2</span>) { <span class="kw">stop</span>(<span class="st">&#39;Another error because something is wrong.&#39;</span>) }</a>
+<a class="sourceLine" id="cb89-76" data-line-number="76">  </a>
+<a class="sourceLine" id="cb89-77" data-line-number="77">  <span class="co"># Stack cloud distance layers of candidate images and reclassify </span></a>
+<a class="sourceLine" id="cb89-78" data-line-number="78">  <span class="co"># values &lt; min_cloud_dist to NA, and values &gt; max_cloud_dist to max_cloud_dist</span></a>
+<a class="sourceLine" id="cb89-79" data-line-number="79">  <span class="kw">print</span>(<span class="st">&#39;Reclassifying cloud distances&#39;</span>)</a>
+<a class="sourceLine" id="cb89-80" data-line-number="80">  cloud_dist &lt;-<span class="st"> </span><span class="kw">stack</span>(<span class="kw">as.character</span>(img_list<span class="op">$</span>cloud_dist_files[ix]))</a>
+<a class="sourceLine" id="cb89-81" data-line-number="81">  cloud_dist &lt;-<span class="st"> </span><span class="kw">reclassify</span>(cloud_dist, <span class="dt">rcl=</span><span class="kw">c</span>(<span class="dv">0</span>, min_cloud_dist, <span class="ot">NA</span>), <span class="dt">right=</span><span class="ot">NA</span>, <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)</a>
+<a class="sourceLine" id="cb89-82" data-line-number="82">  cloud_dist &lt;-<span class="st"> </span><span class="kw">reclassify</span>(cloud_dist, <span class="dt">rcl=</span><span class="kw">c</span>(max_cloud_dist, <span class="kw">sqrt</span>(<span class="kw">nrow</span>(cloud_dist)<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="kw">ncol</span>(cloud_dist)<span class="op">^</span><span class="dv">2</span>), max_cloud_dist), <span class="dt">right=</span><span class="ot">NA</span>, <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)</a>
 <a class="sourceLine" id="cb89-83" data-line-number="83">  </a>
-<a class="sourceLine" id="cb89-84" data-line-number="84">  <span class="co"># Stack cloud distance layers of candidate images and reclassify </span></a>
-<a class="sourceLine" id="cb89-85" data-line-number="85">  <span class="co"># values &lt; min_cloud_dist to NA, and values &gt; max_cloud_dist to max_cloud_dist</span></a>
-<a class="sourceLine" id="cb89-86" data-line-number="86">  <span class="kw">print</span>(<span class="st">&#39;Reclassifying cloud distances&#39;</span>)</a>
-<a class="sourceLine" id="cb89-87" data-line-number="87">  cloud_dist &lt;-<span class="st"> </span><span class="kw">stack</span>(<span class="kw">as.character</span>(img_list<span class="op">$</span>cloud_dist_files[ix]))</a>
-<a class="sourceLine" id="cb89-88" data-line-number="88">  cloud_dist &lt;-<span class="st"> </span><span class="kw">reclassify</span>(cloud_dist, <span class="dt">rcl=</span><span class="kw">c</span>(<span class="dv">0</span>, min_cloud_dist, <span class="ot">NA</span>), <span class="dt">right=</span><span class="ot">NA</span>, <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)</a>
-<a class="sourceLine" id="cb89-89" data-line-number="89">  cloud_dist &lt;-<span class="st"> </span><span class="kw">reclassify</span>(cloud_dist, <span class="dt">rcl=</span><span class="kw">c</span>(max_cloud_dist, <span class="kw">sqrt</span>(<span class="kw">nrow</span>(cloud_dist)<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="kw">ncol</span>(cloud_dist)<span class="op">^</span><span class="dv">2</span>), max_cloud_dist), <span class="dt">right=</span><span class="ot">NA</span>, <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)</a>
-<a class="sourceLine" id="cb89-90" data-line-number="90">  </a>
-<a class="sourceLine" id="cb89-91" data-line-number="91">  <span class="co">#...</span></a>
-<a class="sourceLine" id="cb89-92" data-line-number="92">  cloud_score &lt;-<span class="st"> </span>(cloud_dist <span class="op">-</span><span class="st"> </span>min_cloud_dist) <span class="op">/</span><span class="st"> </span>(max_cloud_dist <span class="op">-</span><span class="st"> </span>min_cloud_dist)</a>
-<a class="sourceLine" id="cb89-93" data-line-number="93">  </a>
-<a class="sourceLine" id="cb89-94" data-line-number="94">  <span class="co">#...</span></a>
-<a class="sourceLine" id="cb89-95" data-line-number="95">  obs_score &lt;-<span class="st"> </span>img_list<span class="op">$</span>DOY_score[ix] <span class="op">*</span><span class="st"> </span>W_DOY <span class="op">+</span><span class="st"> </span>img_list<span class="op">$</span>year_score[ix] <span class="op">*</span><span class="st"> </span>W_year <span class="op">+</span><span class="st"> </span>cloud_score <span class="op">*</span><span class="st"> </span>W_cloud_dist</a>
-<a class="sourceLine" id="cb89-96" data-line-number="96">  </a>
-<a class="sourceLine" id="cb89-97" data-line-number="97">  <span class="co">#...</span></a>
-<a class="sourceLine" id="cb89-98" data-line-number="98">  select &lt;-<span class="st"> </span><span class="kw">which.max</span>(obs_score)</a>
-<a class="sourceLine" id="cb89-99" data-line-number="99">  </a>
-<a class="sourceLine" id="cb89-100" data-line-number="100">  <span class="co">#...</span></a>
-<a class="sourceLine" id="cb89-101" data-line-number="101">  candidates &lt;-<span class="st"> </span><span class="kw">unique</span>(select)</a>
-<a class="sourceLine" id="cb89-102" data-line-number="102">  </a>
-<a class="sourceLine" id="cb89-103" data-line-number="103">  <span class="co">#############################################################################</span></a>
-<a class="sourceLine" id="cb89-104" data-line-number="104">  <span class="co"># Fill composite image with pixels from the candidate images</span></a>
-<a class="sourceLine" id="cb89-105" data-line-number="105">  <span class="cf">for</span> (i <span class="cf">in</span> candidates){</a>
-<a class="sourceLine" id="cb89-106" data-line-number="106">    </a>
-<a class="sourceLine" id="cb89-107" data-line-number="107">    <span class="co">#...</span></a>
-<a class="sourceLine" id="cb89-108" data-line-number="108">    fill_image &lt;-<span class="st"> </span><span class="kw">brick</span>(<span class="kw">as.character</span>(img_list<span class="op">$</span>image_files[ix[i]]), <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)</a>
+<a class="sourceLine" id="cb89-84" data-line-number="84">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb89-85" data-line-number="85">  cloud_score &lt;-<span class="st"> </span>(cloud_dist <span class="op">-</span><span class="st"> </span>min_cloud_dist) <span class="op">/</span><span class="st"> </span>(max_cloud_dist <span class="op">-</span><span class="st"> </span>min_cloud_dist)</a>
+<a class="sourceLine" id="cb89-86" data-line-number="86">  </a>
+<a class="sourceLine" id="cb89-87" data-line-number="87">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb89-88" data-line-number="88">  obs_score &lt;-<span class="st"> </span>img_list<span class="op">$</span>DOY_score[ix] <span class="op">*</span><span class="st"> </span>W_DOY <span class="op">+</span><span class="st"> </span>img_list<span class="op">$</span>year_score[ix] <span class="op">*</span><span class="st"> </span>W_year <span class="op">+</span><span class="st"> </span>cloud_score <span class="op">*</span><span class="st"> </span>W_cloud_dist</a>
+<a class="sourceLine" id="cb89-89" data-line-number="89">  </a>
+<a class="sourceLine" id="cb89-90" data-line-number="90">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb89-91" data-line-number="91">  select &lt;-<span class="st"> </span><span class="kw">which.max</span>(obs_score)</a>
+<a class="sourceLine" id="cb89-92" data-line-number="92">  </a>
+<a class="sourceLine" id="cb89-93" data-line-number="93">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb89-94" data-line-number="94">  candidates &lt;-<span class="st"> </span><span class="kw">unique</span>(select)</a>
+<a class="sourceLine" id="cb89-95" data-line-number="95">  </a>
+<a class="sourceLine" id="cb89-96" data-line-number="96">  <span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb89-97" data-line-number="97">  <span class="co"># Fill composite image with pixels from the candidate images</span></a>
+<a class="sourceLine" id="cb89-98" data-line-number="98">  <span class="cf">for</span> (i <span class="cf">in</span> candidates){</a>
+<a class="sourceLine" id="cb89-99" data-line-number="99">    </a>
+<a class="sourceLine" id="cb89-100" data-line-number="100">    <span class="co">#...</span></a>
+<a class="sourceLine" id="cb89-101" data-line-number="101">    fill_image &lt;-<span class="st"> </span><span class="kw">brick</span>(<span class="kw">as.character</span>(img_list<span class="op">$</span>image_files[ix[i]]), <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)</a>
+<a class="sourceLine" id="cb89-102" data-line-number="102">    </a>
+<a class="sourceLine" id="cb89-103" data-line-number="103">    <span class="co">#...</span></a>
+<a class="sourceLine" id="cb89-104" data-line-number="104">    <span class="cf">if</span> (i <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(candidates)) { </a>
+<a class="sourceLine" id="cb89-105" data-line-number="105">      composite &lt;-<span class="st"> </span><span class="kw">brick</span>(fill_image, <span class="dt">values=</span><span class="ot">FALSE</span>) </a>
+<a class="sourceLine" id="cb89-106" data-line-number="106">      <span class="kw">dataType</span>(composite) &lt;-<span class="st"> &#39;INT2S&#39;</span></a>
+<a class="sourceLine" id="cb89-107" data-line-number="107">      <span class="kw">values</span>(composite) &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb89-108" data-line-number="108">    }</a>
 <a class="sourceLine" id="cb89-109" data-line-number="109">    </a>
-<a class="sourceLine" id="cb89-110" data-line-number="110">    <span class="co">#...</span></a>
-<a class="sourceLine" id="cb89-111" data-line-number="111">    <span class="cf">if</span> (i <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(candidates)) { </a>
-<a class="sourceLine" id="cb89-112" data-line-number="112">      composite &lt;-<span class="st"> </span><span class="kw">brick</span>(fill_image, <span class="dt">values=</span><span class="ot">FALSE</span>) </a>
-<a class="sourceLine" id="cb89-113" data-line-number="113">      <span class="kw">dataType</span>(composite) &lt;-<span class="st"> &#39;INT2S&#39;</span></a>
-<a class="sourceLine" id="cb89-114" data-line-number="114">      <span class="kw">values</span>(composite) &lt;-<span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb89-115" data-line-number="115">    }</a>
-<a class="sourceLine" id="cb89-116" data-line-number="116">    </a>
-<a class="sourceLine" id="cb89-117" data-line-number="117">    <span class="kw">print</span>(<span class="kw">paste0</span>(<span class="st">&#39;Filling raster with acquisition from date &#39;</span>, img_list<span class="op">$</span>date[ix[i]]))</a>
-<a class="sourceLine" id="cb89-118" data-line-number="118">    fill_image.masked &lt;-<span class="st"> </span><span class="kw">mask</span>(fill_image, select, <span class="dt">maskvalue=</span>i, <span class="dt">inverse=</span>T, <span class="dt">updatevalue=</span><span class="dv">0</span>, <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)</a>
-<a class="sourceLine" id="cb89-119" data-line-number="119">    fill_image.masked[<span class="kw">is.na</span>(fill_image.masked)] &lt;-<span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb89-120" data-line-number="120">    composite &lt;-<span class="st"> </span>composite <span class="op">+</span><span class="st"> </span>fill_image.masked</a>
-<a class="sourceLine" id="cb89-121" data-line-number="121">    </a>
-<a class="sourceLine" id="cb89-122" data-line-number="122">  }</a>
+<a class="sourceLine" id="cb89-110" data-line-number="110">    <span class="kw">print</span>(<span class="kw">paste0</span>(<span class="st">&#39;Filling raster with acquisition from date &#39;</span>, img_list<span class="op">$</span>date[ix[i]]))</a>
+<a class="sourceLine" id="cb89-111" data-line-number="111">    fill_image.masked &lt;-<span class="st"> </span><span class="kw">mask</span>(fill_image, select, <span class="dt">maskvalue=</span>i, <span class="dt">inverse=</span>T, <span class="dt">updatevalue=</span><span class="dv">0</span>, <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)</a>
+<a class="sourceLine" id="cb89-112" data-line-number="112">    fill_image.masked[<span class="kw">is.na</span>(fill_image.masked)] &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb89-113" data-line-number="113">    composite &lt;-<span class="st"> </span>composite <span class="op">+</span><span class="st"> </span>fill_image.masked</a>
+<a class="sourceLine" id="cb89-114" data-line-number="114">    </a>
+<a class="sourceLine" id="cb89-115" data-line-number="115">  }</a>
+<a class="sourceLine" id="cb89-116" data-line-number="116">  </a>
+<a class="sourceLine" id="cb89-117" data-line-number="117">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb89-118" data-line-number="118">  composite_na &lt;-<span class="st"> </span><span class="kw">mask</span>(composite, select, <span class="dt">maskvalue=</span><span class="ot">NA</span>, <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)</a>
+<a class="sourceLine" id="cb89-119" data-line-number="119">  </a>
+<a class="sourceLine" id="cb89-120" data-line-number="120">  <span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb89-121" data-line-number="121">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb89-122" data-line-number="122">  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;NAs: &#39;</span>, <span class="kw">round</span>(<span class="kw">freq</span>(composite_na[[<span class="dv">1</span>]], <span class="dt">value=</span><span class="ot">NA</span>)<span class="op">/</span><span class="kw">ncell</span>(composite_na[[<span class="dv">1</span>]])<span class="op">*</span><span class="dv">100</span>, <span class="dt">digits=</span><span class="dv">3</span>), <span class="st">&#39; %&#39;</span>))</a>
 <a class="sourceLine" id="cb89-123" data-line-number="123">  </a>
 <a class="sourceLine" id="cb89-124" data-line-number="124">  <span class="co">#...</span></a>
-<a class="sourceLine" id="cb89-125" data-line-number="125">  composite_na &lt;-<span class="st"> </span><span class="kw">mask</span>(composite, select, <span class="dt">maskvalue=</span><span class="ot">NA</span>, <span class="dt">datatype=</span><span class="st">&#39;INT2S&#39;</span>)</a>
-<a class="sourceLine" id="cb89-126" data-line-number="126">  </a>
-<a class="sourceLine" id="cb89-127" data-line-number="127">  <span class="co">#############################################################################</span></a>
+<a class="sourceLine" id="cb89-125" data-line-number="125">  rcl_DOY &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">ncol=</span><span class="dv">2</span>, <span class="dt">data=</span><span class="kw">c</span>(candidates, img_list<span class="op">$</span>DOY[ix[candidates]]))</a>
+<a class="sourceLine" id="cb89-126" data-line-number="126">  select_DOY &lt;-<span class="st"> </span><span class="kw">reclassify</span>(select, rcl_DOY, <span class="dt">datatype =</span> <span class="st">&#39;INT2S&#39;</span>)</a>
+<a class="sourceLine" id="cb89-127" data-line-number="127">  </a>
 <a class="sourceLine" id="cb89-128" data-line-number="128">  <span class="co">#...</span></a>
-<a class="sourceLine" id="cb89-129" data-line-number="129">  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;NAs: &#39;</span>, <span class="kw">round</span>(<span class="kw">freq</span>(composite_na[[<span class="dv">1</span>]], <span class="dt">value=</span><span class="ot">NA</span>)<span class="op">/</span><span class="kw">ncell</span>(composite_na[[<span class="dv">1</span>]])<span class="op">*</span><span class="dv">100</span>, <span class="dt">digits=</span><span class="dv">3</span>), <span class="st">&#39; %&#39;</span>))</a>
-<a class="sourceLine" id="cb89-130" data-line-number="130">  </a>
-<a class="sourceLine" id="cb89-131" data-line-number="131">  <span class="co">#...</span></a>
-<a class="sourceLine" id="cb89-132" data-line-number="132">  rcl_DOY &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">ncol=</span><span class="dv">2</span>, <span class="dt">data=</span><span class="kw">c</span>(candidates, img_list<span class="op">$</span>DOY[ix[candidates]]))</a>
-<a class="sourceLine" id="cb89-133" data-line-number="133">  select_DOY &lt;-<span class="st"> </span><span class="kw">reclassify</span>(select, rcl_DOY, <span class="dt">datatype =</span> <span class="st">&#39;INT2S&#39;</span>)</a>
-<a class="sourceLine" id="cb89-134" data-line-number="134">  </a>
-<a class="sourceLine" id="cb89-135" data-line-number="135">  <span class="co">#...</span></a>
-<a class="sourceLine" id="cb89-136" data-line-number="136">  rcl_year &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">ncol=</span><span class="dv">2</span>, <span class="dt">data=</span><span class="kw">c</span>(candidates, img_list<span class="op">$</span>year[ix[candidates]]))</a>
-<a class="sourceLine" id="cb89-137" data-line-number="137">  select_year &lt;-<span class="st"> </span><span class="kw">reclassify</span>(select, rcl_year)</a>
+<a class="sourceLine" id="cb89-129" data-line-number="129">  rcl_year &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">ncol=</span><span class="dv">2</span>, <span class="dt">data=</span><span class="kw">c</span>(candidates, img_list<span class="op">$</span>year[ix[candidates]]))</a>
+<a class="sourceLine" id="cb89-130" data-line-number="130">  select_year &lt;-<span class="st"> </span><span class="kw">reclassify</span>(select, rcl_year)</a>
+<a class="sourceLine" id="cb89-131" data-line-number="131">  </a>
+<a class="sourceLine" id="cb89-132" data-line-number="132">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb89-133" data-line-number="133">  output &lt;-<span class="st"> </span><span class="kw">stack</span>(composite_na, select_DOY, select_year)</a>
+<a class="sourceLine" id="cb89-134" data-line-number="134">  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;End of compositing process: &#39;</span>, <span class="kw">Sys.time</span>()))</a>
+<a class="sourceLine" id="cb89-135" data-line-number="135">  </a>
+<a class="sourceLine" id="cb89-136" data-line-number="136">  <span class="co">#...</span></a>
+<a class="sourceLine" id="cb89-137" data-line-number="137">  <span class="kw">return</span>(output)</a>
 <a class="sourceLine" id="cb89-138" data-line-number="138">  </a>
-<a class="sourceLine" id="cb89-139" data-line-number="139">  <span class="co">#...</span></a>
-<a class="sourceLine" id="cb89-140" data-line-number="140">  output &lt;-<span class="st"> </span><span class="kw">stack</span>(composite_na, select_DOY, select_year)</a>
-<a class="sourceLine" id="cb89-141" data-line-number="141">  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;End of compositing process: &#39;</span>, <span class="kw">Sys.time</span>()))</a>
-<a class="sourceLine" id="cb89-142" data-line-number="142">  </a>
-<a class="sourceLine" id="cb89-143" data-line-number="143">  <span class="co">#...</span></a>
-<a class="sourceLine" id="cb89-144" data-line-number="144">  <span class="kw">return</span>(output)</a>
-<a class="sourceLine" id="cb89-145" data-line-number="145">  </a>
-<a class="sourceLine" id="cb89-146" data-line-number="146">}</a></code></pre></div>
+<a class="sourceLine" id="cb89-139" data-line-number="139">}</a></code></pre></div>
 </details>
 <details>
 <p><summary>Click here to see the script calling the compositing function</summary></p>

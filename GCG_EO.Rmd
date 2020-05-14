@@ -1582,15 +1582,8 @@ library(lubridate)
 library(ggplot2)
 
 # Change raster options to store large rasters in temp files on disk
+# Only use if function fails due to memory issues!
 # rasterOptions(maxmemory = 1e12)
-
-#############################################################################
-# Helper function for Gaussian DOY scoring
-gauss_score <- function(param, target, max_offset){
-  
-  return(score)
-}
-
 
 #############################################################################
 # Function definition starts here
