@@ -1982,7 +1982,9 @@ Inspect your result in QGIS and visually identify well classified regions and cl
 
 ### *5) Voluntary assignment:* Automated parameter optimization
 
-The `e1071` package offers automated parameter optimization for several classification algorithms. Use the `tune.randomForest()` function to find the best combination of `mtry`and `ntree` for your classification problem. The decision is made on an accuracy score derived via 10-fold cross-validation.
+The `e1071` package offers automated parameter optimization for several classification algorithms. Use the `tune.randomForest()` function to find the best combination of `mtry`and `ntree` for your classification problem. 
+
+The optimal parameters are detected based on a classification accuracy, derived by predicting a withheld fraction of the training data. To minimize the sampling bias, we specify a 5-fold cross-validation, where the sampling and prediction procedure is repeated five times.
 <!--
 ```{r training_df, echo=F, eval=T, results='hold'}
 library(randomForest)
@@ -1993,8 +1995,11 @@ train.df <- train_data_df
 ```{r rf_tune, echo=T, eval=F}
 library(e1071)
 
+# Define accuracy from 5-fold cross-validation as optimization measure
+cv <- tune.control(cross = 5) 
+
 # Use tune.randomForest to assess the optimal combination of ntree and mtry
-rf.tune <- tune.randomForest(classID~., data = train.df, ntree=seq(100, 500, 50), mtry=c(2:10))
+rf.tune <- tune.randomForest(classID~., data = train.df, ntree=seq(100, 500, 50), mtry=c(2:10), tunecontrol = cv)
 
 # Store the best model in a new object for further use
 rf.best <- rf.tune$best.model
@@ -2018,8 +2023,11 @@ The RBF kernel has the advantage of requiring the specification of only one para
 ```{r svm, echo=T, eval=F}
 library(e1071)
 
+# Define accuracy from 5-fold cross-validation as optimization measure
+cv <- tune.control(cross = 5) 
+
 # Use tune.svm() for a grid search of the gamma and cost parameters
-svm.tune <- tune.svm(classID~., data = train.df, kernel = 'radial', gamma = 10^(-3:3), cost = 10^(-3:3))
+svm.tune <- tune.svm(classID~., data = train.df, kernel = 'radial', gamma = 10^(-3:3), cost = 10^(-3:3), tunecontrol = cv)
 
 # Store the best model in a new object
 svm.best <- svm.tune$best.model
