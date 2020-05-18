@@ -1607,30 +1607,27 @@ parametric_compositing <- function(img_list, target_date,
   # Calculate the scores for the DOY, year, and cloud distance criteria
   print('Calculating compositing scores')
   
-  ### DOY score
-  # ...
-  score <- data.frame('DOY' = c(1:365),
-                      'DOY_offset' = abs(target_DOY - c(1:365)),
-                      'DOY_score' = dnorm(c(1:365), mean=target_DOY, sd=max_DOY_offset/2))
+  ### DOY
+  #...
+  img_list$DOY_score <- exp(-0.5 * ((img_list$DOY - target_DOY) / (max_DOY_offset/3))^2)
   
   # Remove DOYs outside valid range
-  score$DOY_score[score$DOY_offset > max_DOY_offset] <- NA
+  img_list$DOY_score[abs(img_list$DOY-target_DOY)>max_DOY_offset] <- NA
   
-  # Standardize scores
-  score$DOY_score <- (score$DOY_score - min(score$DOY_score, na.rm=T))/diff(range(score$DOY_score, na.rm=T), na.rm=T)
+  # Create data frame with daily score values 
+  score_fct <- data.frame('DOY' = c(1:365),
+                          'offset' = abs(target_DOY - c(1:365)),
+                          'score' = exp(-0.5 * ((c(1:365) - target_DOY) / (max_DOY_offset/3))^2))
   
-  # Append scores to img_list
-  img_list <- merge(img_list, score, by='DOY')
-  
-  
-  ### Year score
+  ### Year
+  #...
   img_list$year_score <- 1-(abs(target_year - img_list$year) / max_year_offset)
   
   if (max_year_offset == 0) {img_list$year_score[img_list$year==target_year] <- 1}
   img_list$year_score[img_list$year_score < 0] <- NA
   
   # Visualize DOY scoring function and available images
-  p <- ggplot(score, aes(x=DOY, y=DOY_score)) +
+  p <- ggplot(score_fct, aes(x=DOY, y=score)) +
           geom_line() +
           geom_point(data=img_list, aes(x=DOY, y=DOY_score, color=as.factor(year))) +
           scale_y_continuous('Score') +
@@ -1689,7 +1686,7 @@ parametric_compositing <- function(img_list, target_date,
   
   #############################################################################
   #...
-  print(paste('NAs: ', round(freq(composite_na[[1]], value=NA)/ncell(composite_na[[1]])*100, digits=3), ' %'))
+  print(paste('Remaining NAs: ', round(freq(composite_na[[1]], value=NA)/ncell(composite_na[[1]])*100, digits=3), ' %'))
   
   #...
   rcl_DOY <- matrix(ncol=2, data=c(candidates, img_list$DOY[ix[candidates]]))
@@ -1984,7 +1981,8 @@ Inspect your result in QGIS and visually identify well classified regions and cl
 
 The `e1071` package offers automated parameter optimization for several classification algorithms. Use the `tune.randomForest()` function to find the best combination of `mtry`and `ntree` for your classification problem. 
 
-The optimal parameters are detected based on a classification accuracy, derived by predicting a withheld fraction of the training data. To minimize the sampling bias, we specify a 5-fold cross-validation, where the sampling and prediction procedure is repeated five times.
+The optimal parameters are detected based on a classification accuracy, derived by predicting a withheld fraction of the training data. To minimize the sampling bias, we can specify an n-fold cross-validation, where the sampling, training, and prediction procedure is repeated n times.
+
 <!--
 ```{r training_df, echo=F, eval=T, results='hold'}
 library(randomForest)
@@ -1992,6 +1990,7 @@ load(url('https://github.com/philipperufin/gcg_eo/raw/master/data/training_data_
 train.df <- train_data_df
 ``` 
 -->
+
 ```{r rf_tune, echo=T, eval=F}
 library(e1071)
 
