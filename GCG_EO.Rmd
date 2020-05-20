@@ -2065,8 +2065,6 @@ Please take a look at the Excel sheet provided [here](https://box.hu-berlin.de/f
 
 ------
 
-<!--
-
 # Session 06: Accuracy assessment and area estimation
 
 ## Learning goals
@@ -2075,11 +2073,15 @@ Please take a look at the Excel sheet provided [here](https://box.hu-berlin.de/f
 - Assess the map errors of your forest type classification
 - Calculate error-adjusted class area estimates
 
+------
+
 ## Background
 
 Independent map accuracy assessment aims at getting an unbiased estimate of map accuracy. Generally, we identify a number of sample locations and compare the predicted class in the map with "true" class, which we determine using high quality reference information (e.g., very high resolution imagery). The following section requires understanding of the basic concepts of map accuracy assessment, i.e. the confusion matrix, overall, producer´s, and user´s accuracy. Read in, (e.g., [here](http://gsp.humboldt.edu/olm_2019/courses/GSP_216_Online/lesson6-2/metrics.html)) if you don´t know what these are.
 
 ![Forest type map with stratified random sample](fig/s06_map.png)
+
+------
 
 ### Why is area-adjustment necessary?
 
@@ -2117,7 +2119,9 @@ The above estimate of overall accuracy implicitly weighs each class according to
 
 Furthermore, the unadjusted overall accuracy does not account for the sampling bias introduced by the stratified sampling. You can imagine this bias as varying sampling densities between the map classes. Let´s assume our map contains a total of 10,000 pixels, we have mapped 700 pixels as deciduous forest and 4,000 pixels as coniferous forest. By verifying 50 samples of each class, we assessed $\frac{50}{700} = 0.071 = 7.1\%$ of the deciduous forest class pixels, while only $\frac{50}{4,000} = 0.013 = 1.3\%$ of the coniferous forest class were investigated. The other way around, one sample of the deciduous forest class is considered representative for  $\frac{700}{50} = 14$ pixels, while one sample of the coniferous forest class represents $\frac{4,000}{50} = 80$ pixels. 
 
-**An assumption**: The samples drawn from the deciduous forest stratum represent a much smaller area in our map (7%), as compared to the coniferous forest class (40%). In terms of overall accuracy, this means that the 39 correctly classified pixels of the deciduous forest class are probably less "relevant" than the 39 correctly classified pixels in the coniferous class. According to the numbers above, one sample of coniferous forest shold thus weigh $\frac{80}{14} = 5.7$ times as much as a deciduous forest pixel. We have to account for this bias when estimating map accuracies from a stratified random sample. 
+**An assumption**: The samples drawn from the deciduous forest stratum represent a much smaller area in our map (7%), as compared to the coniferous forest class (40%). In terms of overall accuracy, this means that the 39 correctly classified pixels of the deciduous forest class are probably less "relevant" than the 39 correctly classified pixels in the coniferous class. According to the numbers above, one sample of coniferous forest shold thus "weigh" $\frac{80}{14} = 5.7$ times as much as a deciduous forest pixel. We have to account for this bias when estimating map accuracies from a stratified random sample. 
+
+------
 
 ### How to do it?
 
@@ -2151,7 +2155,7 @@ Which yields the confusion matrix populated with probabilities:
 |                   |                      |                    |                   |                   |               |             |
 |$\sum p_{j}$       |$0.192$               |$0.164$             |$0.385$            |$0.259$            |               |$1.000$      |
 
-This table sums to 1 and the row sums correspond to the map class proportions from above. We can now confirm our assumption from above. The 39 correct pixels of the deciduous forest class represents a smaller map proportion as compared to the 39 correctly classified pixels of the coniferous forest class (5.5% vs. 31.2%). The coniferous forest samples are therefore more relevant for the area-adjusted overall map accuracy than the deciduous forest samples. More precisely, they are $\frac{0.312}{0.055} = 5.7$ times more important.
+This table sums to 1 and the row sums correspond to the map class proportions from above. We can now confirm our assumption from above. The 39 correct pixels of the deciduous forest class represent a smaller map proportion as compared to the 39 correctly classified pixels of the coniferous forest class (5.5% vs. 31.2%). The coniferous forest samples are therefore more relevant for the area-adjusted overall map accuracy than the deciduous forest samples. More precisely, they are $\frac{0.312}{0.055} = 5.7$ times more important.
 
 Based on this probabilistic confusion matrix, we can calculate the overall and class-wise accuracy scores as usual, while implicitly accounting for different class proportions and the sampling bias. 
 
@@ -2171,6 +2175,8 @@ $PA_{adjusted} =  \frac{0.055}{0.192} = 0.29 = 29\%$
 
 We can see that the user´s accuracy stays the same after adjustment. This makes sense, as we do not incorporate the sampling bias when considering only samples drawn from one map stratum. For the producer´s accuracy, we combine information from samples across all strata. We hence automatically consider the different class proportions and sampling densities when calculating the producer´s accuracy from the confusion matrix populated with probabilities. The producer´s accuracy is relatively low after adjustment, owing to the fact that we likely omit a lot of deciduous forest, which we falsely classified as mixed forest or non-forest.
 
+------
+
 ### Error-adjusted area estimates
 
 There are several methods to obtain class-wise area estimates.  They can either be derived directly from the map by multiplying the map´s class proportions with the total size of the study area. Assuming a study area of $S = 10,000 ha$, our area estimates for deciduous forest would thereby be: 
@@ -2185,15 +2191,19 @@ $area_{DF} = \sum_{p_{j=DF}}^i * S$
 
 $area_{DF} = 0.192 * 10,000 ha = 1,920 ha$
 
-So the better area estimate for deciduous forest in our study region is 1,920 ha, as compared to the map-based estimate of 700 ha. Here again, the substantial omission of deciduous forest in our map was taken into account, which in turn largely increases the area estimate for this class. 
+So the unbiased area estimate for deciduous forest in our study region is 1,920 ha, as compared to the map-based estimate of 700 ha. Here again, the substantial omission of deciduous forest in our map was taken into account, which in turn largely increases the area estimate for this class. 
 
 Wrapping it up, area adjustment can make quite a substantial difference for overall accuracy and producer´s accuracy. User´s accuracy remains unaffected. Producing area estimates directly from the reference data is advised in order to produce more accurate estimations of land cover, land use, or land change. 
 
 All procedures which were only briefly described here and are explained in more detail in [Olofsson et al. (2014)](https://doi.org/10.1016/j.rse.2014.02.015). We recommend this read, as it is documenting the current state-of-the-art in regards to accuracy assessment in high detail. Another source of background information is the [technical documentation of the AREA² tools for accuracy assessment](https://area2.readthedocs.io/en/latest/background.html).
 
+------
+
 ## Assignment
 
 In this assignment, you will perform an area-adjusted accuracy assessment of your forest type map and estimate error-adjusted area for each forest type class. In a first step, the accuracy scores will be investigated in an [Excel spreadsheet](https://box.hu-berlin.de/f/269470b96af54ba687ef/?dl=1). In case you do not yet have a forest type map, please use the one provided [here](https://box.hu-berlin.de/f/00fd4fdd12b34560b836/?dl=1).
+
+------
 
 ### 1) Producing reference data
 
@@ -2208,6 +2218,7 @@ Load the point shapefile in QGIS and add two fields of type Integer: `classID` a
 |Coniferous forest|	3           |Very uncertain    | 3            |
 |Non-forest       |	4           |                  |              |	
 
+------
 
 ### 2) Area-adjusted accuracy assessment
 
@@ -2223,6 +2234,8 @@ a. Which class has the highest / lowest user´s accuracy?
 b. Which class has the highest / lowest producer´s accuracy?
 c. How does the overall accuracy differ after area-adjustment? Why?
 d. How do the map-based area estimates differ from those obtained using the reference data?
+
+------
 
 ### 3) Knowledge transfer
 
@@ -2245,19 +2258,24 @@ To do this, track the underlying formulas of the respective sections in the Exce
 
 Compare the results with the values in the Excel table. If they differ, something went wrong. Check again! 
 
+------
 
+### *4) Voluntary exercise:* Compare the accuracy of SVM and RF classification
+
+Similar to the above exercise, assess the area-adjusted accuracy estimates of the results of assignment 5.6). Next, compare overall and class-wise accuracies. Can you find a notable difference in the performance of RF versus SVM classification? If so, which?
+
+------
  
 ## Reading materials 
 
 In this paper, [Hansen et al. (2013)](http://doi.org/10.1126/science.1244693) presented the first global Landsat-based map of forest cover change. Please make sure to read the paper and the supplementary materials.
 
-In order to make the discussion more vivid, we simulate a discussion on the applicability of the Global Forest Data as a baseline for REDD+ policy decisions. We therefore divide the classroom into two groups. Group A are "proponents" of the global product, whereas group B are its "opponents". Students placed in odd row numbers in the classroom (starting from the front) belong to group A (proponents), whereas students in even row numbers belong to group B (opponents). 
+In order to make the discussion more vivid, we simulate a discussion on the applicability of the Global Forest Data as a baseline for REDD+ policy decisions. We therefore divide the classroom into two groups. Group A are "proponents" of the global product, whereas group B are its "opponents". Students of teams 01-04 belong to group A (proponents), whereas students in teams 05-08 belong to group B (opponents). 
 
 Please prepare arguments for your group based on the core article and the supplementary material, as well as additional scientific literature if you wish (e.g. case studies). Arguments can target conceptual issues, methodological components, or other scientific evidence arguing for or against the suitability of the Global Forest Data in the context of REDD+. 
 
 ------
 
--->
 <!--
 
 # Session 07: Multi-temporal change detection
