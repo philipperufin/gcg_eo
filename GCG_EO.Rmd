@@ -1917,11 +1917,11 @@ Next, the RF allows us to investigate which features (e.g. spectral bands) were 
 
 ![Mean decrease in accuracy (increase in OOB error) caused by the features included in the classification model.](fig/s05_varimp.png){width=60%}
 
-In a next step, we can use partial dependence plots to further investigate the relationship between individual features and the likelihood of class occurrence. We can try to interpret this graph and assess relationships between individual features and our classes of interest. In the below example, the likelihood of occurrence for the deciduous forest class is high in the upper range of swIR 1 reflectance (above 13%), while it is high in the lower range of swIR 1 reflectance (10% and less).
+In a next step, we can use partial dependence plots to further investigate the relationship between individual features and the probability of class occurrence. We can try to interpret this graph and assess relationships between individual features and our classes of interest. In the below example, the probability of occurrence for the deciduous forest class is high in the upper range of swIR 1 reflectance (above 13%), while for the coniferous forest class it is high in the lower range of swIR 1 reflectance (10% and less).
 
-![Change in class likelihood across the value range of the swIR 1 reflectance at DOY 196.](fig/s05_pdp.png){width=80%}
+![Change in class probability across the value range of the swIR 1 reflectance at DOY 196.](fig/s05_pdp.png){width=80%}
 
-While generating meaningful insights is somewhat tricky with reflectance values, we could also imagine including, e.g., a digital elevation model into the RF model to learn about the likelihood of class occurrence across elevation gradients.
+While generating meaningful insights is somewhat tricky with reflectance values, we could also imagine including, e.g., a digital elevation model into the RF model to learn about the probability of class occurrence across elevation gradients.
 
 Summing it up, there are a some key advantages of the RF algorithm, which make it popular in data science and remote sensing. The RF is easy to understand, computationally efficient, parametrization is straightforward, and it often produces good results. It provides quick insights into model performance via the out-of-bag error and allows for investigating variable importance measures and partial dependence plots.
 
