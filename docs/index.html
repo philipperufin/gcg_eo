@@ -2301,7 +2301,7 @@ This is a user guide for map accuracy assessment and area estimation, following 
 <hr />
 <div id="producing-reference-data" class="section level3">
 <h3>1) Producing reference data</h3>
-<p>Load your forest type map in R. Create a stratified reference sample using <code>sampleStratified()</code>. We want to have a stratified equalized sample of 20 pixels per class. Specify the <code>size</code> parameter accordingly. Specify <code>sp = TRUE</code> to receive a spatial points object and <code>na.rm = TRUE</code> to ignore unclassified regions. Write the points to disk using <code>writeOGR()</code>.</p>
+<p>Load your forest type map in R. Create a stratified reference sample using <code>sampleStratified()</code>. We want to have a stratified equalized sample of 25 pixels per class. Specify the <code>size</code> parameter accordingly. Specify <code>sp = TRUE</code> to receive a spatial points object and <code>na.rm = TRUE</code> to ignore unclassified regions. Write the points to disk using <code>writeOGR()</code>.</p>
 <p>Load the point shapefile in QGIS and add two fields of type Integer: <code>classID</code> and <code>confID</code>. Visit each point and determine the class label according to the high resolution imagery in GoogleEarth. Install and use the Send2GE plugin in QGIS to identify the precise pixel location. Enter the class and confidence labels in the attribute table. Work efficiently through the points and save your changes regularly.</p>
 <table>
 <thead>
@@ -2344,9 +2344,7 @@ This is a user guide for map accuracy assessment and area estimation, following 
 <div id="area-adjusted-accuracy-assessment" class="section level3">
 <h3>2) Area-adjusted accuracy assessment</h3>
 <p>Assess the class proportions of your map in R. To do so, use the <code>freq()</code> function to get pixel counts. Use these for calculating class propotions (0-1). Remember to exclude <code>NAs</code>, so the proportions of your 4 classes sum up to 1.</p>
-<p>extract is not necessary</p>
-<p>Load the reference point shapefile in R and <code>extract()</code> the map values at the point locations. Create a confusion matrix from the resulting <code>data.frame</code> using <code>table()</code>.</p>
-<p>Copy &amp; paste the values from your confusion matrix as well as the class proportions into the Excel spreadsheet. Next, answer the following questions:</p>
+<p>Load the reference point shapefile in R and create a confusion matrix from the resulting <code>data.frame</code> using <code>table()</code>. Copy &amp; paste the values from your confusion matrix as well as the class proportions into the Excel spreadsheet. Next, answer the following questions:</p>
 <ol style="list-style-type: lower-alpha">
 <li>Which class has the highest / lowest user´s accuracy?</li>
 <li>Which class has the highest / lowest producer´s accuracy?</li>
@@ -2361,13 +2359,13 @@ This is a user guide for map accuracy assessment and area estimation, following 
 <ol style="list-style-type: lower-alpha">
 <li>Generate the confusion matrix containing probabilities. In this matrix, each cell value represents the probability of occurrence on map class <span class="math inline">\(i\)</span> and reference class <span class="math inline">\(j\)</span>:</li>
 </ol>
-<p><span class="math inline">\(p_{ij} = \frac{n_{ij}}{n_i} * w_i\)</span></p>
+<p><span class="math display">\[p_{ij} = \frac{n_{ij}}{n_i} * w_i\]</span></p>
 <p><span class="math inline">\(n_{ij}\)</span> = Number of pixels belonging to map class <span class="math inline">\(i\)</span> and reference class <span class="math inline">\(j\)</span></p>
 <p><span class="math inline">\(n_i\)</span> = Total number of pixels of map class <span class="math inline">\(i\)</span></p>
 <p><span class="math inline">\(w_i\)</span> = Proportion of map class <span class="math inline">\(i\)</span></p>
 <ol start="2" style="list-style-type: lower-alpha">
-<li>Calculate overall accuracy and class-wise user´s and producer´s accuracy from the confusion matrix.</li>
-<li>Produce error-adjusted area estimates from the confusion matrix.</li>
+<li><p>Calculate overall accuracy and class-wise user´s and producer´s accuracy from the confusion matrix.</p></li>
+<li><p>Produce error-adjusted area estimates from the confusion matrix.</p></li>
 </ol>
 <p>To do this, track the underlying formulas of the respective sections in the Excel sheet and transfer them to R. Use helper functions such as <code>diag()</code>, <code>sum()</code> and <code>apply()</code>. Avoid <code>for</code> loops.</p>
 <p>Compare the results with the values in the Excel table. If they differ, something went wrong. Check again!</p>
@@ -2375,7 +2373,7 @@ This is a user guide for map accuracy assessment and area estimation, following 
 </div>
 <div id="voluntary-exercise-compare-the-accuracy-of-svm-and-rf-classification" class="section level3">
 <h3><em>4) Voluntary exercise:</em> Compare the accuracy of SVM and RF classification</h3>
-<p>Similar to the above exercise, assess the area-adjusted accuracy estimates of the results of assignment 5.6). Next, compare overall and class-wise accuracies. Can you find a notable difference in the performance of RF versus SVM classification? If so, which?</p>
+<p>Assess the area-adjusted accuracy estimates of the results of assignment 5.6). Next, compare overall and class-wise accuracies. Can you find a notable difference in the performance of RF versus SVM classification? If so, which?</p>
 <hr />
 </div>
 </div>
@@ -2384,14 +2382,14 @@ This is a user guide for map accuracy assessment and area estimation, following 
 <p>In this paper, <a href="http://doi.org/10.1126/science.1244693">Hansen et al. (2013)</a> presented the first global Landsat-based map of forest cover change. Please make sure to read the paper and the supplementary materials.</p>
 <p>In order to make the discussion more vivid, we simulate a discussion on the applicability of the Global Forest Data as a baseline for REDD+ policy decisions. We therefore divide the classroom into two groups. Group A are “proponents” of the global product, whereas group B are its “opponents”. Students of teams 01-04 belong to group A (proponents), whereas students in teams 05-08 belong to group B (opponents).</p>
 <p>Please prepare arguments for your group based on the core article and the supplementary material, as well as additional scientific literature if you wish (e.g. case studies). Arguments can target conceptual issues, methodological components, or other scientific evidence arguing for or against the suitability of the Global Forest Data in the context of REDD+.</p>
-<hr />
 <!--
+------
 
 # Session 07: Multi-temporal change detection
 
 ## Learning goals
 
-- Bundle your experiences to develop a supervised classification workflow
+- Bundle your experiences to develop a supervised change classification workflow
 - Map forest dynamics in the Southern Brazilian Amazon
 - Generate map-based estimates of forest loss and gain in the study region
 
@@ -2456,13 +2454,13 @@ Optional: Derive additional features from your data. Do you want to classify bas
 
 b. Consider that the way you collect your training data varies with the approach you choose in 1).
 
-c. Collecting training data is time consuming - try to be efficient. Make use of the QGIS Info-Tool to compare spectral profiles of the three images. You can also link QGIS and Google Earth through the GearthView plugin. For exact pixel locations, use the Landsat pixel grid we provided.
+c. Collecting training data is time consuming - try to be efficient. Make use of the QGIS Info-Tool to compare spectral profiles of the three images. You can also link QGIS and Google Earth through the Send2GE plugin. For exact pixel boundaries, use the Landsat pixel grid we provided.
 
 ### 3) Model training & classification
 
-a. Choose a classification algorithm: Feel free to use any classifier. In case you´re interested in differences between classifiers, test more than one!
+a. Choose a classification algorithm: Feel free to use any classifier. In case you´re interested in differences between classifiers, test more than one.
 
-b. Parametrize the model. Depending on your choice of classification model, think about how to make an informed decision about the model parameters. Optimize parameters wherever possible, e.g. by using the out-of-bag error.
+b. Parametrize the model. Depending on your choice of classification model, think about how to make an informed decision about the model parameters. Optimize parameters wherever possible, e.g. by using the tuning functions presented in assignment 5.
 
 ### 4) Change map validation & area estimates
 
@@ -2480,8 +2478,6 @@ In the next session, we would like to discuss [Müller et al. (2015): Mining den
 
 - How do spectral-temporal metrics conceptually differ from pixel-based composites?
 - For which type of (classification) problems can spectral-temporal metrics be useful?
-
-------
 
 -->
 <!--
@@ -2617,6 +2613,7 @@ a. Assess the accuracy of the map using the validation data we provided. Run an 
 
 b. Combine the resulting map with your forest change map from last week to get a better insight into the land change processes of the study area. Calculate the fractions of deforested land occupied by pasture or cropland for each of the two time periods. Was forest primarily replaced by pastures or by cropland? Did this process change over the periods 2001-2005 and 2006-2010? Please enter your main results in [this table](https://ethercalc.org/tyywz3bm5err).
 
+------
 
 ## Reading materials
 
@@ -2625,8 +2622,6 @@ In this paper, [Hansen et al. (2013)](http://doi.org/10.1126/science.1244693) pr
 In order to make the discussion more vivid, we simulate a discussion on the applicability of the Global Forest Data as a baseline for REDD+ policy decisions. We therefore divide the classroom into two groups. Group A are "proponents" of the global product, whereas group B are its "opponents". Students placed in odd row numbers in the classroom (starting from the front) belong to group A (proponents), whereas students in even row numbers belong to group B (opponents). 
 
 Please prepare arguments for your group based on the core article and the supplementary material, as well as additional scientific literature if you wish (e.g. case studies). Arguments can target conceptual issues, methodological components, or other scientific evidence arguing for or against the suitability of the Global Forest Data in the context of REDD+. 
-
-------
 
 -->
 <!--

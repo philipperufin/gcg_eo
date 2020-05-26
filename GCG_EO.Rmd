@@ -2207,7 +2207,7 @@ In this assignment, you will perform an area-adjusted accuracy assessment of you
 
 ### 1) Producing reference data
 
-Load your forest type map in R. Create a stratified reference sample using `sampleStratified()`. We want to have a stratified equalized sample of 20 pixels per class. Specify the `size` parameter accordingly. Specify `sp = TRUE` to receive a spatial points object and `na.rm = TRUE` to ignore unclassified regions. Write the points to disk using `writeOGR()`.
+Load your forest type map in R. Create a stratified reference sample using `sampleStratified()`. We want to have a stratified equalized sample of 25 pixels per class. Specify the `size` parameter accordingly. Specify `sp = TRUE` to receive a spatial points object and `na.rm = TRUE` to ignore unclassified regions. Write the points to disk using `writeOGR()`.
 
 Load the point shapefile in QGIS and add two fields of type Integer: `classID` and `confID`. Visit each point and determine the class label according to the high resolution imagery in GoogleEarth. Install and use the Send2GE plugin in QGIS to identify the precise pixel location. Enter the class and confidence labels in the attribute table. Work efficiently through the points and save your changes regularly. 
 
@@ -2224,11 +2224,7 @@ Load the point shapefile in QGIS and add two fields of type Integer: `classID` a
 
 Assess the class proportions of your map in R. To do so, use the `freq()` function to get pixel counts. Use these for calculating class propotions (0-1). Remember to exclude `NAs`, so the proportions of your 4 classes sum up to 1.
 
- extract is not necessary 
-
-Load the reference point shapefile in R and `extract()` the map values at the point locations. Create a confusion matrix from the resulting `data.frame` using `table()`.
-
-Copy & paste the values from your confusion matrix as well as the class proportions into the Excel spreadsheet. Next, answer the following questions: 
+Load the reference point shapefile in R and create a confusion matrix from the resulting `data.frame` using `table()`. Copy & paste the values from your confusion matrix as well as the class proportions into the Excel spreadsheet. Next, answer the following questions: 
 
 a. Which class has the highest / lowest user´s accuracy?
 b. Which class has the highest / lowest producer´s accuracy?
@@ -2243,7 +2239,7 @@ Implement three basic components of the accuracy assessment in R.
 
 a.	Generate the confusion matrix containing probabilities. In this matrix, each cell value represents the probability of occurrence on map class $i$ and reference class $j$: 
 
-$p_{ij} = \frac{n_{ij}}{n_i} * w_i$
+$$p_{ij} = \frac{n_{ij}}{n_i} * w_i$$
 
 $n_{ij}$ = Number of pixels belonging to map class $i$ and reference class $j$
 
@@ -2252,6 +2248,7 @@ $n_i$ = Total number of pixels of map class $i$
 $w_i$ = Proportion of map class $i$
 
 b.	Calculate overall accuracy and class-wise user´s and producer´s accuracy from the confusion matrix. 
+
 c.	Produce error-adjusted area estimates from the confusion matrix. 
 
 To do this, track the underlying formulas of the respective sections in the Excel sheet and transfer them to R. Use helper functions such as `diag()`, `sum()` and `apply()`. Avoid `for` loops. 
@@ -2262,7 +2259,7 @@ Compare the results with the values in the Excel table. If they differ, somethin
 
 ### *4) Voluntary exercise:* Compare the accuracy of SVM and RF classification
 
-Similar to the above exercise, assess the area-adjusted accuracy estimates of the results of assignment 5.6). Next, compare overall and class-wise accuracies. Can you find a notable difference in the performance of RF versus SVM classification? If so, which?
+Assess the area-adjusted accuracy estimates of the results of assignment 5.6). Next, compare overall and class-wise accuracies. Can you find a notable difference in the performance of RF versus SVM classification? If so, which?
 
 ------
  
@@ -2274,15 +2271,14 @@ In order to make the discussion more vivid, we simulate a discussion on the appl
 
 Please prepare arguments for your group based on the core article and the supplementary material, as well as additional scientific literature if you wish (e.g. case studies). Arguments can target conceptual issues, methodological components, or other scientific evidence arguing for or against the suitability of the Global Forest Data in the context of REDD+. 
 
-------
-
 <!--
+------
 
 # Session 07: Multi-temporal change detection
 
 ## Learning goals
 
-- Bundle your experiences to develop a supervised classification workflow
+- Bundle your experiences to develop a supervised change classification workflow
 - Map forest dynamics in the Southern Brazilian Amazon
 - Generate map-based estimates of forest loss and gain in the study region
 
@@ -2347,13 +2343,13 @@ Optional: Derive additional features from your data. Do you want to classify bas
 
 b. Consider that the way you collect your training data varies with the approach you choose in 1).
 
-c. Collecting training data is time consuming - try to be efficient. Make use of the QGIS Info-Tool to compare spectral profiles of the three images. You can also link QGIS and Google Earth through the GearthView plugin. For exact pixel locations, use the Landsat pixel grid we provided.
+c. Collecting training data is time consuming - try to be efficient. Make use of the QGIS Info-Tool to compare spectral profiles of the three images. You can also link QGIS and Google Earth through the Send2GE plugin. For exact pixel boundaries, use the Landsat pixel grid we provided.
 
 ### 3) Model training & classification
 
-a. Choose a classification algorithm: Feel free to use any classifier. In case you´re interested in differences between classifiers, test more than one!
+a. Choose a classification algorithm: Feel free to use any classifier. In case you´re interested in differences between classifiers, test more than one.
 
-b. Parametrize the model. Depending on your choice of classification model, think about how to make an informed decision about the model parameters. Optimize parameters wherever possible, e.g. by using the out-of-bag error.
+b. Parametrize the model. Depending on your choice of classification model, think about how to make an informed decision about the model parameters. Optimize parameters wherever possible, e.g. by using the tuning functions presented in assignment 5.
 
 ### 4) Change map validation & area estimates
 
@@ -2372,9 +2368,8 @@ In the next session, we would like to discuss [Müller et al. (2015): Mining den
 - How do spectral-temporal metrics conceptually differ from pixel-based composites?
 - For which type of (classification) problems can spectral-temporal metrics be useful?
 
-------
-
 -->
+
 <!--
 
 # Session 08: Spectral-temporal metrics
@@ -2506,6 +2501,7 @@ a. Assess the accuracy of the map using the validation data we provided. Run an 
 
 b. Combine the resulting map with your forest change map from last week to get a better insight into the land change processes of the study area. Calculate the fractions of deforested land occupied by pasture or cropland for each of the two time periods. Was forest primarily replaced by pastures or by cropland? Did this process change over the periods 2001-2005 and 2006-2010? Please enter your main results in [this table](https://ethercalc.org/tyywz3bm5err).
 
+------
 
 ## Reading materials
 
@@ -2515,9 +2511,9 @@ In order to make the discussion more vivid, we simulate a discussion on the appl
 
 Please prepare arguments for your group based on the core article and the supplementary material, as well as additional scientific literature if you wish (e.g. case studies). Arguments can target conceptual issues, methodological components, or other scientific evidence arguing for or against the suitability of the Global Forest Data in the context of REDD+. 
 
-------
-
 -->
+
+
 <!--
 
 # Session 09: Project phase I
