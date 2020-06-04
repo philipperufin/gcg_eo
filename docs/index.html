@@ -148,6 +148,7 @@ $(document).ready(function () {
         <li><a href="#session-05-machine-learning-for-image-classification">Session 05: Machine learning for image classification</a></li>
         <li><a href="#session-06-accuracy-assessment-and-area-estimation">Session 06: Accuracy assessment and area estimation</a></li>
         <li><a href="#session-07-multi-temporal-change-detection">Session 07: Multi-temporal change detection</a></li>
+        <li><a href="#session-08-spectral-temporal-metrics">Session 08: Spectral-temporal metrics</a></li>
         <li><a href="#terms">Terms</a></li>
         </ul>
         </div>
@@ -2505,150 +2506,170 @@ Optional: Derive additional features from your data. Do you want to classify bas
 <li>How do spectral-temporal metrics conceptually differ from pixel-based composites?</li>
 <li>For which type of (classification) problems can spectral-temporal metrics be useful?</li>
 </ul>
+<hr />
+</div>
+</div>
+<div id="session-08-spectral-temporal-metrics" class="section level1">
+<h1>Session 08: Spectral-temporal metrics</h1>
+<div id="learning-goals-10" class="section level2">
+<h2>Learning goals</h2>
+<ul>
+<li>Exploring the spectral-temporal characteristics of pastures and croplands in the Brazilian Amazon.</li>
+<li>Generate spectral-temporal metrics from an intra-annual time series of Tasseled Cap components.</li>
+<li>Map post-deforestation land use in deforested areas.</li>
+</ul>
+<hr />
+</div>
+<div id="background-5" class="section level2">
+<h2>Background</h2>
+<p>Understanding post-deforestation land use is essential to disentangle the drivers of deforestation. In the study region of last session, intensive agriculture and cattle ranching are the dominant land uses on deforested lands.</p>
+<div class="figure">
+<img src="fig/s08_lu.png" alt="Post-deforestation land uses in the study region include intensive soy cultivation (left) and extensive cattle ranching (right). Images: Philippe Rufin" />
+<p class="caption">Post-deforestation land uses in the study region include intensive soy cultivation (left) and extensive cattle ranching (right). Images: Philippe Rufin</p>
+</div>
+<p>From a remote sensing perspective, separating cropland and grassland is challenging due to similar spectral signatures in most periods of the year. In selected periods however, differences in land surface phenology become apparent. We can investigate these differences by creating an intra-annual time series of Tasseled Cap Greenness (TCG).</p>
+<div class="figure">
+<img src="fig/s08_tcg_ts.gif" alt="Intra-annual time series of Tasseled Cap Greenness for 2010." style="width:80.0%" />
+<p class="caption">Intra-annual time series of Tasseled Cap Greenness for 2010.</p>
+</div>
+<p>Let´s investigate differences between pastures and croplands which appear over time. We collected 50 reference samples for pastures and 50 for cropland in the study region. We then extract the TCG value for all those locations in each of the time series bands. In a next step, we can create class-wise boxplots for each observation date. The boxplots reveal the land surface dynamics for each class.</p>
+<div class="figure">
+<img src="fig/s08_boxplots_ts.png" alt="Boxplots showing the distribution of TCG for pastures (n = 50 samples) and cropland (n = 50 samples) across all observations of the year 2010." />
+<p class="caption">Boxplots showing the distribution of TCG for pastures (n = 50 samples) and cropland (n = 50 samples) across all observations of the year 2010.</p>
+</div>
+<p>Can you identify differences between the classes? Looking at the above graph suggests that croplands have a somewhat higher variability throughout the year, but on average, pastures show a slightly higher TCG. We can try to verify this by calculating descriptive statistics of all TCG observations in the year and then comparing those between the classes. Let´s take a look at the maximum, mean, minimum, and standard deviation of TCG throughout 2010.</p>
+<div class="figure">
+<img src="fig/s08_boxplots_stm.png" alt="Boxplots showing the distribution of maximum, mean, minimum and standard deviation of TCG for pastures (n = 50 samples) and cropland (n = 50 samples) in 2010." />
+<p class="caption">Boxplots showing the distribution of maximum, mean, minimum and standard deviation of TCG for pastures (n = 50 samples) and cropland (n = 50 samples) in 2010.</p>
+</div>
+<p>We can see that these “temporal statistics” can be useful to discriminate the two spectrally similar classes. Features combining the spectral appearance of a surface with its behaviour over time are increasingly popular in the remote sensing community. We refer to such features as spectral-temporal metrics (STM). STM are descriptive statistics of the spectral behaviour over time. They provide an efficient means to capture seasonal variations of land surface dynamics, while reducing the impact of clouds and cloud-shadows. STM can be calculated from indices such as the NDVI or TC components, but also directly from the spectral bands.</p>
+<div class="figure">
+<img src="fig/s08_stm.png" alt="Exemplary metrics calculated from intra-annual time series of Tasseled Cap Greenness." style="width:80.0%" />
+<p class="caption">Exemplary metrics calculated from intra-annual time series of Tasseled Cap Greenness.</p>
+</div>
+<p>Different metrics might be more or less useful depending on the application. Good process understanding is key in finding out which STM are relevant for the problem at hand. We should decide on the type of spectral information and a set of statistics (metrics) to compute. Providing such information to a classifier can enable the production of thematically detailed land cover maps over large areas, such as a <a href="https://www2.hu-berlin.de/geovis/eolab/europeanlandcover/euroLandCover.html">pan-European land cover map</a>.</p>
+<hr />
+</div>
+<div id="assignment-9" class="section level2">
+<h2>Assignment</h2>
+<p>In this assignment you will map pastures and croplands in deforested areas of the Brazilian Amazon. You will use and generate spectral-temporal metrics to separate these two land covers which are difficult to discriminate using single images. The resulting map enables you to determine which land use is primarily replacing forests in the region.</p>
+<p>We provide the following data in <a href="https://box.hu-berlin.de/f/cdc86f7993194946930f/?dl=1">our repository</a>:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>…ts_stacks/: cloud-masked stacks of TC brightness (TCB), TC greenness (TCG), TC wetness (TCW) derived from 30 Landsat images acquired throughout 2010. Observation dates and sensors for each band in the stacks are listed in *.csv file.</p></li>
+<li>…spectemp/: eight spectral-temporal metrics for TCB, TCG and TCW:</li>
+</ol>
+<ul>
+<li>min, max, mean: minimum, maximum and mean value<br />
+</li>
+<li>p25, p50, p75: 25%, 50%, 75% percentile values<br />
+</li>
+<li>iqr: interquartile-range (25%-75%)<br />
+</li>
+<li>std: standard deviation.</li>
+</ul>
+<ol start="3" style="list-style-type: lower-alpha">
+<li><p>…vector/: a shapefile and *.kmz file with the study area and pixel extents</p></li>
+<li><p>….TerraClass2010/: the TerraClass 2010 map product and a corresponding QGIS layer style file which contains the class catalogue.</p></li>
+<li><p>…training/: a set of points to explore the spectral-temporal behaviour of your classes and to train your classification model.</p></li>
+<li><p>…validation/: a set of points to assess the accuracy of your final classification.</p></li>
+</ol>
+<hr />
+<div id="inspect-the-input-data" class="section level3">
+<h3>1) Inspect the input data</h3>
+<p>Open a new QGIS project and inspect the spectral-temporal metrics. Choose one indicator (e.g. Tasseled Cap Greenness) and load all layers. Make sure you understand what the metrics represent and discuss their meaning, robustness (e.g. against cloud contamination), and behaviour over different land cover types with your neighbor(s).</p>
+<hr />
+</div>
+<div id="assess-suitability-of-spectral-temporal-metrics" class="section level3">
+<h3>2) Assess suitability of spectral-temporal metrics</h3>
+<p>We provide a shapefile with training points for the following classes</p>
+<table>
+<thead>
+<tr class="header">
+<th>classID</th>
+<th>Class</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Pasture</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Cropland</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Others</td>
+</tr>
+</tbody>
+</table>
+<p>The below graph visualizes the TC brightness, greenness, and wetness values at the training locations for each band in the temporal stacks (e.g., …/ts_stacks/TCG.tif).</p>
+<div class="figure">
+<img src="fig/s08_boxplots_tc.png" alt="Distribution of TCB, TCG and TCW for pastures (n = 50 samples) and cropland (n = 50 samples) across all observations of the year 2010." />
+<p class="caption">Distribution of TCB, TCG and TCW for pastures (n = 50 samples) and cropland (n = 50 samples) across all observations of the year 2010.</p>
+</div>
+<p>Compare the temporal behavior of the two classes, identify the main characteristics differences. Please record your insights as comments in your script. Select spectral-temporal metrics that you believe capture the differences between croplands and pastures well. Select at most six different metrics from the ones provided.</p>
+<hr />
+</div>
+<div id="compute-additional-spectral-temporal-metrics" class="section level3">
+<h3>3) Compute additional spectral-temporal metrics</h3>
+<p>Let´s generate two additional spectral-temporal metrics from the time series stacks. First, answer the following conceptual questions:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Which temporal subset of your time series highlights the seasonal differences between croplands and pastures best (e.g. ‘dry season’, ‘third quarter’ or ‘August’)?</p></li>
+<li><p>Which statistics provide a high information content? Your metrics can be for instance additional percentiles, information on the timing of specific events, such as the observation date of the minimum value, or differences between metrics. Be creative!</p></li>
+</ol>
+<p>Now the practical part. A number of summarizing functions can be applied directly to raster stacks (<code>mean()</code>, <code>max()</code>, <code>min()</code>, <code>range()</code>). If you want to calculate metrics other than those, you need to convert your raster stack into a matrix using <code>as.matrix()</code>. The below figure helps to understand how a three-dimensional raster stack is being transformed into a two-dimensional matrix.</p>
+<div class="figure">
+<img src="fig/s08_matrix.png" alt="Schematic illstration of converting a raster stack to a matrix using the as.matrix() function." />
+<p class="caption">Schematic illstration of converting a raster stack to a matrix using the as.matrix() function.</p>
+</div>
+<p>Based on the resulting matrix, you can perform basic calculations using, e.g., <code>apply()</code>. You can then write the results into a new raster, which you create using <code>raster()</code> and assign the results of your computation with the <code>vals</code> parameter.</p>
 <!--
-
-# Session 08: Spectral-temporal metrics
-
-## Learning goals
-
-- Exploring the spectral-temporal characteristics of pastures and croplands in the Brazilian Amazon.
-- Generate spectral-temporal metrics from an intra-annual time series of Tasseled Cap components.
-- Map post-deforestation land use in deforested areas.
-
-## Background
-
-Understanding post-deforestation land use is essential to disentangle the drivers of deforestation. In the study region of last session, intensive agriculture and cattle ranching are the dominant land uses on deforested lands.
-
-![Post-deforestation land uses in the study region include intensive soy cultivation (left) and extensive cattle ranching (right). Images: Philippe Rufin](fig/s08_lu.png)
-
-From a remote sensing perspective, separating cropland and grassland is challenging due to similar spectral signatures in most periods of the year. In selected periods however, differences in land surface phenology become apparent. We can investigate these differences by creating an intra-annual time series of Tasseled Cap Greenness (TCG). 
-
-![Intra-annual time series of Tasseled Cap Greenness for 2010.](fig/s08_tcg_ts.gif){width=80%}
-
-Let´s investigate differences between pastures and croplands which appear over time. We collected 50 reference samples for pastures and 50 for cropland in the study region. We then extract the TCG value for all those locations in each of the time series bands. In a next step, we can create class-wise boxplots for each observation date. The boxplots reveal the land surface dynamics for each class.
-
-![Boxplots showing the distribution of TCG for pastures (n = 50 samples) and cropland (n = 50 samples) across all observations of the year 2010.](fig/s08_boxplots_ts.png)
-
-Can you identify differences between the classes? Looking at the above graph suggests that croplands have a somewhat higher variability throughout the year, but on average, pastures show a slightly higher of TCG. We can try to verify this by calculating descriptive statistics of all TCG observations in the year and then comparing those between the classes. Let´s take a look at the maximum, mean, minimum, and standard deviation of TCG throughout 2010.
-
-![Boxplots showing the distribution of maximum, mean, minimum and standard deviation of TCG for pastures (n = 50 samples) and cropland (n = 50 samples) in 2010.](fig/s08_boxplots_stm.png)
-
-We can see that these "temporal statistics" can be useful to discriminate the two spectrally similar classes. Features combining the spectral appearance of a surface with its behaviour over time are increasingly popular in the remote sensing community. We refer to such features as spectral-temporal metrics (STM). STM are descriptive statistics of the spectral behaviour over time. They provide an efficient means to capture seasonal variations of land surface dynamics, while reducing the impact of clouds and cloud-shadows. STM can be calculated from indices such as the NDVI or TC components, but also directly from the spectral bands. 
-
-![Exemplary metrics calculated from intra-annual time series of Tasseled Cap Greenness.](fig/s08_stm.png){width=80%}
-
-Different metrics might be more or less useful depending on the application. Good process understanding is key in finding out which STM are relevant for the problem at hand. We should decide on the type of spectral information and a set of statistics (metrics) to compute. Providing such information to a classifier can enable the production of thematically detailed land cover maps over large areas, such as a [pan-European land cover map](https://www2.hu-berlin.de/geovis/eolab/europeanlandcover/euroLandCover.html).
-
----
-
-## Assignment
-
-In this assignment you will map pastures and croplands in deforested areas of the Brazilian Amazon. You will use and generate spectral-temporal metrics to separate these two land covers which are difficult to discriminate using single images. The resulting map enables you to determine which land use is primarily replacing forests in the region.
-
-We provide the following data in [our repository](https://box.hu-berlin.de/f/cdc86f7993194946930f/?dl=1):
-
-a. …ts_stacks/: cloud-masked stacks of TC brightness (TCB), TC greenness (TCG), TC wetness (TCW) derived from 30 Landsat images acquired throughout 2010. Observation dates and sensors for each band in the stacks are listed in *.csv file.
-
-b. …spectemp/: eight spectral-temporal metrics for TCB, TCG and TCW:
-min, max, mean: minimum, maximum and mean value  
-p25, p50, p75: 25%, 50%, 75% percentile values  
-iqr: interquartile-range (25%-75%)  
-std: standard deviation.  
-
-c. …vector/: a shapefile and *.kmz file with the study area and pixel extents
-
-d. ….TerraClass2010/: the TerraClass 2010 map product and a corresponding QGIS layer style file which contains the class catalogue.
-
-e. …training/: a set of points to explore the spectral-temporal behaviour of your classes and to train your classification model.
-
-f. …validation/: a set of points to assess the accuracy of your final classification.
-
-
-### 1) Inspect the input data 
-
-Open a new QGIS project and inspect the spectral-temporal metrics. Choose one indicator (e.g. Tasseled Cap Greenness) and load all layers. Make sure you understand what the metrics represent and discuss their meaning, robustness (e.g. against cloud contamination), and behaviour over different land cover types with your neighbor(s).
-
-### 2) Assess suitability of spectral-temporal metrics
-
-We provide a shapefile with training points for the following classes  
-
-| classID | Class    |
-| ------- | -----    |
-| 1       | Pasture  |
-| 2       | Cropland |
-| 3       | Others   |
-
-`extract()` the values at your training locations from the temporal stacks (e.g., …/ts_stacks/TCG.tif). Compare the phenological behavior of the classes with boxplots or line plots. Use the following code to import the acquisition dates of the Landsat images:
+Use the following code to import the acquisition dates of the Landsat images:
 
 
 ```r
 data.path <- 'course.dir/S08/data/'
 sensor_date <- read.table(paste0(data.path, 'ts_stacks/Landsat_2010_Sensor_Date.csv', sep=';', header=T)
 ```
-
-Summarize the main characteristics of the three classes over the growing season and identify major differences. Please add your insights in comments in your script. Select spectral-temporal metrics that capture the differences between croplands, pastures, and others well. Select at most six different metrics from the ones provided.
-
-### 3) Compute additional spectral-temporal metrics
-
-Let´s generate two additional spectral-temporal metrics from the time series stacks. First, answer the following conceptual questions:
-
-a. Which temporal subset of your time series highlights the seasonal differences between croplands and pastures best (e.g. 'dry season', 'third quarter' or 'August')?
-
-b. Which statistics provide a high information content? Your metrics can be for instance additional percentiles, information on the timing of specific events, such as the observation date of the minimum value, or differences between metrics. Be creative!
-
-Now the practical part. A number of summarizing functions can be applied directly to raster stacks (`mean()`, `max()`, `min()`, `range()`). If you want to calculate metrics other than those, you need to convert your raster stack into a matrix using `as.matrix()`. The below figure helps to understand how a three-dimensional raster stack is being transformed into a two-dimensional matrix.
-
-![Schematic illstration of converting a raster stack to a matrix using the as.matrix() function.](fig/s08_matrix.png)
-
-Based on the resulting matrix, you can perform basic calculations using, e.g., `apply()`. You can then write the results into a new raster, which you create using `raster()` and assign the results of your computation with the `vals` parameter.  
-
-The following code template gives an example for computing the median Tasseled Cap Greenness. Computation might take several minutes - make use of the processing time by preparing the subsequent tasks.
-
-
-```r
-# Read TCG time series stack
-tcg.stack <- stack('course.dir/S08/data/ts_stacks/TCG_stack.tif')
-
-# Convert to matrix
-tcg.matrix <- as.matrix(tcg.stack)
-
-# Calculate median across rows in matrix
-tcg.median <- apply(tcg.matrix, 1, FUN=median, na.rm=T)
-
-# Write results to empty raster
-tcg.median.raster <- raster(nrows=tcg.stack@nrows, 
-                            ncols=tcg.stack@ncols, 
-                            crs=tcg.stack@crs, 
-                            vals=tcg.median,
-                            ext=extent(tcg.stack))
-
-# Plot result
-plot(tcg.median.raster)
-```
-
-### 4) Train and apply Random Forest Model
-
-a. Train a Random Forest model based on your selected and computed spectral-temporal metrics. As always, make an informed decision about the `ntree` and `mtry` parameters.
-
-b. Produce a map using your Random Forest model and `mask()` the result with last week´s forest map, so only non-forest areas in 2010 are left. Write the result to disk using the appropriate `datatype`.
-
-### 5) Accuracy assessment and area estimates
-
-a. Assess the accuracy of the map using the validation data we provided. Run an additional iteration using different metrics in case you are not satisifed with your results.
-
-b. Combine the resulting map with your forest change map from last week to get a better insight into the land change processes of the study area. Calculate the fractions of deforested land occupied by pasture or cropland for each of the two time periods. Was forest primarily replaced by pastures or by cropland? Did this process change over the periods 2001-2005 and 2006-2010? Please enter your main results in [this table](https://ethercalc.org/tyywz3bm5err).
-
-------
-
-## Reading materials
-
-In this paper, [Hansen et al. (2013)](http://doi.org/10.1126/science.1244693) presented the first global Landsat-based map of forest cover change. Please make sure to read the paper and the supplementary materials.
-
-In order to make the discussion more vivid, we simulate a discussion on the applicability of the Global Forest Data as a baseline for REDD+ policy decisions. We therefore divide the classroom into two groups. Group A are "proponents" of the global product, whereas group B are its "opponents". Students placed in odd row numbers in the classroom (starting from the front) belong to group A (proponents), whereas students in even row numbers belong to group B (opponents). 
-
-Please prepare arguments for your group based on the core article and the supplementary material, as well as additional scientific literature if you wish (e.g. case studies). Arguments can target conceptual issues, methodological components, or other scientific evidence arguing for or against the suitability of the Global Forest Data in the context of REDD+. 
-
 -->
+<p>The following code template gives an example for computing the median Tasseled Cap Greenness. Computation might take several minutes - make use of the processing time by preparing the subsequent tasks.</p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" data-line-number="1"><span class="co"># Read TCG time series stack</span></a>
+<a class="sourceLine" id="cb93-2" data-line-number="2">tcg.stack &lt;-<span class="st"> </span><span class="kw">stack</span>(<span class="st">&#39;course.dir/S08/data/ts_stacks/TCG_stack.tif&#39;</span>)</a>
+<a class="sourceLine" id="cb93-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb93-4" data-line-number="4"><span class="co"># Convert to matrix</span></a>
+<a class="sourceLine" id="cb93-5" data-line-number="5">tcg.matrix &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(tcg.stack)</a>
+<a class="sourceLine" id="cb93-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb93-7" data-line-number="7"><span class="co"># Calculate median across rows in matrix</span></a>
+<a class="sourceLine" id="cb93-8" data-line-number="8">tcg.median &lt;-<span class="st"> </span><span class="kw">apply</span>(tcg.matrix, <span class="dv">1</span>, <span class="dt">FUN=</span>median, <span class="dt">na.rm=</span>T)</a>
+<a class="sourceLine" id="cb93-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb93-10" data-line-number="10"><span class="co"># Write results to empty raster</span></a>
+<a class="sourceLine" id="cb93-11" data-line-number="11">tcg.median.raster &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="dt">nrows=</span>tcg.stack<span class="op">@</span>nrows, </a>
+<a class="sourceLine" id="cb93-12" data-line-number="12">                            <span class="dt">ncols=</span>tcg.stack<span class="op">@</span>ncols, </a>
+<a class="sourceLine" id="cb93-13" data-line-number="13">                            <span class="dt">crs=</span>tcg.stack<span class="op">@</span>crs, </a>
+<a class="sourceLine" id="cb93-14" data-line-number="14">                            <span class="dt">vals=</span>tcg.median,</a>
+<a class="sourceLine" id="cb93-15" data-line-number="15">                            <span class="dt">ext=</span><span class="kw">extent</span>(tcg.stack))</a>
+<a class="sourceLine" id="cb93-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb93-17" data-line-number="17"><span class="co"># Plot result</span></a>
+<a class="sourceLine" id="cb93-18" data-line-number="18"><span class="kw">plot</span>(tcg.median.raster)</a></code></pre></div>
+<hr />
+</div>
+<div id="train-and-apply-random-forest-model" class="section level3">
+<h3>4) Train and apply Random Forest Model</h3>
+<ol style="list-style-type: lower-alpha">
+<li><p>Train a Random Forest model based on your selected and computed spectral-temporal metrics. As always, make an informed decision about the <code>ntree</code> and <code>mtry</code> parameters.</p></li>
+<li><p>Produce a map using your Random Forest model and <code>mask()</code> the result with last week´s forest map, so only non-forest areas in 2010 are left. Write the result to disk using the appropriate <code>datatype</code>.</p></li>
+</ol>
+<hr />
+</div>
+<div id="accuracy-assessment-and-area-estimates" class="section level3">
+<h3>5) Accuracy assessment and area estimates</h3>
+<ol style="list-style-type: lower-alpha">
+<li><p>Assess the accuracy of the map using the validation data we provided. Run an additional iteration using different metrics in case you are not satisifed with your results.</p></li>
+<li><p>Combine the resulting map with your forest change map from last week to get a better insight into the land change processes of the study area. Calculate the fractions of deforested land occupied by pasture or cropland for each of the two time periods. Was forest primarily replaced by pastures or by cropland? Did this process change over the periods 2001-2005 and 2006-2010? Please enter your main results in <a href="https://ethercalc.org/tyywz3bm5err">this table</a>.</p></li>
+</ol>
+<hr />
 <!--
 
 # Session 09: Project phase I
@@ -2817,6 +2838,7 @@ The schedule is very tight and presenters are urged to strictly stay within pre-
 ------
 
 -->
+</div>
 </div>
 </div>
 <div id="terms" class="section level1">
