@@ -2605,14 +2605,17 @@ Developing a research idea is an iterative process. Running into problems and re
 
 ------
 
-Concerning the MAP: 
+# Concerning the MAP: 
 
-Your project work will result in a written homework in the style of a scientific article. The written work should follow the typical structure of a scientific paper containing sections for: Abstract, Introduction, Data & Methods, Results, Discussion, and Conclusion. The work should contain a maximum of 20,000 characters (not counting spaces, references, and appendix). For writing guidelines see for instance https://writingajournalarticle.wordpress.com/. The appendix may contain additional materials such as figures, tables, and code for the main analyses.
+Your project work will result in a written homework in the style of a scientific article. The written work should follow the typical structure of a scientific paper (Abstract, Introduction, Data & Methods, Results, Discussion, and Conclusion). Feel free to screen online materials for [scientific writing guidelines](https://writingajournalarticle.wordpress.com/). 
 
-To allow for transparent grading, you should disentangle the individual contributions in a tabular format containing:
-* in columns: the name of the team members
-* in rows: components of the work, including but not limited to: study design, data acquisition, preprocessing, reference data collection, performing analyses, writing code, literature research, writing manuscript, creating figures, formatting, revisions & editing, references
-* in cells: the respective members contribution to this part of the work (in %)
+The work should contain a maximum of 20,000 characters (not counting spaces, references, and appendix). The appendix may contain additional materials such as figures, tables, and code for the main analyses.
+
+To allow for transparent grading, we kindly ask you to disentangle the individual contributions in a tabular format containing:
+
+- in columns: the name of the team members
+- in rows: components of the work, including but not limited to: study design, data acquisition, preprocessing, reference data collection, performing analyses, writing code, literature research, writing manuscript, creating figures, formatting, revisions & editing, references
+- in cells: the respective members contribution to this part of the work (in %)
 
 
 <!--
