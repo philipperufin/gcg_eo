@@ -2541,6 +2541,20 @@ Think about training and validation data collection early on. Make sure there is
 
 ------
 
+# Concerning the MAP 
+
+Your project work will result in a written homework in the style of a scientific article. The written work should follow the typical structure of a scientific paper (Abstract, Introduction, Data & Methods, Results, Discussion, and Conclusion). Feel free to screen online materials for [scientific writing guidelines](https://writingajournalarticle.wordpress.com/). 
+
+The work should contain a maximum of 20,000 characters (not counting spaces, references, and appendix). The appendix may contain additional materials such as figures, tables, and code for the main analyses.
+
+To allow for transparent grading, we kindly ask you to disentangle the individual contributions in a tabular format containing:
+
+- in columns: the name of the team members
+- in rows: components of the work, including but not limited to: study design, data acquisition, preprocessing, reference data collection, performing analyses, writing code, literature research, writing manuscript, creating figures, formatting, revisions & editing, references
+- in cells: the respective members contribution to this part of the work (in %)
+
+------
+
 # Session 09: Project phase I
 
 ## Learning goals: 
@@ -2605,21 +2619,6 @@ Developing a research idea is an iterative process. Running into problems and re
 
 ------
 
-# Concerning the MAP: 
-
-Your project work will result in a written homework in the style of a scientific article. The written work should follow the typical structure of a scientific paper (Abstract, Introduction, Data & Methods, Results, Discussion, and Conclusion). Feel free to screen online materials for [scientific writing guidelines](https://writingajournalarticle.wordpress.com/). 
-
-The work should contain a maximum of 20,000 characters (not counting spaces, references, and appendix). The appendix may contain additional materials such as figures, tables, and code for the main analyses.
-
-To allow for transparent grading, we kindly ask you to disentangle the individual contributions in a tabular format containing:
-
-- in columns: the name of the team members
-- in rows: components of the work, including but not limited to: study design, data acquisition, preprocessing, reference data collection, performing analyses, writing code, literature research, writing manuscript, creating figures, formatting, revisions & editing, references
-- in cells: the respective members contribution to this part of the work (in %)
-
-
-<!--
-
 # Session 10: Project phase II
 
 ## Learning goals:
@@ -2642,7 +2641,7 @@ To get there, we need to do the following:
 - Crop the image(s) to the study region extent.
 - Mask clouds & cloud shadows in the image(s).
 
-### 2) Advanced pre-processing 
+### 2) Higher-level pre-processing 
 
 Producing meaningful features for classification or regression algorithms is a critical step towards good reults. Make use of the methods and skillsets you acquired during the course. Depending on your research project, it might make sense to perform pixel-based compositing, or to calculate spectral-temporal metrics. Remember, many of these steps can be performed using spectral bands, band indices, or Tasseled Cap components. Take enough time to discuss these issues in your team before making a final choice. 
 
@@ -2660,9 +2659,6 @@ You have already done this a couple of times by now. Here are some guidelines th
 **Until next week:** Have your input features and training data ready, so we can proceed with producing results. Decide for an algorithm to use in your classification / regression problem. Discuss the parametrization of these algorithms in your team, i.e., which are the required parameters and how to determine useful parameter settings.
 
 ------
-
--->
-<!--
 
 
 # Session 11: Project phase III
@@ -2714,7 +2710,6 @@ The schedule is very tight and presenters are urged to strictly stay within pre-
 
 ------
 
--->
 
 # Terms
 
