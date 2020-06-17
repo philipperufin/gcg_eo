@@ -2538,7 +2538,7 @@ Think about training and validation data collection early on. Make sure there is
 ------
 
 **Until next week:** Submit a short project proposal the latest on 15 June. It should contain your topic of choice, study region, dataset(s), method(s) and one key scientific article in at most three to four sentences. 
-
+<!--
 ------
 
 # Concerning the MAP 
@@ -2552,6 +2552,8 @@ To allow for transparent grading, we kindly ask you to disentangle the individua
 - in columns: the name of the team members
 - in rows: components of the work, including but not limited to: study design, data acquisition, preprocessing, reference data collection, performing analyses, writing code, literature research, writing manuscript, creating figures, formatting, revisions & editing, references
 - in cells: the respective members contribution to this part of the work (in %)
+
+-->
 
 ------
 
