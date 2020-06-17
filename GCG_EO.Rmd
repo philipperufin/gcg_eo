@@ -2554,7 +2554,7 @@ The work should contain a maximum of 20,000 characters (not counting spaces, ref
 | Discussion + Conclusion         | XX %      | XX %      | XX %      | XX %      | XX %      |
 | Analyses (Code / Documentation) | XX %      | XX %      | XX %      | XX %      | XX %      |
 
-
+The deadline for the MAP is 30 September 2020. 
 
 ------
 
