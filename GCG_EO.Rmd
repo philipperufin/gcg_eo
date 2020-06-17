@@ -2538,22 +2538,23 @@ Think about training and validation data collection early on. Make sure there is
 ------
 
 **Until next week:** Submit a short project proposal the latest on 15 June. It should contain your topic of choice, study region, dataset(s), method(s) and one key scientific article in at most three to four sentences. 
-<!--
+
 ------
 
 # Concerning the MAP 
 
 Your project work will result in a written homework in the style of a scientific article. The written work should follow the typical structure of a scientific paper (Abstract, Introduction, Data & Methods, Results, Discussion, and Conclusion). Feel free to screen online materials for [scientific writing guidelines](https://writingajournalarticle.wordpress.com/). 
 
-The work should contain a maximum of 20,000 characters (not counting spaces, references, and appendix). The appendix may contain additional materials such as figures, tables, and code for the main analyses.
+The work should contain a maximum of 20,000 characters (not counting spaces, references, and appendix). To allow for transparent grading, we kindly ask you to disentangle the individual contributions in a tabular format containing the respective members contribution to this part of the work (in %):
 
-To allow for transparent grading, we kindly ask you to disentangle the individual contributions in a tabular format containing:
+| Component                       | Name 1    | Name 2    | Name 3    | Name 4    | Name 5    |  
+| -------                         | -----     | -----     | -----     | -----     | -----     | 
+| Abstract + Introduction         | XX %      | XX %      | XX %      | XX %      | XX %      |
+| Methods + Results               | XX %      | XX %      | XX %      | XX %      | XX %      |
+| Discussion + Conclusion         | XX %      | XX %      | XX %      | XX %      | XX %      |
+| Analyses (Code / Documentation) | XX %      | XX %      | XX %      | XX %      | XX %      |
 
-- in columns: the name of the team members
-- in rows: components of the work, including but not limited to: study design, data acquisition, preprocessing, reference data collection, performing analyses, writing code, literature research, writing manuscript, creating figures, formatting, revisions & editing, references
-- in cells: the respective members contribution to this part of the work (in %)
 
--->
 
 ------
 
@@ -2615,7 +2616,7 @@ Developing a research idea is an iterative process. Running into problems and re
 
 !["The cloud" (Alon 2009)](fig/s09_cloud.png)
 
-**Until 12:15:** Write a 200 word abstract on a ppt slide to present to the group and collect feedback.
+**Until friday** Submit your 200 word abstract in moodle tomorrow.
 
 **Until next week:** Order and download the required data, so you can proceed with pre-processing.
 
